@@ -1,27 +1,29 @@
 import { RunTable } from "@/components/runTable";
+import { Calendar } from "@/components/ui/calendar";
+import { Input } from "@/components/ui/input";
+import { useState } from "react";
 
 export function PastRuns() {
+  const [date, setDate] = useState<Date | undefined>(new Date());
+
   return (
     <div className="flex flex-col px-4 gap-4">
       <div className="flex justify-between">
-        <div className="form-control w-full max-w-xs">
-          <label className="label">
-            <span className="label-text">Date</span>
-          </label>
-          <input
-            type="text"
-            placeholder="DD/MM/YYYY"
-            className="input input-bordered w-full max-w-xs"
+        <div className="w-full max-w-xs">
+          <label>Date</label>
+          <Calendar
+            mode="single"
+            selected={date}
+            onSelect={setDate}
+            className="rounded-md border"
           />
         </div>
-        <div className="form-control w-full max-w-xs">
-          <label className="label">
-            <span className="label-text">Runner</span>
-          </label>
-          <input
+        <div className="w-full max-w-xs">
+          <label>Runner</label>
+          <Input
             type="text"
             placeholder="Name here"
-            className="input input-bordered w-full max-w-xs"
+            className="w-full max-w-xs"
           />
         </div>
       </div>

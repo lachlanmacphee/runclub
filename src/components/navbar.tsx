@@ -9,6 +9,11 @@ import {
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
 
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Button } from "./ui/button";
+import { LogOut } from "lucide-react";
+import { ModeToggle } from "./mode-toggle";
+
 export function Navbar() {
   const { logout } = usePocket();
 
@@ -25,11 +30,15 @@ export function Navbar() {
                 Dashboard
               </NavigationMenuLink>
             </Link>
+          </NavigationMenuItem>
+          <NavigationMenuItem>
             <Link to="/pastruns">
               <NavigationMenuLink className={navigationMenuTriggerStyle()}>
                 Past Runs
               </NavigationMenuLink>
             </Link>
+          </NavigationMenuItem>
+          <NavigationMenuItem>
             <Link to="/newrun">
               <NavigationMenuLink className={navigationMenuTriggerStyle()}>
                 New Runs
@@ -40,10 +49,14 @@ export function Navbar() {
       </NavigationMenu>
 
       <div className="flex gap-2">
-        <div className="w-10 rounded-full">
-          <img src="https://yt3.googleusercontent.com/-CFTJHU7fEWb7BYEb6Jh9gm1EpetvVGQqtof0Rbh-VQRIznYYKJxCaqv_9HeBcmJmIsp2vOO9JU=s900-c-k-c0x00ffffff-no-rj" />
-        </div>
-        <button onClick={logout}>Logout</button>
+        <Avatar>
+          <AvatarImage src="https://yt3.googleusercontent.com/-CFTJHU7fEWb7BYEb6Jh9gm1EpetvVGQqtof0Rbh-VQRIznYYKJxCaqv_9HeBcmJmIsp2vOO9JU=s900-c-k-c0x00ffffff-no-rj" />
+          <AvatarFallback>avtr</AvatarFallback>
+        </Avatar>
+        <ModeToggle />
+        <Button onClick={logout} variant="outline" size="icon">
+          <LogOut className="h-4 w-4" />
+        </Button>
       </div>
     </div>
   );

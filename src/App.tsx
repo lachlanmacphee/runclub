@@ -9,21 +9,24 @@ import { NewRun } from "./pages/newRun";
 import { PastRuns } from "./pages/pastRuns";
 
 import { PocketProvider } from "./contexts/PocketContext";
+import { ThemeProvider } from "./contexts/ThemeProviderContext";
 
 export default function App() {
   return (
     <PocketProvider>
-      <BrowserRouter>
-        <Routes>
-          <Route index element={<Login />} />
-          <Route path="/signup" element={<SignUp />} />
-          <Route element={<RequireAuth />}>
-            <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/pastruns" element={<PastRuns />} />
-            <Route path="/newrun" element={<NewRun />} />
-          </Route>
-        </Routes>
-      </BrowserRouter>
+      <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+        <BrowserRouter>
+          <Routes>
+            <Route index element={<Login />} />
+            <Route path="/signup" element={<SignUp />} />
+            <Route element={<RequireAuth />}>
+              <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/pastruns" element={<PastRuns />} />
+              <Route path="/newrun" element={<NewRun />} />
+            </Route>
+          </Routes>
+        </BrowserRouter>
+      </ThemeProvider>
     </PocketProvider>
   );
 }
