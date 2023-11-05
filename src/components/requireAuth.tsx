@@ -11,9 +11,9 @@ export const RequireAuth = () => {
   }
 
   return (
-    <div>
+    <>
       <Navbar />
       <Outlet />
-    </div>
+    </>
   );
 };
