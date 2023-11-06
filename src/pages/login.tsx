@@ -2,6 +2,8 @@ import { useCallback, useState } from "react";
 import { useNavigate, Link, Navigate } from "react-router-dom";
 
 import { usePocket } from "@/contexts";
+import { Input } from "@/components/ui/input";
+import { Button, buttonVariants } from "@/components/ui/button";
 
 export const Login = () => {
   const [email, setEmail] = useState("");
@@ -9,7 +11,7 @@ export const Login = () => {
   const { login, user } = usePocket();
   const navigate = useNavigate();
 
-  const handleOnSubmit = useCallback(async () => {
+  const handleLogin = useCallback(async () => {
     await login(email, password);
     navigate("/dashboard");
   }, [email, login, navigate, password]);
@@ -20,36 +22,32 @@ export const Login = () => {
 
   return (
     <div className="flex h-screen flex-col justify-center items-center">
-      <section className="flex text-white w-1/2 flex-col gap-4 bg-slate-600 rounded-md p-8">
+      <section className="flex w-1/2 flex-col gap-4 rounded-md p-8">
         <h1 className="text-center text-3xl font-extrabold">Gunn Runners</h1>
-        <form
-          onSubmit={handleOnSubmit}
-          className="flex flex-col gap-4 text-center"
-        >
+        <div className="flex flex-col gap-4 text-center">
           <h2 className="text-xl">Login</h2>
-          <input
+          <Input
             placeholder="Email"
             type="email"
-            className="input input-bordered"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
-          <input
+          <Input
             placeholder="Password"
             type="password"
-            className="input input-bordered"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
           <div className="flex justify-between mt-2">
-            <Link to="/signup" className="btn btn-secondary">
+            <Link
+              to="/signup"
+              className={buttonVariants({ variant: "default" })}
+            >
               Go to Sign Up
             </Link>
-            <button type="submit" className="btn btn-primary">
-              Login
-            </button>
+            <Button onClick={handleLogin}>Login</Button>
           </div>
-        </form>
+        </div>
       </section>
     </div>
   );
