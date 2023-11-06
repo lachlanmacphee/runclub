@@ -3,7 +3,7 @@ import { RunTable } from "@/components/runTable";
 export const Dashboard = () => {
   return (
     <div>
-      <div className="flex justify-between px-4 py-4 items-center">
+      <div className="flex justify-between px-8 py-4 gap-4 items-center">
         <div>
           <h1 className="text-5xl font-bold">Latest Run</h1>
           <p className="py-6">
@@ -18,7 +18,7 @@ export const Dashboard = () => {
           className="max-w-sm rounded-lg shadow-2xl"
         />
       </div>
-      <div className="px-4">
+      <div className="px-8">
         <RunTable />
       </div>
     </div>
