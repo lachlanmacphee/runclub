@@ -18,6 +18,7 @@ export const Home = () => {
             className={`${
               index > 3 ? "hidden md:flex" : "flex"
             } justify-center`}
+            key={index}
           >
             <img className="rounded-lg aspect-video" src={imgLink} />
           </div>
