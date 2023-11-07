@@ -19,7 +19,7 @@ export const SignUp = () => {
   }, [register, email, password, passwordConfirm, navigate]);
 
   if (user) {
-    return <Navigate to="/dashboard" replace />;
+    return <Navigate to="/latestrun" replace />;
   }
 
   return (

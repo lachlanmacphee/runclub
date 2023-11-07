@@ -2,6 +2,7 @@ import { RunTable } from "@/components/runTable";
 import { Calendar } from "@/components/ui/calendar";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { formatDateWithSuffix } from "@/utils";
 import { useState } from "react";
 
 export function PastRuns() {
@@ -14,13 +15,16 @@ export function PastRuns() {
   }
 
   return (
-    <div className="flex flex-col px-4 gap-4">
+    <div className="flex flex-col p-8 gap-4">
       <div className="flex justify-between items-center">
-        <div className="w-full max-w-xs">
-          <Label htmlFor="date">Date</Label>
+        <div className="flex w-full flex-col gap-2 max-w-xs">
+          <Label htmlFor="date" className="font-bold">
+            Date
+          </Label>
           <Input
             name="date"
             onClick={() => setShowCalendar(true)}
+            onChange={() => {}}
             value={date?.toLocaleDateString()}
           />
           {showCalendar && (
@@ -32,12 +36,16 @@ export function PastRuns() {
             />
           )}
         </div>
-        <div className="flex flex-col items-center">
-          <h1 className="text-xl font-bold">7th of November, 2023</h1>
+        <div className="flex flex-col items-center text-center">
+          <h1 className="text-xl font-bold">
+            {date && formatDateWithSuffix(date)}
+          </h1>
           <h2>Albert Park Lake</h2>
         </div>
-        <div className="w-full max-w-xs">
-          <Label htmlFor="date">Runner</Label>
+        <div className="flex flex-col gap-2 w-full max-w-xs">
+          <Label htmlFor="date" className="font-bold">
+            Runner
+          </Label>
           <Input
             name="runner"
             type="text"

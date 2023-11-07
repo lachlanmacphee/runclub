@@ -18,14 +18,19 @@ export function Navbar() {
 
   return (
     <div className="flex justify-between py-4 px-8 items-center bg-base-100">
-      <Link to="/dashboard" className="normal-case font-bold text-2xl">
+      <Link to="/" className="normal-case font-bold text-2xl">
         Gunn Runners
       </Link>
       <NavigationMenu>
         <NavigationMenuList>
           <NavigationMenuItem>
-            <Link to="/dashboard" className={navigationMenuTriggerStyle()}>
-              Dashboard
+            <Link to="/" className={navigationMenuTriggerStyle()}>
+              Home
+            </Link>
+          </NavigationMenuItem>
+          <NavigationMenuItem>
+            <Link to="/latestrun" className={navigationMenuTriggerStyle()}>
+              Latest Run
             </Link>
           </NavigationMenuItem>
           <NavigationMenuItem>
@@ -35,7 +40,12 @@ export function Navbar() {
           </NavigationMenuItem>
           <NavigationMenuItem>
             <Link to="/newrun" className={navigationMenuTriggerStyle()}>
-              New Runs
+              Create New Run
+            </Link>
+          </NavigationMenuItem>
+          <NavigationMenuItem>
+            <Link to="/faqs" className={navigationMenuTriggerStyle()}>
+              FAQs
             </Link>
           </NavigationMenuItem>
         </NavigationMenuList>
@@ -44,7 +54,7 @@ export function Navbar() {
       <div className="flex gap-3">
         <Avatar>
           <AvatarImage src="https://yt3.googleusercontent.com/-CFTJHU7fEWb7BYEb6Jh9gm1EpetvVGQqtof0Rbh-VQRIznYYKJxCaqv_9HeBcmJmIsp2vOO9JU=s900-c-k-c0x00ffffff-no-rj" />
-          <AvatarFallback>avtr</AvatarFallback>
+          <AvatarFallback>Avatar</AvatarFallback>
         </Avatar>
         <ModeToggle />
         <Button onClick={logout} variant="outline" size="icon">

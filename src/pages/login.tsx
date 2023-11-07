@@ -13,11 +13,11 @@ export const Login = () => {
 
   const handleLogin = useCallback(async () => {
     await login(email, password);
-    navigate("/dashboard");
+    navigate("/latestrun");
   }, [email, login, navigate, password]);
 
   if (user) {
-    return <Navigate to="/dashboard" replace />;
+    return <Navigate to="/latestrun" replace />;
   }
 
   return (
