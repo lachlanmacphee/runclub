@@ -24,9 +24,9 @@ export default function App() {
             <Route path="/signup" element={<SignUp />} />
             <Route element={<Layout />}>
               <Route index element={<Home />} />
+              <Route path="/latestrun" element={<LatestRun />} />
+              <Route path="/pastruns" element={<PastRuns />} />
               <Route element={<RequireAuth />}>
-                <Route path="/latestrun" element={<LatestRun />} />
-                <Route path="/pastruns" element={<PastRuns />} />
                 <Route path="/newrun" element={<NewRun />} />
               </Route>
               <Route path="faqs" element={<FAQs />} />
