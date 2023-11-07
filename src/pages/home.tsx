@@ -11,7 +11,7 @@ const imgLinks = [
 
 export const Home = () => {
   return (
-    <div className="flex items-center flex-col gap-8 p-8">
+    <div className="flex items-center flex-col gap-8">
       <div className="grid gap-4 grid-cols-2 h-64 grid-rows-2 md:grid-cols-4 md:grid-rows-2 max-w-3xl">
         {imgLinks.map((imgLink, index) => (
           <div

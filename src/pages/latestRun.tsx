@@ -2,7 +2,7 @@ import { RunTable } from "@/components/runTable";
 
 export const LatestRun = () => {
   return (
-    <div className="p-8 flex flex-col gap-6">
+    <div className="flex flex-col gap-6">
       <div>
         <h1 className="text-5xl font-bold">Latest Run</h1>
         <p className="py-6">

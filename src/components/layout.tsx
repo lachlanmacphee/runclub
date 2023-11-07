@@ -5,7 +5,9 @@ export const Layout = () => {
   return (
     <>
       <Navbar />
-      <Outlet />
+      <div className="p-8">
+        <Outlet />
+      </div>
     </>
   );
 };
