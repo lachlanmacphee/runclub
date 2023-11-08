@@ -36,7 +36,7 @@ const FormSchema = z.object({
   date: z.date(),
   location: z.enum(["albertParkLake"]),
   participants: z.array(
-    z.object({ bib: z.number(), name: z.string(), distance: z.number() })
+    z.object({ bib: z.string(), name: z.string(), distance: z.string() })
   ),
 });
 
@@ -46,7 +46,7 @@ export function NewRun() {
     defaultValues: {
       date: new Date(),
       location: "albertParkLake",
-      participants: [{ bib: 1, name: "", distance: 5 }],
+      participants: [{ bib: "1", name: "", distance: "5" }],
     },
   });
 
@@ -54,8 +54,6 @@ export function NewRun() {
     control: form.control,
     name: "participants",
   });
-
-  const participantsLength = fields.length;
 
   function onSubmit(data: z.infer<typeof FormSchema>) {
     toast({
@@ -66,6 +64,21 @@ export function NewRun() {
         </pre>
       ),
     });
+  }
+
+  const participantsLength = fields.length;
+
+  function addParticipant() {
+    append(
+      {
+        bib: `${participantsLength + 1}`,
+        name: "",
+        distance: "5",
+      },
+      {
+        focusName: `participants.${participantsLength}.name`,
+      }
+    );
   }
 
   return (
@@ -130,13 +143,17 @@ export function NewRun() {
               {fields.map((item, index) => (
                 <TableRow key={item.id}>
                   <TableCell>
-                    <Input {...form.register(`participants.${index}.bib`)} />
+                    <Input
+                      type="number"
+                      {...form.register(`participants.${index}.bib`)}
+                    />
                   </TableCell>
                   <TableCell>
                     <Input {...form.register(`participants.${index}.name`)} />
                   </TableCell>
                   <TableCell>
                     <Input
+                      type="number"
                       {...form.register(`participants.${index}.distance`)}
                     />
                   </TableCell>
@@ -152,22 +169,15 @@ export function NewRun() {
                 </TableRow>
               ))}
               <TableRow>
-                <TableCell colSpan={4}>
+                <TableCell />
+                <TableCell />
+                <TableCell />
+                <TableCell>
                   <Button
                     type="button"
                     variant="outline"
-                    onClick={() =>
-                      append(
-                        {
-                          bib: participantsLength + 1,
-                          name: "",
-                          distance: 5,
-                        },
-                        {
-                          focusName: `participants.${participantsLength}.name`,
-                        }
-                      )
-                    }
+                    size="icon"
+                    onClick={addParticipant}
                   >
                     <Plus />
                   </Button>
