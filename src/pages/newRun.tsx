@@ -1,5 +1,5 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
+import { useFieldArray, useForm } from "react-hook-form";
 import * as z from "zod";
 
 import { Button } from "@/components/ui/button";
@@ -21,10 +21,23 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import { Plus, Trash } from "lucide-react";
+import { Input } from "@/components/ui/input";
 
 const FormSchema = z.object({
   date: z.date(),
   location: z.enum(["albertParkLake"]),
+  participants: z.array(
+    z.object({ bib: z.number(), name: z.string(), distance: z.number() })
+  ),
 });
 
 export function NewRun() {
@@ -33,8 +46,16 @@ export function NewRun() {
     defaultValues: {
       date: new Date(),
       location: "albertParkLake",
+      participants: [{ bib: 1, name: "", distance: 5 }],
     },
   });
+
+  const { fields, append, remove } = useFieldArray({
+    control: form.control,
+    name: "participants",
+  });
+
+  const participantsLength = fields.length;
 
   function onSubmit(data: z.infer<typeof FormSchema>) {
     toast({
@@ -96,6 +117,65 @@ export function NewRun() {
               </FormItem>
             )}
           />
+          <Table className="max-h-64">
+            <TableHeader>
+              <TableRow>
+                <TableHead>Bib</TableHead>
+                <TableHead>Name</TableHead>
+                <TableHead>Distance</TableHead>
+                <TableHead>Actions</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {fields.map((item, index) => (
+                <TableRow key={item.id}>
+                  <TableCell>
+                    <Input {...form.register(`participants.${index}.bib`)} />
+                  </TableCell>
+                  <TableCell>
+                    <Input {...form.register(`participants.${index}.name`)} />
+                  </TableCell>
+                  <TableCell>
+                    <Input
+                      {...form.register(`participants.${index}.distance`)}
+                    />
+                  </TableCell>
+                  <TableCell>
+                    <Button
+                      onClick={() => remove(index)}
+                      variant="destructive"
+                      size="icon"
+                    >
+                      <Trash />
+                    </Button>
+                  </TableCell>
+                </TableRow>
+              ))}
+              <TableRow>
+                <TableCell colSpan={4}>
+                  <Button
+                    type="button"
+                    variant="outline"
+                    onClick={() =>
+                      append(
+                        {
+                          bib: participantsLength + 1,
+                          name: "",
+                          distance: 5,
+                        },
+                        {
+                          focusName: `participants.${participantsLength}.name`,
+                        }
+                      )
+                    }
+                  >
+                    <Plus />
+                  </Button>
+                </TableCell>
+              </TableRow>
+            </TableBody>
+          </Table>
+
           <Button type="submit">Submit</Button>
         </form>
       </Form>
