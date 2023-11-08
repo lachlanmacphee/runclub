@@ -23,8 +23,8 @@ export function Navbar() {
       <Link to="/" className="normal-case w-[160px] font-bold text-2xl">
         Gunn Runners
       </Link>
-      <NavigationMenu className="hidden md:block">
-        <NavigationMenuList className="flex">
+      <NavigationMenu className="hidden lg:block">
+        <NavigationMenuList>
           <NavigationMenuItem>
             <Link to="/" className={navigationMenuTriggerStyle()}>
               Home
@@ -54,8 +54,8 @@ export function Navbar() {
           </NavigationMenuItem>
           <NavigationMenuItem>
             <NavigationMenuTrigger>Support</NavigationMenuTrigger>
-            <NavigationMenuContent className="absolute top-0">
-              <ul className="flex gap-3 p-4 w-[456px]">
+            <NavigationMenuContent>
+              <ul className="flex gap-3 p-4">
                 <li>
                   <Link to="/contact" className={navigationMenuTriggerStyle()}>
                     Contact Us

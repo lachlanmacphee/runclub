@@ -1,58 +1,128 @@
-import { useCallback, useState } from "react";
+import { useCallback } from "react";
 import { useNavigate, Link, Navigate } from "react-router-dom";
-
 import { usePocket } from "@/contexts";
-import { Button, buttonVariants } from "@/components/ui/button";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import * as z from "zod";
 import { Input } from "@/components/ui/input";
+import { Button, buttonVariants } from "@/components/ui/button";
+import { useToast } from "@/components/ui/use-toast";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+
+const FormSchema = z
+  .object({
+    email: z.string().email(),
+    password: z.string().min(10),
+    passwordConfirm: z.string().min(10),
+  })
+  .refine((schema) => schema.password === schema.passwordConfirm, {
+    message: "Passwords must match",
+    path: ["passwordConfirm"],
+  });
 
 export const SignUp = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [passwordConfirm, setPasswordConfirm] = useState("");
-  const { register, user } = usePocket();
+  const { register, login, user } = usePocket();
+  const { toast } = useToast();
   const navigate = useNavigate();
 
-  const handleSignUp = useCallback(async () => {
-    await register(email, password, passwordConfirm);
-    navigate("/");
-    return;
-  }, [register, email, password, passwordConfirm, navigate]);
+  const form = useForm<z.infer<typeof FormSchema>>({
+    resolver: zodResolver(FormSchema),
+    defaultValues: {
+      email: "",
+      password: "",
+      passwordConfirm: "",
+    },
+  });
+
+  const onSubmit = useCallback(
+    async (data: z.infer<typeof FormSchema>) => {
+      try {
+        await register(data.email, data.password, data.passwordConfirm);
+        await login(data.email, data.password);
+        navigate("/");
+      } catch {
+        toast({
+          title: "Sign Up Failed",
+          variant: "destructive",
+          duration: 3000,
+          description: "The server might be down.",
+        });
+      }
+    },
+    [login, navigate, register, toast]
+  );
 
   if (user) {
-    return <Navigate to="/latestrun" replace />;
+    return <Navigate to="/" replace />;
   }
 
   return (
     <div className="flex h-screen flex-col justify-center items-center">
       <section className="flex w-1/2 flex-col gap-4 rounded-md p-8">
         <h1 className="text-center text-3xl font-extrabold">Gunn Runners</h1>
-        <div className="flex flex-col gap-4 text-center">
-          <h2 className="text-xl">Sign Up</h2>
-          <Input
-            placeholder="Email"
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-          <Input
-            placeholder="Password"
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-          <Input
-            placeholder="Confirm Password"
-            type="password"
-            value={passwordConfirm}
-            onChange={(e) => setPasswordConfirm(e.target.value)}
-          />
-          <div className="flex justify-between mt-2">
-            <Link to="/" className={buttonVariants({ variant: "default" })}>
-              Go to Login
-            </Link>
-            <Button onClick={handleSignUp}>Sign Up</Button>
-          </div>
-        </div>
+        <h2 className="text-xl text-center">Sign Up</h2>
+        <Form {...form}>
+          <form
+            onSubmit={form.handleSubmit(onSubmit)}
+            className="flex flex-col gap-4"
+          >
+            <FormField
+              control={form.control}
+              name="email"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Email</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Email" type="email" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="password"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Password</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Password" type="password" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="passwordConfirm"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Confirm Password</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Password" type="password" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <div className="flex justify-between mt-2">
+              <Link
+                to="/login"
+                className={buttonVariants({ variant: "default" })}
+              >
+                Go to Login
+              </Link>
+              <Button type="submit">Sign Up</Button>
+            </div>
+          </form>
+        </Form>
       </section>
     </div>
   );

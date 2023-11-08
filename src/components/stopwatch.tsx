@@ -7,6 +7,18 @@ type StopwatchProps = {
   seconds: number;
 };
 
+// Example Usage
+// const { start, hours, minutes, seconds } = useStopwatch();
+
+// return (
+//   <Stopwatch
+//     start={start}
+//     hours={hours}
+//     minutes={minutes}
+//     seconds={seconds}
+//   />
+// );
+
 export function Stopwatch({ start, hours, minutes, seconds }: StopwatchProps) {
   const fHours = hours.toString().padStart(2, "0");
   const fMins = minutes.toString().padStart(2, "0");
