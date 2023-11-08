@@ -6,6 +6,8 @@ import {
   NavigationMenuItem,
   NavigationMenuList,
   navigationMenuTriggerStyle,
+  NavigationMenuContent,
+  NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -22,7 +24,7 @@ export function Navbar() {
         Gunn Runners
       </Link>
       <NavigationMenu className="hidden md:block">
-        <NavigationMenuList>
+        <NavigationMenuList className="flex">
           <NavigationMenuItem>
             <Link to="/" className={navigationMenuTriggerStyle()}>
               Home
@@ -49,6 +51,23 @@ export function Navbar() {
             <Link to="/faqs" className={navigationMenuTriggerStyle()}>
               FAQs
             </Link>
+          </NavigationMenuItem>
+          <NavigationMenuItem>
+            <NavigationMenuTrigger>Support</NavigationMenuTrigger>
+            <NavigationMenuContent className="absolute top-0">
+              <ul className="flex gap-3 p-4 w-[456px]">
+                <li>
+                  <Link to="/contact" className={navigationMenuTriggerStyle()}>
+                    Contact Us
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/privacy" className={navigationMenuTriggerStyle()}>
+                    Privacy Policy
+                  </Link>
+                </li>
+              </ul>
+            </NavigationMenuContent>
           </NavigationMenuItem>
         </NavigationMenuList>
       </NavigationMenu>

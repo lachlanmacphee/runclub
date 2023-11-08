@@ -14,6 +14,8 @@ import { Home } from "./pages/home";
 import { Layout } from "./components/layout";
 import { FAQs } from "./pages/faqs";
 
+import { Toaster } from "@/components/ui/toaster";
+
 export default function App() {
   return (
     <PocketProvider>
@@ -32,6 +34,7 @@ export default function App() {
               <Route path="faqs" element={<FAQs />} />
             </Route>
           </Routes>
+          <Toaster />
         </BrowserRouter>
       </ThemeProvider>
     </PocketProvider>

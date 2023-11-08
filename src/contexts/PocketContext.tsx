@@ -26,7 +26,7 @@ export type PocketContextType = {
   ) => Promise<RecordAuthResponse<RecordModel>>;
   logout: VoidFunction;
   user: { [key: string]: unknown } | null;
-  token: unknown;
+  token: string;
   pb: unknown;
 };
 
