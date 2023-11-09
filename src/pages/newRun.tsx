@@ -31,18 +31,35 @@ import {
 } from "@/components/ui/table";
 import { Plus, Trash } from "lucide-react";
 import { Input } from "@/components/ui/input";
+import { hasDuplicates } from "@/utils";
 
-const FormSchema = z.object({
-  date: z.date(),
-  location: z.enum(["albertParkLake"]),
-  participants: z.array(
-    z.object({ bib: z.string(), name: z.string(), distance: z.string() })
-  ),
-});
+const FormSchema = z
+  .object({
+    date: z.date(),
+    location: z.enum(["albertParkLake"]),
+    participants: z.array(
+      z.object({
+        bib: z.string(),
+        name: z.string().min(2),
+        distance: z.string(),
+      })
+    ),
+  })
+  .refine(
+    (schema) => {
+      const bibArr = schema.participants.map((elem) => elem.bib);
+      return !hasDuplicates(bibArr);
+    },
+    {
+      path: ["participants"],
+      message: "You cannot have duplicate bib numbers.",
+    }
+  );
 
 export function NewRun() {
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
+    mode: "onBlur",
     defaultValues: {
       date: new Date(),
       location: "albertParkLake",
@@ -66,12 +83,14 @@ export function NewRun() {
     });
   }
 
-  const participantsLength = fields.length;
+  const participants = form.getValues("participants");
+  const participantsLength = participants.length;
+  const newBibNumber = Number(participants[participantsLength - 1].bib) + 1;
 
   function addParticipant() {
     append(
       {
-        bib: `${participantsLength + 1}`,
+        bib: String(newBibNumber),
         name: "",
         distance: "5",
       },
@@ -80,6 +99,8 @@ export function NewRun() {
       }
     );
   }
+
+  console.log("form.formState.errors :>> ", form.formState.errors);
 
   return (
     <div className="flex flex-col">
@@ -158,18 +179,24 @@ export function NewRun() {
                     />
                   </TableCell>
                   <TableCell>
-                    <Button
-                      onClick={() => remove(index)}
-                      variant="destructive"
-                      size="icon"
-                    >
-                      <Trash />
-                    </Button>
+                    {index !== 0 && (
+                      <Button
+                        onClick={() => remove(index)}
+                        variant="destructive"
+                        size="icon"
+                      >
+                        <Trash />
+                      </Button>
+                    )}
                   </TableCell>
                 </TableRow>
               ))}
               <TableRow>
-                <TableCell />
+                <TableCell className="font-bold text-destructive">
+                  {form.formState.errors.participants?.root && (
+                    <p>{form.formState.errors.participants.root.message}</p>
+                  )}
+                </TableCell>
                 <TableCell />
                 <TableCell />
                 <TableCell>
@@ -185,8 +212,11 @@ export function NewRun() {
               </TableRow>
             </TableBody>
           </Table>
-
-          <Button type="submit">Submit</Button>
+          <div className="flex justify-center">
+            <Button type="submit" className="w-48">
+              Submit
+            </Button>
+          </div>
         </form>
       </Form>
     </div>

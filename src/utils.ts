@@ -24,3 +24,7 @@ export function formatDateWithSuffix(date: Date) {
 
   return `${dayString} of ${month}, ${year}`;
 }
+
+export function hasDuplicates(array: unknown[]) {
+  return new Set(array).size !== array.length;
+}
