@@ -27,7 +27,7 @@ export type PocketContextType = {
   logout: VoidFunction;
   user: { [key: string]: unknown } | null;
   token: string;
-  pb: unknown;
+  pb: PocketBase;
 };
 
 export const PocketContext = createContext<PocketContextType | null>(null);

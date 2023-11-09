@@ -112,3 +112,12 @@ export const FAQExampleData = [
       'Originally set up 18 years ago by a group of friends, the Gunn Runners met at the Gunn Island Hotel once a week for a simple "Run and a Beer". The format remains much the same, with the group now meeting at the Limerick Arms Hotel in South Melbourne.',
   },
 ];
+
+export const mobileLinks = [
+  { path: "/", label: "Home" },
+  { path: "/latestrun", label: "Latest Run" },
+  { path: "/pastruns", label: "Past Runs" },
+  { path: "/newrun", label: "Create New Run" },
+  { path: "/faqs", label: "FAQs" },
+  { path: "/contactus", label: "Contact Us" },
+];

@@ -32,6 +32,7 @@ import {
 import { Plus, Trash } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { hasDuplicates } from "@/utils";
+import { usePocket } from "@/contexts";
 
 const FormSchema = z
   .object({
@@ -57,6 +58,7 @@ const FormSchema = z
   );
 
 export function NewRun() {
+  const { pb } = usePocket();
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     mode: "onBlur",
@@ -72,14 +74,28 @@ export function NewRun() {
     name: "participants",
   });
 
-  function onSubmit(data: z.infer<typeof FormSchema>) {
+  async function onSubmit(data: z.infer<typeof FormSchema>) {
+    const { id: groupRunId } = await pb
+      .collection("group_runs")
+      .create({ date: data.date, location: data.location });
+
+    Promise.all(
+      data.participants.map(async (participant) => {
+        const data = {
+          group_run_id: groupRunId,
+          name: participant.name,
+          distance: Number(participant.distance),
+          bib: Number(participant.bib),
+        };
+        await pb
+          .collection("participant_runs")
+          .create(data, { requestKey: null });
+      })
+    );
+
     toast({
-      title: "You submitted the following values:",
-      description: (
-        <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-          <code className="text-white">{JSON.stringify(data, null, 2)}</code>
-        </pre>
-      ),
+      title: "Run Created",
+      description: "The run was successfully created.",
     });
   }
 
@@ -99,8 +115,6 @@ export function NewRun() {
       }
     );
   }
-
-  console.log("form.formState.errors :>> ", form.formState.errors);
 
   return (
     <div className="flex flex-col">
