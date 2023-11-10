@@ -117,6 +117,7 @@ export function Navbar() {
           <DropdownMenuContent>
             {mobileLinks.map((link) => (
               <MobileLink
+                key={link.path}
                 path={link.path}
                 label={link.label}
                 setter={setDropdownOpen}

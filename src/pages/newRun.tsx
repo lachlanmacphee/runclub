@@ -1,6 +1,8 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useFieldArray, useForm } from "react-hook-form";
 import * as z from "zod";
+import { useEffect, useState } from "react";
+import CreatableSelect from "react-select/creatable";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -33,6 +35,7 @@ import { Plus, Trash } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { hasDuplicates } from "@/utils";
 import { usePocket } from "@/contexts";
+import { User } from "@/types";
 
 const FormSchema = z
   .object({
@@ -41,7 +44,7 @@ const FormSchema = z
     participants: z.array(
       z.object({
         bib: z.string(),
-        name: z.string().min(2),
+        name: z.object({ value: z.string(), label: z.string() }),
         distance: z.string(),
       })
     ),
@@ -58,6 +61,7 @@ const FormSchema = z
   );
 
 export function NewRun() {
+  const [users, setUsers] = useState<User[]>([]);
   const { pb } = usePocket();
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
@@ -65,7 +69,9 @@ export function NewRun() {
     defaultValues: {
       date: new Date(),
       location: "albertParkLake",
-      participants: [{ bib: "1", name: "", distance: "5" }],
+      participants: [
+        { bib: "1", name: { value: "", label: "" }, distance: "5" },
+      ],
     },
   });
 
@@ -73,6 +79,14 @@ export function NewRun() {
     control: form.control,
     name: "participants",
   });
+
+  useEffect(() => {
+    async function fetchUsers() {
+      const res = (await pb.collection("users").getFullList()) as User[];
+      setUsers(res);
+    }
+    fetchUsers();
+  }, [pb]);
 
   async function onSubmit(data: z.infer<typeof FormSchema>) {
     const { id: groupRunId } = await pb
@@ -83,7 +97,11 @@ export function NewRun() {
       data.participants.map(async (participant) => {
         const data = {
           group_run_id: groupRunId,
-          name: participant.name,
+          user_id:
+            participant.name.value === participant.name.label
+              ? undefined
+              : participant.name.value,
+          name: participant.name.label,
           distance: Number(participant.distance),
           bib: Number(participant.bib),
         };
@@ -107,7 +125,7 @@ export function NewRun() {
     append(
       {
         bib: String(newBibNumber),
-        name: "",
+        name: { label: "", value: "" },
         distance: "5",
       },
       {
@@ -184,10 +202,26 @@ export function NewRun() {
                     />
                   </TableCell>
                   <TableCell>
-                    <Input {...form.register(`participants.${index}.name`)} />
+                    <FormField
+                      control={form.control}
+                      name={`participants.${index}.name`}
+                      render={({ field }) => (
+                        <CreatableSelect
+                          value={field.value}
+                          onChange={field.onChange}
+                          options={users.map((user) => {
+                            return {
+                              label: user.name,
+                              value: user.id,
+                            };
+                          })}
+                        />
+                      )}
+                    />
                   </TableCell>
                   <TableCell>
                     <Input
+                      step={0.5}
                       type="number"
                       {...form.register(`participants.${index}.distance`)}
                     />
