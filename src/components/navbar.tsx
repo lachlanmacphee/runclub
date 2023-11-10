@@ -26,12 +26,17 @@ import { mobileLinks } from "@/constants";
 function MobileLink({
   path,
   label,
+  isLoggedIn,
   setter,
 }: {
   path: string;
   label: string;
+  isLoggedIn: boolean;
   setter: Dispatch<SetStateAction<boolean>>;
 }) {
+  if (!isLoggedIn && path == "/newrun") {
+    return null;
+  }
   return (
     <DropdownMenuItem>
       <Link to={path} onClick={() => setter(false)}>
@@ -123,6 +128,7 @@ export function Navbar() {
                 key={link.path}
                 path={link.path}
                 label={link.label}
+                isLoggedIn={!!user}
                 setter={setDropdownOpen}
               />
             ))}
