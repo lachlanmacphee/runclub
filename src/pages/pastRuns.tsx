@@ -1,12 +1,15 @@
 import { RunTable } from "@/components/runTable";
 import { DatePicker } from "@/components/ui/date-picker";
 import { Input } from "@/components/ui/input";
+import { Participant } from "@/types";
 import { formatDateWithSuffix } from "@/utils";
 import { useState } from "react";
 
 export function PastRuns() {
   const [date, setDate] = useState<Date>(new Date());
   const [runner, setRunner] = useState<string>("");
+  const [runLocation, setRunLocation] = useState<string>("");
+  const [participants, setParticipants] = useState<Participant[]>([]);
 
   return (
     <div className="flex flex-col gap-4">
@@ -18,7 +21,7 @@ export function PastRuns() {
           <h1 className="text-xl font-bold">
             {date && formatDateWithSuffix(date)}
           </h1>
-          <h2>Albert Park Lake</h2>
+          <h2>{runLocation}</h2>
         </div>
         <Input
           name="runner"
@@ -29,7 +32,7 @@ export function PastRuns() {
           className="justify-self-end"
         />
       </div>
-      <RunTable runner={runner} />
+      <RunTable participants={participants} runner={runner} />
     </div>
   );
 }

@@ -47,7 +47,7 @@ export function Navbar() {
 
   return (
     <div className="flex justify-between py-4 px-8 items-center">
-      <Link to="/" className="normal-case w-[180px] font-bold text-2xl">
+      <Link to="/" className="normal-case w-[190px] font-bold text-2xl">
         Gunn Runners
       </Link>
       <NavigationMenu className="hidden lg:block">
@@ -87,7 +87,7 @@ export function Navbar() {
         </NavigationMenuList>
       </NavigationMenu>
 
-      <div className="flex gap-3 justify-end w-[180px]">
+      <div className="flex gap-3 justify-end w-[190px]">
         {user && (
           <Avatar>
             <AvatarImage src="https://yt3.googleusercontent.com/-CFTJHU7fEWb7BYEb6Jh9gm1EpetvVGQqtof0Rbh-VQRIznYYKJxCaqv_9HeBcmJmIsp2vOO9JU=s900-c-k-c0x00ffffff-no-rj" />
@@ -109,10 +109,13 @@ export function Navbar() {
           </Button>
         )}
         <DropdownMenu open={dropdownOpen} onOpenChange={setDropdownOpen}>
-          <DropdownMenuTrigger className="lg:hidden">
-            <Button variant="outline" size="icon">
-              <HamburgerMenuIcon className="h-[1.2rem] w-[1.2rem]" />
-            </Button>
+          <DropdownMenuTrigger
+            className={
+              buttonVariants({ variant: "outline", size: "icon" }) +
+              " lg:hidden"
+            }
+          >
+            <HamburgerMenuIcon className="h-[1.2rem] w-[1.2rem]" />
           </DropdownMenuTrigger>
           <DropdownMenuContent>
             {mobileLinks.map((link) => (
