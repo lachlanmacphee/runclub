@@ -18,7 +18,7 @@ export const LatestRun = () => {
 
       // From the recent runs, find the latest and get its id
       const latestRun: GroupRun = recentRuns.sort(
-        (a, b) => a.date.getTime() - b.date.getTime()
+        (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
       )[0];
       const latestRunId = latestRun.id;
 
