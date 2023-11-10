@@ -44,7 +44,7 @@ const FormSchema = z
     participants: z.array(
       z.object({
         bib: z.string(),
-        name: z.object({ value: z.string(), label: z.string() }),
+        name: z.object({ value: z.string(), label: z.string() }).optional(),
         distance: z.string(),
       })
     ),
@@ -69,9 +69,7 @@ export function NewRun() {
     defaultValues: {
       date: new Date(),
       location: "albertParkLake",
-      participants: [
-        { bib: "1", name: { value: "", label: "" }, distance: "5" },
-      ],
+      participants: [{ bib: "1", name: undefined, distance: "5" }],
     },
   });
 
@@ -97,11 +95,8 @@ export function NewRun() {
       data.participants.map(async (participant) => {
         const data = {
           group_run_id: groupRunId,
-          user_id:
-            participant.name.value === participant.name.label
-              ? undefined
-              : participant.name.value,
-          name: participant.name.label,
+          user_id: participant?.name?.value,
+          name: participant?.name?.label,
           distance: Number(participant.distance),
           bib: Number(participant.bib),
         };
@@ -125,7 +120,7 @@ export function NewRun() {
     append(
       {
         bib: String(newBibNumber),
-        name: { label: "", value: "" },
+        name: undefined,
         distance: "5",
       },
       {
@@ -211,6 +206,7 @@ export function NewRun() {
                           classNamePrefix="custom-react-select"
                           value={field.value}
                           onChange={field.onChange}
+                          placeholder="Select or type..."
                           options={users.map((user) => {
                             return {
                               label: user.name,

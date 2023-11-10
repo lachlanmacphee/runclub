@@ -77,15 +77,15 @@
 
 @layer components {
   .custom-react-select-container .custom-react-select__control {
-    @apply bg-background border border-border hover:border-border shadow-none h-[40px] w-full;
+    @apply bg-background border rounded-md border-input hover:border-border shadow-none min-h-[40px];
   }
 
   .custom-react-select-container .custom-react-select__control--is-focused {
-    @apply bg-background border border-border hover:border-border;
+    @apply bg-background border-2 border-ring hover:border-ring ring-offset-2;
   }
 
   .custom-react-select-container .custom-react-select__menu {
-    @apply bg-background border border-border;
+    @apply bg-background border border-input;
   }
 
   .custom-react-select-container .custom-react-select__option {
