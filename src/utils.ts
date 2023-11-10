@@ -28,3 +28,10 @@ export function formatDateWithSuffix(date: Date) {
 export function hasDuplicates(array: unknown[]) {
   return new Set(array).size !== array.length;
 }
+
+export function convertLocationValueToLabel(value: string) {
+  switch (value) {
+    case "albertParkLake":
+      return "Albert Park Lake";
+  }
+}

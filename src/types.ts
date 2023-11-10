@@ -12,6 +12,12 @@ export type User = {
   verified: boolean;
 };
 
+export type GroupRun = {
+  id: string;
+  date: Date;
+  location: string;
+};
+
 export type Participant = {
   user_id?: string;
   group_run_id: string;

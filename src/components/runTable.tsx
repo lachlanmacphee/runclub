@@ -6,18 +6,19 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { exampleRunData } from "@/constants";
+import { Participant } from "@/types";
 
 type RunTableProps = {
   runner?: string;
+  participants: Participant[];
 };
 
-function getRunnerRows(runner: string) {
+function getRunnerRows(runner: string, participants: Participant[]) {
   const runData = runner
-    ? exampleRunData.filter((run) =>
+    ? participants.filter((run) =>
         run.name.toLowerCase().includes(runner.toLowerCase())
       )
-    : exampleRunData;
+    : participants;
 
   if (runData.length === 0) {
     return (
@@ -29,17 +30,17 @@ function getRunnerRows(runner: string) {
     );
   }
 
-  return runData.map((run) => (
+  return runData.map((run, idx) => (
     <TableRow key={run.name}>
-      <TableCell>{run.rank}</TableCell>
+      <TableCell>{idx + 1}</TableCell>
       <TableCell>{run.name}</TableCell>
       <TableCell>{run.distance}</TableCell>
-      <TableCell>{run.time}</TableCell>
+      <TableCell>{run.time_seconds}</TableCell>
     </TableRow>
   ));
 }
 
-export function RunTable({ runner }: RunTableProps) {
+export function RunTable({ runner, participants }: RunTableProps) {
   return (
     <Table>
       <TableHeader>
@@ -50,7 +51,7 @@ export function RunTable({ runner }: RunTableProps) {
           <TableHead>Time</TableHead>
         </TableRow>
       </TableHeader>
-      <TableBody>{getRunnerRows(runner ?? "")}</TableBody>
+      <TableBody>{getRunnerRows(runner ?? "", participants)}</TableBody>
     </Table>
   );
 }
