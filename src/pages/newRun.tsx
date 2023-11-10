@@ -207,6 +207,8 @@ export function NewRun() {
                       name={`participants.${index}.name`}
                       render={({ field }) => (
                         <CreatableSelect
+                          className="custom-react-select-container"
+                          classNamePrefix="custom-react-select"
                           value={field.value}
                           onChange={field.onChange}
                           options={users.map((user) => {

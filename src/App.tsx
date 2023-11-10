@@ -13,6 +13,7 @@ import { ThemeProvider } from "./contexts/ThemeProviderContext";
 import { Home } from "./pages/home";
 import { Layout } from "./components/layout";
 import { FAQs } from "./pages/faqs";
+import { ContactUs } from "./pages/contactUs";
 
 import { Toaster } from "@/components/ui/toaster";
 
@@ -32,6 +33,7 @@ export default function App() {
                 <Route path="/newrun" element={<NewRun />} />
               </Route>
               <Route path="faqs" element={<FAQs />} />
+              <Route path="contactus" element={<ContactUs />} />
             </Route>
           </Routes>
           <Toaster />
