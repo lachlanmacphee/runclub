@@ -44,7 +44,7 @@ const FormSchema = z
     participants: z.array(
       z.object({
         bib: z.string(),
-        name: z.object({ value: z.string(), label: z.string() }).optional(),
+        name: z.object({ value: z.string(), label: z.string() }),
         distance: z.string(),
       })
     ),
@@ -69,7 +69,10 @@ export function NewRun() {
     defaultValues: {
       date: new Date(),
       location: "albertParkLake",
-      participants: [{ bib: "1", name: undefined, distance: "5" }],
+      // Workaround to enable null initial value
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      participants: [{ bib: "1", name: null, distance: "5" }],
     },
   });
 
@@ -95,8 +98,11 @@ export function NewRun() {
       data.participants.map(async (participant) => {
         const data = {
           group_run_id: groupRunId,
-          user_id: participant?.name?.value,
-          name: participant?.name?.label,
+          user_id:
+            participant.name.value == participant.name.label
+              ? null
+              : participant.name.value,
+          name: participant.name.label,
           distance: Number(participant.distance),
           bib: Number(participant.bib),
         };
@@ -120,7 +126,10 @@ export function NewRun() {
     append(
       {
         bib: String(newBibNumber),
-        name: undefined,
+        // Workaround to enable null initial value
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        name: null,
         distance: "5",
       },
       {
@@ -202,11 +211,10 @@ export function NewRun() {
                       name={`participants.${index}.name`}
                       render={({ field }) => (
                         <CreatableSelect
+                          {...field}
                           className="custom-react-select-container"
                           classNamePrefix="custom-react-select"
-                          value={field.value}
-                          onChange={field.onChange}
-                          placeholder="Select or type..."
+                          placeholder="Select..."
                           options={users.map((user) => {
                             return {
                               label: user.name,
