@@ -1,15 +1,67 @@
 import { RunTable } from "@/components/runTable";
 import { DatePicker } from "@/components/ui/date-picker";
 import { Input } from "@/components/ui/input";
-import { Participant } from "@/types";
-import { formatDateWithSuffix } from "@/utils";
-import { useState } from "react";
+import { usePocket } from "@/contexts";
+import { GroupRun, Participant } from "@/types";
+import { convertLocationValueToLabel, formatDateWithSuffix } from "@/utils";
+import { useEffect, useState } from "react";
+import { format } from "date-fns";
 
 export function PastRuns() {
+  const { pb } = usePocket();
   const [date, setDate] = useState<Date>(new Date());
   const [runner, setRunner] = useState<string>("");
+  const [runDescription, setRunDescription] = useState<string>("");
   const [runLocation, setRunLocation] = useState<string>("");
   const [participants, setParticipants] = useState<Participant[]>([]);
+
+  useEffect(() => {
+    async function fetchRunFromDate() {
+      // Might be able to make this query more specific with filters
+      const recentRuns: GroupRun[] = await pb
+        .collection("group_runs")
+        .getFullList();
+
+      // From the recent runs, find the latest and get its id
+      const runFromDate: GroupRun | undefined = recentRuns.find(
+        (run) => run.date.substring(0, 10) === format(date, "yyyy-MM-dd")
+      );
+
+      if (!runFromDate) {
+        setRunLocation("");
+        setRunDescription("");
+        setParticipants([]);
+        return;
+      }
+
+      const runFromDateId = runFromDate.id;
+
+      // Find all the participants that were part of that run and set the state
+      const participants: Participant[] = await pb
+        .collection("participant_runs")
+        .getFullList({
+          filter: pb.filter("group_run_id = {:runFromDateId}", {
+            runFromDateId,
+          }),
+        });
+      participants.sort(
+        (a, b) => (a.time_seconds ?? 0) - (b.time_seconds ?? 0)
+      );
+      setParticipants(participants);
+
+      // Generate and set the run description
+      setRunDescription(
+        `On ${new Date(runFromDate.date).toLocaleDateString()}, ${
+          participants.length
+        } Gunnies hit the track at ${convertLocationValueToLabel(
+          runFromDate.location
+        )}. Congratulations to ${
+          participants[0].name
+        } for the fastest time, and all other Gunnies who attended.`
+      );
+    }
+    fetchRunFromDate();
+  }, [pb, date]);
 
   return (
     <div className="flex flex-col gap-4">
@@ -32,6 +84,7 @@ export function PastRuns() {
           className="justify-self-end"
         />
       </div>
+      <p>{runDescription}</p>
       <RunTable participants={participants} runner={runner} />
     </div>
   );

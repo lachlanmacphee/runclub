@@ -14,7 +14,7 @@ export type User = {
 
 export type GroupRun = {
   id: string;
-  date: Date;
+  date: string;
   location: string;
 };
 
