@@ -5,11 +5,13 @@ import { usePocket } from "@/contexts";
 import { GroupRun, Participant } from "@/types";
 import { convertLocationValueToLabel, formatDateWithSuffix } from "@/utils";
 import { useEffect, useState } from "react";
-import { format } from "date-fns";
+
+const initialDate = new Date();
+initialDate.setHours(0, 0, 0, 0);
 
 export function PastRuns() {
   const { pb } = usePocket();
-  const [date, setDate] = useState<Date>(new Date());
+  const [date, setDate] = useState<Date>(initialDate);
   const [runner, setRunner] = useState<string>("");
   const [runDescription, setRunDescription] = useState<string>("");
   const [runLocation, setRunLocation] = useState<string>("");
@@ -24,7 +26,8 @@ export function PastRuns() {
 
       // From the recent runs, find the latest and get its id
       const runFromDate: GroupRun | undefined = recentRuns.find(
-        (run) => run.date.substring(0, 10) === format(date, "yyyy-MM-dd")
+        (run) =>
+          run.date.substring(0, 10) === date.toISOString().substring(0, 10)
       );
 
       if (!runFromDate) {
