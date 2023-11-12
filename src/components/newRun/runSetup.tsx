@@ -60,6 +60,9 @@ const FormSchema = z
     }
   );
 
+const initialDate = new Date();
+initialDate.setHours(0, 0, 0, 0);
+
 export function RunSetup({
   setStep,
   setParticipants,
@@ -73,7 +76,7 @@ export function RunSetup({
     resolver: zodResolver(FormSchema),
     mode: "onBlur",
     defaultValues: {
-      date: new Date(),
+      date: initialDate,
       location: "albertParkLake",
       // Workaround to enable null initial value
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
