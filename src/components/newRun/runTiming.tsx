@@ -25,7 +25,14 @@ export function RunTiming({ participants }: { participants: Participant[] }) {
     if (Object.keys(completed).length === participants.length) {
       if (Object.values(completed).every(Boolean)) {
         pause();
-        navigate("/latestrun");
+        toast({
+          title: "Run Complete!",
+          description:
+            "All participants have crossed the finish line! Redirecting in 5 seconds...",
+        });
+        setTimeout(() => {
+          navigate("/latestrun");
+        }, 5000);
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
