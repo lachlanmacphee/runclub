@@ -6,6 +6,7 @@ type StopwatchProps = {
   minutes: number;
   seconds: number;
   isRunning: boolean;
+  isRunComplete: boolean;
 };
 
 export function Stopwatch({
@@ -14,6 +15,7 @@ export function Stopwatch({
   minutes,
   seconds,
   isRunning,
+  isRunComplete,
 }: StopwatchProps) {
   const fHours = hours.toString().padStart(2, "0");
   const fMins = minutes.toString().padStart(2, "0");
@@ -22,7 +24,9 @@ export function Stopwatch({
   return (
     <div className="flex flex-col items-center gap-4">
       <h1 className="font-extrabold text-5xl">{`${fHours}:${fMins}:${fSecs}`}</h1>
-      <div>{!isRunning && <Button onClick={start}>Start</Button>}</div>
+      <div>
+        {!isRunning && !isRunComplete && <Button onClick={start}>Start</Button>}
+      </div>
     </div>
   );
 }
