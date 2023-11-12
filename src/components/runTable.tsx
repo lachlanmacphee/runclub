@@ -48,7 +48,7 @@ export function RunTable({ runner, participants }: RunTableProps) {
           <TableHead>Position</TableHead>
           <TableHead>Name</TableHead>
           <TableHead>Distance</TableHead>
-          <TableHead>Time</TableHead>
+          <TableHead>Time (seconds)</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>{getRunnerRows(runner ?? "", participants)}</TableBody>

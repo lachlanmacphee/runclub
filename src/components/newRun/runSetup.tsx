@@ -114,10 +114,11 @@ export function RunSetup({
     });
 
     Promise.all(
-      participants.map(async (data) => {
-        await pb
+      participants.map(async (pdata: Participant) => {
+        const res = await pb
           .collection("participant_runs")
-          .create(data, { requestKey: null });
+          .create(pdata, { requestKey: null });
+        pdata.id = res.id;
       })
     );
 
