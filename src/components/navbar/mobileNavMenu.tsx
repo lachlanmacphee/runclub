@@ -3,8 +3,8 @@ import { usePocket } from "@/contexts";
 import { mobileLinks } from "@/lib/constants";
 
 // Components
-import { buttonVariants } from "./ui/button";
-import { MobileLink } from "@/components/MobileLink";
+import { buttonVariants } from "../ui/button";
+import { MobileLink } from "@/components/navbar/mobileLink";
 
 import {
   DropdownMenu,

@@ -1,6 +1,6 @@
-import { Button } from "./ui/button";
+import { Button } from "../ui/button";
 import { LogIn, LogOut } from "lucide-react";
-import { buttonVariants } from "./ui/button";
+import { buttonVariants } from "../ui/button";
 import { usePocket } from "@/contexts";
 import { Link } from "react-router-dom";
 

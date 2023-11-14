@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 // Components
 import { DesktopNavMenu } from "./desktopNavMenu";
 import { MobileNavMenu } from "./mobileNavMenu";
-import { AvatarIconModal } from "./avatar";
+import { AvatarIconModal } from "../avatar";
 import { ModeToggle } from "./mode-toggle";
 
 // Icons
