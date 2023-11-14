@@ -60,7 +60,7 @@ export const Login = () => {
 
   return (
     <div className="flex h-screen flex-col justify-center items-center">
-      <section className="flex w-1/2 flex-col gap-4 rounded-md p-8">
+      <section className="flex w-full sm:w-1/2 flex-col gap-4 rounded-md p-8">
         <h1 className="text-center text-3xl font-extrabold">Gunn Runners</h1>
         <h2 className="text-xl text-center">Login</h2>
         <Form {...form}>
