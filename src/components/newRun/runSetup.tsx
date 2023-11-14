@@ -1,9 +1,13 @@
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useFieldArray, useForm } from "react-hook-form";
-import * as z from "zod";
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
-import CreatableSelect from "react-select/creatable";
+import { hasDuplicates } from "@/utils";
+import { usePocket } from "@/contexts";
+import { Participant, User } from "@/types";
 
+// Components
+import CreatableSelect from "react-select/creatable";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -31,11 +35,10 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Plus, Trash } from "lucide-react";
 import { Input } from "@/components/ui/input";
-import { hasDuplicates } from "@/utils";
-import { usePocket } from "@/contexts";
-import { Participant, User } from "@/types";
+
+// Icons
+import { Plus, Trash } from "lucide-react";
 
 const FormSchema = z
   .object({

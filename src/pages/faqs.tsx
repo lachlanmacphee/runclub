@@ -1,12 +1,12 @@
-import { FAQExampleData } from "@/constants";
+import { FAQData } from "@/constants";
 
-export const FAQs = () => {
+export function FAQs() {
   return (
     <div className="flex items-center flex-col">
       <div className="flex flex-col gap-4 max-w-3xl">
         <h1 className="text-5xl font-bold">FAQs</h1>
         <div className="flex flex-col gap-4">
-          {FAQExampleData.map(({ question, answer }, index) => (
+          {FAQData.map(({ question, answer }, index) => (
             <div className="flex flex-col gap-2" key={index}>
               <h2 className="text-lg font-semibold">{question}</h2>
               <p>{answer}</p>
@@ -16,4 +16,4 @@ export const FAQs = () => {
       </div>
     </div>
   );
-};
+}

@@ -9,9 +9,5 @@ export const RequireAuth = () => {
     return <Navigate to="/" replace />;
   }
 
-  return (
-    <>
-      <Outlet />
-    </>
-  );
+  return <Outlet />;
 };

@@ -32,8 +32,8 @@ export default function App() {
               <Route element={<RequireAuth />}>
                 <Route path="/newrun" element={<NewRun />} />
               </Route>
-              <Route path="faqs" element={<FAQs />} />
-              <Route path="contactus" element={<ContactUs />} />
+              <Route path="/faqs" element={<FAQs />} />
+              <Route path="/contactus" element={<ContactUs />} />
             </Route>
           </Routes>
           <Toaster />

@@ -1,12 +1,15 @@
 import { useCallback } from "react";
 import { useNavigate, Link, Navigate } from "react-router-dom";
-import { usePocket } from "@/contexts";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { usePocket } from "@/contexts";
+
+// Components
 import { Input } from "@/components/ui/input";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
+
 import {
   Form,
   FormControl,
@@ -44,7 +47,7 @@ export const Login = () => {
           title: "Login Failed",
           variant: "destructive",
           duration: 3000,
-          description: "The server might be down.",
+          description: "The server might be down...",
         });
       }
     },

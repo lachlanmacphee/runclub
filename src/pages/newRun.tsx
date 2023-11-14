@@ -1,7 +1,9 @@
+import { useState } from "react";
+import { Participant } from "@/types";
+
+// Components
 import { RunSetup } from "@/components/newRun/runSetup";
 import { RunTiming } from "@/components/newRun/runTiming";
-import { Participant } from "@/types";
-import { useState } from "react";
 
 export function NewRun() {
   const [step, setStep] = useState(0);

@@ -9,6 +9,7 @@ import {
 import PocketBase, { RecordAuthResponse, RecordModel } from "pocketbase";
 import { useInterval } from "usehooks-ts";
 import { JwtPayload, jwtDecode } from "jwt-decode";
+import { User } from "@/types";
 
 const BASE_URL = "http://127.0.0.1:8090";
 const fiveMinutesInMs = 300000;
@@ -25,7 +26,7 @@ export type PocketContextType = {
     password: string
   ) => Promise<RecordAuthResponse<RecordModel>>;
   logout: VoidFunction;
-  user: { [key: string]: unknown } | null;
+  user: User | null;
   token: string;
   pb: PocketBase;
 };
@@ -40,12 +41,12 @@ export const PocketProvider = ({ children }: PocketProviderProps) => {
   const pb = useMemo(() => new PocketBase(BASE_URL), []);
 
   const [token, setToken] = useState(pb.authStore.token);
-  const [user, setUser] = useState(pb.authStore.model);
+  const [user, setUser] = useState<User>(pb.authStore.model as User);
 
   useEffect(() => {
     return pb.authStore.onChange((token, model) => {
       setToken(token);
-      setUser(model);
+      setUser(model as User);
     });
   });
 

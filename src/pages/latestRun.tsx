@@ -4,10 +4,10 @@ import { GroupRun, Participant } from "@/types";
 import { convertLocationValueToLabel } from "@/utils";
 import { useEffect, useState } from "react";
 
-export const LatestRun = () => {
+export function LatestRun() {
+  const { pb } = usePocket();
   const [participants, setParticipants] = useState<Participant[]>([]);
   const [runDescription, setRunDescription] = useState<string>("");
-  const { pb } = usePocket();
 
   useEffect(() => {
     async function fetchLatestRun() {
@@ -56,4 +56,4 @@ export const LatestRun = () => {
       <RunTable participants={participants} />
     </div>
   );
-};
+}
