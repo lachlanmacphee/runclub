@@ -1,6 +1,8 @@
-import { DropdownMenuItem } from "@radix-ui/react-dropdown-menu";
 import { Dispatch, SetStateAction } from "react";
 import { Link } from "react-router-dom";
+
+// Components
+import { DropdownMenuItem } from "./ui/dropdown-menu";
 
 export function MobileLink({
   path,
