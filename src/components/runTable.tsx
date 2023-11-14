@@ -33,7 +33,9 @@ function getRunnerRows(participants: Participant[], runner?: string) {
       <TableCell>{idx + 1}</TableCell>
       <TableCell>{run.name}</TableCell>
       <TableCell>{run.distance}</TableCell>
-      <TableCell>{formatTime(run.time_seconds)}</TableCell>
+      <TableCell>
+        {run.time_seconds ? formatTime(run.time_seconds) : "N/A"}
+      </TableCell>
     </TableRow>
   ));
 }
