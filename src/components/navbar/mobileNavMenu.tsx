@@ -23,7 +23,7 @@ export function MobileNavMenu() {
     <DropdownMenu open={dropdownOpen} onOpenChange={setDropdownOpen}>
       <DropdownMenuTrigger
         className={
-          buttonVariants({ variant: "outline", size: "icon" }) + " lg:hidden"
+          buttonVariants({ variant: "outline", size: "icon" }) + " xl:hidden"
         }
       >
         <HamburgerMenuIcon className="h-[1.2rem] w-[1.2rem]" />

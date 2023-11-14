@@ -13,7 +13,7 @@ export function DesktopNavMenu() {
   const { user } = usePocket();
 
   return (
-    <NavigationMenu className="hidden lg:block">
+    <NavigationMenu className="hidden xl:block">
       <NavigationMenuList>
         <NavigationMenuItem>
           <Link to="/" className={navigationMenuTriggerStyle()}>
@@ -43,8 +43,13 @@ export function DesktopNavMenu() {
           </Link>
         </NavigationMenuItem>
         <NavigationMenuItem>
-          <Link to="/contactus" className={navigationMenuTriggerStyle()}>
+          <Link to="/contact" className={navigationMenuTriggerStyle()}>
             Contact Us
+          </Link>
+        </NavigationMenuItem>
+        <NavigationMenuItem>
+          <Link to="/privacy" className={navigationMenuTriggerStyle()}>
+            Privacy Policy
           </Link>
         </NavigationMenuItem>
       </NavigationMenuList>

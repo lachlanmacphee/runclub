@@ -1,20 +1,19 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { PocketProvider } from "./contexts/PocketContext";
+import { ThemeProvider } from "./contexts/ThemeProviderContext";
 
 import { Login } from "./pages/login";
 import { SignUp } from "./pages/signUp";
-
-import { RequireAuth } from "./components/requireAuth";
+import { Home } from "./pages/home";
 import { LatestRun } from "./pages/latestRun";
 import { NewRun } from "./pages/newRun";
 import { PastRuns } from "./pages/pastRuns";
-
-import { PocketProvider } from "./contexts/PocketContext";
-import { ThemeProvider } from "./contexts/ThemeProviderContext";
-import { Home } from "./pages/home";
-import { Layout } from "./components/layout";
 import { FAQs } from "./pages/faqs";
 import { ContactUs } from "./pages/contactUs";
+import { Privacy } from "./pages/privacy";
 
+import { Layout } from "./components/layout";
+import { RequireAuth } from "./components/requireAuth";
 import { Toaster } from "@/components/ui/toaster";
 
 export default function App() {
@@ -33,7 +32,8 @@ export default function App() {
                 <Route path="/newrun" element={<NewRun />} />
               </Route>
               <Route path="/faqs" element={<FAQs />} />
-              <Route path="/contactus" element={<ContactUs />} />
+              <Route path="/contact" element={<ContactUs />} />
+              <Route path="/privacy" element={<Privacy />} />
             </Route>
           </Routes>
           <Toaster />
