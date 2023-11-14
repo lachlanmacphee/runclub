@@ -11,7 +11,6 @@ import { useInterval } from "usehooks-ts";
 import { JwtPayload, jwtDecode } from "jwt-decode";
 import { User } from "@/lib/types";
 
-const BASE_URL = "http://127.0.0.1:8090";
 const fiveMinutesInMs = 300000;
 const twoMinutesInMs = 120000;
 
@@ -38,7 +37,7 @@ type PocketProviderProps = {
 };
 
 export const PocketProvider = ({ children }: PocketProviderProps) => {
-  const pb = useMemo(() => new PocketBase(BASE_URL), []);
+  const pb = useMemo(() => new PocketBase(import.meta.env.VITE_PB_URL), []);
 
   const [token, setToken] = useState(pb.authStore.token);
   const [user, setUser] = useState<User>(pb.authStore.model as User);
