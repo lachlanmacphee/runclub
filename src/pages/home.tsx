@@ -50,8 +50,15 @@ export function Home() {
           </p>
 
           <p>
-            Please also complete our online waiver form before arriving for the
-            first time.
+            Please also complete our{" "}
+            <a
+              className="text-blue-600 dark:text-blue-500 hover:underline"
+              target="_blank"
+              href="https://docs.google.com/forms/d/e/1FAIpQLSceTLRKG5asBOCasC6pw2nqOpgUKjcvFQxpd5juYu70KzphzA/viewform"
+            >
+              online waiver form
+            </a>{" "}
+            before arriving for the first time.
           </p>
           <strong className="text-center py-2">
             We hope to see you there!
