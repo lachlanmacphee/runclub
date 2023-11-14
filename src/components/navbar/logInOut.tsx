@@ -1,5 +1,5 @@
 import { Button } from "../ui/button";
-import { LogIn, LogOut } from "lucide-react";
+import { User2, LogOut } from "lucide-react";
 import { buttonVariants } from "../ui/button";
 import { usePocket } from "@/contexts";
 import { Link } from "react-router-dom";
@@ -20,7 +20,7 @@ export function LogInOut() {
       to="/login"
       className={buttonVariants({ variant: "outline", size: "icon" })}
     >
-      <LogIn className="h-[1.2rem] w-[1.2rem]" />
+      <User2 className="h-[1.2rem] w-[1.2rem]" />
     </Link>
   );
 }
