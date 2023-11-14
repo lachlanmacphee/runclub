@@ -2,7 +2,7 @@ import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useFieldArray, useForm } from "react-hook-form";
-import { hasDuplicates } from "@/utils";
+import { hasDuplicates } from "@/lib/utils";
 import { usePocket } from "@/contexts";
 import { Participant, User } from "@/lib/types";
 

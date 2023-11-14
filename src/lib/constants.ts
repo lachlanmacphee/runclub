@@ -46,7 +46,7 @@ export const homeImgLinks = [
   "https://gunnrunners.org.au/wp-content/uploads/2021/02/2021-02-26_12-11-04-700x475.png",
   "https://gunnrunners.org.au/wp-content/uploads/2021/02/2021-02-26_12-19-58-671x455.png",
   "https://gunnrunners.org.au/wp-content/uploads/2021/02/2021-02-26_12-23-48-700x475.png",
-  "https://scontent.fmel16-1.fna.fbcdn.net/v/t39.30808-6/393643559_10161403192483033_1531983085060895806_n.jpg?stp=cp6_dst-jpg&_nc_cat=108&ccb=1-7&_nc_sid=5f2048&_nc_ohc=Aysqk9OEZUcAX8L5XFF&_nc_ht=scontent.fmel16-1.fna&oh=00_AfAokAX3st3lPXYunVZNg_BgTn6uVCUwXoUYek0kzjZNew&oe=654E6927",
+  "https://gunnrunners.org.au/wp-content/uploads/2021/02/2021-02-26_12-09-45-700x475.png",
 ];
 
 export const mobileLinks = [

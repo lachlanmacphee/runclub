@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useStopwatch } from "react-timer-hook";
 import { usePocket } from "@/contexts";
-import { convertTimesToSeconds } from "@/utils";
+import { convertTimesToSeconds } from "@/lib/utils";
 import { Participant } from "@/lib/types";
 
 import { toast } from "@/components/ui/use-toast";

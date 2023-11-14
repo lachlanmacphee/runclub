@@ -1,4 +1,4 @@
-import { formatTime } from "@/utils";
+import { formatTime } from "@/lib/utils";
 import { Participant } from "@/lib/types";
 
 // Components
