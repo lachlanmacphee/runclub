@@ -21,6 +21,7 @@ import {
 
 const FormSchema = z
   .object({
+    fullName: z.string().min(5),
     email: z.string().email(),
     password: z.string().min(10),
     passwordConfirm: z.string().min(10),
@@ -38,6 +39,7 @@ export const SignUp = () => {
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
+      fullName: "",
       email: "",
       password: "",
       passwordConfirm: "",
@@ -47,7 +49,12 @@ export const SignUp = () => {
   const onSubmit = useCallback(
     async (data: z.infer<typeof FormSchema>) => {
       try {
-        await register(data.email, data.password, data.passwordConfirm);
+        await register(
+          data.fullName,
+          data.email,
+          data.password,
+          data.passwordConfirm
+        );
         await login(data.email, data.password);
         navigate("/");
       } catch {
@@ -78,12 +85,29 @@ export const SignUp = () => {
           >
             <FormField
               control={form.control}
+              name="fullName"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Full Name</FormLabel>
+                  <FormControl>
+                    <Input placeholder="John Smith" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
               name="email"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Email</FormLabel>
                   <FormControl>
-                    <Input placeholder="Email" type="email" {...field} />
+                    <Input
+                      placeholder="john.smith@gmail.com"
+                      type="email"
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

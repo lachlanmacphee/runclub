@@ -16,6 +16,7 @@ const twoMinutesInMs = 120000;
 
 export type PocketContextType = {
   register: (
+    name: string,
     email: string,
     password: string,
     passwordConfirm: string
@@ -50,10 +51,15 @@ export const PocketProvider = ({ children }: PocketProviderProps) => {
   });
 
   const register = useCallback(
-    async (email: string, password: string, passwordConfirm: string) => {
+    async (
+      name: string,
+      email: string,
+      password: string,
+      passwordConfirm: string
+    ) => {
       return await pb
         .collection("users")
-        .create({ email, password, passwordConfirm });
+        .create({ name, email, password, passwordConfirm });
     },
     [pb]
   );
