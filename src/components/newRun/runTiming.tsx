@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useStopwatch } from "react-timer-hook";
 import { usePocket } from "@/contexts";
 import { convertTimesToSeconds } from "@/utils";
-import { Participant } from "@/types";
+import { Participant } from "@/lib/types";
 
 import { toast } from "@/components/ui/use-toast";
 import { Stopwatch } from "@/components/stopwatch";

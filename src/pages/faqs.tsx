@@ -1,4 +1,4 @@
-import { FAQData } from "@/constants";
+import { FAQData } from "@/lib/constants";
 
 export function FAQs() {
   return (

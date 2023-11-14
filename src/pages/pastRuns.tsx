@@ -2,8 +2,8 @@ import { RunTable } from "@/components/runTable";
 import { DatePicker } from "@/components/ui/date-picker";
 import { Input } from "@/components/ui/input";
 import { usePocket } from "@/contexts";
-import { GroupRun, Participant } from "@/types";
-import { convertLocationValueToLabel, formatDateWithSuffix } from "@/utils";
+import { GroupRun, Participant } from "@/lib/types";
+import { convertLocationValueToLabel, formatDateWithSuffix } from "@/lib/utils";
 import { useEffect, useState } from "react";
 
 const initialDate = new Date();

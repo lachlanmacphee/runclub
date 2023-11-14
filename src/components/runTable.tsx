@@ -1,5 +1,5 @@
 import { formatTime } from "@/utils";
-import { Participant } from "@/types";
+import { Participant } from "@/lib/types";
 
 // Components
 import {

@@ -4,7 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useFieldArray, useForm } from "react-hook-form";
 import { hasDuplicates } from "@/utils";
 import { usePocket } from "@/contexts";
-import { Participant, User } from "@/types";
+import { Participant, User } from "@/lib/types";
 
 // Components
 import CreatableSelect from "react-select/creatable";

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Participant } from "@/types";
+import { Participant } from "@/lib/types";
 
 // Components
 import { RunSetup } from "@/components/newRun/runSetup";

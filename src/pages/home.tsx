@@ -1,4 +1,4 @@
-import { homeImgLinks } from "@/constants";
+import { homeImgLinks } from "@/lib/constants";
 
 export function Home() {
   return (

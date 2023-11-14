@@ -1,7 +1,7 @@
 import { RunTable } from "@/components/runTable";
 import { usePocket } from "@/contexts";
-import { GroupRun, Participant } from "@/types";
-import { convertLocationValueToLabel } from "@/utils";
+import { GroupRun, Participant } from "@/lib/types";
+import { convertLocationValueToLabel } from "@/lib/utils";
 import { useEffect, useState } from "react";
 
 export function LatestRun() {

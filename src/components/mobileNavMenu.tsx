@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { usePocket } from "@/contexts";
-import { mobileLinks } from "@/constants";
+import { mobileLinks } from "@/lib/constants";
 
 // Components
 import { buttonVariants } from "./ui/button";

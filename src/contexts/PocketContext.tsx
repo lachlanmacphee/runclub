@@ -9,7 +9,7 @@ import {
 import PocketBase, { RecordAuthResponse, RecordModel } from "pocketbase";
 import { useInterval } from "usehooks-ts";
 import { JwtPayload, jwtDecode } from "jwt-decode";
-import { User } from "@/types";
+import { User } from "@/lib/types";
 
 const BASE_URL = "http://127.0.0.1:8090";
 const fiveMinutesInMs = 300000;
