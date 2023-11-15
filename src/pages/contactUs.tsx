@@ -39,7 +39,7 @@ const formSchema = z.object({
       message: "Comment must be at least 10 characters.",
     })
     .max(160, {
-      message: "Comment must not be longer than 30 characters.",
+      message: "Comment must not be longer than 160 characters.",
     }),
 });
 
