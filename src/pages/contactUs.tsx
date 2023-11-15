@@ -1,8 +1,10 @@
+import { useEffect } from "react";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { usePocket } from "@/contexts";
 
+// Components
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -22,7 +24,9 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
 import { toast } from "@/components/ui/use-toast";
-import { useEffect } from "react";
+
+// Icons
+import { Loader2 } from "lucide-react";
 
 const formSchema = z.object({
   firstName: z.string().min(2),
@@ -195,7 +199,13 @@ export const ContactUs = () => {
             )}
           />
 
-          <Button type="submit">Submit</Button>
+          <Button type="submit">
+            {form.formState.isSubmitting ? (
+              <Loader2 className="h-4 w-4 animate-spin" />
+            ) : (
+              "Submit"
+            )}
+          </Button>
         </form>
       </Form>
     </div>
