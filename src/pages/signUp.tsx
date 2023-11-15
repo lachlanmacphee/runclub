@@ -53,7 +53,8 @@ export const SignUp = () => {
           data.fullName,
           data.email,
           data.password,
-          data.passwordConfirm
+          data.passwordConfirm,
+          "member"
         );
         await login(data.email, data.password);
         navigate("/");

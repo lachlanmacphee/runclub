@@ -1,5 +1,6 @@
 export type User = {
   avatar: string;
+  role: string;
   collectionId: string;
   collectionName: string;
   created: string;

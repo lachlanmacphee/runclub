@@ -34,7 +34,7 @@ export function MobileNavMenu() {
             key={link.path}
             path={link.path}
             label={link.label}
-            isLoggedIn={!!user}
+            user={user}
             setter={setDropdownOpen}
           />
         ))}
