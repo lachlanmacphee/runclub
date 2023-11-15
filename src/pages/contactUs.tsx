@@ -1,6 +1,7 @@
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+import { usePocket } from "@/contexts";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -20,6 +21,8 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
+import { toast } from "@/components/ui/use-toast";
+import { useEffect } from "react";
 
 const formSchema = z.object({
   firstName: z.string().min(2),
@@ -44,6 +47,8 @@ const formSchema = z.object({
 });
 
 export const ContactUs = () => {
+  const { pb } = usePocket();
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -56,9 +61,26 @@ export const ContactUs = () => {
     },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
-    // send email
+  useEffect(() => {
+    if (form.formState.isSubmitSuccessful) {
+      form.reset();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [form.formState, form.reset]);
+
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    await pb.collection("contact_us_submissions").create({
+      firstName: values.firstName,
+      lastName: values.lastName,
+      emailAddress: values.emailAddress,
+      phoneNumber: values.phoneNumber,
+      subject: values.subject,
+      comments: values.comments,
+    });
+    toast({
+      title: "Form Submitted!",
+      description: "We'll get back to you as soon as we can.",
+    });
   }
 
   return (
