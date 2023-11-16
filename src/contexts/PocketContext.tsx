@@ -26,6 +26,7 @@ export type PocketContextType = {
     email: string,
     password: string
   ) => Promise<RecordAuthResponse<RecordModel>>;
+  OAuthLogin: (provider: string) => Promise<RecordAuthResponse<RecordModel>>;
   logout: VoidFunction;
   user: User | null;
   token: string;
@@ -73,6 +74,13 @@ export const PocketProvider = ({ children }: PocketProviderProps) => {
     [pb]
   );
 
+  const OAuthLogin = useCallback(
+    async (provider: string) => {
+      return await pb.collection("users").authWithOAuth2({ provider });
+    },
+    [pb]
+  );
+
   const logout = useCallback(() => {
     pb.authStore.clear();
   }, [pb]);
@@ -94,7 +102,7 @@ export const PocketProvider = ({ children }: PocketProviderProps) => {
 
   return (
     <PocketContext.Provider
-      value={{ register, login, logout, user, token, pb }}
+      value={{ register, login, OAuthLogin, logout, user, token, pb }}
     >
       {children}
     </PocketContext.Provider>

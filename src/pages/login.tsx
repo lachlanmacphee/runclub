@@ -19,13 +19,16 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 
+// Icons
+import { FaGoogle, FaFacebook, FaInstagram } from "react-icons/fa";
+
 const FormSchema = z.object({
   email: z.string().email(),
   password: z.string(),
 });
 
 export const Login = () => {
-  const { login, user } = usePocket();
+  const { OAuthLogin, login, user } = usePocket();
   const { toast } = useToast();
   const navigate = useNavigate();
 
@@ -36,6 +39,11 @@ export const Login = () => {
       password: "",
     },
   });
+
+  const handleOAuthLogin = async (provider: string) => {
+    await OAuthLogin(provider);
+    navigate("/");
+  };
 
   const onSubmit = useCallback(
     async (data: z.infer<typeof FormSchema>) => {
@@ -94,6 +102,43 @@ export const Login = () => {
                 </FormItem>
               )}
             />
+            <div className="relative">
+              <div className="absolute inset-0 flex items-center">
+                <span className="w-full border-t" />
+              </div>
+              <div className="relative flex justify-center text-xs uppercase">
+                <span className="bg-background px-2 text-muted-foreground">
+                  Or continue with
+                </span>
+              </div>
+            </div>
+            <Button
+              variant="outline"
+              type="button"
+              className="flex gap-1"
+              onClick={() => handleOAuthLogin("google")}
+            >
+              <FaGoogle />
+              <span>Google</span>
+            </Button>
+            <Button
+              variant="outline"
+              type="button"
+              className="flex gap-1"
+              onClick={() => handleOAuthLogin("facebook")}
+            >
+              <FaFacebook />
+              <span>Facebook</span>
+            </Button>
+            <Button
+              variant="outline"
+              type="button"
+              className="flex gap-1"
+              disabled
+            >
+              <FaInstagram />
+              <span>Instagram (coming soon)</span>
+            </Button>
             <div className="flex justify-between mt-2">
               <Link
                 to="/signup"
