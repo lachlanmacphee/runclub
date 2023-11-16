@@ -1,20 +1,16 @@
 import { usePocket } from "@/contexts";
 
 // Components
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Avatar, AvatarImage } from "@/components/ui/avatar";
 
 export function AvatarIconModal() {
-  const { user } = usePocket();
+  const { pb, user } = usePocket();
 
   if (!user) return null;
 
-  const name = user.name.replace(" ", "+");
-  const userInitialsAvatar = `https://ui-avatars.com/api/?name=${name}`;
-
   return (
     <Avatar>
-      <AvatarImage src={userInitialsAvatar} />
-      <AvatarFallback>Avatar</AvatarFallback>
+      <AvatarImage src={pb.files.getUrl(user, user.avatar)} />
     </Avatar>
   );
 }

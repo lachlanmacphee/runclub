@@ -81,10 +81,22 @@ export const PocketProvider = ({ children }: PocketProviderProps) => {
         .authWithOAuth2({ provider });
 
       const meta = authData.meta;
+
       if (meta?.isNew) {
-        await pb
-          .collection("users")
-          .update(authData.record.id, { name: meta.name });
+        const formData = new FormData();
+
+        const response = await fetch(meta.avatarUrl, {
+          referrerPolicy: "no-referrer",
+        });
+
+        if (response.ok) {
+          const file = await response.blob();
+          formData.append("avatar", file);
+        }
+
+        formData.append("name", meta.name);
+
+        await pb.collection("users").update(authData.record.id, formData);
       }
 
       return authData;
