@@ -126,18 +126,22 @@ export const Login = () => {
               type="button"
               className="flex gap-1"
               onClick={() => handleOAuthLogin("facebook")}
+              disabled
+              // Need to fix avatar for this
             >
               <FaFacebook />
-              <span>Facebook</span>
+              <span>Facebook (coming soon)</span>
             </Button>
             <Button
               variant="outline"
               type="button"
               className="flex gap-1"
               onClick={() => handleOAuthLogin("strava")}
+              disabled
+              // Need to fix email and avatar for this
             >
               <FaStrava />
-              <span>Strava</span>
+              <span>Strava (coming soon)</span>
             </Button>
             <div className="flex justify-between mt-2">
               <Link
