@@ -134,10 +134,10 @@ export const Login = () => {
               variant="outline"
               type="button"
               className="flex gap-1"
-              disabled
+              onClick={() => handleOAuthLogin("strava")}
             >
               <FaStrava />
-              <span>Strava (coming soon)</span>
+              <span>Strava</span>
             </Button>
             <div className="flex justify-between mt-2">
               <Link
