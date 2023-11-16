@@ -20,7 +20,7 @@ import {
 } from "@/components/ui/form";
 
 // Icons
-import { FaGoogle, FaFacebook, FaInstagram } from "react-icons/fa";
+import { FaGoogle, FaFacebook, FaStrava } from "react-icons/fa";
 
 const FormSchema = z.object({
   email: z.string().email(),
@@ -136,8 +136,8 @@ export const Login = () => {
               className="flex gap-1"
               disabled
             >
-              <FaInstagram />
-              <span>Instagram (coming soon)</span>
+              <FaStrava />
+              <span>Strava (coming soon)</span>
             </Button>
             <div className="flex justify-between mt-2">
               <Link
