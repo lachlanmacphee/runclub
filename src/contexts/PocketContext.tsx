@@ -76,7 +76,18 @@ export const PocketProvider = ({ children }: PocketProviderProps) => {
 
   const OAuthLogin = useCallback(
     async (provider: string) => {
-      return await pb.collection("users").authWithOAuth2({ provider });
+      const authData = await pb
+        .collection("users")
+        .authWithOAuth2({ provider });
+
+      const meta = authData.meta;
+      if (meta?.isNew) {
+        await pb
+          .collection("users")
+          .update(authData.record.id, { name: meta.name });
+      }
+
+      return authData;
     },
     [pb]
   );
