@@ -20,7 +20,7 @@ import {
 } from "@/components/ui/form";
 
 // Icons
-import { FaGoogle, FaFacebook, FaStrava } from "react-icons/fa";
+import { FaGoogle, FaFacebook } from "react-icons/fa";
 
 const FormSchema = z.object({
   email: z.string().email(),
@@ -126,22 +126,9 @@ export const Login = () => {
               type="button"
               className="flex gap-1"
               onClick={() => handleOAuthLogin("facebook")}
-              disabled
-              // Need to fix avatar for this
             >
               <FaFacebook />
-              <span>Facebook (coming soon)</span>
-            </Button>
-            <Button
-              variant="outline"
-              type="button"
-              className="flex gap-1"
-              onClick={() => handleOAuthLogin("strava")}
-              disabled
-              // Need to fix email and avatar for this
-            >
-              <FaStrava />
-              <span>Strava (coming soon)</span>
+              <span>Facebook</span>
             </Button>
             <div className="flex justify-between mt-2">
               <Link

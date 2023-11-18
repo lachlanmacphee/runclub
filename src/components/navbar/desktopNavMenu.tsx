@@ -30,7 +30,7 @@ export function DesktopNavMenu() {
             Past Runs
           </Link>
         </NavigationMenuItem>
-        {(!user || user.role === "member") && (
+        {user && user?.role !== "member" && (
           <NavigationMenuItem>
             <Link to="/newrun" className={navigationMenuTriggerStyle()}>
               Create New Run

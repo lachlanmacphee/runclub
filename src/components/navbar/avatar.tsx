@@ -4,14 +4,16 @@ import { usePocket } from "@/contexts";
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
 
 export function AvatarIconModal() {
-  const { pb, user } = usePocket();
+  const { user } = usePocket();
 
   if (!user) return null;
-  // add back initials if user signed up with first and last name
+
+  const name = user.name.replace(" ", "+");
+  const userInitialsAvatar = `https://ui-avatars.com/api/?name=${name}`;
 
   return (
     <Avatar>
-      <AvatarImage src={pb.files.getUrl(user, user.avatar)} />
+      <AvatarImage src={userInitialsAvatar} />
     </Avatar>
   );
 }
