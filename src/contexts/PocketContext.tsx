@@ -19,8 +19,7 @@ export type PocketContextType = {
     name: string,
     email: string,
     password: string,
-    passwordConfirm: string,
-    role: string
+    passwordConfirm: string
   ) => Promise<RecordModel>;
   login: (
     email: string,
@@ -57,12 +56,11 @@ export const PocketProvider = ({ children }: PocketProviderProps) => {
       name: string,
       email: string,
       password: string,
-      passwordConfirm: string,
-      role: string
+      passwordConfirm: string
     ) => {
       return await pb
         .collection("users")
-        .create({ name, email, password, passwordConfirm, role });
+        .create({ name, email, password, passwordConfirm, role: "member" });
     },
     [pb]
   );
@@ -86,6 +84,7 @@ export const PocketProvider = ({ children }: PocketProviderProps) => {
       if (meta?.isNew) {
         const formData = new FormData();
         formData.append("name", meta.name);
+        formData.append("role", "member");
         await pb.collection("users").update(authData.record.id, formData);
       }
 
