@@ -28,7 +28,7 @@ export function MobileNavMenu() {
       >
         <HamburgerMenuIcon className="h-[1.2rem] w-[1.2rem]" />
       </DropdownMenuTrigger>
-      <DropdownMenuContent>
+      <DropdownMenuContent align="end" className="mt-1">
         {mobileLinks.map((link) => (
           <MobileLink
             key={link.path}
