@@ -73,7 +73,6 @@ export const PocketProvider = ({ children }: PocketProviderProps) => {
   );
 
   const OAuthLogin = useCallback(
-    // might need to add stuff to request certain scopes here?
     async (provider: string) => {
       const authData = await pb
         .collection("users")
