@@ -77,11 +77,12 @@ export function RunTiming({ participants }: { participants: Participant[] }) {
           Object.values(completed).every(Boolean)
         }
       />
-      <div className="flex gap-4 justify-center">
+      <div className="flex gap-4 justify-around flex-wrap">
         {participants.map((participant) => (
           <Button
             onClick={() => markParticipant(participant.bib)}
             key={participant.bib}
+            className="w-24 h-16 font-bold text-xl"
             size="lg"
             variant={completed[participant.bib] ? "secondary" : "default"}
             disabled={!isRunning}
