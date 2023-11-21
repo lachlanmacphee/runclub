@@ -17,6 +17,8 @@ export type GroupRun = {
   id: string;
   date: string;
   location: string;
+  created: string;
+  updated: string;
 };
 
 export type Participant = {

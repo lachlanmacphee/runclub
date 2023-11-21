@@ -54,7 +54,7 @@ export function PastRuns() {
 
       // Generate and set the run description
       setRunDescription(
-        `On ${new Date(runFromDate.date).toLocaleDateString()}, ${
+        `On ${new Date(runFromDate.created).toLocaleDateString()}, ${
           participants.length
         } Gunnies hit the track at ${convertLocationValueToLabel(
           runFromDate.location

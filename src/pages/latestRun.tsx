@@ -35,7 +35,7 @@ export function LatestRun() {
 
       // Generate and set the run description
       setRunDescription(
-        `On ${new Date(latestRun.date).toLocaleDateString()}, ${
+        `On ${new Date(latestRun.created).toLocaleDateString()}, ${
           participants.length
         } Gunnies hit the track at ${convertLocationValueToLabel(
           latestRun.location
