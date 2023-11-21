@@ -4,7 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useFieldArray, useForm } from "react-hook-form";
 import { hasDuplicates } from "@/lib/utils";
 import { usePocket } from "@/contexts";
-import { Participant, User } from "@/lib/types";
+import { Participant } from "@/lib/types";
 
 // Components
 import CreatableSelect from "react-select/creatable";
@@ -53,7 +53,7 @@ export function RunSetup({
   setStep: Dispatch<SetStateAction<number>>;
   setParticipants: Dispatch<SetStateAction<Participant[]>>;
 }) {
-  const [users, setUsers] = useState<User[]>([]);
+  const [pastParticipants, setPastParticipants] = useState<Participant[]>([]);
   const [order, setOrder] = useState<number>(-1);
   const { pb } = usePocket();
   const form = useForm<z.infer<typeof FormSchema>>({
@@ -75,11 +75,19 @@ export function RunSetup({
   });
 
   useEffect(() => {
-    async function fetchUsers() {
-      const res = (await pb.collection("users").getFullList()) as User[];
-      setUsers(res);
+    async function fetchPastParticipants() {
+      const date = new Date();
+      date.setDate(date.getDate() - 30);
+      const res = (await pb.collection("participant_runs").getFullList({
+        filter: pb.filter("created > {:date}", { date }),
+      })) as Participant[];
+      const uniqueObjMap: Record<string, Participant> = {};
+      for (const object of res) {
+        uniqueObjMap[object.name] = object;
+      }
+      setPastParticipants(Object.values(uniqueObjMap));
     }
-    fetchUsers();
+    fetchPastParticipants();
   }, [pb]);
 
   async function onSubmit(data: z.infer<typeof FormSchema>) {
@@ -213,11 +221,12 @@ export function RunSetup({
                           {...field}
                           className="custom-react-select-container"
                           classNamePrefix="custom-react-select"
-                          placeholder="uiSelect..."
-                          options={users.map((user) => {
+                          placeholder="Select..."
+                          menuPosition="fixed"
+                          options={pastParticipants.map((participant) => {
                             return {
-                              label: user.name,
-                              value: user.id,
+                              label: participant.name,
+                              value: participant.id as string,
                             };
                           })}
                         />

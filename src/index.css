@@ -85,7 +85,7 @@
   }
 
   .custom-react-select-container .custom-react-select__menu {
-    @apply bg-background border border-input;
+    @apply bg-background border border-input z-10;
   }
 
   .custom-react-select-container .custom-react-select__option {
