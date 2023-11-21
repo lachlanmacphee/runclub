@@ -62,8 +62,6 @@ export function RunSetup({
     defaultValues: {
       date: initialDate,
       location: "albertParkLake",
-      // Workaround to enable null initial value
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       participants: [{ bib: "1", name: null, distance: "5" }],
     },
@@ -133,8 +131,6 @@ export function RunSetup({
     append(
       {
         bib: String(newBibNumber),
-        // Workaround to enable null initial value
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
         name: null,
         distance: "5",
