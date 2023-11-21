@@ -9,36 +9,16 @@ import { Participant, User } from "@/lib/types";
 // Components
 import CreatableSelect from "react-select/creatable";
 import { Button } from "@/components/ui/button";
-import {
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
+import { Switch } from "@/components/ui/switch";
 import { toast } from "@/components/ui/use-toast";
 import { DatePicker } from "@/components/ui/date-picker";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
+import * as uiForm from "@/components/ui/form";
+import * as uiSelect from "@/components/ui/select";
+import * as uiTable from "@/components/ui/table";
 import { Input } from "@/components/ui/input";
 
 // Icons
-import { Plus, Trash } from "lucide-react";
+import { ArrowDown01, ArrowUp01, Plus, Trash } from "lucide-react";
 
 const FormSchema = z
   .object({
@@ -74,6 +54,7 @@ export function RunSetup({
   setParticipants: Dispatch<SetStateAction<Participant[]>>;
 }) {
   const [users, setUsers] = useState<User[]>([]);
+  const [order, setOrder] = useState<number>(-1);
   const { pb } = usePocket();
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
@@ -138,7 +119,7 @@ export function RunSetup({
 
   const participants = form.getValues("participants");
   const participantsLength = participants.length;
-  const newBibNumber = Number(participants[participantsLength - 1].bib) + 1;
+  const newBibNumber = Number(participants[participantsLength - 1].bib) + order;
 
   function addParticipant() {
     append(
@@ -158,73 +139,73 @@ export function RunSetup({
 
   return (
     <div className="flex flex-col">
-      <Form {...form}>
+      <uiForm.Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-          <FormField
+          <uiForm.FormField
             control={form.control}
             name="date"
             render={({ field }) => (
-              <FormItem>
-                <FormLabel>Date</FormLabel>
-                <FormControl>
+              <uiForm.FormItem>
+                <uiForm.FormLabel>Date</uiForm.FormLabel>
+                <uiForm.FormControl>
                   <DatePicker date={field.value} setDate={field.onChange} />
-                </FormControl>
-                <FormDescription>
+                </uiForm.FormControl>
+                <uiForm.FormDescription>
                   Select the date for the run. If you are creating it for today,
                   leave it as is.
-                </FormDescription>
-                <FormMessage />
-              </FormItem>
+                </uiForm.FormDescription>
+                <uiForm.FormMessage />
+              </uiForm.FormItem>
             )}
           />
-          <FormField
+          <uiForm.FormField
             control={form.control}
             name="location"
             render={({ field }) => (
-              <FormItem>
-                <FormLabel>Location</FormLabel>
-                <Select
+              <uiForm.FormItem>
+                <uiForm.FormLabel>Location</uiForm.FormLabel>
+                <uiSelect.Select
                   onValueChange={field.onChange}
                   defaultValue={field.value}
                 >
-                  <FormControl>
-                    <SelectTrigger>
-                      <SelectValue />
-                    </SelectTrigger>
-                  </FormControl>
-                  <SelectContent>
-                    <SelectItem value="albertParkLake">
+                  <uiForm.FormControl>
+                    <uiSelect.SelectTrigger>
+                      <uiSelect.SelectValue />
+                    </uiSelect.SelectTrigger>
+                  </uiForm.FormControl>
+                  <uiSelect.SelectContent>
+                    <uiSelect.SelectItem value="albertParkLake">
                       Albert Park Lake
-                    </SelectItem>
-                  </SelectContent>
-                </Select>
-                <FormDescription>
+                    </uiSelect.SelectItem>
+                  </uiSelect.SelectContent>
+                </uiSelect.Select>
+                <uiForm.FormDescription>
                   Select the location for the run from the available options.
-                </FormDescription>
-                <FormMessage />
-              </FormItem>
+                </uiForm.FormDescription>
+                <uiForm.FormMessage />
+              </uiForm.FormItem>
             )}
           />
-          <Table className="max-h-64">
-            <TableHeader>
-              <TableRow>
-                <TableHead>Bib</TableHead>
-                <TableHead>Name</TableHead>
-                <TableHead>Distance</TableHead>
-                <TableHead>Actions</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
+          <uiTable.Table className="max-h-64">
+            <uiTable.TableHeader>
+              <uiTable.TableRow>
+                <uiTable.TableHead>Bib</uiTable.TableHead>
+                <uiTable.TableHead>Name</uiTable.TableHead>
+                <uiTable.TableHead>Distance</uiTable.TableHead>
+                <uiTable.TableHead>Actions</uiTable.TableHead>
+              </uiTable.TableRow>
+            </uiTable.TableHeader>
+            <uiTable.TableBody>
               {fields.map((item, index) => (
-                <TableRow key={item.id}>
-                  <TableCell>
+                <uiTable.TableRow key={item.id}>
+                  <uiTable.TableCell>
                     <Input
                       type="number"
                       {...form.register(`participants.${index}.bib`)}
                     />
-                  </TableCell>
-                  <TableCell>
-                    <FormField
+                  </uiTable.TableCell>
+                  <uiTable.TableCell>
+                    <uiForm.FormField
                       control={form.control}
                       name={`participants.${index}.name`}
                       render={({ field }) => (
@@ -232,7 +213,7 @@ export function RunSetup({
                           {...field}
                           className="custom-react-select-container"
                           classNamePrefix="custom-react-select"
-                          placeholder="Select..."
+                          placeholder="uiSelect..."
                           options={users.map((user) => {
                             return {
                               label: user.name,
@@ -242,15 +223,15 @@ export function RunSetup({
                         />
                       )}
                     />
-                  </TableCell>
-                  <TableCell>
+                  </uiTable.TableCell>
+                  <uiTable.TableCell>
                     <Input
                       step={0.5}
                       type="number"
                       {...form.register(`participants.${index}.distance`)}
                     />
-                  </TableCell>
-                  <TableCell>
+                  </uiTable.TableCell>
+                  <uiTable.TableCell>
                     {index !== 0 && (
                       <Button
                         onClick={() => remove(index)}
@@ -260,18 +241,29 @@ export function RunSetup({
                         <Trash />
                       </Button>
                     )}
-                  </TableCell>
-                </TableRow>
+                  </uiTable.TableCell>
+                </uiTable.TableRow>
               ))}
-              <TableRow>
-                <TableCell className="font-bold text-destructive">
+              <uiTable.TableRow>
+                <uiTable.TableCell>
+                  <div className="flex items-center space-x-2">
+                    <ArrowDown01 />
+                    <Switch
+                      id="order"
+                      onCheckedChange={(val) => setOrder(val ? 1 : -1)}
+                    />
+                    <ArrowUp01 />
+                  </div>
+                </uiTable.TableCell>
+                <uiTable.TableCell
+                  colSpan={2}
+                  className="font-bold text-destructive"
+                >
                   {form.formState.errors.participants?.root && (
                     <p>{form.formState.errors.participants.root.message}</p>
                   )}
-                </TableCell>
-                <TableCell />
-                <TableCell />
-                <TableCell>
+                </uiTable.TableCell>
+                <uiTable.TableCell>
                   <Button
                     type="button"
                     variant="outline"
@@ -280,17 +272,17 @@ export function RunSetup({
                   >
                     <Plus />
                   </Button>
-                </TableCell>
-              </TableRow>
-            </TableBody>
-          </Table>
+                </uiTable.TableCell>
+              </uiTable.TableRow>
+            </uiTable.TableBody>
+          </uiTable.Table>
           <div className="flex justify-center">
             <Button type="submit" className="w-48">
               Submit
             </Button>
           </div>
         </form>
-      </Form>
+      </uiForm.Form>
     </div>
   );
 }

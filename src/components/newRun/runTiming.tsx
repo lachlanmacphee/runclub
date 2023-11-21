@@ -72,10 +72,7 @@ export function RunTiming({ participants }: { participants: Participant[] }) {
         minutes={minutes}
         seconds={seconds}
         isRunning={isRunning}
-        isRunComplete={
-          Object.keys(completed).length === participants.length &&
-          Object.values(completed).every(Boolean)
-        }
+        isRunComplete={isRunComplete}
       />
       <div className="flex gap-4 justify-around flex-wrap">
         {participants.map((participant) => (
