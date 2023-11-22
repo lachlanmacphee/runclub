@@ -17,6 +17,7 @@ export type GroupRun = {
   id: string;
   date: string;
   location: string;
+  isComplete: boolean;
   created: string;
   updated: string;
 };

@@ -91,7 +91,7 @@ export function RunSetup({
   async function onSubmit(data: z.infer<typeof FormSchema>) {
     const { id: groupRunId } = await pb
       .collection("group_runs")
-      .create({ date: data.date, location: data.location });
+      .create({ date: data.date, location: data.location, isComplete: false });
 
     const participants = data.participants.map((participant) => {
       return {

@@ -40,6 +40,7 @@ type PocketProviderProps = {
 
 export const PocketProvider = ({ children }: PocketProviderProps) => {
   const pb = useMemo(() => new PocketBase(import.meta.env.VITE_PB_URL), []);
+  pb.autoCancellation(false);
 
   const [token, setToken] = useState(pb.authStore.token);
   const [user, setUser] = useState<User>(pb.authStore.model as User);
