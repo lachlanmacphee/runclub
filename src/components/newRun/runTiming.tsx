@@ -21,6 +21,9 @@ export function RunTiming({ participants }: { participants: Participant[] }) {
     Object.values(completed).every(Boolean);
 
   useEffect(() => {
+    // async function markRunComplete() {
+    //   await pb.collection
+    // }
     if (isRunComplete) {
       pause();
       toast({

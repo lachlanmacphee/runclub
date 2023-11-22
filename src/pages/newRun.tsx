@@ -5,30 +5,37 @@ import { GroupRun, Participant } from "@/lib/types";
 // Components
 import { RunSetup } from "@/components/newRun/runSetup";
 import { RunTiming } from "@/components/newRun/runTiming";
+import { RunsInProgress } from "@/components/newRun/runsInProgress";
 
 export function NewRun() {
   const { pb } = usePocket();
-  const [step, setStep] = useState(0);
+  const [step, setStep] = useState(-1);
   const [inProgressRuns, setInProgressRuns] = useState<GroupRun[]>([]);
   const [participants, setParticipants] = useState<Participant[]>([]);
 
   useEffect(() => {
     async function fetchInProgressRuns() {
-      const res = (await pb.collection("group_runs").getFullList({
+      const inProgressRuns = (await pb.collection("group_runs").getFullList({
         filter: "isComplete = false",
       })) as GroupRun[];
 
-      setInProgressRuns(res);
+      if (inProgressRuns.length == 0) {
+        setStep(0);
+        return;
+      }
+
+      setInProgressRuns(inProgressRuns);
     }
     fetchInProgressRuns();
   }, [pb]);
 
-  if (inProgressRuns.length > 0) {
+  if (inProgressRuns.length > 0 && step == -1) {
     return (
-      <div>
-        There are runs in progress. Would you like to continue one of them or
-        start a new run?
-      </div>
+      <RunsInProgress
+        inProgressRuns={inProgressRuns}
+        setStep={setStep}
+        setParticipants={setParticipants}
+      />
     );
   }
 

@@ -222,7 +222,9 @@ export function RunSetup({
                           options={pastParticipants.map((participant) => {
                             return {
                               label: participant.name,
-                              value: participant.id as string,
+                              value: participant.user_id
+                                ? participant.user_id
+                                : participant.name,
                             };
                           })}
                         />
