@@ -8,9 +8,17 @@ import { Participant } from "@/lib/types";
 import { toast } from "@/components/ui/use-toast";
 import { Stopwatch } from "@/components/stopwatch";
 import { Button } from "@/components/ui/button";
+import { LateComers } from "./lateComers";
 
-export function RunTiming({ participants }: { participants: Participant[] }) {
+export function RunTiming({
+  participants,
+  setParticipants,
+}: {
+  participants: Participant[];
+  setParticipants: React.Dispatch<React.SetStateAction<Participant[]>>;
+}) {
   const { pb } = usePocket();
+  const runId = participants[0].group_run_id;
   const { start, pause, hours, minutes, seconds, isRunning } = useStopwatch();
   const navigate = useNavigate();
 
@@ -21,10 +29,8 @@ export function RunTiming({ participants }: { participants: Participant[] }) {
     Object.values(completed).every(Boolean);
 
   useEffect(() => {
-    // async function markRunComplete() {
-    //   await pb.collection
-    // }
-    if (isRunComplete) {
+    async function markRunComplete() {
+      await pb.collection("group_runs").update(runId, { complete: true });
       pause();
       toast({
         title: "Run Complete!",
@@ -34,6 +40,9 @@ export function RunTiming({ participants }: { participants: Participant[] }) {
       setTimeout(() => {
         navigate("/latestrun");
       }, 5000);
+    }
+    if (isRunComplete) {
+      markRunComplete();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [completed]);
@@ -91,6 +100,15 @@ export function RunTiming({ participants }: { participants: Participant[] }) {
           </Button>
         ))}
       </div>
+      {!isRunning && !isRunComplete && (
+        <div className="flex justify-center">
+          <LateComers
+            runId={runId}
+            participants={participants}
+            setParticipants={setParticipants}
+          />
+        </div>
+      )}
     </div>
   );
 }

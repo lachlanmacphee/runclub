@@ -76,6 +76,9 @@
 }
 
 @layer components {
+  .custom-react-select-container {
+    @apply w-full;
+  }
   .custom-react-select-container .custom-react-select__control {
     @apply bg-background border rounded-md border-input hover:border-border shadow-none min-h-[40px];
   }
@@ -97,8 +100,11 @@
   }
 
   .custom-react-select-container .custom-react-select__input-container,
-  .custom-react-select-container .custom-react-select__placeholder,
   .custom-react-select-container .custom-react-select__single-value {
-    @apply text-black dark:text-white;
+    @apply text-black dark:text-white text-sm;
+  }
+
+  .custom-react-select-container .custom-react-select__placeholder {
+    @apply text-muted-foreground text-sm;
   }
 }

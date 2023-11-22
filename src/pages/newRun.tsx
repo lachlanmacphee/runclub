@@ -43,6 +43,11 @@ export function NewRun() {
     case 0:
       return <RunSetup setStep={setStep} setParticipants={setParticipants} />;
     case 1:
-      return <RunTiming participants={participants} />;
+      return (
+        <RunTiming
+          participants={participants}
+          setParticipants={setParticipants}
+        />
+      );
   }
 }

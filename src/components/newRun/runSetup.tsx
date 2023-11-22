@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useFieldArray, useForm } from "react-hook-form";
@@ -19,6 +19,7 @@ import { Input } from "@/components/ui/input";
 
 // Icons
 import { ArrowDown01, ArrowUp01, Plus, Trash } from "lucide-react";
+import { usePastParticipants } from "@/hooks/usePastParticipants";
 
 const FormSchema = z
   .object({
@@ -53,7 +54,7 @@ export function RunSetup({
   setStep: Dispatch<SetStateAction<number>>;
   setParticipants: Dispatch<SetStateAction<Participant[]>>;
 }) {
-  const [pastParticipants, setPastParticipants] = useState<Participant[]>([]);
+  const pastParticipants = usePastParticipants();
   const [order, setOrder] = useState<number>(-1);
   const { pb } = usePocket();
   const form = useForm<z.infer<typeof FormSchema>>({
@@ -71,22 +72,6 @@ export function RunSetup({
     control: form.control,
     name: "participants",
   });
-
-  useEffect(() => {
-    async function fetchPastParticipants() {
-      const date = new Date();
-      date.setDate(date.getDate() - 30);
-      const res = (await pb.collection("participant_runs").getFullList({
-        filter: pb.filter("created > {:date}", { date }),
-      })) as Participant[];
-      const uniqueObjMap: Record<string, Participant> = {};
-      for (const object of res) {
-        uniqueObjMap[object.name] = object;
-      }
-      setPastParticipants(Object.values(uniqueObjMap));
-    }
-    fetchPastParticipants();
-  }, [pb]);
 
   async function onSubmit(data: z.infer<typeof FormSchema>) {
     const { id: groupRunId } = await pb
