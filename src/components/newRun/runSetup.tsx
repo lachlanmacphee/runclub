@@ -239,12 +239,12 @@ export function RunSetup({
               <uiTable.TableRow>
                 <uiTable.TableCell>
                   <div className="flex items-center space-x-2">
-                    <ArrowDown01 />
+                    <ArrowUp01 />
                     <Switch
                       id="order"
                       onCheckedChange={(val) => setOrder(val ? 1 : -1)}
                     />
-                    <ArrowUp01 />
+                    <ArrowDown01 />
                   </div>
                 </uiTable.TableCell>
                 <uiTable.TableCell
