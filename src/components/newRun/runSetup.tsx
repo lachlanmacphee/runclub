@@ -18,7 +18,7 @@ import * as uiTable from "@/components/ui/table";
 import { Input } from "@/components/ui/input";
 
 // Icons
-import { ArrowDown01, ArrowUp01, Plus, Trash } from "lucide-react";
+import { ArrowDown10, ArrowUp10, Plus, Trash } from "lucide-react";
 import { usePastParticipants } from "@/hooks/usePastParticipants";
 
 const FormSchema = z
@@ -239,12 +239,12 @@ export function RunSetup({
               <uiTable.TableRow>
                 <uiTable.TableCell>
                   <div className="flex items-center space-x-2">
-                    <ArrowUp01 />
+                    <ArrowDown10 />
                     <Switch
                       id="order"
                       onCheckedChange={(val) => setOrder(val ? 1 : -1)}
                     />
-                    <ArrowDown01 />
+                    <ArrowUp10 />
                   </div>
                 </uiTable.TableCell>
                 <uiTable.TableCell
