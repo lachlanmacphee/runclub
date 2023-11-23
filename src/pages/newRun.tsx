@@ -7,8 +7,12 @@ import { RunSetup } from "@/components/newRun/runSetup";
 import { RunTiming } from "@/components/newRun/runTiming";
 import { RunsInProgress } from "@/components/newRun/runsInProgress";
 
+// Icons
+import { Loader2 } from "lucide-react";
+
 export function NewRun() {
   const { pb } = usePocket();
+  const [isLoading, setIsLoading] = useState(true);
   const [step, setStep] = useState(-1);
   const [inProgressRuns, setInProgressRuns] = useState<GroupRun[]>([]);
   const [participants, setParticipants] = useState<Participant[]>([]);
@@ -21,13 +25,22 @@ export function NewRun() {
 
       if (inProgressRuns.length == 0) {
         setStep(0);
+        setIsLoading(false);
         return;
       }
 
+      setIsLoading(false);
       setInProgressRuns(inProgressRuns);
     }
     fetchInProgressRuns();
   }, [pb]);
+
+  if (isLoading)
+    return (
+      <div className="flex justify-center">
+        <Loader2 className="h-12 w-12 animate-spin" />
+      </div>
+    );
 
   if (inProgressRuns.length > 0 && step == -1) {
     return (
