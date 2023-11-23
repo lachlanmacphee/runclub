@@ -1,16 +1,22 @@
+import { useEffect, useState } from "react";
+
+import { usePocket } from "@/contexts";
+
+import { convertLocationValueToLabel, formatDateWithSuffix } from "@/lib/utils";
+import { GroupRun, Participant } from "@/lib/types";
+
 import { RunTable } from "@/components/runTable";
 import { DatePicker } from "@/components/ui/date-picker";
 import { Input } from "@/components/ui/input";
-import { usePocket } from "@/contexts";
-import { GroupRun, Participant } from "@/lib/types";
-import { convertLocationValueToLabel, formatDateWithSuffix } from "@/lib/utils";
-import { useEffect, useState } from "react";
+
+import { Loader2 } from "lucide-react";
 
 const initialDate = new Date();
 initialDate.setHours(0, 0, 0, 0);
 
 export function PastRuns() {
   const { pb } = usePocket();
+  const [isLoading, setIsLoading] = useState(true);
   const [date, setDate] = useState<Date>(initialDate);
   const [runner, setRunner] = useState<string>("");
   const [runDescription, setRunDescription] = useState<string>("");
@@ -19,6 +25,11 @@ export function PastRuns() {
 
   useEffect(() => {
     async function fetchRunFromDate() {
+      setIsLoading(true);
+      setRunLocation("");
+      setRunDescription("");
+      setParticipants([]);
+
       // Might be able to make this query more specific with filters
       const recentRuns: GroupRun[] = await pb
         .collection("group_runs")
@@ -31,9 +42,7 @@ export function PastRuns() {
       );
 
       if (!runFromDate) {
-        setRunLocation("");
-        setRunDescription("");
-        setParticipants([]);
+        setIsLoading(false);
         return;
       }
 
@@ -62,6 +71,8 @@ export function PastRuns() {
           participants[0].name
         } for the fastest time, and all other Gunnies who attended.`
       );
+
+      setIsLoading(false);
     }
     fetchRunFromDate();
   }, [pb, date]);
@@ -88,7 +99,13 @@ export function PastRuns() {
         />
       </div>
       <p>{runDescription}</p>
-      <RunTable participants={participants} runner={runner} />
+      {isLoading ? (
+        <div className="flex justify-center">
+          <Loader2 className="h-12 w-12 animate-spin" />
+        </div>
+      ) : (
+        <RunTable participants={participants} runner={runner} />
+      )}
     </div>
   );
 }
