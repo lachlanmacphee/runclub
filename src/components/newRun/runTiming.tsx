@@ -30,7 +30,7 @@ export function RunTiming({
 
   useEffect(() => {
     async function markRunComplete() {
-      await pb.collection("group_runs").update(runId, { complete: true });
+      await pb.collection("group_runs").update(runId, { isComplete: true });
       pause();
       toast({
         title: "Run Complete!",
