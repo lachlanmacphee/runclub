@@ -1,11 +1,17 @@
-import { RunTable } from "@/components/runTable";
-import { usePocket } from "@/contexts";
-import { GroupRun, Participant } from "@/lib/types";
-import { convertLocationValueToLabel } from "@/lib/utils";
 import { useEffect, useState } from "react";
+
+import { usePocket } from "@/contexts";
+
+import { convertLocationValueToLabel } from "@/lib/utils";
+import { GroupRun, Participant } from "@/lib/types";
+
+import { RunTable } from "@/components/runTable";
+
+import { Loader2 } from "lucide-react";
 
 export function LatestRun() {
   const { pb } = usePocket();
+  const [isLoading, setIsLoading] = useState(true);
   const [participants, setParticipants] = useState<Participant[]>([]);
   const [runDescription, setRunDescription] = useState<string>("");
 
@@ -43,6 +49,8 @@ export function LatestRun() {
           participants[0].name
         } for the fastest time, and all other Gunnies who attended.`
       );
+
+      setIsLoading(false);
     }
     fetchLatestRun();
   }, [pb]);
@@ -53,7 +61,13 @@ export function LatestRun() {
         <h1 className="text-5xl font-bold">Latest Run</h1>
         <p className="py-6">{runDescription}</p>
       </div>
-      <RunTable participants={participants} />
+      {isLoading ? (
+        <div className="flex justify-center">
+          <Loader2 className="h-12 w-12 animate-spin" />
+        </div>
+      ) : (
+        <RunTable participants={participants} />
+      )}
     </div>
   );
 }
