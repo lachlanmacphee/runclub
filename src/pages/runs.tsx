@@ -9,7 +9,7 @@ import { RunTable } from "@/components/runTable";
 import { DatePicker } from "@/components/ui/date-picker";
 import { Input } from "@/components/ui/input";
 
-import { Loader2 } from "lucide-react";
+import { Loader2, Search } from "lucide-react";
 
 export function Runs() {
   const { pb } = usePocket();
@@ -72,9 +72,9 @@ export function Runs() {
       setRunDescription(
         `This week we had ${
           participants.length
-        } members hit the track at ${convertLocationValueToLabel(
+        } Gunnies hit the track at ${convertLocationValueToLabel(
           runFromDate.location
-        )}. Congratulations to all Gunnies, including ${
+        )}. Congratulations to all participants, including ${
           participants.find((participant) => participant.distance == 5)?.name
         } for the fastest time in the 5km, and ${
           participants.find((participant) => participant.distance == 3.5)?.name
@@ -98,14 +98,19 @@ export function Runs() {
           </h1>
           <h2>{runLocation}</h2>
         </div>
-        <Input
-          name="runner"
-          type="text"
-          value={runner}
-          onChange={(e) => setRunner(e.target.value)}
-          placeholder="Runner"
-          className="justify-self-end"
-        />
+        <div className="relative w-full justify-self-end">
+          <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+            <Search className="w-4 h-4" />
+          </div>
+          <Input
+            name="runner"
+            type="search"
+            value={runner}
+            onChange={(e) => setRunner(e.target.value)}
+            placeholder="Name"
+            className="p-4 ps-10"
+          />
+        </div>
       </div>
       <p>{runDescription}</p>
       {isLoading ? (
