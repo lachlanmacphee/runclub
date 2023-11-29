@@ -53,6 +53,8 @@ export function Runs() {
         return;
       }
 
+      const runLocation = convertLocationValueToLabel(runFromDate.location);
+      setRunLocation(runLocation ?? "Location Unknown");
       const runFromDateId = runFromDate.id;
 
       // Find all the participants that were part of that run and set the state
