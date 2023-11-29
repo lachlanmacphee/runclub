@@ -51,9 +51,8 @@ export const homeImgLinks = [
 
 export const mobileLinks = [
   { path: "/", label: "Home" },
-  { path: "/latestrun", label: "Latest Run" },
-  { path: "/pastruns", label: "Past Runs" },
-  { path: "/newrun", label: "Create New Run" },
+  { path: "/runs", label: "Runs" },
+  { path: "/newrun", label: "New Run" },
   { path: "/faqs", label: "FAQs" },
   { path: "/contact", label: "Contact Us" },
   { path: "/privacy", label: "Privacy Policy" },

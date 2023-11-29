@@ -11,13 +11,10 @@ import { Input } from "@/components/ui/input";
 
 import { Loader2 } from "lucide-react";
 
-const initialDate = new Date();
-initialDate.setHours(0, 0, 0, 0);
-
-export function PastRuns() {
+export function Runs() {
   const { pb } = usePocket();
   const [isLoading, setIsLoading] = useState(true);
-  const [date, setDate] = useState<Date>(initialDate);
+  const [date, setDate] = useState<Date | null>(null);
   const [runner, setRunner] = useState<string>("");
   const [runDescription, setRunDescription] = useState<string>("");
   const [runLocation, setRunLocation] = useState<string>("");
@@ -35,11 +32,21 @@ export function PastRuns() {
         .collection("group_runs")
         .getFullList();
 
-      // From the recent runs, find the latest and get its id
-      const runFromDate: GroupRun | undefined = recentRuns.find(
-        (run) =>
-          run.date.substring(0, 10) === date.toISOString().substring(0, 10)
-      );
+      let runFromDate: GroupRun | undefined;
+
+      if (!date) {
+        // If the page is just opening, set to the most recent run
+        runFromDate = recentRuns.sort(
+          (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
+        )[0];
+        setDate(new Date(runFromDate.date));
+      } else {
+        // Otherwise grab the run from the chosen date
+        runFromDate = recentRuns.find(
+          (run) =>
+            run.date.substring(0, 10) === date.toISOString().substring(0, 10)
+        );
+      }
 
       if (!runFromDate) {
         setIsLoading(false);
@@ -63,13 +70,15 @@ export function PastRuns() {
 
       // Generate and set the run description
       setRunDescription(
-        `On ${new Date(runFromDate.created).toLocaleDateString()}, ${
+        `This week we had ${
           participants.length
-        } Gunnies hit the track at ${convertLocationValueToLabel(
+        } members hit the track at ${convertLocationValueToLabel(
           runFromDate.location
-        )}. Congratulations to ${
-          participants[0].name
-        } for the fastest time, and all other Gunnies who attended.`
+        )}. Congratulations to all Gunnies, including ${
+          participants.find((participant) => participant.distance == 5)?.name
+        } for the fastest time in the 5km, and ${
+          participants.find((participant) => participant.distance == 3.5)?.name
+        } for the fastest time in the 3.5km.`
       );
 
       setIsLoading(false);

@@ -5,9 +5,8 @@ import { ThemeProvider } from "./contexts/ThemeProviderContext";
 import { Login } from "./pages/login";
 import { SignUp } from "./pages/signUp";
 import { Home } from "./pages/home";
-import { LatestRun } from "./pages/latestRun";
 import { NewRun } from "./pages/newRun";
-import { PastRuns } from "./pages/pastRuns";
+import { Runs } from "./pages/runs";
 import { FAQs } from "./pages/faqs";
 import { ContactUs } from "./pages/contactUs";
 import { Privacy } from "./pages/privacy";
@@ -26,8 +25,7 @@ export default function App() {
             <Route path="/signup" element={<SignUp />} />
             <Route element={<Layout />}>
               <Route index element={<Home />} />
-              <Route path="/latestrun" element={<LatestRun />} />
-              <Route path="/pastruns" element={<PastRuns />} />
+              <Route path="/runs" element={<Runs />} />
               <Route element={<RequireAuth />}>
                 <Route path="/newrun" element={<NewRun />} />
               </Route>

@@ -21,19 +21,14 @@ export function DesktopNavMenu() {
           </Link>
         </NavigationMenuItem>
         <NavigationMenuItem>
-          <Link to="/latestrun" className={navigationMenuTriggerStyle()}>
-            Latest Run
-          </Link>
-        </NavigationMenuItem>
-        <NavigationMenuItem>
-          <Link to="/pastruns" className={navigationMenuTriggerStyle()}>
-            Past Runs
+          <Link to="/runs" className={navigationMenuTriggerStyle()}>
+            Runs
           </Link>
         </NavigationMenuItem>
         {user && user?.role !== "member" && (
           <NavigationMenuItem>
             <Link to="/newrun" className={navigationMenuTriggerStyle()}>
-              Create New Run
+              New Run
             </Link>
           </NavigationMenuItem>
         )}

@@ -15,8 +15,8 @@ export function DatePicker({
   date,
   setDate,
 }: {
-  date: Date;
-  setDate: Dispatch<SetStateAction<Date>>;
+  date: Date | null;
+  setDate: Dispatch<SetStateAction<Date | null>>;
 }) {
   const [calendarOpen, setCalendarOpen] = useState(false);
   return (
@@ -34,15 +34,17 @@ export function DatePicker({
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-auto p-0" align="start">
-        <Calendar
-          mode="single"
-          selected={date}
-          onDayClick={(newDate) => {
-            setDate(newDate);
-            setCalendarOpen(false);
-          }}
-          initialFocus
-        />
+        {date && (
+          <Calendar
+            mode="single"
+            selected={date}
+            onDayClick={(newDate) => {
+              setDate(newDate);
+              setCalendarOpen(false);
+            }}
+            initialFocus
+          />
+        )}
       </PopoverContent>
     </Popover>
   );
