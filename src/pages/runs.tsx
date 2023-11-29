@@ -103,7 +103,7 @@ export function Runs() {
           </h1>
           <h2>{runLocation}</h2>
         </div>
-        <div className="relative w-full justify-self-end">
+        <div className="relative h-10 w-full justify-self-end">
           <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
             <Search className="w-4 h-4" />
           </div>
