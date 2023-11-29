@@ -8,6 +8,7 @@ import { Participant } from "@/lib/types";
 
 // Components
 import CreatableSelect from "react-select/creatable";
+import Select from "react-select";
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
 import { toast } from "@/components/ui/use-toast";
@@ -29,7 +30,7 @@ const FormSchema = z
       z.object({
         bib: z.string(),
         name: z.object({ value: z.string(), label: z.string() }),
-        distance: z.string(),
+        distance: z.object({ value: z.string(), label: z.string() }),
       })
     ),
   })
@@ -43,6 +44,11 @@ const FormSchema = z
       message: "You cannot have duplicate bib numbers.",
     }
   );
+
+const distanceOptions = [
+  { label: "3.5km", value: "3.5" },
+  { label: "5km", value: "5" },
+];
 
 const initialDate = new Date();
 initialDate.setHours(0, 0, 0, 0);
@@ -64,7 +70,7 @@ export function RunSetup({
       date: initialDate,
       location: "albertParkLake",
       // @ts-ignore
-      participants: [{ bib: "1", name: null, distance: "5" }],
+      participants: [{ bib: "1", name: null, distance: distanceOptions[1] }],
     },
   });
 
@@ -86,7 +92,7 @@ export function RunSetup({
             ? undefined
             : participant.name.value,
         name: participant.name.label,
-        distance: Number(participant.distance),
+        distance: Number(participant.distance.value),
         bib: Number(participant.bib),
       };
     });
@@ -118,7 +124,7 @@ export function RunSetup({
         bib: String(newBibNumber),
         // @ts-ignore
         name: null,
-        distance: "5",
+        distance: distanceOptions[1],
       },
       {
         focusName: `participants.${participantsLength}.name`,
@@ -217,10 +223,19 @@ export function RunSetup({
                     />
                   </uiTable.TableCell>
                   <uiTable.TableCell>
-                    <Input
-                      step={0.5}
-                      type="number"
-                      {...form.register(`participants.${index}.distance`)}
+                    <uiForm.FormField
+                      control={form.control}
+                      name={`participants.${index}.distance`}
+                      render={({ field }) => (
+                        <Select
+                          {...field}
+                          className="custom-react-select-container"
+                          classNamePrefix="custom-react-select"
+                          placeholder="Select..."
+                          menuPosition="fixed"
+                          options={distanceOptions}
+                        />
+                      )}
                     />
                   </uiTable.TableCell>
                   <uiTable.TableCell>
