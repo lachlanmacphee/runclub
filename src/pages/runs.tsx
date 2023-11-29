@@ -162,11 +162,11 @@ export function Runs() {
 
   return (
     <div className="flex flex-col gap-4">
-      <div className="grid grid-cols-1 gap-4 md:gap-0 md:grid-cols-[0.5fr_1fr_0.5fr]">
+      <div className="grid grid-cols-1 gap-4 md:gap-0 md:grid-cols-[0.5fr_1fr]">
         <div className="row-start-2 md:row-start-1">
           <DatePicker date={date} setDate={setDate} />
         </div>
-        <div className="flex flex-col items-center text-center">
+        <div className="flex flex-col items-center md:items-end justify-center ">
           <h1 className="text-xl font-bold">
             {date && formatDateWithSuffix(date)}
           </h1>
