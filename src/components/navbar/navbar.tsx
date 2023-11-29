@@ -12,10 +12,7 @@ export function Navbar() {
     <div className="flex justify-between py-4 px-8 items-center">
       <Link to="/" className="normal-case font-bold text-2xl w-[250px]">
         <div className="flex gap-4 items-center">
-          <img
-            className="w-10 h-10 rounded-full"
-            src="/src/assets/gunnieslogo.png"
-          />
+          <img className="w-10 h-10 rounded-full" src="/gunnieslogo.png" />
           <span>Gunn Runners</span>
         </div>
       </Link>
