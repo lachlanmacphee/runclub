@@ -23,6 +23,7 @@ export type GroupRun = {
 };
 
 export type Participant = {
+  position?: number;
   id?: string;
   user_id?: string;
   group_run_id: string;

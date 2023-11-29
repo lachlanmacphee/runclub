@@ -66,6 +66,9 @@ export function Runs() {
       participants.sort(
         (a, b) => (a.time_seconds ?? 0) - (b.time_seconds ?? 0)
       );
+      participants.forEach(
+        (participant, index) => (participant.position = index + 1)
+      );
       setParticipants(participants);
 
       // Generate and set the run description

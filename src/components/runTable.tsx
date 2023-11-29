@@ -28,9 +28,9 @@ function getRunnerRows(participants: Participant[], runner?: string) {
     );
   }
 
-  return runData.map((run, idx) => (
+  return runData.map((run) => (
     <TableRow key={run.name}>
-      <TableCell>{idx + 1}</TableCell>
+      <TableCell>{run.position}</TableCell>
       <TableCell>{run.name}</TableCell>
       <TableCell>{run.distance}</TableCell>
       <TableCell>
