@@ -10,6 +10,7 @@ import { Runs } from "./pages/runs";
 import { FAQs } from "./pages/faqs";
 import { ContactUs } from "./pages/contactUs";
 import { Privacy } from "./pages/privacy";
+import { NotFound } from "./pages/notFound";
 
 import { Layout } from "./components/layout";
 import { RequireAuth } from "./components/requireAuth";
@@ -32,6 +33,7 @@ export default function App() {
               <Route path="/faqs" element={<FAQs />} />
               <Route path="/contact" element={<ContactUs />} />
               <Route path="/privacy" element={<Privacy />} />
+              <Route path="*" element={<NotFound />} />
             </Route>
           </Routes>
           <Toaster />
