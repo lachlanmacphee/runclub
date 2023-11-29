@@ -1,21 +1,90 @@
 import { useEffect, useState } from "react";
+import { ColumnDef } from "@tanstack/react-table";
 
 import { usePocket } from "@/contexts";
 
-import { convertLocationValueToLabel, formatDateWithSuffix } from "@/lib/utils";
+import {
+  convertLocationValueToLabel,
+  formatDateWithSuffix,
+  formatTime,
+} from "@/lib/utils";
 import { GroupRun, Participant } from "@/lib/types";
 
-import { RunTable } from "@/components/runTable";
+import { DataTable } from "@/components/ui/data-table";
+import { Button } from "@/components/ui/button";
 import { DatePicker } from "@/components/ui/date-picker";
-import { Input } from "@/components/ui/input";
 
-import { Loader2, Search } from "lucide-react";
+import { Loader2, ArrowUpDown } from "lucide-react";
+
+const runTableColumns: ColumnDef<Participant>[] = [
+  {
+    accessorKey: "position",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          className="px-0 hover:bg-transparent"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Position
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
+  },
+  {
+    accessorKey: "name",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          className="px-0 hover:bg-transparent"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Name
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
+  },
+  {
+    accessorKey: "distance",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          className="px-0 hover:bg-transparent"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Distance
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
+    cell: ({ row }) => `${row.getValue("distance")}km`,
+  },
+  {
+    accessorKey: "time_seconds",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          className="px-0 hover:bg-transparent"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Time
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
+    cell: ({ row }) => formatTime(row.getValue("time_seconds")),
+  },
+];
 
 export function Runs() {
   const { pb } = usePocket();
   const [isLoading, setIsLoading] = useState(true);
   const [date, setDate] = useState<Date | null>(null);
-  const [runner, setRunner] = useState<string>("");
   const [runDescription, setRunDescription] = useState<string>("");
   const [runLocation, setRunLocation] = useState<string>("");
   const [participants, setParticipants] = useState<Participant[]>([]);
@@ -103,19 +172,6 @@ export function Runs() {
           </h1>
           <h2>{runLocation}</h2>
         </div>
-        <div className="relative h-10 w-full justify-self-end">
-          <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
-            <Search className="w-4 h-4" />
-          </div>
-          <Input
-            name="runner"
-            type="search"
-            value={runner}
-            onChange={(e) => setRunner(e.target.value)}
-            placeholder="Name"
-            className="p-4 ps-10"
-          />
-        </div>
       </div>
       <p>{runDescription}</p>
       {isLoading ? (
@@ -123,7 +179,7 @@ export function Runs() {
           <Loader2 className="h-12 w-12 animate-spin" />
         </div>
       ) : (
-        <RunTable participants={participants} runner={runner} />
+        <DataTable columns={runTableColumns} data={participants} />
       )}
     </div>
   );
