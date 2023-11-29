@@ -55,5 +55,4 @@ export const mobileLinks = [
   { path: "/newrun", label: "New Run" },
   { path: "/faqs", label: "FAQs" },
   { path: "/contact", label: "Contact Us" },
-  { path: "/privacy", label: "Privacy Policy" },
 ];

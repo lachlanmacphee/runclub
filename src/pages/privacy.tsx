@@ -1,4 +1,10 @@
+import { useEffect } from "react";
+
 export function Privacy() {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <div className="flex items-center flex-col">
       <article className="flex flex-col gap-4 max-w-3xl">

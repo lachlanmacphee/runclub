@@ -42,11 +42,6 @@ export function DesktopNavMenu() {
             Contact Us
           </Link>
         </NavigationMenuItem>
-        <NavigationMenuItem>
-          <Link to="/privacy" className={navigationMenuTriggerStyle()}>
-            Privacy Policy
-          </Link>
-        </NavigationMenuItem>
       </NavigationMenuList>
     </NavigationMenu>
   );
