@@ -1,6 +1,7 @@
 {{template "layout/header" .}}
 <div
   class="container"
+  id="timer"
   x-data="{
     start: null,
     current: null,
@@ -10,10 +11,10 @@
       this.current = this.start;
       this.interval = setInterval(() => {
         this.current = Date.now()
-      }, 100)},
-      getTime() {
-        return new Date(this.current - this.start).toISOString().substr(11, 8)
-      }
+    }, 100)},
+    getTime() {
+      return new Date(this.current - this.start).toISOString().substr(11, 8)
+    }
   }"
 >
   <button x-show="!start" @click="startStopwatch()">Start</button>
@@ -28,7 +29,7 @@
     {{range $participant := .participants}}
     <button
       type="button"
-      hx-vals="js:{time: current}"
+      hx-vals="js:{time: Math.floor((Alpine.$data(timer).current - Alpine.$data(timer).start) / 1000)}"
       hx-post="/api/timing/eventId/bibNumber"
       x-bind:disabled="!start"
       style="width: 120px"
