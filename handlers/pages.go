@@ -6,6 +6,7 @@ import (
 	"runclub/database"
 	"runclub/models"
 	"strconv"
+	"time"
 
 	"github.com/gofiber/fiber/v2"
 	"gorm.io/gorm"
@@ -27,6 +28,7 @@ func Event(c *fiber.Ctx) error {
 	
 	return c.Render("pages/events/index", fiber.Map{
 		"events": events,
+		"today": time.Now().Format("2006-01-02"),
 	}, "layout/main")
 }
 

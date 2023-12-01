@@ -4,7 +4,7 @@
   <form hx-post="/api/event">
     <div>
       <label>Date</label>
-      <input name="date" type="date" required />
+      <input name="date" type="date" value="{{ .today }}" required />
     </div>
     <div>
       <label>Location</label>
