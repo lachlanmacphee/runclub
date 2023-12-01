@@ -19,7 +19,7 @@ func Event(c *fiber.Ctx) error {
 	db := database.Get()
 
 	var events []models.Event
-	err := db.Find(&events, models.Event{IsComplete: false}).Error
+	err := db.Find(&events, "is_complete = ?", false).Error
 	if (err != nil) {
 		fmt.Println(err)
 		return c.Redirect("/")
