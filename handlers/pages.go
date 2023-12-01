@@ -69,6 +69,7 @@ func Timing(c *fiber.Ctx) error {
 
 	return c.Render("pages/timing/index", fiber.Map{
 		"participants": participants,
+		"eventId": c.Params("eventId"),
 	}, "layout/main")
 }
 

@@ -38,5 +38,8 @@ func main() {
 	// API - Participants
 	app.Post("/api/participant/:id", handlers.AddParticipant)
 
+	// API - Timing
+	app.Post("/api/timing/:eventId/:bib", handlers.TimeParticipant)
+
     log.Fatal(app.Listen(":5173"))
 }

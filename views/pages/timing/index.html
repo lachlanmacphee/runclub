@@ -26,11 +26,13 @@
   <div
     style="display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center"
   >
-    {{range $participant := .participants}}
+    {{range $participant := .participants }}
     <button
       type="button"
       hx-vals="js:{time: Math.floor((Alpine.$data(timer).current - Alpine.$data(timer).start) / 1000)}"
-      hx-post="/api/timing/eventId/bibNumber"
+      hx-post="/api/timing/{{ $.eventId }}/{{ $participant.Bib }}"
+      hx-target="this"
+      hx-swap="outerHTML"
       x-bind:disabled="!start"
       style="width: 120px"
     >
