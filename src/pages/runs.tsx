@@ -26,7 +26,7 @@ const runTableColumns: ColumnDef<Participant>[] = [
           className="px-0 hover:bg-transparent"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          Position
+          #
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       );
@@ -56,7 +56,7 @@ const runTableColumns: ColumnDef<Participant>[] = [
           className="px-0 hover:bg-transparent"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          Distance
+          Dist
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       );
