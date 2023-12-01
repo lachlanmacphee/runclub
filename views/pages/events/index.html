@@ -1,6 +1,6 @@
 {{template "layout/header" .}}
 <div class="container">
-  <h1 style="margin-bottom: 20px">New Event</h1>
+  <h1 style="margin-bottom: 20px">Create New Event</h1>
   <form hx-post="/api/event">
     <div>
       <label>Date</label>
@@ -15,8 +15,8 @@
     </div>
     <button type="submit">Create</button>
   </form>
-  <h1 style="margin-bottom: 0px">Continue Event</h1>
-  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px">
+  <h1 style="margin-bottom: 0px">In Progress Events</h1>
+  <div class="grid">
     {{range $event := .events}}
     <article>
       <header>
@@ -27,7 +27,7 @@
       </header>
       <div style="display: flex; justify-content: center">
         <img
-          src="https://www.onlymelbourne.com.au/image/ico-albertpark.jpg"
+          src="{{ .GetLocationImage $event.Location }}"
           style="width: 450px; height: 300px"
         />
       </div>
