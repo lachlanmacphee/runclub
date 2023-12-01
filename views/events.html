@@ -1,0 +1,18 @@
+{{template "partials/header" .}}
+<div class="container">
+  <h3>Create an Event</h3>
+  <form hx-post="/api/event">
+    <div>
+      <label>Date</label>
+      <input name="date" type="date" required />
+    </div>
+    <div>
+      <label>Location</label>
+      <select name="location" required>
+        <option value="albertParkLake" selected>Albert Park Lake</option>
+        <option value="southMelbourneBeach">South Melbourne Beach</option>
+      </select>
+    </div>
+    <button type="submit">Create</button>
+  </form>
+</div>

@@ -1,0 +1,17 @@
+<form hx-post="/api/participant/{{ .id }}" hx-swap="afterend">
+  <div class="grid">
+    <div>
+      <label>Bib</label>
+      <input name="bib" type="number" step="1" required />
+    </div>
+    <div>
+      <label>Name</label>
+      <input name="name" type="text" required />
+    </div>
+    <div>
+      <label>Distance</label>
+      <input name="distance" type="number" value="5.0" step="0.5" required />
+    </div>
+    <button type="submit">Add</button>
+  </div>
+</form>
