@@ -13,6 +13,8 @@ func main() {
 
 	database.Connect()
 
+	// database.Migrate()
+
 	// Create a new engine
     engine := html.New("./views", ".html")
 
