@@ -24,8 +24,6 @@ func Event(c *fiber.Ctx) error {
 		fmt.Println(err)
 		return c.Redirect("/")
 	}
-
-	fmt.Println(events)
 	
 	return c.Render("pages/events/index", fiber.Map{
 		"events": events,
