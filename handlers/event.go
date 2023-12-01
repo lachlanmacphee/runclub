@@ -42,5 +42,5 @@ func CreateEvent(c *fiber.Ctx) error {
 
 	c.Set("HX-Redirect", fmt.Sprintf("/participants/%d", event.ID))
 	
-	return c.Next()
+	return c.Send(nil)
 }

@@ -9,7 +9,7 @@
   <div
     style="display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center"
   >
-    {{range $val := .arr}}
+    {{range $participant := .participants}}
     <button
       type="button"
       hx-vals="js:{time: current}"
@@ -17,7 +17,7 @@
       x-bind:disabled="!start"
       style="width: 120px"
     >
-      {{$val}}
+      {{$participant.Bib}}
     </button>
     {{end}}
   </div>

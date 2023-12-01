@@ -27,7 +27,7 @@ func main() {
     app.Get("/", handlers.Home)
 	app.Get("/events", handlers.Event)
 	app.Get("/participants/:eventId", handlers.Participants)
-	app.Get("/timing", handlers.Timing)
+	app.Get("/timing/:eventId", handlers.Timing)
 	app.Get("/faq", handlers.Faq)
 	app.Get("/contact", handlers.Contact)
 
