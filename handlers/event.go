@@ -39,8 +39,8 @@ func CreateEvent(c *fiber.Ctx) error {
 	if err != nil {
 		fmt.Println(err)
 	}
+
+	c.Set("HX-Redirect", fmt.Sprintf("/participants/%d", event.ID))
 	
-	return c.Render("partials/participant_form", fiber.Map{
-		"id": event.ID,
-	}, "layouts/main")
+	return c.Next()
 }

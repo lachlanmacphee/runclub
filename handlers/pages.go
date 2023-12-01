@@ -12,6 +12,12 @@ func Event(c *fiber.Ctx) error {
 	return c.Render("pages/events/index", nil, "layout/main")
 }
 
+func Participants(c *fiber.Ctx) error {
+	return c.Render("pages/participants/index", fiber.Map{
+		"eventId": c.Params("eventId"),
+	}, "layout/main")
+}
+
 func Faq(c *fiber.Ctx) error {
 	return c.Render("pages/faq/index", nil, "layout/main")
 }
