@@ -13,7 +13,8 @@
       }, 100)},
       getTime() {
         return new Date(this.current - this.start).toISOString().substr(11, 8)
-      }}"
+      }
+  }"
 >
   <button x-show="!start" @click="startStopwatch()">Start</button>
   <h1
