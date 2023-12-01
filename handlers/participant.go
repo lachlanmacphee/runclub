@@ -25,7 +25,7 @@ func AddParticipant(c *fiber.Ctx) error {
 		panic(convErr)
 	}
 
-	eventId, convErr := strconv.ParseUint(c.Params("id"), 10, 64)
+	eventId, convErr := strconv.Atoi(c.Params("id"))
 	if convErr != nil {
 		panic(convErr)
 	}

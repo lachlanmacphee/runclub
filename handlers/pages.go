@@ -1,7 +1,14 @@
 package handlers
 
 import (
+	"errors"
+	"fmt"
+	"runclub/database"
+	"runclub/models"
+	"strconv"
+
 	"github.com/gofiber/fiber/v2"
+	"gorm.io/gorm"
 )
 
 func Home(c *fiber.Ctx) error {
@@ -13,8 +20,28 @@ func Event(c *fiber.Ctx) error {
 }
 
 func Participants(c *fiber.Ctx) error {
+	db := database.Get()
+
+	eventIdInt, err := strconv.Atoi(c.Params("eventId"))
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	var event models.Event
+	err = db.First(&event, eventIdInt).Error
+	if (errors.Is(err, gorm.ErrRecordNotFound)) {
+		return c.Redirect("/events")
+	}
+
+	var participants []models.Participant
+	err = db.Find(&participants, models.Participant{EventID: eventIdInt}).Error
+	if err != nil {
+		fmt.Println(err)
+	}
+
 	return c.Render("pages/participants/index", fiber.Map{
 		"eventId": c.Params("eventId"),
+		"participants": participants,
 	}, "layout/main")
 }
 

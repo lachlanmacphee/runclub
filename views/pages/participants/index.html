@@ -31,6 +31,14 @@
         <th>Distance</th>
       </tr>
     </thead>
-    <tbody id="participants"></tbody>
+    <tbody id="participants">
+      {{range $val := .participants}}
+      <tr>
+        <td>{{ $val.Bib }}</td>
+        <td>{{ $val.Name }}</td>
+        <td>{{ $val.Distance }}</td>
+      </tr>
+      {{end}}
+    </tbody>
   </table>
 </div>

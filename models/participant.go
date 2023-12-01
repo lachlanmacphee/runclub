@@ -10,5 +10,5 @@ type Participant struct {
 	Bib int
 	Time int
 	Distance string
-	EventID uint64
+	EventID int
 }
