@@ -1,0 +1,44 @@
+{{template "layout/header" .}}
+<div class="container" x-data="timing">
+  <button x-show="!start" @click="startStopwatch">Start</button>
+  <h1
+    x-show="current"
+    x-text="getTime"
+    style="font-family: monospace; text-align: center"
+  ></h1>
+  <div
+    style="display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center"
+  >
+    {{range $val := .arr}}
+    <button
+      type="button"
+      hx-vals="js:{time: current}"
+      hx-post="/api/timing/eventId/bibNumber"
+      x-bind:disabled="!start"
+      style="width: 120px"
+    >
+      {{$val}}
+    </button>
+    {{end}}
+  </div>
+</div>
+
+<script>
+  document.addEventListener("alpine:init", () => {
+    Alpine.data("timing", () => ({
+      start: null,
+      current: null,
+      interval: null,
+      startStopwatch() {
+        this.start = Date.now();
+        this.current = this.start;
+        this.interval = setInterval(() => {
+          this.current = Date.now();
+        }, 100);
+      },
+      getTime() {
+        return new Date(this.current - this.start).toISOString().substr(11, 8);
+      },
+    }));
+  });
+</script>
