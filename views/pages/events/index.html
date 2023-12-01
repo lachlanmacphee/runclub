@@ -21,8 +21,8 @@
     <article>
       <header>
         <hgroup>
-          <h2>{{ $event.Location }}</h2>
-          <h3>{{ $event.Date }}</h3>
+          <h2>{{ .FormatLocation $event.Location }}</h2>
+          <h3>{{ .FormatDate $event.Date }}</h3>
         </hgroup>
       </header>
       <div style="display: flex; justify-content: center">
