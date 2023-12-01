@@ -17,11 +17,12 @@
   </form>
   <h1 style="margin-bottom: 0px">Continue Event</h1>
   <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px">
+    {{range $event := .events}}
     <article>
       <header>
         <hgroup>
-          <h2>Albert Park Lake</h2>
-          <h3>28th of November</h3>
+          <h2>{{ $event.Location }}</h2>
+          <h3>{{ $event.Date }}</h3>
         </hgroup>
       </header>
       <div style="display: flex; justify-content: center">
@@ -30,22 +31,15 @@
           style="width: 450px; height: 300px"
         />
       </div>
-      <footer><button>Continue</button></footer>
+      <footer>
+        <a
+          href="/participants/{{ $event.ID }}"
+          style="width: 100%"
+          role="button"
+          >Continue</a
+        >
+      </footer>
     </article>
-    <article>
-      <header>
-        <hgroup>
-          <h2>South Melbourne Beach</h2>
-          <h3>21st of November</h3>
-        </hgroup>
-      </header>
-      <div style="display: flex; justify-content: center">
-        <img
-          src="https://images.myguide-cdn.com/melbourne/companies/port-melbourne-beach/large/port-melbourne-beach-33890.jpg"
-          style="width: 450px; height: 300px"
-        />
-      </div>
-      <footer><button>Continue</button></footer>
-    </article>
+    {{end}}
   </div>
 </div>

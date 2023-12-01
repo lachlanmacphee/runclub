@@ -16,7 +16,20 @@ func Home(c *fiber.Ctx) error {
 }
 
 func Event(c *fiber.Ctx) error {
-	return c.Render("pages/events/index", nil, "layout/main")
+	db := database.Get()
+
+	var events []models.Event
+	err := db.Find(&events, models.Event{IsComplete: false}).Error
+	if (err != nil) {
+		fmt.Println(err)
+		return c.Redirect("/")
+	}
+
+	fmt.Println(events)
+	
+	return c.Render("pages/events/index", fiber.Map{
+		"events": events,
+	}, "layout/main")
 }
 
 func Participants(c *fiber.Ctx) error {
