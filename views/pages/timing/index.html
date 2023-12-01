@@ -1,7 +1,19 @@
 {{template "layout/header" .}}
 <div
   class="container"
-  x-data="{start: null, current: null, interval: null, startStopwatch() { this.start = Date.now(); this.current = this.start; this.interval = setInterval(() => { this.current = Date.now() }, 100) }, getTime() { return new Date(this.current - this.start).toISOString().substr(11, 8) }}"
+  x-data="{
+    start: null,
+    current: null,
+    interval: null,
+    startStopwatch() {
+      this.start = Date.now();
+      this.current = this.start;
+      this.interval = setInterval(() => {
+        this.current = Date.now()
+      }, 100)},
+      getTime() {
+        return new Date(this.current - this.start).toISOString().substr(11, 8)
+      }}"
 >
   <button x-show="!start" @click="startStopwatch()">Start</button>
   <h1
