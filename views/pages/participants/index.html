@@ -4,7 +4,7 @@
     hx-post="/api/participant/{{ .eventId }}"
     hx-target="#participants"
     hx-swap="afterbegin"
-    hx-on::after-request="this.reset()"
+    hx-on::after-request="if(event.detail.successful) this.reset()"
   >
     <div>
       <label>Bib</label>
