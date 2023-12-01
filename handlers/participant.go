@@ -38,7 +38,9 @@ func AddParticipant(c *fiber.Ctx) error {
 		fmt.Println(err)
 	}
 	
-	return c.Render("partials/participant_form", fiber.Map{
-		"id": c.Params("id"),
-	}, "layouts/main")
+	return c.Render("pages/participants/row", fiber.Map{
+		"bib": participant.Bib,
+		"name": participant.Name,
+		"distance": participant.Distance,
+	})
 }

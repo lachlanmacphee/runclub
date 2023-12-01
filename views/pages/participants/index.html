@@ -1,6 +1,11 @@
 {{template "layout/header" .}}
 <div class="container">
-  <form hx-post="/api/participant/{{ .eventId }}" hx-swap="afterend">
+  <form
+    hx-post="/api/participant/{{ .eventId }}"
+    hx-target="#participants"
+    hx-swap="afterbegin"
+    hx-on::after-request="this.reset()"
+  >
     <div>
       <label>Bib</label>
       <input name="bib" type="number" step="1" required />
@@ -15,4 +20,14 @@
     </div>
     <button type="submit">Add</button>
   </form>
+  <table role="grid">
+    <thead>
+      <tr>
+        <th>Bib</th>
+        <th>Name</th>
+        <th>Distance</th>
+      </tr>
+    </thead>
+    <tbody id="participants"></tbody>
+  </table>
 </div>
