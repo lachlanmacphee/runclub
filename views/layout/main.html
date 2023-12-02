@@ -20,7 +20,7 @@
     <script src="https://unpkg.com/alpinejs" defer></script>
   </head>
   <body hx-boost="true">
-    <header>{{template "layout/header" .}}</header>
-    <main id="main">{{embed}}</main>
+    <header style="padding: 0px">{{template "layout/navbar" .}}</header>
+    <main id="main" style="padding: 0px">{{embed}}</main>
   </body>
 </html>

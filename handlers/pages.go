@@ -13,7 +13,11 @@ import (
 )
 
 func Home(c *fiber.Ctx) error {
-	return c.Render("pages/home/index", nil, "layout/main")
+	if hxRequest := c.Get("HX-Request"); hxRequest == "" {
+		return c.Render("pages/home/index", nil, "layout/main")
+	}
+
+	return c.Render("pages/home/index", nil)
 }
 
 func Event(c *fiber.Ctx) error {
@@ -25,11 +29,20 @@ func Event(c *fiber.Ctx) error {
 		fmt.Println(err)
 		return c.Redirect("/")
 	}
-	
+
+	if hxRequest := c.Get("HX-Request"); hxRequest == "" {
+		return c.Render("pages/events/index", fiber.Map{
+			"events": events,
+			"today": time.Now().Format("2006-01-02"),
+		}, "layout/main")
+	}
+
 	return c.Render("pages/events/index", fiber.Map{
 		"events": events,
 		"today": time.Now().Format("2006-01-02"),
-	}, "layout/main")
+	})
+	
+	
 }
 
 func Participants(c *fiber.Ctx) error {
@@ -53,10 +66,18 @@ func Participants(c *fiber.Ctx) error {
 		fmt.Println(err)
 	}
 
+	if hxRequest := c.Get("HX-Request"); hxRequest == "" {
+		return c.Render("pages/participants/index", fiber.Map{
+			"eventId": c.Params("eventId"),
+			"participants": participants,
+		}, "layout/main")
+	}
+
 	return c.Render("pages/participants/index", fiber.Map{
 		"eventId": c.Params("eventId"),
 		"participants": participants,
-	}, "layout/main")
+	})
+	
 }
 
 func Timing(c *fiber.Ctx) error {
@@ -80,16 +101,32 @@ func Timing(c *fiber.Ctx) error {
 		fmt.Println(err)
 	}
 
+	if hxRequest := c.Get("HX-Request"); hxRequest == "" {
+		return c.Render("pages/timing/index", fiber.Map{
+			"participants": participants,
+			"eventId": c.Params("eventId"),
+		}, "layout/main")
+	}
+
 	return c.Render("pages/timing/index", fiber.Map{
 		"participants": participants,
 		"eventId": c.Params("eventId"),
-	}, "layout/main")
+	})
+	
 }
 
 func Faq(c *fiber.Ctx) error {
-	return c.Render("pages/faq/index", nil, "layout/main")
+	if hxRequest := c.Get("HX-Request"); hxRequest == "" {
+		return c.Render("pages/faq/index", nil, "layout/main")
+	}
+
+	return c.Render("pages/faq/index", nil)
 }
 
 func Contact(c *fiber.Ctx) error {
-	return c.Render("pages/contact/index", nil, "layout/main")
+	if hxRequest := c.Get("HX-Request"); hxRequest == "" {
+		return c.Render("pages/contact/index", nil, "layout/main")
+	}
+
+	return c.Render("pages/contact/index", nil)
 }

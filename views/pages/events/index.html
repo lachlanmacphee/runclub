@@ -31,12 +31,14 @@
         />
       </div>
       <footer>
-        <a
-          href="/participants/{{ $event.ID }}"
+        <button
+          hx-get="/participants/{{ $event.ID }}"
+          hx-push-url="true"
+          hx-target="#main"
           style="width: 100%"
-          role="button"
-          >Continue</a
         >
+          Continue
+        </button>
       </footer>
     </article>
     {{end}}

@@ -19,12 +19,14 @@
     </div>
     <button type="submit">Add</button>
   </form>
-  <a
-    href="/timing/{{ .eventId }}"
+  <button
+    hx-get="/timing/{{ .eventId }}"
+    hx-push-url="true"
+    hx-target="#main"
     style="width: 100%; margin-bottom: 17px"
-    role="button"
-    >Start Timing</a
   >
+    Start Timing
+  </button>
   <table role="grid">
     <thead>
       <tr>
