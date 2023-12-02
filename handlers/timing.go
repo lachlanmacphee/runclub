@@ -34,6 +34,15 @@ func TimeParticipant(c *fiber.Ctx) error {
 
 	db := database.Get()
 	db.Model(&models.Participant{}).Where("bib = ? AND event_id = ?", bib, eventId).Update("time", time)
+
+	var count int64
+	db.Model(&models.Participant{}).Where("event_id = ? AND time = 0", eventId).Count(&count)
+
+	if count == 0 {
+		db.Model(&models.Event{}).Where("id = ?", eventId).Update("is_complete", true)
+		c.Set("HX-Redirect", "/events")
+		return c.SendStatus(200)
+	}
 	
 	return c.Render("pages/timing/disabledButton", fiber.Map{
 		"bib": bib,
