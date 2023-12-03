@@ -1,14 +1,15 @@
-{{range $val := .participants}}
+{{range $val := .names}}
 <tr>
   <td>
     <button
       hx-post="/api/participant/choose"
       hx-target="#nameInput"
       hx-swap="outerHTML"
-      hx-vals='{"name": "{{$val.Name}}"}'
+      hx-vals='{"name": "{{$val}}"}'
       type="button"
+      class="secondary"
     >
-      {{ $val.Name }}
+      {{ $val }}
     </button>
   </td>
 </tr>

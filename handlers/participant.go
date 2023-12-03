@@ -46,23 +46,24 @@ func AddParticipant(c *fiber.Ctx) error {
 }
 
 func GetParticipantsByDate(c *fiber.Ctx) error {
-	payload := struct {
-		Date  string `json:"date"`
-	}{}
-
-	if err := c.BodyParser(&payload); err != nil {
-		return err
-	}
+	date := c.Query("date")
 
 	db := database.Get()
-	var participants []models.Participant
-	err := db.Where("date = ?", payload.Date).Find(&participants).Error
-	
+	dateDbFormat := date + " 00:00:00+00:00"
+
+	var event models.Event
+	err := db.Where("date = ?", dateDbFormat).First(&event).Error
 	if err != nil {
 		fmt.Println(err)
 	}
-	
-	return c.Render("pages/participants/searchResults", fiber.Map{
+
+	var participants []models.Participant
+	err = db.Where("event_id = ?", event.ID).Find(&participants).Error
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	return c.Render("pages/participants/table", fiber.Map{
 		"participants": participants,
 	})
 }
@@ -77,15 +78,15 @@ func GetParticipants(c *fiber.Ctx) error {
 	}
 
 	db := database.Get()
-	var participants []models.Participant
-	err := db.Where("name LIKE ?", "%" + payload.Name + "%").Find(&participants).Error
+	var names []string
+	err := db.Model(&models.Participant{}).Where("name LIKE ?", "%" + payload.Name + "%").Distinct().Pluck("name", &names).Error
 	
 	if err != nil {
 		fmt.Println(err)
 	}
 	
 	return c.Render("pages/participants/searchResults", fiber.Map{
-		"participants": participants,
+		"names": names,
 	})
 }
 
