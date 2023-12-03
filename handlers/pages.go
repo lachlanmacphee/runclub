@@ -22,9 +22,16 @@ func Home(c *fiber.Ctx) error {
 
 func PastEvents(c *fiber.Ctx) error {
 	db := database.Get()
+	today := time.Now().Format("2006-01-02 00:00:00+00:00")
+
+	var event models.Event
+	err := db.Where("date = ?", today).First(&event).Error
+	if err != nil {
+		fmt.Println(err)
+	}
 
 	var participants []models.Participant
-	err := db.Find(&participants).Error
+	err = db.Where("event_id = ?", event.ID).Find(&participants).Error
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -32,11 +39,13 @@ func PastEvents(c *fiber.Ctx) error {
 	if hxRequest := c.Get("HX-Request"); hxRequest == "" {
 		return c.Render("pages/pastEvents/index", fiber.Map{
 			"participants": participants,
+			"today": today,
 		}, "layout/main")
 	}
 
 	return c.Render("pages/pastEvents/index", fiber.Map{
 		"participants": participants,
+		"today": time.Now().Format("2006-01-02"),
 	},)
 }
 

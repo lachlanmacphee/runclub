@@ -1,5 +1,9 @@
 <div class="container">
   <h1>Past Events</h1>
+  <form hx-trigger="change" hx-post="/api/participant/date">
+    <label>Date</label>
+    <input name="date" type="date" value="{{ .today }}" required />
+  </form>
   <table role="grid">
     <thead>
       <tr>

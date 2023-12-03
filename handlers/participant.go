@@ -45,6 +45,28 @@ func AddParticipant(c *fiber.Ctx) error {
 	})
 }
 
+func GetParticipantsByDate(c *fiber.Ctx) error {
+	payload := struct {
+		Date  string `json:"date"`
+	}{}
+
+	if err := c.BodyParser(&payload); err != nil {
+		return err
+	}
+
+	db := database.Get()
+	var participants []models.Participant
+	err := db.Where("date = ?", payload.Date).Find(&participants).Error
+	
+	if err != nil {
+		fmt.Println(err)
+	}
+	
+	return c.Render("pages/participants/searchResults", fiber.Map{
+		"participants": participants,
+	})
+}
+
 func GetParticipants(c *fiber.Ctx) error {
 	payload := struct {
 		Name  string `json:"name"`

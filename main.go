@@ -40,6 +40,7 @@ func main() {
 
 	// API - Participants
 	participant := api.Group("/participant")
+	participant.Get("/date", handlers.GetParticipantsByDate)
 	participant.Post("/event/:id", handlers.AddParticipant)
     participant.Post("/find", handlers.GetParticipants)
 	participant.Post("/choose", handlers.ChooseParticipant)
