@@ -1,6 +1,10 @@
 <div class="container">
   <h1>Contact Us</h1>
-  <form hx-post="/api/contact">
+  <form
+    hx-post="/api/contact"
+    hx-swap="none"
+    hx-on::after-request="if(event.detail.successful) this.reset()"
+  >
     <div>
       <label>First Name</label>
       <input placeholder="John" name="firstName" />
