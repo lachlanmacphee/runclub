@@ -1,17 +1,39 @@
 <div class="container">
   <form
-    hx-post="/api/participant/{{ .eventId }}"
+    hx-post="/api/participant/event/{{ .eventId }}"
     hx-target="#participants"
     hx-swap="afterbegin"
     hx-on::after-request="if(event.detail.successful) this.reset()"
   >
     <div>
       <label>Bib</label>
-      <input name="bib" type="number" step="1" required />
+      <input name="bib" type="number" value="1" step="1" required />
     </div>
     <div>
       <label>Name</label>
-      <input name="name" type="text" required />
+      <input
+        id="nameInput"
+        name="name"
+        type="text"
+        placeholder="Begin typing to search past participants..."
+        hx-post="/api/participant/find"
+        hx-trigger="input changed delay:500ms, search"
+        hx-target="#search-results"
+        hx-swap="innerHTML"
+        required
+      />
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Past Participants</th>
+          </tr>
+        </thead>
+        <tbody id="search-results">
+          <tr>
+            <td>No results...</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
     <div>
       <label>Distance</label>

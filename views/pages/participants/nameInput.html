@@ -1,0 +1,12 @@
+<input
+  id="nameInput"
+  name="name"
+  type="text"
+  placeholder="Begin typing to search past participants..."
+  hx-post="/api/participant/find"
+  hx-trigger="input changed delay:500ms, search"
+  hx-target="#search-results"
+  hx-swap="innerHTML"
+  value="{{ .name }}"
+  required
+/>

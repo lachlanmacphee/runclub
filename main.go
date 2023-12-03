@@ -31,18 +31,23 @@ func main() {
 	app.Get("/faq", handlers.Faq)
 	app.Get("/contact", handlers.Contact)
 
+	api := app.Group("/api")
+
 	// API - Events
-	app.Get("/api/event", handlers.GetEvents)
-	app.Post("/api/event", handlers.CreateEvent)
+	api.Get("/event", handlers.GetEvents)
+	api.Post("/event", handlers.CreateEvent)
 
 	// API - Participants
-	app.Post("/api/participant/:id", handlers.AddParticipant)
+	participant := api.Group("/participant")
+	participant.Post("/event/:id", handlers.AddParticipant)
+    participant.Post("/find", handlers.GetParticipants)
+	participant.Post("/choose", handlers.ChooseParticipant)
 
 	// API - Timing
-	app.Post("/api/timing/:eventId/:bib", handlers.TimeParticipant)
+	api.Post("/timing/:eventId/:bib", handlers.TimeParticipant)
 
 	// API - Contacts
-	app.Post("/api/contact", handlers.SendEmail)
+	api.Post("/contact", handlers.SendEmail)
 
     log.Fatal(app.Listen(":5173"))
 }

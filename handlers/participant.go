@@ -44,3 +44,39 @@ func AddParticipant(c *fiber.Ctx) error {
 		"distance": participant.Distance,
 	})
 }
+
+func GetParticipants(c *fiber.Ctx) error {
+	payload := struct {
+		Name  string `json:"name"`
+	}{}
+
+	if err := c.BodyParser(&payload); err != nil {
+		return err
+	}
+
+	db := database.Get()
+	var participants []models.Participant
+	err := db.Where("name LIKE ?", "%" + payload.Name + "%").Find(&participants).Error
+	
+	if err != nil {
+		fmt.Println(err)
+	}
+	
+	return c.Render("pages/participants/searchResults", fiber.Map{
+		"participants": participants,
+	})
+}
+
+func ChooseParticipant(c *fiber.Ctx) error {
+	payload := struct {
+		Name  string `json:"name"`
+	}{}
+
+	if err := c.BodyParser(&payload); err != nil {
+		return err
+	}
+	
+	return c.Render("pages/participants/nameInput", fiber.Map{
+		"name": payload.Name,
+	})
+}
