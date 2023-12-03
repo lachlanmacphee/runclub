@@ -1,6 +1,6 @@
 <div class="container">
   <h1>Contact Us</h1>
-  <form>
+  <form hx-post="/api/contact">
     <div>
       <label>First Name</label>
       <input placeholder="John" name="firstName" />
@@ -11,7 +11,7 @@
     </div>
     <div>
       <label>Email Address</label>
-      <input placeholder="john.smith@email.com" name="email" />
+      <input placeholder="john.smith@email.com" name="emailAddress" />
     </div>
     <div>
       <label>Phone Number</label

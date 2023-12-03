@@ -41,5 +41,8 @@ func main() {
 	// API - Timing
 	app.Post("/api/timing/:eventId/:bib", handlers.TimeParticipant)
 
+	// API - Contacts
+	app.Post("/api/contact", handlers.SendEmail)
+
     log.Fatal(app.Listen(":5173"))
 }
