@@ -38,7 +38,7 @@ export function RunTiming({
           "All participants have crossed the finish line! Redirecting in 5 seconds...",
       });
       setTimeout(() => {
-        navigate("/latestrun");
+        navigate("/runs");
       }, 5000);
     }
     if (isRunComplete) {
