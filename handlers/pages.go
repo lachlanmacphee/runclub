@@ -20,6 +20,26 @@ func Home(c *fiber.Ctx) error {
 	return c.Render("pages/home/index", nil)
 }
 
+func PastEvents(c *fiber.Ctx) error {
+	db := database.Get()
+
+	var participants []models.Participant
+	err := db.Find(&participants).Error
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	if hxRequest := c.Get("HX-Request"); hxRequest == "" {
+		return c.Render("pages/pastEvents/index", fiber.Map{
+			"participants": participants,
+		}, "layout/main")
+	}
+
+	return c.Render("pages/pastEvents/index", fiber.Map{
+		"participants": participants,
+	},)
+}
+
 func Event(c *fiber.Ctx) error {
 	db := database.Get()
 

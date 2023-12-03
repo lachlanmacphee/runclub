@@ -12,11 +12,20 @@
     </li>
     <li>
       <a
+        hx-get="/pastevents"
+        hx-push-url="true"
+        hx-target="#main"
+        style="cursor: pointer"
+        >Past Events</a
+      >
+    </li>
+    <li>
+      <a
         hx-get="/events"
         hx-push-url="true"
         hx-target="#main"
         style="cursor: pointer"
-        >Events</a
+        >New Event</a
       >
     </li>
     <li>

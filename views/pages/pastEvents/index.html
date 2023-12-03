@@ -1,0 +1,21 @@
+<div class="container">
+  <h1>Past Events</h1>
+  <table role="grid">
+    <thead>
+      <tr>
+        <th>Bib</th>
+        <th>Name</th>
+        <th>Distance</th>
+      </tr>
+    </thead>
+    <tbody id="participants">
+      {{range $val := .participants}}
+      <tr>
+        <td>{{ $val.Bib }}</td>
+        <td>{{ $val.Name }}</td>
+        <td>{{ $val.Distance }}</td>
+      </tr>
+      {{end}}
+    </tbody>
+  </table>
+</div>

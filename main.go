@@ -25,6 +25,7 @@ func main() {
 
 	// Pages
     app.Get("/", handlers.Home)
+	app.Get("/pastevents", handlers.PastEvents)
 	app.Get("/events", handlers.Event)
 	app.Get("/participants/:eventId", handlers.Participants)
 	app.Get("/timing/:eventId", handlers.Timing)
