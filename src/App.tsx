@@ -7,6 +7,7 @@ import { SignUp } from "./pages/signUp";
 import { Home } from "./pages/home";
 import { NewRun } from "./pages/newRun";
 import { Runs } from "./pages/runs";
+import { Leaderboard } from "./pages/leaderboard";
 import { FAQs } from "./pages/faqs";
 import { ContactUs } from "./pages/contactUs";
 import { Privacy } from "./pages/privacy";
@@ -27,6 +28,7 @@ export default function App() {
             <Route element={<Layout />}>
               <Route index element={<Home />} />
               <Route path="/runs" element={<Runs />} />
+              <Route path="/leaderboard" element={<Leaderboard />} />
               <Route element={<RequireAuth />}>
                 <Route path="/newrun" element={<NewRun />} />
               </Route>

@@ -1,85 +1,14 @@
 import { useEffect, useState } from "react";
-import { ColumnDef } from "@tanstack/react-table";
 
 import { usePocket } from "@/contexts";
 
-import {
-  convertLocationValueToLabel,
-  formatDateWithSuffix,
-  formatTime,
-} from "@/lib/utils";
+import { convertLocationValueToLabel, formatDateWithSuffix } from "@/lib/utils";
 import { GroupRun, Participant } from "@/lib/types";
 
-import { DataTable } from "@/components/ui/data-table";
-import { Button } from "@/components/ui/button";
+import { RunTable } from "@/components/runTable";
 import { DatePicker } from "@/components/ui/date-picker";
 
-import { Loader2, ArrowUpDown } from "lucide-react";
-
-const runTableColumns: ColumnDef<Participant>[] = [
-  {
-    accessorKey: "position",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          className="px-0 hover:bg-transparent"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          #
-          <ArrowUpDown className="ml-2 h-4 w-4" />
-        </Button>
-      );
-    },
-  },
-  {
-    accessorKey: "name",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          className="px-0 hover:bg-transparent"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Name
-          <ArrowUpDown className="ml-2 h-4 w-4" />
-        </Button>
-      );
-    },
-  },
-  {
-    accessorKey: "distance",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          className="px-0 hover:bg-transparent"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Dist
-          <ArrowUpDown className="ml-2 h-4 w-4" />
-        </Button>
-      );
-    },
-    cell: ({ row }) => `${row.getValue("distance")}km`,
-  },
-  {
-    accessorKey: "time_seconds",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          className="px-0 hover:bg-transparent"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Time
-          <ArrowUpDown className="ml-2 h-4 w-4" />
-        </Button>
-      );
-    },
-    cell: ({ row }) => formatTime(row.getValue("time_seconds")),
-  },
-];
+import { Loader2 } from "lucide-react";
 
 export function Runs() {
   const { pb } = usePocket();
@@ -179,7 +108,7 @@ export function Runs() {
           <Loader2 className="h-12 w-12 animate-spin" />
         </div>
       ) : (
-        <DataTable columns={runTableColumns} data={participants} />
+        <RunTable participants={participants} />
       )}
     </div>
   );

@@ -33,6 +33,11 @@ export function DesktopNavMenu() {
           </NavigationMenuItem>
         )}
         <NavigationMenuItem>
+          <Link to="/leaderboard" className={navigationMenuTriggerStyle()}>
+            Leaderboard
+          </Link>
+        </NavigationMenuItem>
+        <NavigationMenuItem>
           <Link to="/faqs" className={navigationMenuTriggerStyle()}>
             FAQs
           </Link>
