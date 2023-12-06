@@ -15,7 +15,6 @@ import { toast } from "@/components/ui/use-toast";
 import { DatePicker } from "@/components/ui/date-picker";
 import * as uiForm from "@/components/ui/form";
 import * as uiSelect from "@/components/ui/select";
-import * as uiTable from "@/components/ui/table";
 import { Input } from "@/components/ui/input";
 
 // Icons
@@ -181,108 +180,95 @@ export function RunSetup({
               </uiForm.FormItem>
             )}
           />
-          <uiTable.Table className="max-h-64">
-            <uiTable.TableHeader>
-              <uiTable.TableRow>
-                <uiTable.TableHead>Bib</uiTable.TableHead>
-                <uiTable.TableHead>Name</uiTable.TableHead>
-                <uiTable.TableHead>Distance</uiTable.TableHead>
-                <uiTable.TableHead>Actions</uiTable.TableHead>
-              </uiTable.TableRow>
-            </uiTable.TableHeader>
-            <uiTable.TableBody>
-              {fields.map((item, index) => (
-                <uiTable.TableRow key={item.id}>
-                  <uiTable.TableCell>
-                    <Input
-                      type="number"
-                      {...form.register(`participants.${index}.bib`)}
+          <div className="flex flex-col gap-2">
+            <div className="grid grid-cols-[65px_2fr_1fr_40px] gap-x-2">
+              <p>Bib</p>
+              <p>Name</p>
+              <p>Distance</p>
+            </div>
+            {fields.map((item, index) => (
+              <div
+                key={item.id}
+                className="grid grid-cols-[65px_2fr_1fr_40px] gap-x-2"
+              >
+                <Input
+                  type="number"
+                  {...form.register(`participants.${index}.bib`)}
+                />
+                <uiForm.FormField
+                  control={form.control}
+                  name={`participants.${index}.name`}
+                  render={({ field }) => (
+                    <CreatableSelect
+                      {...field}
+                      className="custom-react-select-container"
+                      classNamePrefix="custom-react-select"
+                      placeholder="Select..."
+                      menuPosition="fixed"
+                      options={pastParticipants.map((participant) => {
+                        return {
+                          label: participant.name,
+                          value: participant.user_id
+                            ? participant.user_id
+                            : participant.name,
+                        };
+                      })}
                     />
-                  </uiTable.TableCell>
-                  <uiTable.TableCell>
-                    <uiForm.FormField
-                      control={form.control}
-                      name={`participants.${index}.name`}
-                      render={({ field }) => (
-                        <CreatableSelect
-                          {...field}
-                          className="custom-react-select-container"
-                          classNamePrefix="custom-react-select"
-                          placeholder="Select..."
-                          menuPosition="fixed"
-                          options={pastParticipants.map((participant) => {
-                            return {
-                              label: participant.name,
-                              value: participant.user_id
-                                ? participant.user_id
-                                : participant.name,
-                            };
-                          })}
-                        />
-                      )}
-                    />
-                  </uiTable.TableCell>
-                  <uiTable.TableCell>
-                    <uiForm.FormField
-                      control={form.control}
-                      name={`participants.${index}.distance`}
-                      render={({ field }) => (
-                        <Select
-                          {...field}
-                          className="custom-react-select-container"
-                          classNamePrefix="custom-react-select"
-                          placeholder="Select..."
-                          menuPosition="fixed"
-                          options={distanceOptions}
-                        />
-                      )}
-                    />
-                  </uiTable.TableCell>
-                  <uiTable.TableCell>
-                    {index !== 0 && (
-                      <Button
-                        onClick={() => remove(index)}
-                        variant="destructive"
-                        size="icon"
-                      >
-                        <Trash />
-                      </Button>
-                    )}
-                  </uiTable.TableCell>
-                </uiTable.TableRow>
-              ))}
-              <uiTable.TableRow>
-                <uiTable.TableCell>
-                  <div className="flex items-center space-x-2">
-                    <ArrowDown10 />
-                    <Switch
-                      id="order"
-                      onCheckedChange={(val) => setOrder(val ? 1 : -1)}
-                    />
-                    <ArrowUp10 />
-                  </div>
-                </uiTable.TableCell>
-                <uiTable.TableCell
-                  colSpan={2}
-                  className="font-bold text-destructive"
-                >
-                  {form.formState.errors.participants?.root && (
-                    <p>{form.formState.errors.participants.root.message}</p>
                   )}
-                </uiTable.TableCell>
-                <uiTable.TableCell>
-                  <Button
-                    type="button"
-                    variant="outline"
-                    size="icon"
-                    onClick={addParticipant}
-                  >
-                    <Plus />
-                  </Button>
-                </uiTable.TableCell>
-              </uiTable.TableRow>
-            </uiTable.TableBody>
-          </uiTable.Table>
+                />
+                <uiForm.FormField
+                  control={form.control}
+                  name={`participants.${index}.distance`}
+                  render={({ field }) => (
+                    <Select
+                      {...field}
+                      className="custom-react-select-container"
+                      classNamePrefix="custom-react-select"
+                      placeholder="Select..."
+                      menuPosition="fixed"
+                      options={distanceOptions}
+                    />
+                  )}
+                />
+                {index !== 0 && (
+                  <div className="flex justify-center">
+                    <Button
+                      onClick={() => remove(index)}
+                      variant="destructive"
+                      size="icon"
+                    >
+                      <Trash />
+                    </Button>
+                  </div>
+                )}
+              </div>
+            ))}
+            <div className="grid grid-cols-[1fr_2fr_40px] gap-x-2">
+              <div className="flex items-center space-x-2">
+                <ArrowDown10 />
+                <Switch
+                  id="order"
+                  onCheckedChange={(val) => setOrder(val ? 1 : -1)}
+                />
+                <ArrowUp10 />
+              </div>
+              <span className="font-bold text-destructive">
+                {form.formState.errors.participants?.root && (
+                  <p>{form.formState.errors.participants.root.message}</p>
+                )}
+              </span>
+              <div className="flex justify-center">
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="icon"
+                  onClick={addParticipant}
+                >
+                  <Plus />
+                </Button>
+              </div>
+            </div>
+          </div>
           <div className="flex justify-center">
             <Button type="submit" className="w-48">
               Submit

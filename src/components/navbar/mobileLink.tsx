@@ -19,6 +19,9 @@ export function MobileLink({
   if ((!user || user.role === "member") && path == "/newrun") {
     return null;
   }
+  if ((!user || user.role !== "admin") && path == "/manage") {
+    return null;
+  }
   return (
     <DropdownMenuItem>
       <Link to={path} onClick={() => setter(false)}>

@@ -6,7 +6,7 @@ export const Layout = () => {
   return (
     <>
       <Navbar />
-      <div className="p-8 min-h-[calc(100vh-72px)]">
+      <div className="p-6 min-h-[calc(100vh-72px)]">
         <Outlet />
       </div>
       <Footer />
