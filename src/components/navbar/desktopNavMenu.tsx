@@ -37,6 +37,13 @@ export function DesktopNavMenu() {
             Leaderboard
           </Link>
         </NavigationMenuItem>
+        {user && user?.role === "admin" && (
+          <NavigationMenuItem>
+            <Link to="/manage" className={navigationMenuTriggerStyle()}>
+              Manage
+            </Link>
+          </NavigationMenuItem>
+        )}
         <NavigationMenuItem>
           <Link to="/faqs" className={navigationMenuTriggerStyle()}>
             FAQs

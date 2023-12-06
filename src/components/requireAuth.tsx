@@ -14,5 +14,9 @@ export const RequireAuth = () => {
     return <Navigate to="/" replace />;
   }
 
+  if (user?.role !== "admin" && location.pathname === "/manage") {
+    return <Navigate to="/" replace />;
+  }
+
   return <Outlet />;
 };
