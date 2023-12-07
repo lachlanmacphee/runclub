@@ -10,9 +10,9 @@ export default defineConfig({
       includeAssets: ["favicon.ico", "apple-touch-icon.png", "mask-icon.svg"],
       manifest: {
         name: "Gunn Runners App",
-        short_name: "GunniesApp",
+        short_name: "Gunnies",
         description: "Manage timing and operations for Gunn Runners",
-        theme_color: "#ffffff",
+        theme_color: "var(",
         icons: [
           {
             src: "android-chrome-192x192.png",
