@@ -12,7 +12,7 @@ export default defineConfig({
         name: "Gunn Runners App",
         short_name: "Gunnies",
         description: "Manage timing and operations for Gunn Runners",
-        theme_color: "var(",
+        theme_color: "#ffffff",
         icons: [
           {
             src: "android-chrome-192x192.png",
