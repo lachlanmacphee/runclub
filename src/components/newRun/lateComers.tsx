@@ -69,8 +69,11 @@ export function LateComers({
     <div className="flex flex-col items-center gap-4">
       <h2 className="text-2xl font-bold">Latecomers</h2>
       <uiForm.Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="flex gap-4">
-          <Input type="number" placeholder="Bib" {...form.register(`bib`)} />
+        <form
+          onSubmit={form.handleSubmit(onSubmit)}
+          className="flex flex-col md:flex-row gap-4"
+        >
+          <Input placeholder="Bib" {...form.register(`bib`)} />
           <uiForm.FormField
             control={form.control}
             name="name"

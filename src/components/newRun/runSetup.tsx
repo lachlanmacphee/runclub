@@ -187,10 +187,7 @@ export function RunSetup({
                 key={item.id}
                 className="grid grid-cols-[65px_2fr_1fr_40px] gap-x-2"
               >
-                <Input
-                  type="number"
-                  {...form.register(`participants.${index}.bib`)}
-                />
+                <Input {...form.register(`participants.${index}.bib`)} />
                 <uiForm.FormField
                   control={form.control}
                   name={`participants.${index}.name`}
