@@ -58,3 +58,8 @@ export const mobileLinks = [
   { path: "/faqs", label: "FAQs" },
   { path: "/contact", label: "Contact Us" },
 ];
+
+export const distanceOptions = [
+  { label: "3.5km", value: "3.5" },
+  { label: "5km", value: "5" },
+];

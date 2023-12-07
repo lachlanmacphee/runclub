@@ -2,9 +2,10 @@ import { Dispatch, SetStateAction, useState } from "react";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useFieldArray, useForm } from "react-hook-form";
-import { hasDuplicates } from "@/lib/utils";
 import { usePocket } from "@/contexts";
+import { hasDuplicates } from "@/lib/utils";
 import { Participant } from "@/lib/types";
+import { distanceOptions } from "@/lib/constants";
 
 // Components
 import CreatableSelect from "react-select/creatable";
@@ -43,11 +44,6 @@ const FormSchema = z
       message: "You cannot have duplicate bib numbers.",
     }
   );
-
-const distanceOptions = [
-  { label: "3.5km", value: "3.5" },
-  { label: "5km", value: "5" },
-];
 
 const initialDate = new Date();
 initialDate.setHours(0, 0, 0, 0);
@@ -204,7 +200,6 @@ export function RunSetup({
                       className="custom-react-select-container"
                       classNamePrefix="custom-react-select"
                       placeholder="Select..."
-                      menuPosition="fixed"
                       options={pastParticipants.map((participant) => {
                         return {
                           label: participant.name,
@@ -225,7 +220,6 @@ export function RunSetup({
                       className="custom-react-select-container"
                       classNamePrefix="custom-react-select"
                       placeholder="Select..."
-                      menuPosition="fixed"
                       options={distanceOptions}
                     />
                   )}
