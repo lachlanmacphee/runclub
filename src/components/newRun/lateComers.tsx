@@ -52,6 +52,18 @@ export function LateComers({
   }, [form.formState, form.reset]);
 
   async function onSubmit(data: z.infer<typeof FormSchema>) {
+    const currentBibs: number[] = participants.map(
+      (participant) => participant.bib
+    );
+
+    if (currentBibs.includes(Number(data.bib))) {
+      form.setError("bib", {
+        type: "custom",
+        message: "This bib already exists.",
+      });
+      return;
+    }
+
     const newParticipant: Participant = {
       group_run_id: runId,
       user_id: data.name.value == data.name.label ? undefined : data.name.value,
@@ -65,6 +77,10 @@ export function LateComers({
     setParticipants([...participants, res]);
   }
 
+  const participantNames: string[] = participants.map(
+    (participant) => participant.name
+  );
+
   return (
     <div className="flex flex-col items-center gap-4">
       <h2 className="text-2xl font-bold">Latecomers</h2>
@@ -73,7 +89,17 @@ export function LateComers({
           onSubmit={form.handleSubmit(onSubmit)}
           className="flex flex-col md:flex-row gap-4"
         >
-          <Input placeholder="Bib" {...form.register(`bib`)} />
+          <uiForm.FormField
+            control={form.control}
+            name="bib"
+            render={({ field }) => (
+              <uiForm.FormItem>
+                <Input {...field} placeholder="Bib" />
+                <uiForm.FormMessage />
+              </uiForm.FormItem>
+            )}
+          />
+
           <uiForm.FormField
             control={form.control}
             name="name"
@@ -83,14 +109,19 @@ export function LateComers({
                 className="custom-react-select-container"
                 classNamePrefix="custom-react-select"
                 placeholder="Name"
-                options={pastParticipants.map((participant) => {
-                  return {
-                    label: participant.name,
-                    value: participant.user_id
-                      ? participant.user_id
-                      : participant.name,
-                  };
-                })}
+                options={pastParticipants
+                  .filter(
+                    (participant) =>
+                      !participantNames.includes(participant.name)
+                  )
+                  .map((participant) => {
+                    return {
+                      label: participant.name,
+                      value: participant.user_id
+                        ? participant.user_id
+                        : participant.name,
+                    };
+                  })}
               />
             )}
           />
