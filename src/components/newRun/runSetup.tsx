@@ -110,6 +110,9 @@ export function RunSetup({
   }
 
   const participants = form.getValues("participants");
+  const participantNames: string[] = participants.map(
+    (participant) => participant.name?.label
+  );
   const participantsLength = participants.length;
   const newBibNumber = Number(participants[participantsLength - 1].bib) + order;
 
@@ -197,14 +200,19 @@ export function RunSetup({
                       className="custom-react-select-container"
                       classNamePrefix="custom-react-select"
                       placeholder="Select..."
-                      options={pastParticipants.map((participant) => {
-                        return {
-                          label: participant.name,
-                          value: participant.user_id
-                            ? participant.user_id
-                            : participant.name,
-                        };
-                      })}
+                      options={pastParticipants
+                        .filter(
+                          (participant) =>
+                            !participantNames.includes(participant.name)
+                        )
+                        .map((participant) => {
+                          return {
+                            label: participant.name,
+                            value: participant.user_id
+                              ? participant.user_id
+                              : participant.name,
+                          };
+                        })}
                     />
                   )}
                 />
