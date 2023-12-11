@@ -2,9 +2,10 @@ import { Dispatch, SetStateAction, useState } from "react";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useFieldArray, useForm } from "react-hook-form";
-import { hasDuplicates } from "@/lib/utils";
 import { usePocket } from "@/contexts";
+import { hasDuplicates } from "@/lib/utils";
 import { Participant } from "@/lib/types";
+import { distanceOptions } from "@/lib/constants";
 
 // Components
 import CreatableSelect from "react-select/creatable";
@@ -43,11 +44,6 @@ const FormSchema = z
       message: "You cannot have duplicate bib numbers.",
     }
   );
-
-const distanceOptions = [
-  { label: "3.5km", value: "3.5" },
-  { label: "5km", value: "5" },
-];
 
 const initialDate = new Date();
 initialDate.setHours(0, 0, 0, 0);
@@ -114,6 +110,9 @@ export function RunSetup({
   }
 
   const participants = form.getValues("participants");
+  const participantNames: string[] = participants.map(
+    (participant) => participant.name?.label
+  );
   const participantsLength = participants.length;
   const newBibNumber = Number(participants[participantsLength - 1].bib) + order;
 
@@ -191,10 +190,7 @@ export function RunSetup({
                 key={item.id}
                 className="grid grid-cols-[65px_2fr_1fr_40px] gap-x-2"
               >
-                <Input
-                  type="number"
-                  {...form.register(`participants.${index}.bib`)}
-                />
+                <Input {...form.register(`participants.${index}.bib`)} />
                 <uiForm.FormField
                   control={form.control}
                   name={`participants.${index}.name`}
@@ -204,15 +200,19 @@ export function RunSetup({
                       className="custom-react-select-container"
                       classNamePrefix="custom-react-select"
                       placeholder="Select..."
-                      menuPosition="fixed"
-                      options={pastParticipants.map((participant) => {
-                        return {
-                          label: participant.name,
-                          value: participant.user_id
-                            ? participant.user_id
-                            : participant.name,
-                        };
-                      })}
+                      options={pastParticipants
+                        .filter(
+                          (participant) =>
+                            !participantNames.includes(participant.name)
+                        )
+                        .map((participant) => {
+                          return {
+                            label: participant.name,
+                            value: participant.user_id
+                              ? participant.user_id
+                              : participant.name,
+                          };
+                        })}
                     />
                   )}
                 />
@@ -225,7 +225,6 @@ export function RunSetup({
                       className="custom-react-select-container"
                       classNamePrefix="custom-react-select"
                       placeholder="Select..."
-                      menuPosition="fixed"
                       options={distanceOptions}
                     />
                   )}

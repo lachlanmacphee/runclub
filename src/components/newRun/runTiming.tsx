@@ -91,8 +91,7 @@ export function RunTiming({
           <Button
             onClick={() => markParticipant(participant.bib)}
             key={participant.bib}
-            className="w-24 h-16 font-bold text-xl"
-            size="lg"
+            className="md:w-24 md:h-16 font-bold text-xl"
             variant={completed[participant.bib] ? "secondary" : "default"}
             disabled={!isRunning}
           >

@@ -12,7 +12,10 @@ export function Navbar() {
     <div className="flex justify-between py-4 px-8 items-center">
       <Link to="/" className="normal-case font-bold text-2xl w-[250px]">
         <div className="flex gap-4 items-center">
-          <img className="w-10 h-10 rounded-full" src="/gunnieslogo.png" />
+          <img
+            className="w-10 h-10 rounded-full"
+            src="/android-chrome-512x512.png"
+          />
           <span>Gunn Runners</span>
         </div>
       </Link>

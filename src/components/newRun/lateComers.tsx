@@ -6,17 +6,19 @@ import * as z from "zod";
 import { usePocket } from "@/contexts";
 import { usePastParticipants } from "@/hooks/usePastParticipants";
 
+import { Participant } from "@/lib/types";
+import { distanceOptions } from "@/lib/constants";
+
+import Select from "react-select";
 import CreatableSelect from "react-select/creatable";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import * as uiForm from "@/components/ui/form";
 
-import { Participant } from "@/lib/types";
-
 const FormSchema = z.object({
   bib: z.string(),
   name: z.object({ value: z.string(), label: z.string() }),
-  distance: z.string(),
+  distance: z.object({ value: z.string(), label: z.string() }),
 });
 
 export function LateComers({
@@ -38,7 +40,7 @@ export function LateComers({
       bib: "",
       // @ts-ignore
       name: null,
-      distance: "",
+      distance: distanceOptions[1],
     },
   });
 
@@ -54,7 +56,7 @@ export function LateComers({
       group_run_id: runId,
       user_id: data.name.value == data.name.label ? undefined : data.name.value,
       name: data.name.label,
-      distance: Number(data.distance),
+      distance: Number(data.distance.value),
       bib: Number(data.bib),
     };
     const res = (await pb
@@ -67,8 +69,11 @@ export function LateComers({
     <div className="flex flex-col items-center gap-4">
       <h2 className="text-2xl font-bold">Latecomers</h2>
       <uiForm.Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="flex gap-4">
-          <Input type="number" placeholder="Bib" {...form.register(`bib`)} />
+        <form
+          onSubmit={form.handleSubmit(onSubmit)}
+          className="flex flex-col md:flex-row gap-4"
+        >
+          <Input placeholder="Bib" {...form.register(`bib`)} />
           <uiForm.FormField
             control={form.control}
             name="name"
@@ -78,7 +83,6 @@ export function LateComers({
                 className="custom-react-select-container"
                 classNamePrefix="custom-react-select"
                 placeholder="Name"
-                menuPosition="fixed"
                 options={pastParticipants.map((participant) => {
                   return {
                     label: participant.name,
@@ -90,11 +94,18 @@ export function LateComers({
               />
             )}
           />
-          <Input
-            step={0.5}
-            type="number"
-            placeholder="Distance"
-            {...form.register(`distance`)}
+          <uiForm.FormField
+            control={form.control}
+            name="distance"
+            render={({ field }) => (
+              <Select
+                {...field}
+                className="custom-react-select-container"
+                classNamePrefix="custom-react-select"
+                placeholder="Select..."
+                options={distanceOptions}
+              />
+            )}
           />
           <Button type="submit">Add</Button>
         </form>
