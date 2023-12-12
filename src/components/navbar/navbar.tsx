@@ -40,15 +40,13 @@ export function Navbar() {
               className="w-10 h-10 rounded-full"
               src="/android-chrome-512x512.png"
             />
-            <span>Gunn Runners</span>
+            <span className="hidden md:block">Gunn Runners</span>
           </div>
         </Link>
         <DesktopNavMenu />
         <div className="flex gap-3 justify-end w-[250px]">
           <AvatarIconModal />
-          <span className="hidden xl:block">
-            <ModeToggle />
-          </span>
+          <ModeToggle />
           <LogInOut />
           <MobileNavMenu />
         </div>

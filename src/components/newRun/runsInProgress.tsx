@@ -38,7 +38,7 @@ export function RunsInProgress({
       <h1 className="text-5xl font-bold">In Progress Runs</h1>
       <p>Would you like to continue a current run or create a new one?</p>
       {inProgressRuns.map((run) => (
-        <Card className="w-[350px]">
+        <Card className="w-[350px]" key={run.id}>
           <CardHeader>
             <CardTitle>{convertLocationValueToLabel(run.location)}</CardTitle>
             <CardDescription>
