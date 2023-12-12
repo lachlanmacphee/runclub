@@ -18,7 +18,7 @@ export function ManageClub() {
             >
               here
             </a>{" "}
-            to visit the Pocketbase GUI. You will need to modify the
+            to visit the Pocketbase GUI. You will need to modify records in the
             participant_runs collection.
           </p>
         </div>
