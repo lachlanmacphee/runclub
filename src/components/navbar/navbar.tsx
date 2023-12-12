@@ -7,11 +7,12 @@ import { AvatarIconModal } from "./avatar";
 import { ModeToggle } from "./mode-toggle";
 import { LogInOut } from "./logInOut";
 import { AnnouncementBanner } from "./announcementBanner";
+import { AnnouncementTypes } from "@/lib/constants";
 
 export function Navbar() {
   return (
     <>
-      <AnnouncementBanner />
+      <AnnouncementBanner type={AnnouncementTypes.ChristmasParty} />
       <div className="flex justify-between py-4 px-8 items-center">
         <Link to="/" className="normal-case font-bold text-2xl w-[250px]">
           <div className="flex gap-4 items-center">

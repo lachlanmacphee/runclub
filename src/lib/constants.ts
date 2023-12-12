@@ -63,3 +63,24 @@ export const distanceOptions = [
   { label: "3.5km", value: "3.5" },
   { label: "5km", value: "5" },
 ];
+
+export enum AnnouncementTypes {
+  GrandPrix = "grandPrix",
+  ChristmasParty = "christmasParty",
+  NoRun = "noRun",
+}
+
+export const announcementTypes = {
+  [AnnouncementTypes.GrandPrix]: "Grand Prix",
+  [AnnouncementTypes.ChristmasParty]: "Christmas Party",
+  [AnnouncementTypes.NoRun]: "No Run",
+};
+
+export const announcementMessages = {
+  [AnnouncementTypes.GrandPrix]:
+    "Due to the Grand Prix, there will be no run this week.",
+  [AnnouncementTypes.ChristmasParty]:
+    "Christmas party this week! Meet at the rotunda. The run will be self-timed.",
+  [AnnouncementTypes.NoRun]:
+    "Unfortunately there will be no run this week due to circumstances out of our control.",
+};

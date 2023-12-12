@@ -8,11 +8,11 @@ import {
   FormControl,
   FormField,
   FormItem,
-  FormLabel,
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { toast } from "@/components/ui/use-toast";
+import { Button } from "../ui/button";
 
 const FormSchema = z.object({
   name: z.string(),
@@ -22,7 +22,7 @@ export function ClubNameForm() {
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
-      name: "",
+      name: "Gunn Runners",
     },
   });
 
@@ -41,25 +41,25 @@ export function ClubNameForm() {
   }, []);
 
   return (
-    <Form {...form}>
-      <form
-        onSubmit={form.handleSubmit(onSubmit)}
-        className="flex flex-col gap-4"
-      >
-        <FormField
-          control={form.control}
-          name="name"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Club Name</FormLabel>
-              <FormControl>
-                <Input placeholder="Club Name" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-      </form>
-    </Form>
+    <div className="flex flex-col gap-2">
+      <h2 className="font-bold text-2xl">Club Name</h2>
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(onSubmit)} className="flex gap-4">
+          <FormField
+            control={form.control}
+            name="name"
+            render={({ field }) => (
+              <FormItem>
+                <FormControl>
+                  <Input {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <Button type="submit">Update</Button>
+        </form>
+      </Form>
+    </div>
   );
 }
