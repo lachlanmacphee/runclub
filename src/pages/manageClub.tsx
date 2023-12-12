@@ -8,9 +8,9 @@ export function ManageClub() {
         <ClubNameForm />
         <Announcements />
         <div className="flex flex-col gap-2">
-          <h2 className="font-bold text-2xl">Edit Past Runs</h2>
+          <h2 className="font-bold text-2xl">Edit User Roles & Past Runs</h2>
           <p>
-            To edit past runs, please click{" "}
+            To edit user roles and past runs, please click{" "}
             <a
               href="https://gunniesapp.fly.dev/_/"
               target="_blank"
@@ -19,7 +19,7 @@ export function ManageClub() {
               here
             </a>{" "}
             to visit the Pocketbase GUI. You will need to modify records in the
-            participant_runs collection.
+            users and/or participant_runs collection.
           </p>
         </div>
       </div>
