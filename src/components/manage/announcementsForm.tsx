@@ -17,6 +17,7 @@ import { AnnouncementTypes, announcementTypes } from "@/lib/constants";
 import { AnnouncementBanner } from "../navbar/announcementBanner";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
+import { usePocket } from "@/contexts";
 
 const FormSchema = z.object({
   type: z.nativeEnum(AnnouncementTypes),
@@ -24,6 +25,8 @@ const FormSchema = z.object({
 });
 
 export function Announcements() {
+  const { pb } = usePocket();
+
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
@@ -34,19 +37,37 @@ export function Announcements() {
 
   const currentType = form.watch("type");
 
-  const onSubmit = useCallback(async (data: z.infer<typeof FormSchema>) => {
-    try {
-      // do something with data
-      console.log(data);
-    } catch {
-      toast({
-        title: "Update Failed",
-        variant: "destructive",
-        duration: 3000,
-        description: "Failed to update the announcement...",
-      });
-    }
-  }, []);
+  const onSubmit = useCallback(
+    async (data: z.infer<typeof FormSchema>) => {
+      try {
+        const announcementEndTime =
+          Date.now() + 1000 * 60 * 60 * 24 * Number(data.daysToShow);
+
+        const recordData = {
+          endUnixTime: announcementEndTime,
+          type: data.type,
+        };
+
+        await pb.collection("announcements").create(recordData);
+
+        toast({
+          title: "Announcement Updated",
+          duration: 3000,
+          description: `Updated the announcement to type ${
+            announcementTypes[data.type]
+          } for the next ${data.daysToShow} day/s.`,
+        });
+      } catch {
+        toast({
+          title: "Update Failed",
+          variant: "destructive",
+          duration: 3000,
+          description: "Failed to update the announcement...",
+        });
+      }
+    },
+    [pb]
+  );
 
   return (
     <div className="flex flex-col gap-2">
@@ -102,10 +123,10 @@ export function Announcements() {
               </FormItem>
             )}
           />
+          <Button type="submit" className="max-w-sm mt-3">
+            Update
+          </Button>
         </form>
-        <Button type="submit" className="max-w-sm mt-3">
-          Update
-        </Button>
       </Form>
     </div>
   );

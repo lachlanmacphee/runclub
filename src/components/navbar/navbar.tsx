@@ -7,12 +7,32 @@ import { AvatarIconModal } from "./avatar";
 import { ModeToggle } from "./mode-toggle";
 import { LogInOut } from "./logInOut";
 import { AnnouncementBanner } from "./announcementBanner";
-import { AnnouncementTypes } from "@/lib/constants";
+import { useEffect, useState } from "react";
+import { usePocket } from "@/contexts";
+import { RecordModel } from "pocketbase";
+
+const currentTime = Date.now();
 
 export function Navbar() {
+  const { pb } = usePocket();
+  const [announcement, setAnnouncement] = useState<RecordModel | null>(null);
+
+  useEffect(() => {
+    async function fetchLatestAnnouncement() {
+      const record = await pb.collection("announcements").getList(1, 1, {
+        sort: "-created",
+      });
+      setAnnouncement(record.items[0]);
+    }
+    fetchLatestAnnouncement();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <>
-      <AnnouncementBanner type={AnnouncementTypes.ChristmasParty} />
+      {announcement && currentTime <= announcement.endUnixTime && (
+        <AnnouncementBanner type={announcement.type} />
+      )}
       <div className="flex justify-between py-4 px-8 items-center">
         <Link to="/" className="normal-case font-bold text-2xl w-[250px]">
           <div className="flex gap-4 items-center">
