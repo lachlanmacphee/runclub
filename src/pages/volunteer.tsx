@@ -2,9 +2,10 @@ import { useEffect, useState } from "react";
 
 import { usePocket } from "@/contexts";
 import { getTuesdaysForNext3Months } from "@/lib/utils";
-
-import { Button } from "@/components/ui/button";
 import { User } from "@/lib/types";
+
+import { toast } from "@/components/ui/use-toast";
+import { Button } from "@/components/ui/button";
 
 type Volunteer = {
   run_date: Date;
@@ -29,6 +30,22 @@ export function Volunteer() {
   const [isLoading, setIsLoading] = useState(false);
 
   const signUpToVolunteer = async (run_date: Date, user_id: string) => {
+    const res = await pb.collection("volunteers").getFullList({
+      filter: pb.filter("run_date = {:run_date}", {
+        run_date,
+      }),
+    });
+    if (res.length == 2) {
+      toast({
+        title: "Volunteer Signup Failed",
+        variant: "destructive",
+        duration: 5000,
+        description:
+          "There are already 2 volunteers signed up for this run. Please refresh the page to get the latest data",
+      });
+      return;
+    }
+    // should have a check here to confirm that two volunteers aren't already signed up (in case the page hasn't been refreshed for a while)
     await pb.collection("volunteers").create({ run_date, user_id });
     const volunteer: Volunteer = {
       run_date,
