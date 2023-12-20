@@ -16,7 +16,10 @@ export function MobileLink({
   user: User | null;
   setter: Dispatch<SetStateAction<boolean>>;
 }) {
-  if ((!user || user.role === "member") && path == "/newrun") {
+  if (
+    (!user || user.role === "member") &&
+    ["/newrun", "/volunteer"].includes(path)
+  ) {
     return null;
   }
   if ((!user || user.role !== "admin") && path == "/manage") {

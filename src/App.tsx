@@ -6,6 +6,7 @@ import { Login } from "./pages/login";
 import { SignUp } from "./pages/signUp";
 import { Home } from "./pages/home";
 import { NewRun } from "./pages/newRun";
+import { Volunteer } from "./pages/volunteer";
 import { Runs } from "./pages/runs";
 import { Leaderboard } from "./pages/leaderboard";
 import { ManageClub } from "./pages/manageClub";
@@ -32,6 +33,7 @@ export default function App() {
               <Route path="/leaderboard" element={<Leaderboard />} />
               <Route element={<RequireAuth />}>
                 <Route path="/newrun" element={<NewRun />} />
+                <Route path="/volunteer" element={<Volunteer />} />
                 <Route path="/manage" element={<ManageClub />} />
               </Route>
               <Route path="/faqs" element={<FAQs />} />

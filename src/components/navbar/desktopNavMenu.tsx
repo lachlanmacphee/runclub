@@ -32,6 +32,13 @@ export function DesktopNavMenu() {
             </Link>
           </NavigationMenuItem>
         )}
+        {user && user?.role !== "member" && (
+          <NavigationMenuItem>
+            <Link to="/volunteer" className={navigationMenuTriggerStyle()}>
+              Volunteer
+            </Link>
+          </NavigationMenuItem>
+        )}
         <NavigationMenuItem>
           <Link to="/leaderboard" className={navigationMenuTriggerStyle()}>
             Leaderboard

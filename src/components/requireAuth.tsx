@@ -10,7 +10,10 @@ export const RequireAuth = () => {
     return <Navigate to="/" replace />;
   }
 
-  if (user?.role === "member" && location.pathname === "/newrun") {
+  if (
+    user?.role === "member" &&
+    ["/newrun", "/volunteer"].includes(location.pathname)
+  ) {
     return <Navigate to="/" replace />;
   }
 

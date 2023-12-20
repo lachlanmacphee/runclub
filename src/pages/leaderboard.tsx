@@ -32,8 +32,6 @@ export function Leaderboard() {
           filter: pb.filter("distance = {:distance}", { distance: 3.5 }),
         });
 
-      console.log(fiveKmParticipants);
-
       const participants: Participant[] = [
         ...threePointFiveKmParticipants,
         ...fiveKmParticipants,

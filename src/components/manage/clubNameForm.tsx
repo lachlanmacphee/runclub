@@ -1,4 +1,4 @@
-import { useCallback } from "react";
+// import { useCallback } from "react";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -11,7 +11,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { toast } from "@/components/ui/use-toast";
+// import { toast } from "@/components/ui/use-toast";
 import { Button } from "../ui/button";
 
 const FormSchema = z.object({
@@ -26,25 +26,25 @@ export function ClubNameForm() {
     },
   });
 
-  const onSubmit = useCallback(async (data: z.infer<typeof FormSchema>) => {
-    try {
-      // do something with data
-      console.log(data);
-    } catch {
-      toast({
-        title: "Update Failed",
-        variant: "destructive",
-        duration: 3000,
-        description: "We couldn't change the team name...",
-      });
-    }
-  }, []);
+  // const onSubmit = useCallback(async (data: z.infer<typeof FormSchema>) => {
+  //   try {
+  //     console.log(data)
+  //   } catch {
+  //     toast({
+  //       title: "Update Failed",
+  //       variant: "destructive",
+  //       duration: 3000,
+  //       description: "We couldn't change the team name...",
+  //     });
+  //   }
+  // }, []);
 
   return (
     <div className="flex flex-col gap-2">
       <h2 className="font-bold text-2xl">Club Name</h2>
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="flex gap-4">
+        {/* onSubmit={form.handleSubmit(onSubmit)} */}
+        <form className="flex gap-4">
           <FormField
             control={form.control}
             name="name"
