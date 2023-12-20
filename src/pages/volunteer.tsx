@@ -130,7 +130,8 @@ export function Volunteer() {
                 }
                 disabled={
                   volunteerTwo?.user_id === user.id ||
-                  volunteerOne?.user_id !== user.id
+                  (volunteerOne?.user_id !== undefined &&
+                    volunteerOne?.user_id !== user.id)
                 }
                 onClick={() =>
                   volunteerOne?.user_id === user.id
@@ -146,7 +147,8 @@ export function Volunteer() {
                 }
                 disabled={
                   volunteerOne?.user_id === user.id ||
-                  volunteerTwo?.user_id !== user.id
+                  (volunteerTwo?.user_id !== undefined &&
+                    volunteerTwo?.user_id !== user.id)
                 }
                 onClick={() =>
                   volunteerTwo?.user_id === user.id
