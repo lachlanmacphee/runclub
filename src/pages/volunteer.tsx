@@ -128,27 +128,33 @@ export function Volunteer() {
                 variant={
                   volunteerOne?.user_id === user.id ? "destructive" : "outline"
                 }
-                disabled={volunteerTwo?.user_id === user.id}
+                disabled={
+                  volunteerTwo?.user_id === user.id ||
+                  volunteerOne?.user_id !== user.id
+                }
                 onClick={() =>
                   volunteerOne?.user_id === user.id
                     ? optOutOfVolunteering(date, user.id)
                     : signUpToVolunteer(date, user.id)
                 }
               >
-                {volunteerOne?.expand.user_id.name ?? "Click to volunteer"}
+                {volunteerOne?.expand?.user_id.name ?? "Click to volunteer"}
               </Button>
               <Button
                 variant={
                   volunteerTwo?.user_id === user.id ? "destructive" : "outline"
                 }
-                disabled={volunteerOne?.user_id === user.id}
+                disabled={
+                  volunteerOne?.user_id === user.id ||
+                  volunteerTwo?.user_id !== user.id
+                }
                 onClick={() =>
                   volunteerTwo?.user_id === user.id
                     ? optOutOfVolunteering(date, user.id)
                     : signUpToVolunteer(date, user.id)
                 }
               >
-                {volunteerTwo?.expand.user_id.name ?? "Click to volunteer"}
+                {volunteerTwo?.expand?.user_id.name ?? "Click to volunteer"}
               </Button>
             </div>
           );
