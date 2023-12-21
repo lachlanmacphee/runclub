@@ -19,7 +19,8 @@ export type PocketContextType = {
     name: string,
     email: string,
     password: string,
-    passwordConfirm: string
+    passwordConfirm: string,
+    isVolunteer: boolean
   ) => Promise<RecordModel>;
   login: (
     email: string,
@@ -57,11 +58,16 @@ export const PocketProvider = ({ children }: PocketProviderProps) => {
       name: string,
       email: string,
       password: string,
-      passwordConfirm: string
+      passwordConfirm: string,
+      isVolunteer: boolean
     ) => {
-      return await pb
-        .collection("users")
-        .create({ name, email, password, passwordConfirm, role: "member" });
+      return await pb.collection("users").create({
+        name,
+        email,
+        password,
+        passwordConfirm,
+        role: isVolunteer ? "moderator" : "member",
+      });
     },
     [pb]
   );
