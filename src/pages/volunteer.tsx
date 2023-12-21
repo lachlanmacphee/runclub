@@ -52,15 +52,13 @@ export function Volunteer() {
       user_id,
       expand: { user_id: { name: user.name } },
     };
-    const tempVolunteers = { ...volunteers };
 
-    const exists = tempVolunteers[run_date.toISOString()];
-    if (!exists) {
-      tempVolunteers[run_date.toISOString()] = [volunteer];
-    } else {
-      tempVolunteers[run_date.toISOString()].push(volunteer);
-    }
-    setVolunteers(tempVolunteers);
+    const dateStr = run_date.toISOString();
+    const newVolunteers = {
+      ...volunteers,
+      [dateStr]: [...(volunteers[dateStr] ?? []), volunteer],
+    };
+    setVolunteers(newVolunteers);
   };
 
   const optOutOfVolunteering = async (run_date: Date, user_id: string) => {
@@ -71,11 +69,14 @@ export function Volunteer() {
       })
     );
     await pb.collection("volunteers").delete(res.id);
-    const tempVolunteers = { ...volunteers };
-    tempVolunteers[run_date.toISOString()] = tempVolunteers[
-      run_date.toISOString()
-    ].filter((volunteer) => volunteer.user_id !== user_id);
-    setVolunteers(tempVolunteers);
+    const dateStr = run_date.toISOString();
+    const newVolunteers = {
+      ...volunteers,
+      [dateStr]: (volunteers[dateStr] ?? []).filter(
+        (volunteer) => volunteer.user_id !== user.id
+      ),
+    };
+    setVolunteers(newVolunteers);
   };
 
   useEffect(() => {
@@ -96,17 +97,11 @@ export function Volunteer() {
         });
       const tempVolunteers: { [key: string]: Volunteer[] } = {};
       resVolunteers.map((volunteer) => {
-        const exists =
-          tempVolunteers[new Date(volunteer.run_date).toISOString()];
-        if (!exists) {
-          tempVolunteers[new Date(volunteer.run_date).toISOString()] = [
-            volunteer,
-          ];
-        } else {
-          tempVolunteers[new Date(volunteer.run_date).toISOString()].push(
-            volunteer
-          );
-        }
+        const dateStr = new Date(volunteer.run_date).toISOString();
+        tempVolunteers[dateStr] = [
+          ...(tempVolunteers[dateStr] ?? []),
+          volunteer,
+        ];
       });
       setVolunteers(tempVolunteers);
       setIsLoading(false);
