@@ -118,8 +118,8 @@ export function Volunteer() {
 
   return (
     <div className="flex justify-center">
-      <div className="flex flex-col gap-2 w-10/12 max-w-3xl">
-        <div className="grid grid-cols-3 gap-8 mb-2 font-bold">
+      <div className="flex flex-col gap-4 w-10/12 max-w-3xl">
+        <div className="grid grid-cols-3 gap-4 font-bold">
           <p>Date</p>
           <p>Volunteer One</p>
           <p>Volunteer Two</p>
@@ -138,7 +138,7 @@ export function Volunteer() {
           return (
             <div
               key={date.toISOString()}
-              className="grid grid-cols-3 gap-8 items-center"
+              className="grid grid-cols-3 gap-4 items-center"
             >
               <p>{date.toLocaleDateString()}</p>
               <Button
@@ -155,8 +155,9 @@ export function Volunteer() {
                     ? optOutOfVolunteering(date, user.id)
                     : signUpToVolunteer(date, user.id)
                 }
+                className="h-full whitespace-normal"
               >
-                {volunteerOne?.expand?.user_id.name ?? "Click to volunteer"}
+                {volunteerOne?.expand?.user_id.name ?? "Volunteer"}
               </Button>
               <Button
                 variant={
@@ -172,8 +173,9 @@ export function Volunteer() {
                     ? optOutOfVolunteering(date, user.id)
                     : signUpToVolunteer(date, user.id)
                 }
+                className="h-full whitespace-normal"
               >
-                {volunteerTwo?.expand?.user_id.name ?? "Click to volunteer"}
+                {volunteerTwo?.expand?.user_id.name ?? "Volunteer"}
               </Button>
             </div>
           );
