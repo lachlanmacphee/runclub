@@ -27,7 +27,7 @@ export function MobileLink({
   }
   return (
     <DropdownMenuItem>
-      <Link to={path} onClick={() => setter(false)}>
+      <Link to={path} className="w-full" onClick={() => setter(false)}>
         {label}
       </Link>
     </DropdownMenuItem>
