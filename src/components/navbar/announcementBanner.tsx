@@ -1,24 +1,25 @@
-import { AnnouncementTypes, announcementMessages } from "@/lib/constants";
 import { AlertCircle, Car, PartyPopper } from "lucide-react";
 
 type AnnouncementBannerProps = {
-  type: AnnouncementTypes;
+  icon: string;
+  message: string;
   isPreview?: boolean;
 };
 
-function getIconForType(type: AnnouncementTypes) {
-  switch (type) {
-    case AnnouncementTypes.NoRun:
+function getIcon(icon: string) {
+  switch (icon) {
+    case "Alert":
       return <AlertCircle />;
-    case AnnouncementTypes.GrandPrix:
+    case "Car":
       return <Car />;
-    case AnnouncementTypes.ChristmasParty:
+    case "Party":
       return <PartyPopper />;
   }
 }
 
 export function AnnouncementBanner({
-  type,
+  icon,
+  message,
   isPreview,
 }: AnnouncementBannerProps) {
   return (
@@ -27,8 +28,12 @@ export function AnnouncementBanner({
         isPreview && "rounded-lg"
       }`}
     >
-      {getIconForType(type)}
-      <span>{announcementMessages[type]}</span>
+      {getIcon(icon)}
+      <span>
+        {isPreview && message === ""
+          ? "Your message will appear here"
+          : message}
+      </span>
     </div>
   );
 }

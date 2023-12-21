@@ -31,7 +31,10 @@ export function Navbar() {
   return (
     <>
       {announcement && currentTime <= announcement.endUnixTime && (
-        <AnnouncementBanner type={announcement.type} />
+        <AnnouncementBanner
+          icon={announcement.icon}
+          message={announcement.message}
+        />
       )}
       <div className="flex justify-between py-4 px-8 items-center">
         <Link to="/" className="normal-case font-bold text-2xl w-[250px]">
