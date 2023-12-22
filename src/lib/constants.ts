@@ -34,7 +34,7 @@ export const FAQData = [
   {
     question: "What is the history of Gunn Runners?",
     answer:
-      'Originally set up 18 years ago by a group of friends, the Gunn Runners met at the Gunn Island Hotel once a week for a simple "Run and a Beer". The format remains much the same, with the group now meeting at the Limerick Arms Hotel in South Melbourne.',
+      'Originally set up 21 years ago by a group of friends, the Gunn Runners met at the Gunn Island Hotel once a week for a simple "Run and a Beer". The format remains much the same, with the group now meeting at the Limerick Arms Hotel in South Melbourne.',
   },
 ];
 
