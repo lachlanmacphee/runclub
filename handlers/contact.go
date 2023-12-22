@@ -15,20 +15,8 @@ func SendEmail(c *fiber.Ctx) error {
 		PhoneNumber string `json:"phoneNumber"`
 		Subject string `json:"subject"`
 		Comments string `json:"comments"`
-
 	}{}
 
-	from := "info@gunnies.app"
-	password := "<Email Password>"
-  
-	to := []string{
-	  "info@gunnies.app",
-	}
-  
-	// smtp server configuration.
-	smtpHost := "smtp.gmail.com"
-	smtpPort := "587"
-  
 	// Message.
 	message := []byte(fmt.Sprintf(`
 	From: %s %s
@@ -36,6 +24,17 @@ func SendEmail(c *fiber.Ctx) error {
 	Subject: %s
 	Comments: %s
 	`, payload.FirstName, payload.LastName, payload.PhoneNumber, payload.Subject, payload.Comments))
+  
+	// smtp server configuration.
+	smtpHost := "smtp.gmail.com"
+	smtpPort := "587"
+  
+	from := "your-email-address-here"
+	password := "your-email-password-here"
+  
+	to := []string{
+	  "your-email-address-here",
+	}
 	
 	// Authentication.
 	auth := smtp.PlainAuth("", from, password, smtpHost)
