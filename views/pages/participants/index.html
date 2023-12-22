@@ -3,11 +3,11 @@
     hx-post="/api/participant/event/{{ .eventId }}"
     hx-target="#participants"
     hx-swap="afterbegin"
-    hx-on::after-request="if(event.detail.successful && event.detail.target.id != 'search-results') this.reset()"
+    hx-on::after-request="if(event.detail.successful && event.detail.target.id != 'search-results') resetForm()"
   >
     <div>
       <label>Bib</label>
-      <input name="bib" type="number" value="1" step="1" required />
+      <input id="bib" name="bib" type="number" value="1" step="1" required />
     </div>
     <div>
       <label>Name</label>
@@ -37,7 +37,14 @@
     </div>
     <div>
       <label>Distance</label>
-      <input name="distance" type="number" value="5.0" step="0.5" required />
+      <input
+        id="distanceInput"
+        name="distance"
+        type="number"
+        value="5.0"
+        step="0.5"
+        required
+      />
     </div>
     <button id="addParticipant" type="submit">Add</button>
   </form>
@@ -68,3 +75,15 @@
     </tbody>
   </table>
 </div>
+<script>
+  function resetForm() {
+    var nameInput = document.getElementById("nameInput");
+    nameInput.value = nameInput.defaultValue;
+
+    var distanceInput = document.getElementById("distanceInput");
+    distanceInput.value = distanceInput.defaultValue;
+
+    var bibInput = document.getElementById("bib");
+    bibInput.value = (parseInt(bibInput.value) + 1).toString();
+  }
+</script>

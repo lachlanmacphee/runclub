@@ -92,7 +92,7 @@ func Participants(c *fiber.Ctx) error {
 	}
 
 	var participants []models.Participant
-	err = db.Find(&participants, models.Participant{EventID: eventIdInt}).Error
+	err = db.Order("bib desc").Find(&participants, models.Participant{EventID: eventIdInt}).Error
 	if err != nil {
 		fmt.Println(err)
 	}
