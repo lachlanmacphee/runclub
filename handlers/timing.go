@@ -40,7 +40,7 @@ func TimeParticipant(c *fiber.Ctx) error {
 
 	if count == 0 {
 		db.Model(&models.Event{}).Where("id = ?", eventId).Update("is_complete", true)
-		c.Set("HX-Redirect", "/events")
+		c.Set("HX-Redirect", "/pastevents")
 		return c.SendStatus(200)
 	}
 	
