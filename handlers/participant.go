@@ -97,17 +97,3 @@ func GetParticipants(c *fiber.Ctx) error {
 		"names": names,
 	})
 }
-
-func ChooseParticipant(c *fiber.Ctx) error {
-	payload := struct {
-		Name  string `json:"name"`
-	}{}
-
-	if err := c.BodyParser(&payload); err != nil {
-		return err
-	}
-	
-	return c.Render("pages/participants/nameInput", fiber.Map{
-		"name": payload.Name,
-	})
-}

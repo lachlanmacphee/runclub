@@ -23,6 +23,8 @@ func main() {
         Views: engine,
     })
 
+	app.Static("/", "./public")
+
 	// Pages
     app.Get("/", handlers.Home)
 	app.Get("/pastevents", handlers.PastEvents)
@@ -43,7 +45,6 @@ func main() {
 	participant.Get("/date", handlers.GetParticipantsByDate)
 	participant.Post("/event/:id", handlers.AddParticipant)
     participant.Post("/find", handlers.GetParticipants)
-	participant.Post("/choose", handlers.ChooseParticipant)
 
 	// API - Timing
 	api.Post("/timing/:eventId/:bib", handlers.TimeParticipant)

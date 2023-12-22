@@ -48,14 +48,6 @@
     </div>
     <button id="addParticipant" type="submit">Add</button>
   </form>
-  <button
-    hx-get="/timing/{{ .eventId }}"
-    hx-push-url="true"
-    hx-target="#main"
-    style="width: 100%; margin-bottom: 17px"
-  >
-    Start Timing
-  </button>
   <table role="grid">
     <thead>
       <tr>
@@ -74,6 +66,14 @@
       {{end}}
     </tbody>
   </table>
+  <button
+    hx-get="/timing/{{ .eventId }}"
+    hx-push-url="true"
+    hx-target="#main"
+    style="width: 100%; margin-bottom: 17px"
+  >
+    Start Timing
+  </button>
 </div>
 <script>
   function resetForm() {
@@ -85,5 +85,9 @@
 
     var bibInput = document.getElementById("bib");
     bibInput.value = (parseInt(bibInput.value) + 1).toString();
+
+    document.getElementById("search-results").innerHTML =
+      "<tr><td>No results...</td></tr>";
+    document.getElementById("nameInput").focus();
   }
 </script>
