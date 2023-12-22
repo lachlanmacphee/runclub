@@ -15,7 +15,6 @@ export function FAQs() {
         </div>
         <h2 className="text-xl font-bold">How do I use this site?</h2>
         <iframe
-          width="560"
           height="315"
           src="https://www.youtube.com/embed/AnM3uq0jtWY?si=5F86eFHo3f-_PiJL"
           title="YouTube video player"
@@ -23,7 +22,6 @@ export function FAQs() {
           allowFullScreen
         ></iframe>
         <iframe
-          width="560"
           height="315"
           src="https://www.youtube.com/embed/_u9m-tyygD0?si=_7fhsYgvdMV6RIDZ"
           title="YouTube video player"
@@ -31,7 +29,6 @@ export function FAQs() {
           allowFullScreen
         ></iframe>
         <iframe
-          width="560"
           height="315"
           src="https://www.youtube.com/embed/EAGqJjKvuq4?si=YR3UG8CBof3-znRg"
           title="YouTube video player"
