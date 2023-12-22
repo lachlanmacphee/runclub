@@ -77,9 +77,17 @@ func GetParticipants(c *fiber.Ctx) error {
 		return err
 	}
 
+	if payload.Name == "" {
+		return c.SendString("<tr><td>No results...</td></tr>")
+	}
+
 	db := database.Get()
 	var names []string
 	err := db.Model(&models.Participant{}).Where("name LIKE ?", "%" + payload.Name + "%").Distinct().Pluck("name", &names).Error
+	
+	if len(names) == 0 {
+		return c.SendString("<tr><td>No results...</td></tr>")
+	}
 	
 	if err != nil {
 		fmt.Println(err)

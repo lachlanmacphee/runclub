@@ -3,7 +3,7 @@
     hx-post="/api/participant/event/{{ .eventId }}"
     hx-target="#participants"
     hx-swap="afterbegin"
-    hx-on::after-request="if(event.detail.successful) this.reset()"
+    hx-on::after-request="if(event.detail.successful && event.detail.target.id != 'search-results') this.reset()"
   >
     <div>
       <label>Bib</label>
@@ -15,7 +15,7 @@
         id="nameInput"
         name="name"
         type="text"
-        placeholder="Begin typing to search past participants..."
+        placeholder="Enter a new name or search existing participants"
         hx-post="/api/participant/find"
         hx-trigger="input changed delay:500ms, search"
         hx-target="#search-results"
@@ -39,7 +39,7 @@
       <label>Distance</label>
       <input name="distance" type="number" value="5.0" step="0.5" required />
     </div>
-    <button type="submit">Add</button>
+    <button id="addParticipant" type="submit">Add</button>
   </form>
   <button
     hx-get="/timing/{{ .eventId }}"
