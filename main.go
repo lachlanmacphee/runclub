@@ -2,8 +2,11 @@ package main
 
 import (
 	"log"
+	"net/http"
 	"runclub/database"
 	"runclub/handlers"
+	"runclub/models"
+	"time"
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/template/html/v2"
@@ -22,12 +25,42 @@ func main() {
     app := fiber.New(fiber.Config{
         Views: engine,
     })
+	api := app.Group("/api")
 
 	app.Static("/", "./public")
 
-	// Pages
+	// Unauthenticated Pages
     app.Get("/", handlers.Home)
 	app.Get("/login", handlers.LoginPage)
+
+	// Unauthenticated API
+	api.Post("/login", handlers.Login)
+
+	app.Use(func(c *fiber.Ctx) error {
+		sessionToken := c.Cookies("session_token")
+
+		if sessionToken == "" {
+			// If the cookie is not set, return an unauthorized status
+			return c.Status(http.StatusUnauthorized).SendString("Unauthorized")
+		}
+
+		db := database.Get()
+		var session models.Session
+		err := db.Where("token = ?", sessionToken).First(&session).Error
+
+		if err != nil {
+			return c.Status(http.StatusUnauthorized).SendString("Unauthorized")
+		}
+
+		if session.Expiry.Before(time.Now()) {
+			db.Delete(session)
+			return c.Status(http.StatusUnauthorized).SendString("Session expired")
+		}
+		
+		return c.Next()
+	})
+
+	// Authenticated Pages
 	app.Get("/welcome", handlers.Welcome)
 	app.Get("/setup", handlers.Setup)
 	app.Get("/pastevents", handlers.PastEvents)
@@ -36,12 +69,8 @@ func main() {
 	app.Get("/timing/:eventId", handlers.Timing)
 	app.Get("/faq", handlers.Faq)
 	app.Get("/contact", handlers.Contact)
-
-	// API
-	api := app.Group("/api")
-
-	// API - Login
-	api.Post("/login", handlers.Login)
+	
+	// Authenticated API
 
 	// API - Events
 	api.Get("/event", handlers.GetEvents)

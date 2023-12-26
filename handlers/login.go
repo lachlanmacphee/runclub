@@ -10,7 +10,6 @@ import (
 	"github.com/google/uuid"
 )
 
-// Create a struct that models the structure of a user in the request body
 type Credentials struct {
 	Email string `json:"email"`
 	Password string `json:"password"`
@@ -43,5 +42,7 @@ func Login(c *fiber.Ctx) error {
 		Expires: expiresAt,
     })
 
-	return c.SendString("Login successful")
+	c.Redirect("/pastevents")
+	
+	return nil
 }
