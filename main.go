@@ -27,6 +27,8 @@ func main() {
 
 	// Pages
     app.Get("/", handlers.Home)
+	app.Get("/login", handlers.LoginPage)
+	app.Get("/welcome", handlers.Welcome)
 	app.Get("/setup", handlers.Setup)
 	app.Get("/pastevents", handlers.PastEvents)
 	app.Get("/events", handlers.Event)
@@ -37,6 +39,9 @@ func main() {
 
 	// API
 	api := app.Group("/api")
+
+	// API - Login
+	api.Post("/login", handlers.Login)
 
 	// API - Events
 	api.Get("/event", handlers.GetEvents)

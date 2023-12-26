@@ -25,5 +25,5 @@ func Get() *gorm.DB {
 }
 
 func Migrate() {
-	db.AutoMigrate(&models.User{}, &models.Event{}, &models.Participant{})
+	db.AutoMigrate(&models.User{}, &models.Event{}, &models.Participant{}, &models.Session{}, &models.Team{})
 }

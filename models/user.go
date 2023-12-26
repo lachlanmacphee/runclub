@@ -7,6 +7,7 @@ import (
 type User struct {
 	gorm.Model
 	Email  string
+	Password string
 	Name string
 	Role string
 }
