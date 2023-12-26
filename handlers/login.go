@@ -31,7 +31,7 @@ func Login(c *fiber.Ctx) error {
 	}
 
 	sessionToken := uuid.NewString()
-	expiresAt := time.Now().Add(120 * time.Second)
+	expiresAt := time.Now().Add(15 * time.Minute)
 
 	session := models.Session{Email: creds.Email, Token: sessionToken, Expiry: expiresAt}
 	db.Create(&session)
@@ -42,7 +42,7 @@ func Login(c *fiber.Ctx) error {
 		Expires: expiresAt,
     })
 
-	c.Redirect("/pastevents")
-	
+	c.Set("HX-Redirect", "/pastevents")
+
 	return nil
 }
