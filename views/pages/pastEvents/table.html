@@ -1,0 +1,8 @@
+{{range $val := .participants}}
+<tr>
+  <td>{{ $val.Bib }}</td>
+  <td>{{ $val.Name }}</td>
+  <td>{{ $val.Distance }}</td>
+  <td>{{ .FormatTime $val.Time }}</td>
+</tr>
+{{end}}

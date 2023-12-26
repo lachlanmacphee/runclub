@@ -20,6 +20,14 @@ func Home(c *fiber.Ctx) error {
 	return c.Render("pages/home/index", nil)
 }
 
+func Setup(c *fiber.Ctx) error {
+	if hxRequest := c.Get("HX-Request"); hxRequest == "" {
+		return c.Render("pages/setup/index", nil, "layout/main")
+	}
+
+	return c.Render("pages/setup/index", nil)
+}
+
 func PastEvents(c *fiber.Ctx) error {
 	db := database.Get()
 	today := time.Now()

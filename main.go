@@ -27,6 +27,7 @@ func main() {
 
 	// Pages
     app.Get("/", handlers.Home)
+	app.Get("/setup", handlers.Setup)
 	app.Get("/pastevents", handlers.PastEvents)
 	app.Get("/events", handlers.Event)
 	app.Get("/participants/:eventId", handlers.Participants)
@@ -34,6 +35,7 @@ func main() {
 	app.Get("/faq", handlers.Faq)
 	app.Get("/contact", handlers.Contact)
 
+	// API
 	api := app.Group("/api")
 
 	// API - Events

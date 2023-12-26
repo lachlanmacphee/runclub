@@ -63,7 +63,7 @@ func GetParticipantsByDate(c *fiber.Ctx) error {
 		fmt.Println(err)
 	}
 
-	return c.Render("pages/participants/table", fiber.Map{
+	return c.Render("pages/pastEvents/table", fiber.Map{
 		"participants": participants,
 	})
 }
