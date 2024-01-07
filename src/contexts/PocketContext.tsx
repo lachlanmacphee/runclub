@@ -1,10 +1,10 @@
 import {
   createContext,
   useCallback,
-  useState,
   useEffect,
   useMemo,
   ReactNode,
+  useState,
 } from "react";
 import PocketBase, { RecordAuthResponse, RecordModel } from "pocketbase";
 import { useInterval } from "usehooks-ts";
@@ -47,11 +47,20 @@ export const PocketProvider = ({ children }: PocketProviderProps) => {
   const [user, setUser] = useState<User>(pb.authStore.model as User);
 
   useEffect(() => {
+    async function getLatestUserData() {
+      const res = await pb.collection("users").authRefresh();
+      setToken(res.token);
+      setUser(res.record as User);
+    }
+    if (pb.authStore.isValid) {
+      getLatestUserData();
+    }
     return pb.authStore.onChange((token, model) => {
       setToken(token);
       setUser(model as User);
     });
-  });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const register = useCallback(
     async (
@@ -104,7 +113,10 @@ export const PocketProvider = ({ children }: PocketProviderProps) => {
   }, [pb]);
 
   const refreshSession = useCallback(async () => {
-    if (!pb.authStore.isValid) return;
+    if (!pb.authStore.isValid) {
+      logout();
+      return;
+    }
     const decoded = jwtDecode<JwtPayload>(token);
     if (!decoded.exp) {
       return;
@@ -114,7 +126,7 @@ export const PocketProvider = ({ children }: PocketProviderProps) => {
     if (tokenExpiration < expirationWithBuffer) {
       await pb.collection("users").authRefresh();
     }
-  }, [pb, token]);
+  }, [logout, pb, token]);
 
   useInterval(refreshSession, token ? twoMinutesInMs : null);
 
