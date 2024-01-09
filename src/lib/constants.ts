@@ -49,15 +49,22 @@ export const homeImgLinks = [
   "https://gunnrunners.org.au/wp-content/uploads/2021/02/2021-02-26_12-09-45-700x475.png",
 ];
 
-export const mobileLinks = [
-  { path: "/", label: "Home" },
-  { path: "/runs", label: "Runs" },
-  { path: "/newrun", label: "New Run" },
-  { path: "/volunteer", label: "Volunteer" },
-  { path: "/leaderboard", label: "Leaderboard" },
-  { path: "/manage", label: "Manage" },
-  { path: "/faqs", label: "FAQs" },
-  { path: "/contact", label: "Contact Us" },
+export const ROLES = {
+  MEMBER: "member",
+  MODERATOR: "moderator",
+  ADMIN: "admin",
+};
+
+export const ROUTES = [
+  { path: "/", label: "Home", minRole: null },
+  { path: "/runs", label: "Runs", minRole: null },
+  { path: "/newrun", label: "New Run", minRole: ROLES.MODERATOR },
+  { path: "/volunteer", label: "Volunteer", minRole: ROLES.MODERATOR },
+  { path: "/leaderboard", label: "Leaderboard", minRole: null },
+  { path: "/manage", label: "Manage", minRole: ROLES.ADMIN },
+  { path: "/faqs", label: "FAQs", minRole: null },
+  { path: "/wiki", label: "Wiki", minRole: ROLES.MODERATOR },
+  { path: "/contact", label: "Contact Us", minRole: null },
 ];
 
 export const distanceOptions = [

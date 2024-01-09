@@ -30,6 +30,11 @@ export function Runs() {
         .collection("group_runs")
         .getFullList();
 
+      if (recentRuns.length == 0) {
+        setIsLoading(false);
+        return;
+      }
+
       let runFromDate: GroupRun | undefined;
 
       if (!date) {

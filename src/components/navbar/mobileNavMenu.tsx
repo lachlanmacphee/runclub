@@ -1,6 +1,4 @@
 import { useState } from "react";
-import { usePocket } from "@/contexts";
-import { mobileLinks } from "@/lib/constants";
 
 // Components
 import { buttonVariants } from "../ui/button";
@@ -14,10 +12,11 @@ import {
 
 // Icons
 import { HamburgerMenuIcon } from "@radix-ui/react-icons";
+import { useAccessiblePages } from "@/hooks/useAccessiblePages";
 
 export function MobileNavMenu() {
-  const { user } = usePocket();
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const { getPages } = useAccessiblePages();
 
   return (
     <DropdownMenu open={dropdownOpen} onOpenChange={setDropdownOpen}>
@@ -29,12 +28,11 @@ export function MobileNavMenu() {
         <HamburgerMenuIcon className="h-[1.2rem] w-[1.2rem]" />
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="mt-1">
-        {mobileLinks.map((link) => (
+        {getPages().map((page) => (
           <MobileLink
-            key={link.path}
-            path={link.path}
-            label={link.label}
-            user={user}
+            key={page.path}
+            path={page.path}
+            label={page.label}
             setter={setDropdownOpen}
           />
         ))}

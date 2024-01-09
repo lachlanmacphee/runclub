@@ -11,6 +11,7 @@ import { Runs } from "./pages/runs";
 import { Leaderboard } from "./pages/leaderboard";
 import { ManageClub } from "./pages/manageClub";
 import { FAQs } from "./pages/faqs";
+import { Wiki } from "./pages/wiki";
 import { ContactUs } from "./pages/contactUs";
 import { Privacy } from "./pages/privacy";
 import { NotFound } from "./pages/notFound";
@@ -35,6 +36,7 @@ export default function App() {
                 <Route path="/newrun" element={<NewRun />} />
                 <Route path="/volunteer" element={<Volunteer />} />
                 <Route path="/manage" element={<ManageClub />} />
+                <Route path="/wiki" element={<Wiki />} />
               </Route>
               <Route path="/faqs" element={<FAQs />} />
               <Route path="/contact" element={<ContactUs />} />

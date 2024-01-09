@@ -6,6 +6,15 @@ body {
   overscroll-behavior: none;
 }
 
+/* Custom CSS Needed for TipTap PlaceHolder */
+.ProseMirror p.is-editor-empty:first-child::before {
+  color: #adb5bd;
+  content: attr(data-placeholder);
+  float: left;
+  height: 0;
+  pointer-events: none;
+}
+
 @layer base {
   :root {
     --background: 0 0% 100%;

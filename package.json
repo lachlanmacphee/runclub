@@ -24,6 +24,10 @@
     "@radix-ui/react-switch": "^1.0.3",
     "@radix-ui/react-toast": "^1.1.5",
     "@tanstack/react-table": "^8.10.7",
+    "@tiptap/extension-placeholder": "^2.1.15",
+    "@tiptap/pm": "^2.1.15",
+    "@tiptap/react": "^2.1.15",
+    "@tiptap/starter-kit": "^2.1.15",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0",
     "date-fns": "^2.30.0",
@@ -44,6 +48,7 @@
     "zod": "^3.22.4"
   },
   "devDependencies": {
+    "@tailwindcss/typography": "^0.5.10",
     "@types/node": "^20.8.10",
     "@types/react": "^18.2.15",
     "@types/react-dom": "^18.2.7",
