@@ -14,8 +14,22 @@ import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
 import { toast } from "@/components/ui/use-toast";
 import { DatePicker } from "@/components/ui/date-picker";
-import * as uiForm from "@/components/ui/form";
-import * as uiSelect from "@/components/ui/select";
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import {
+  Select as ShadSelect,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
 
 // Icons
@@ -30,7 +44,12 @@ const FormSchema = z
     participants: z.array(
       z.object({
         bib: z.string(),
-        name: z.object({ value: z.string(), label: z.string() }),
+        name: z.object(
+          { value: z.string(), label: z.string() },
+          {
+            invalid_type_error: "A name is required here.",
+          }
+        ),
         distance: z.object({ value: z.string(), label: z.string() }),
       })
     ),
@@ -67,7 +86,7 @@ export function RunSetup({
       date: initialDate,
       location: "albertParkLake",
       // @ts-ignore
-      participants: [{ bib: "1", name: null, distance: distanceOptions[1] }],
+      participants: [{ bib: "100", name: null, distance: distanceOptions[1] }],
     },
   });
 
@@ -153,56 +172,57 @@ export function RunSetup({
         handleSubmitConfirmationConfirm={handleSubmitConfirmationConfirm}
         handleSubmitConfirmationCancel={handleSubmitConfirmationCancel}
       />
-      <uiForm.Form {...form}>
+      <Form {...form}>
         <form
           onSubmit={form.handleSubmit(handleSubmitConfirmation)}
           className="space-y-6"
         >
-          <uiForm.FormField
+          <FormField
             control={form.control}
             name="date"
             render={({ field }) => (
-              <uiForm.FormItem>
-                <uiForm.FormLabel>Date</uiForm.FormLabel>
-                <uiForm.FormControl>
+              <FormItem>
+                <FormLabel>Date</FormLabel>
+                <FormControl>
                   <DatePicker date={field.value} setDate={field.onChange} />
-                </uiForm.FormControl>
-                <uiForm.FormDescription>
+                </FormControl>
+                <FormDescription>
                   Select the date for the run. If you are creating it for today,
                   leave it as is.
-                </uiForm.FormDescription>
-                <uiForm.FormMessage />
-              </uiForm.FormItem>
+                </FormDescription>
+                <FormMessage />
+              </FormItem>
             )}
           />
-          <uiForm.FormField
+          <FormField
             control={form.control}
             name="location"
             render={({ field }) => (
-              <uiForm.FormItem>
-                <uiForm.FormLabel>Location</uiForm.FormLabel>
-                <uiSelect.Select
+              <FormItem>
+                <FormLabel>Location</FormLabel>
+                <ShadSelect
                   onValueChange={field.onChange}
                   defaultValue={field.value}
                 >
-                  <uiForm.FormControl>
-                    <uiSelect.SelectTrigger>
-                      <uiSelect.SelectValue />
-                    </uiSelect.SelectTrigger>
-                  </uiForm.FormControl>
-                  <uiSelect.SelectContent>
-                    <uiSelect.SelectItem value="albertParkLake">
+                  <FormControl>
+                    <SelectTrigger>
+                      <SelectValue />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    <SelectItem value="albertParkLake">
                       Albert Park Lake
-                    </uiSelect.SelectItem>
-                  </uiSelect.SelectContent>
-                </uiSelect.Select>
-                <uiForm.FormDescription>
+                    </SelectItem>
+                  </SelectContent>
+                </ShadSelect>
+                <FormDescription>
                   Select the location for the run from the available options.
-                </uiForm.FormDescription>
-                <uiForm.FormMessage />
-              </uiForm.FormItem>
+                </FormDescription>
+                <FormMessage />
+              </FormItem>
             )}
           />
+          <div></div>
           <div className="flex flex-col gap-2">
             <div className="grid grid-cols-[65px_2fr_1fr_40px] gap-x-2">
               <p>Bib</p>
@@ -214,43 +234,64 @@ export function RunSetup({
                 key={item.id}
                 className="grid grid-cols-[65px_2fr_1fr_40px] gap-x-2"
               >
-                <Input {...form.register(`participants.${index}.bib`)} />
-                <uiForm.FormField
+                <FormField
+                  control={form.control}
+                  name={`participants.${index}.bib`}
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormControl>
+                        <Input placeholder="#" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
                   control={form.control}
                   name={`participants.${index}.name`}
                   render={({ field }) => (
-                    <CreatableSelect
-                      {...field}
-                      className="custom-react-select-container"
-                      classNamePrefix="custom-react-select"
-                      placeholder="Select..."
-                      options={pastParticipants
-                        .filter(
-                          (participant) =>
-                            !participantNames.includes(participant.name)
-                        )
-                        .map((participant) => {
-                          return {
-                            label: participant.name,
-                            value: participant.user_id
-                              ? participant.user_id
-                              : participant.name,
-                          };
-                        })}
-                    />
+                    <FormItem>
+                      <FormControl>
+                        <CreatableSelect
+                          {...field}
+                          className="custom-react-select-container"
+                          classNamePrefix="custom-react-select"
+                          placeholder="Select..."
+                          options={pastParticipants
+                            .filter(
+                              (participant) =>
+                                !participantNames.includes(participant.name)
+                            )
+                            .map((participant) => {
+                              return {
+                                label: participant.name,
+                                value: participant.user_id
+                                  ? participant.user_id
+                                  : participant.name,
+                              };
+                            })}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
                   )}
                 />
-                <uiForm.FormField
+                <FormField
                   control={form.control}
                   name={`participants.${index}.distance`}
                   render={({ field }) => (
-                    <Select
-                      {...field}
-                      className="custom-react-select-container"
-                      classNamePrefix="custom-react-select"
-                      placeholder="Select..."
-                      options={distanceOptions}
-                    />
+                    <FormItem>
+                      <FormControl>
+                        <Select
+                          {...field}
+                          className="custom-react-select-container"
+                          classNamePrefix="custom-react-select"
+                          placeholder="Select..."
+                          options={distanceOptions}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
                   )}
                 />
                 {index !== 0 && (
@@ -298,7 +339,7 @@ export function RunSetup({
             </Button>
           </div>
         </form>
-      </uiForm.Form>
+      </Form>
     </>
   );
 }
