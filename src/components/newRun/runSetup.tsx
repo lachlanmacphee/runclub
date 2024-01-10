@@ -21,6 +21,7 @@ import { Input } from "@/components/ui/input";
 // Icons
 import { ArrowDown10, ArrowUp10, Plus, Trash } from "lucide-react";
 import { usePastParticipants } from "@/hooks/usePastParticipants";
+import { RunSetupConfirmationAlert } from "./runSetupConfirmationAlert";
 
 const FormSchema = z
   .object({
@@ -57,6 +58,7 @@ export function RunSetup({
 }) {
   const pastParticipants = usePastParticipants();
   const [order, setOrder] = useState<number>(-1);
+  const [isConfirmationModalOpen, setIsConfirmationModalOpen] = useState(false);
   const { pb } = usePocket();
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
@@ -73,6 +75,19 @@ export function RunSetup({
     control: form.control,
     name: "participants",
   });
+
+  const handleSubmitConfirmation = () => {
+    setIsConfirmationModalOpen(true);
+  };
+
+  const handleSubmitConfirmationConfirm = () => {
+    form.handleSubmit(onSubmit)();
+    setIsConfirmationModalOpen(false);
+  };
+
+  const handleSubmitConfirmationCancel = () => {
+    setIsConfirmationModalOpen(false);
+  };
 
   async function onSubmit(data: z.infer<typeof FormSchema>) {
     const { id: groupRunId } = await pb
@@ -131,9 +146,18 @@ export function RunSetup({
   }
 
   return (
-    <div className="flex flex-col">
+    <>
+      <RunSetupConfirmationAlert
+        isConfirmationModalOpen={isConfirmationModalOpen}
+        setIsConfirmationModalOpen={setIsConfirmationModalOpen}
+        handleSubmitConfirmationConfirm={handleSubmitConfirmationConfirm}
+        handleSubmitConfirmationCancel={handleSubmitConfirmationCancel}
+      />
       <uiForm.Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+        <form
+          onSubmit={form.handleSubmit(handleSubmitConfirmation)}
+          className="space-y-6"
+        >
           <uiForm.FormField
             control={form.control}
             name="date"
@@ -270,11 +294,11 @@ export function RunSetup({
           </div>
           <div className="flex justify-center">
             <Button type="submit" className="w-48">
-              Submit
+              Create Run
             </Button>
           </div>
         </form>
       </uiForm.Form>
-    </div>
+    </>
   );
 }
