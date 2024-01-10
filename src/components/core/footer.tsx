@@ -1,7 +1,6 @@
 import { Facebook, Instagram } from "lucide-react";
-import { FaMeetup } from "react-icons/fa";
 import { Link } from "react-router-dom";
-import { buttonVariants } from "./ui/button";
+import { buttonVariants } from "../ui/button";
 
 const SocialLinks = () => (
   <>
@@ -10,9 +9,6 @@ const SocialLinks = () => (
     </Link>
     <Link to="https://www.instagram.com/gunn.runners/">
       <Instagram className="w-8 h-8" />
-    </Link>
-    <Link to="https://www.meetup.com/gunnrunners/">
-      <FaMeetup className="w-8 h-8" />
     </Link>
   </>
 );

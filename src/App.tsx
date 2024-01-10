@@ -16,8 +16,8 @@ import { ContactUs } from "./pages/contactUs";
 import { Privacy } from "./pages/privacy";
 import { NotFound } from "./pages/notFound";
 
-import { Layout } from "./components/layout";
-import { RequireAuth } from "./components/requireAuth";
+import { Layout } from "./components/core/layout";
+import { RequireAuth } from "./components/core/requireAuth";
 import { Toaster } from "@/components/ui/toaster";
 
 export default function App() {

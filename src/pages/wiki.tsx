@@ -1,8 +1,12 @@
-import Tiptap from "@/components/editor/tipTapEditor";
-import { Sidebar } from "@/components/sidebar";
-import { usePocket } from "@/contexts";
-import { RecordModel } from "pocketbase";
 import { useCallback, useEffect, useState } from "react";
+import { usePocket } from "@/contexts";
+
+// Types
+import { RecordModel } from "pocketbase";
+
+// Components
+import Tiptap from "@/components/editor/tipTapEditor";
+import { Sidebar } from "@/components/wiki/sidebar";
 
 export const Wiki = () => {
   const { pb } = usePocket();

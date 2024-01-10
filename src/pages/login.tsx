@@ -19,9 +19,6 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 
-// Icons
-import { FaGoogle, FaFacebook } from "react-icons/fa";
-
 const FormSchema = z.object({
   email: z.string().email(),
   password: z.string(),
@@ -118,7 +115,6 @@ export const Login = () => {
               className="flex gap-1"
               onClick={() => handleOAuthLogin("google")}
             >
-              <FaGoogle />
               <span>Google</span>
             </Button>
             <Button
@@ -127,7 +123,6 @@ export const Login = () => {
               className="flex gap-1"
               onClick={() => handleOAuthLogin("facebook")}
             >
-              <FaFacebook />
               <span>Facebook</span>
             </Button>
             <div className="flex justify-between mt-2">

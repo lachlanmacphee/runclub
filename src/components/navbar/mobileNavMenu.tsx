@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 // Icons
-import { HamburgerMenuIcon } from "@radix-ui/react-icons";
+import { Menu } from "lucide-react";
 import { useAccessiblePages } from "@/hooks/useAccessiblePages";
 
 export function MobileNavMenu() {
@@ -25,7 +25,7 @@ export function MobileNavMenu() {
           buttonVariants({ variant: "outline", size: "icon" }) + " xl:hidden"
         }
       >
-        <HamburgerMenuIcon className="h-[1.2rem] w-[1.2rem]" />
+        <Menu className="h-[1.2rem] w-[1.2rem]" />
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="mt-1">
         {getPages().map((page) => (

@@ -4,7 +4,7 @@ import { usePocket } from "@/contexts";
 
 import { Participant } from "@/lib/types";
 
-import { RunTable } from "@/components/runTable";
+import { RunTable } from "@/components/runs/runTable";
 
 import { Loader2 } from "lucide-react";
 

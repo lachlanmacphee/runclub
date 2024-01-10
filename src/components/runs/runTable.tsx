@@ -6,7 +6,7 @@ import { Participant } from "@/lib/types";
 import { Button } from "@/components/ui/button";
 
 import { ArrowUpDown } from "lucide-react";
-import { DataTable } from "./ui/data-table";
+import { DataTable } from "../ui/data-table";
 
 const runTableColumns: ColumnDef<Participant>[] = [
   {

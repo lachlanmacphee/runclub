@@ -6,7 +6,7 @@ import { convertTimesToSeconds } from "@/lib/utils";
 import { Participant } from "@/lib/types";
 
 import { toast } from "@/components/ui/use-toast";
-import { Stopwatch } from "@/components/stopwatch";
+import { Stopwatch } from "@/components/newRun/stopwatch";
 import { Button } from "@/components/ui/button";
 import { LateComers } from "./lateComers";
 

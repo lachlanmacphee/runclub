@@ -5,7 +5,7 @@ import { usePocket } from "@/contexts";
 import { convertLocationValueToLabel, formatDateWithSuffix } from "@/lib/utils";
 import { GroupRun, Participant } from "@/lib/types";
 
-import { RunTable } from "@/components/runTable";
+import { RunTable } from "@/components/runs/runTable";
 import { DatePicker } from "@/components/ui/date-picker";
 
 import { Loader2 } from "lucide-react";
