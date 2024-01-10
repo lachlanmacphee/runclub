@@ -29,15 +29,15 @@ import {
 export const MenuBar = ({
   editor,
   handleSave,
+  isContentChanged,
 }: {
   editor: Editor | null;
   handleSave: (content: string) => void;
+  isContentChanged: boolean;
 }) => {
   if (!editor) {
     return null;
   }
-
-  // use editor.isActive(code) [or bold, italic, etc to check if active to switch button if so]
 
   return (
     <div className="flex">
@@ -184,6 +184,7 @@ export const MenuBar = ({
       <Button
         variant="default"
         className="ml-auto"
+        disabled={!isContentChanged}
         onClick={() => {
           if (editor) {
             handleSave(editor?.getHTML());

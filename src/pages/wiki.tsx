@@ -11,6 +11,7 @@ import { Sidebar } from "@/components/wiki/sidebar";
 export const Wiki = () => {
   const { pb } = usePocket();
   const [activePage, setActivePage] = useState<RecordModel>();
+  const [isContentChanged, setIsContentChanged] = useState<boolean>(false);
   const [wikiData, setWikiData] = useState<Record<string, RecordModel[]>>();
 
   const handleSave = useCallback(
@@ -25,6 +26,7 @@ export const Wiki = () => {
         );
         newWikiData[activePage.category][oldPageIdx] = updatedPage;
         setWikiData(newWikiData);
+        setIsContentChanged(false);
       }
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -58,7 +60,12 @@ export const Wiki = () => {
         setActivePage={setActivePage}
         refreshPages={fetchWikiData}
       />
-      <Tiptap handleSave={handleSave} content={activePage?.content} />
+      <Tiptap
+        handleSave={handleSave}
+        isContentChanged={isContentChanged}
+        setIsContentChanged={setIsContentChanged}
+        content={activePage?.content}
+      />
     </div>
   );
 };

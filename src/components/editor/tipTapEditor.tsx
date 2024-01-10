@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { Dispatch, SetStateAction, useEffect } from "react";
 
 // Libraries
 import { useEditor, EditorContent } from "@tiptap/react";
@@ -23,24 +23,36 @@ const editorProps = {
 
 const Tiptap = ({
   content,
+  isContentChanged,
+  setIsContentChanged,
   handleSave,
 }: {
   content: string;
+  isContentChanged: boolean;
+  setIsContentChanged: Dispatch<SetStateAction<boolean>>;
   handleSave: (content: string) => void;
 }) => {
   const editor = useEditor({
     extensions,
     content,
     editorProps,
+    onUpdate: () => {
+      setIsContentChanged(true);
+    },
   });
 
   useEffect(() => {
     editor?.commands.setContent(content);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [editor, content]);
 
   return (
     <div className="flex flex-col p-4 gap-4">
-      <MenuBar editor={editor} handleSave={handleSave} />
+      <MenuBar
+        editor={editor}
+        isContentChanged={isContentChanged}
+        handleSave={handleSave}
+      />
       <EditorContent editor={editor} />
     </div>
   );
