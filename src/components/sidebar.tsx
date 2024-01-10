@@ -1,70 +1,58 @@
 import { Button } from "@/components/ui/button";
+import { ScrollArea } from "./ui/scroll-area";
+import { RecordModel } from "pocketbase";
 
-export function Sidebar() {
+export function Sidebar({
+  wikiData,
+  activePage,
+  setActivePage,
+}: {
+  wikiData: Record<string, RecordModel[]> | undefined;
+  activePage: RecordModel | undefined;
+  setActivePage: (page: RecordModel) => void;
+}) {
+  if (!wikiData) {
+    return (
+      <ScrollArea className="h-[calc(100vh-72px)]">
+        <div className="pb-12">
+          <div className="space-y-4 py-4">Loading...</div>
+        </div>
+      </ScrollArea>
+    );
+  }
+
+  const categories = Object.keys(wikiData);
+
   return (
-    <div className="pb-12">
-      <div className="space-y-4 py-4">
-        <div className="px-3 py-2">
-          <h2 className="mb-2 px-4 text-lg font-semibold tracking-tight">
-            Volunteering
-          </h2>
-          <div className="space-y-1">
-            <Button variant="secondary" className="w-full justify-start">
-              Page 1
-            </Button>
-            <Button variant="ghost" className="w-full justify-start">
-              Page 2
-            </Button>
-            <Button variant="ghost" className="w-full justify-start">
-              Page 3
-            </Button>
-          </div>
-        </div>
-        <div className="px-3 py-2">
-          <h2 className="mb-2 px-4 text-lg font-semibold tracking-tight">
-            App
-          </h2>
-          <div className="space-y-1">
-            <Button variant="ghost" className="w-full justify-start">
-              Page 1
-            </Button>
-            <Button variant="ghost" className="w-full justify-start">
-              Page 2
-            </Button>
-            <Button variant="ghost" className="w-full justify-start">
-              Page 3
-            </Button>
-            <Button variant="ghost" className="w-full justify-start">
-              Page 4
-            </Button>
-            <Button variant="ghost" className="w-full justify-start">
-              Page 5
-            </Button>
-          </div>
-        </div>
-        <div className="px-3 py-2">
-          <h2 className="mb-2 px-4 text-lg font-semibold tracking-tight">
-            Finances
-          </h2>
-          <div className="space-y-1">
-            <Button variant="ghost" className="w-full justify-start">
-              Page 1
-            </Button>
-            <Button variant="ghost" className="w-full justify-start">
-              Page 2
-            </Button>
-            <Button variant="ghost" className="w-full justify-start">
-              Page 3
-            </Button>
-            <Button variant="ghost" className="w-full justify-start">
-              Page 4
-            </Button>
-            <Button variant="ghost" className="w-full justify-start">
-              Page 5
-            </Button>
-          </div>
+    <ScrollArea className="h-[calc(100vh-72px)]">
+      <div className="pb-12">
+        <div className="space-y-4 py-4">
+          {categories.map((category) => (
+            <div key={category} className="px-3 py-2">
+              <h2 className="mb-2 px-4 text-lg font-semibold tracking-tight">
+                {category}
+              </h2>
+              <div className="space-y-1">
+                {wikiData[category].map((page) => (
+                  <Button
+                    key={page.name}
+                    variant={
+                      activePage?.name === page.name ? "default" : "ghost"
+                    }
+                    className="w-full justify-start"
+                    onClick={() => setActivePage(page)}
+                  >
+                    {page.name}
+                  </Button>
+                ))}
+                <Button variant="ghost" className="w-full justify-start">
+                  Add Page
+                </Button>
+              </div>
+            </div>
+          ))}
         </div>
       </div>
-    </div>
+    </ScrollArea>
   );
 }
