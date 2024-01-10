@@ -31,20 +31,21 @@ export const Wiki = () => {
     [activePage, pb]
   );
 
+  const fetchWikiData = useCallback(async () => {
+    const pages = await pb.collection("wiki_pages").getFullList();
+    const newWikiData: Record<string, RecordModel[]> = {};
+    pages.map((page) => {
+      if (newWikiData[page.category]) {
+        newWikiData[page.category].push(page);
+        return;
+      }
+      newWikiData[page.category] = [page];
+    });
+    setWikiData(newWikiData);
+    setActivePage(newWikiData["App"][0]);
+  }, [pb]);
+
   useEffect(() => {
-    async function fetchWikiData() {
-      const pages = await pb.collection("wiki_pages").getFullList();
-      const newWikiData: Record<string, RecordModel[]> = {};
-      pages.map((page) => {
-        if (newWikiData[page.category]) {
-          newWikiData[page.category].push(page);
-          return;
-        }
-        newWikiData[page.category] = [page];
-      });
-      setWikiData(newWikiData);
-      setActivePage(newWikiData["App"][0]);
-    }
     fetchWikiData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -55,6 +56,7 @@ export const Wiki = () => {
         wikiData={wikiData}
         activePage={activePage}
         setActivePage={setActivePage}
+        refreshPages={fetchWikiData}
       />
       <Tiptap handleSave={handleSave} content={activePage?.content} />
     </div>
