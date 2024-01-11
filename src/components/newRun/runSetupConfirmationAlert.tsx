@@ -33,8 +33,9 @@ export function RunSetupConfirmationAlert({
             Are you sure you want to create a run?
           </AlertDialogTitle>
           <AlertDialogDescription>
-            You will not be able to come back to this screen after. We recommend
-            clicking "Create Run" only when you are about to leave the pub.
+            You will not be able to come back to this screen after, but you can
+            still add latecomers on the next page. You should only click "Create
+            Run" as you are about to leave the pub.
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>

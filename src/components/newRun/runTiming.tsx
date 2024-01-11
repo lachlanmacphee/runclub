@@ -9,6 +9,7 @@ import { toast } from "@/components/ui/use-toast";
 import { Stopwatch } from "@/components/newRun/stopwatch";
 import { Button } from "@/components/ui/button";
 import { LateComers } from "./lateComers";
+import { Textarea } from "../ui/textarea";
 
 export function RunTiming({
   participants,
@@ -122,6 +123,12 @@ export function RunTiming({
           />
         </div>
       )}
+      <div className="flex justify-center">
+        <Textarea
+          className="w-3/4 md:w-1/2 h-[192px]"
+          placeholder="You can write notes for the run here, but they will not be saved to the cloud."
+        />
+      </div>
     </div>
   );
 }
