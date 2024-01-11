@@ -103,6 +103,7 @@ export function AddPageDialog({
                         <SelectItem value="Communication">
                           Communication
                         </SelectItem>
+                        <SelectItem value="Finance">Finance</SelectItem>
                       </SelectContent>
                     </Select>
                     <FormMessage />
