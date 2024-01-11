@@ -13,12 +13,22 @@ import Select from "react-select";
 import CreatableSelect from "react-select/creatable";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import * as uiForm from "@/components/ui/form";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import { Checkbox } from "../ui/checkbox";
 
 const FormSchema = z.object({
   bib: z.string(),
   name: z.object({ value: z.string(), label: z.string() }),
   distance: z.object({ value: z.string(), label: z.string() }),
+  isNew: z.boolean(),
+  isPaid: z.boolean(),
 });
 
 export function LateComers({
@@ -41,6 +51,8 @@ export function LateComers({
       // @ts-ignore
       name: null,
       distance: distanceOptions[1],
+      isNew: false,
+      isPaid: true,
     },
   });
 
@@ -70,6 +82,8 @@ export function LateComers({
       name: data.name.label,
       distance: Number(data.distance.value),
       bib: Number(data.bib),
+      is_new: data.isNew,
+      is_paid: data.isPaid,
     };
     const res = (await pb
       .collection("participant_runs")
@@ -83,24 +97,24 @@ export function LateComers({
 
   return (
     <div className="flex flex-col items-center gap-4">
-      <h2 className="text-2xl font-bold">Latecomers</h2>
-      <uiForm.Form {...form}>
+      <h2 className="text-xl font-bold">Latecomers</h2>
+      <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className="flex flex-col md:flex-row gap-4"
+          className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4"
         >
-          <uiForm.FormField
+          <FormField
             control={form.control}
             name="bib"
             render={({ field }) => (
-              <uiForm.FormItem>
+              <FormItem>
                 <Input {...field} placeholder="Bib" />
-                <uiForm.FormMessage />
-              </uiForm.FormItem>
+                <FormMessage />
+              </FormItem>
             )}
           />
 
-          <uiForm.FormField
+          <FormField
             control={form.control}
             name="name"
             render={({ field }) => (
@@ -125,7 +139,8 @@ export function LateComers({
               />
             )}
           />
-          <uiForm.FormField
+
+          <FormField
             control={form.control}
             name="distance"
             render={({ field }) => (
@@ -138,9 +153,48 @@ export function LateComers({
               />
             )}
           />
-          <Button type="submit">Add</Button>
+
+          <FormField
+            control={form.control}
+            name="isNew"
+            render={({ field }) => (
+              <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4">
+                <FormControl>
+                  <Checkbox
+                    checked={field.value}
+                    onCheckedChange={field.onChange}
+                  />
+                </FormControl>
+                <div className="space-y-1 leading-none">
+                  <FormLabel>New to Gunnies</FormLabel>
+                </div>
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="isPaid"
+            render={({ field }) => (
+              <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4">
+                <FormControl>
+                  <Checkbox
+                    checked={field.value}
+                    onCheckedChange={field.onChange}
+                  />
+                </FormControl>
+                <div className="space-y-1 leading-none">
+                  <FormLabel>Paid $5</FormLabel>
+                </div>
+              </FormItem>
+            )}
+          />
+
+          <Button type="submit" className="sm:h-full">
+            Add
+          </Button>
         </form>
-      </uiForm.Form>
+      </Form>
     </div>
   );
 }

@@ -28,6 +28,10 @@ export function RunTiming({
     Object.keys(completed).length === participants.length &&
     Object.values(completed).every(Boolean);
 
+  const newParticipants = participants.filter(
+    (participant) => participant.is_new
+  );
+
   useEffect(() => {
     async function markRunComplete() {
       await pb.collection("group_runs").update(runId, { isComplete: true });
@@ -86,19 +90,29 @@ export function RunTiming({
         isRunning={isRunning}
         isRunComplete={isRunComplete}
       />
-      <div className="flex gap-4 justify-around flex-wrap">
-        {participants.map((participant) => (
-          <Button
-            onClick={() => markParticipant(participant.bib)}
-            key={participant.bib}
-            className="md:w-24 md:h-16 font-bold text-xl"
-            variant={completed[participant.bib] ? "secondary" : "default"}
-            disabled={!isRunning}
-          >
-            {participant.bib}
-          </Button>
-        ))}
-      </div>
+      {!isRunning && !isRunComplete && newParticipants.length > 0 && (
+        <div className="text-center">
+          <h2 className="font-bold text-xl">New Gunnies</h2>
+          {newParticipants.map((participant) => (
+            <p key={participant.name}>{participant.name}</p>
+          ))}
+        </div>
+      )}
+      {isRunning && (
+        <div className="flex gap-4 justify-around flex-wrap">
+          {participants.map((participant) => (
+            <Button
+              onClick={() => markParticipant(participant.bib)}
+              key={participant.bib}
+              className="md:w-24 md:h-16 font-bold text-xl"
+              variant={completed[participant.bib] ? "secondary" : "default"}
+              disabled={!isRunning}
+            >
+              {participant.bib}
+            </Button>
+          ))}
+        </div>
+      )}
       {!isRunning && !isRunComplete && (
         <div className="flex justify-center">
           <LateComers

@@ -16,7 +16,6 @@ import { DatePicker } from "@/components/ui/date-picker";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -37,6 +36,7 @@ import { usePastParticipants } from "@/hooks/usePastParticipants";
 import { RunSetupConfirmationAlert } from "./runSetupConfirmationAlert";
 import { Label } from "../ui/label";
 import { Switch } from "../ui/switch";
+import { Checkbox } from "../ui/checkbox";
 
 const FormSchema = z
   .object({
@@ -52,6 +52,8 @@ const FormSchema = z
           }
         ),
         distance: z.object({ value: z.string(), label: z.string() }),
+        isNew: z.boolean(),
+        isPaid: z.boolean(),
       })
     ),
   })
@@ -76,26 +78,30 @@ export function RunSetup({
   setStep: Dispatch<SetStateAction<number>>;
   setParticipants: Dispatch<SetStateAction<Participant[]>>;
 }) {
+  const { pb } = usePocket();
   const pastParticipants = usePastParticipants();
+
   const [order, setOrder] = useState<number>(-1);
   const [isConfirmationModalOpen, setIsConfirmationModalOpen] = useState(false);
-  const { pb } = usePocket();
-  const [newParticipantBib, setNewParticipantBib] = useState<string>("100");
-  const [newParticipantName, setNewParticipantName] = useState<{
+
+  const [partBib, setPartBib] = useState<string>("100");
+  const [partName, setPartName] = useState<{
     value: string;
     label: string;
   } | null>();
-  const [newParticipantDistance, setNewParticipantDistance] = useState<{
+  const [partDist, setPartDist] = useState<{
     value: string;
     label: string;
   } | null>(distanceOptions[1]);
+  const [partIsNew, setPartIsNew] = useState<boolean>(false);
+  const [partIsPaid, setPartIsPaid] = useState<boolean>(true);
+
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     mode: "onBlur",
     defaultValues: {
       date: initialDate,
       location: "albertParkLake",
-      // @ts-ignore
       participants: [],
     },
   });
@@ -133,6 +139,8 @@ export function RunSetup({
         name: participant.name.label,
         distance: Number(participant.distance.value),
         bib: Number(participant.bib),
+        is_new: participant.isNew,
+        is_paid: participant.isPaid,
       };
     });
 
@@ -149,7 +157,7 @@ export function RunSetup({
     setParticipants(participants);
     toast({
       title: "Run Created",
-      description: "The run was successfully created.",
+      description: "Moving to timing page...",
     });
   }
 
@@ -159,28 +167,30 @@ export function RunSetup({
   );
   const participantsLength = participants.length;
 
-  function addParticipant(
-    bib: string,
-    name: { value: string; label: string },
-    distance: { value: string; label: string }
-  ) {
-    append(
-      {
-        bib,
-        name,
-        distance,
-      },
-      {
-        focusName: `participants.${participantsLength}.name`,
-      }
-    );
-    setNewParticipantBib(
-      order == 1
-        ? String(parseInt(newParticipantBib) + 1)
-        : String(parseInt(newParticipantBib) - 1)
-    );
-    setNewParticipantName(null);
-    setNewParticipantDistance(distanceOptions[1]);
+  function addParticipant() {
+    if (partBib && partName && partDist) {
+      append(
+        {
+          bib: partBib,
+          name: partName,
+          distance: partDist,
+          isNew: partIsNew,
+          isPaid: partIsPaid,
+        },
+        {
+          focusName: `participants.${participantsLength}.name`,
+        }
+      );
+      setPartBib(
+        order == 1
+          ? String(parseInt(partBib) + 1)
+          : String(parseInt(partBib) - 1)
+      );
+      setPartName(null);
+      setPartDist(distanceOptions[1]);
+      setPartIsNew(false);
+      setPartIsPaid(true);
+    }
   }
 
   return (
@@ -194,59 +204,54 @@ export function RunSetup({
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(handleSubmitConfirmation)}
-          className="space-y-6"
+          className="space-y-8"
         >
-          <FormField
-            control={form.control}
-            name="date"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Date</FormLabel>
-                <FormControl>
-                  <DatePicker date={field.value} setDate={field.onChange} />
-                </FormControl>
-                <FormDescription>
-                  Select the date for the run. If you are creating it for today,
-                  leave it as is.
-                </FormDescription>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="location"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Location</FormLabel>
-                <ShadSelect
-                  onValueChange={field.onChange}
-                  defaultValue={field.value}
-                >
+          <div className="space-y-2">
+            <FormField
+              control={form.control}
+              name="date"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Date</FormLabel>
                   <FormControl>
-                    <SelectTrigger>
-                      <SelectValue />
-                    </SelectTrigger>
+                    <DatePicker date={field.value} setDate={field.onChange} />
                   </FormControl>
-                  <SelectContent>
-                    <SelectItem value="albertParkLake">
-                      Albert Park Lake
-                    </SelectItem>
-                  </SelectContent>
-                </ShadSelect>
-                <FormDescription>
-                  Select the location for the run from the available options.
-                </FormDescription>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="location"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Location</FormLabel>
+                  <ShadSelect
+                    onValueChange={field.onChange}
+                    defaultValue={field.value}
+                  >
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      <SelectItem value="albertParkLake">
+                        Albert Park Lake
+                      </SelectItem>
+                    </SelectContent>
+                  </ShadSelect>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
           <div className="space-y-2">
             <div>
               <Label>Bib</Label>
               <Input
-                value={newParticipantBib}
-                onChange={(e) => setNewParticipantBib(e.target.value)}
+                value={partBib}
+                onChange={(e) => setPartBib(e.target.value)}
               />
             </div>
             <div>
@@ -255,8 +260,8 @@ export function RunSetup({
                 className="custom-react-select-container"
                 classNamePrefix="custom-react-select"
                 placeholder="Select..."
-                value={newParticipantName}
-                onChange={(newName) => setNewParticipantName(newName)}
+                value={partName}
+                onChange={(newName) => setPartName(newName)}
                 options={pastParticipants
                   .filter(
                     (participant) =>
@@ -278,12 +283,38 @@ export function RunSetup({
                 className="custom-react-select-container"
                 classNamePrefix="custom-react-select"
                 placeholder="Select..."
-                value={newParticipantDistance}
-                onChange={(newDistance) =>
-                  setNewParticipantDistance(newDistance)
-                }
+                value={partDist}
+                onChange={(newDistance) => setPartDist(newDistance)}
                 options={distanceOptions}
               />
+            </div>
+            <div className="flex gap-x-4 py-2">
+              <div className="flex items-center space-x-2">
+                <Checkbox
+                  id="is_new"
+                  checked={partIsNew}
+                  onCheckedChange={(e) => setPartIsNew(!!e.valueOf())}
+                />
+                <label
+                  htmlFor="is_new"
+                  className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                >
+                  New to Gunnies
+                </label>
+              </div>
+              <div className="flex items-center space-x-2">
+                <Checkbox
+                  id="is_paid"
+                  checked={partIsPaid}
+                  onCheckedChange={(e) => setPartIsPaid(!!e.valueOf())}
+                />
+                <label
+                  htmlFor="is_paid"
+                  className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                >
+                  Paid $5
+                </label>
+              </div>
             </div>
             <div className="flex justify-between">
               <div className="flex items-center space-x-2">
@@ -294,22 +325,7 @@ export function RunSetup({
                 />
                 <ArrowUp10 />
               </div>
-              <Button
-                type="button"
-                onClick={() => {
-                  if (
-                    newParticipantBib &&
-                    newParticipantName &&
-                    newParticipantDistance
-                  ) {
-                    addParticipant(
-                      newParticipantBib,
-                      newParticipantName,
-                      newParticipantDistance
-                    );
-                  }
-                }}
-              >
+              <Button type="button" onClick={addParticipant}>
                 Add Participant
               </Button>
             </div>
@@ -385,21 +401,21 @@ export function RunSetup({
                     </FormItem>
                   )}
                 />
-                {index !== 0 && (
-                  <div className="flex justify-center">
-                    <Button
-                      onClick={() => remove(index)}
-                      variant="destructive"
-                      size="icon"
-                    >
-                      <Trash />
-                    </Button>
-                  </div>
-                )}
+                <div className="flex justify-center">
+                  <Button
+                    onClick={() => remove(index)}
+                    variant="destructive"
+                    size="icon"
+                  >
+                    <Trash />
+                  </Button>
+                </div>
               </div>
             ))}
             {participantsLength == 0 && (
-              <span className="text-center">No participants added yet.</span>
+              <span className="text-center mt-4">
+                No participants have been added yet.
+              </span>
             )}
             {form.formState.errors.participants?.root && (
               <span className="font-bold text-destructive">
