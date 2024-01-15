@@ -41,7 +41,7 @@ export function SwitchPageDialog({
         </DialogHeader>
         <ScrollArea className="h-96">
           {categories.map((category) => (
-            <div key={category}>
+            <div key={category} className="mb-4">
               <h2 className="mb-2 px-4 text-lg font-semibold tracking-tight">
                 {category}
               </h2>
