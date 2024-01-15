@@ -68,8 +68,8 @@ export function AddPageDialog({
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="outline" className="w-full">
-          Add a Page
+        <Button variant="outline" className="w-full sticky z-10 top-0">
+          Add Page
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-md">
@@ -124,7 +124,7 @@ export function AddPageDialog({
                 )}
               />
             </div>
-            <DialogFooter>
+            <DialogFooter className="gap-4">
               <DialogClose asChild>
                 <Button type="button" variant="secondary">
                   Close

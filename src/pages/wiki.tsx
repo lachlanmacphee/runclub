@@ -53,7 +53,7 @@ export const Wiki = () => {
   }, []);
 
   return (
-    <div className="grid grid-cols-[minmax(200px,0.25fr)_1fr]">
+    <div className="grid grid-cols-1 md:grid-cols-[minmax(300px,0.25fr)_1fr]">
       <Sidebar
         wikiData={wikiData}
         activePage={activePage}

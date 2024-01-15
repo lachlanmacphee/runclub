@@ -5,6 +5,7 @@ import { RecordModel } from "pocketbase";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { AddPageDialog } from "./addPageDialog";
+import { SwitchPageDialog } from "./switchPageDialog";
 
 export function Sidebar({
   wikiData,
@@ -18,41 +19,48 @@ export function Sidebar({
   refreshPages: VoidFunction;
 }) {
   if (!wikiData) {
-    return (
-      <ScrollArea className="h-[calc(100vh-72px)]">
-        <div className="pb-12">
-          <div className="space-y-4 py-4">Loading...</div>
-        </div>
-      </ScrollArea>
-    );
+    return <span>Loading wiki pages...</span>;
   }
 
   const categories = Object.keys(wikiData);
 
   return (
-    <ScrollArea className="h-[calc(100vh-72px)]">
-      <div className="space-y-4 py-4 pr-8">
+    <>
+      <div className="flex flex-col space-y-4 md:hidden">
         <AddPageDialog refreshPages={refreshPages} />
-        {categories.map((category) => (
-          <div key={category}>
-            <h2 className="mb-2 px-4 text-lg font-semibold tracking-tight">
-              {category}
-            </h2>
-            <div className="space-y-1">
-              {wikiData[category].map((page) => (
-                <Button
-                  key={page.name}
-                  variant={activePage?.name === page.name ? "default" : "ghost"}
-                  className="w-full justify-start"
-                  onClick={() => setActivePage(page)}
-                >
-                  {page.name}
-                </Button>
-              ))}
-            </div>
-          </div>
-        ))}
+        <SwitchPageDialog
+          categories={categories}
+          wikiData={wikiData}
+          activePage={activePage}
+          setActivePage={setActivePage}
+        />
       </div>
-    </ScrollArea>
+      <ScrollArea className="hidden md:block h-[calc(100vh-72px)]">
+        <div className="space-y-4 py-4 md:pr-8">
+          <AddPageDialog refreshPages={refreshPages} />
+          {categories.map((category) => (
+            <div key={category}>
+              <h2 className="mb-2 px-4 text-lg font-semibold tracking-tight">
+                {category}
+              </h2>
+              <div className="space-y-1">
+                {wikiData[category].map((page) => (
+                  <Button
+                    key={page.name}
+                    variant={
+                      activePage?.name === page.name ? "default" : "ghost"
+                    }
+                    className="w-full justify-start"
+                    onClick={() => setActivePage(page)}
+                  >
+                    {page.name}
+                  </Button>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      </ScrollArea>
+    </>
   );
 }
