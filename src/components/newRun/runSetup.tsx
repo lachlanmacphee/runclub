@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useFieldArray, useForm } from "react-hook-form";
@@ -68,6 +68,7 @@ const FormSchema = z
     }
   );
 
+const localStorageKey = "participants";
 const initialDate = new Date();
 initialDate.setHours(0, 0, 0, 0);
 
@@ -102,7 +103,7 @@ export function RunSetup({
     defaultValues: {
       date: initialDate,
       location: "albertParkLake",
-      participants: [],
+      participants: JSON.parse(localStorage.getItem(localStorageKey) ?? "[]"),
     },
   });
 
@@ -110,6 +111,14 @@ export function RunSetup({
     control: form.control,
     name: "participants",
   });
+
+  useEffect(() => {
+    const subscription = form.watch((data) =>
+      localStorage.setItem("participants", JSON.stringify(data.participants))
+    );
+    return () => subscription.unsubscribe();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [form.watch]);
 
   const handleSubmitConfirmation = () => {
     setIsConfirmationModalOpen(true);
