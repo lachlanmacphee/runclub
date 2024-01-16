@@ -106,7 +106,7 @@ export function RunSetup({
     },
   });
 
-  const { fields, append, remove } = useFieldArray({
+  const { fields, prepend, remove } = useFieldArray({
     control: form.control,
     name: "participants",
   });
@@ -169,7 +169,7 @@ export function RunSetup({
 
   function addParticipant() {
     if (partBib && partName && partDist) {
-      append(
+      prepend(
         {
           bib: partBib,
           name: partName,
