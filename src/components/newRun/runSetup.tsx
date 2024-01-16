@@ -37,6 +37,7 @@ import { RunSetupConfirmationAlert } from "./runSetupConfirmationAlert";
 import { Label } from "../ui/label";
 import { Switch } from "../ui/switch";
 import { Checkbox } from "../ui/checkbox";
+import { IntroMessageDialog } from "./introMessageDialog";
 
 const FormSchema = z
   .object({
@@ -84,6 +85,7 @@ export function RunSetup({
 
   const [order, setOrder] = useState<number>(-1);
   const [isConfirmationModalOpen, setIsConfirmationModalOpen] = useState(false);
+  const [isIntroModalOpen, setIsIntroModalOpen] = useState(true);
 
   const [partBib, setPartBib] = useState<string>("100");
   const [partName, setPartName] = useState<{
@@ -114,7 +116,7 @@ export function RunSetup({
 
   useEffect(() => {
     const subscription = form.watch((data) =>
-      localStorage.setItem("participants", JSON.stringify(data.participants))
+      localStorage.setItem(localStorageKey, JSON.stringify(data.participants))
     );
     return () => subscription.unsubscribe();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -164,6 +166,7 @@ export function RunSetup({
 
     setStep(1);
     setParticipants(participants);
+    localStorage.removeItem(localStorageKey);
     toast({
       title: "Run Created",
       description: "Moving to timing page...",
@@ -204,6 +207,10 @@ export function RunSetup({
 
   return (
     <>
+      <IntroMessageDialog
+        isIntroModalOpen={isIntroModalOpen}
+        setIsIntroModalOpen={setIsIntroModalOpen}
+      />
       <RunSetupConfirmationAlert
         isConfirmationModalOpen={isConfirmationModalOpen}
         setIsConfirmationModalOpen={setIsConfirmationModalOpen}
