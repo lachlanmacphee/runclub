@@ -178,7 +178,7 @@ export function RunSetup({
           isPaid: partIsPaid,
         },
         {
-          focusName: `participants.${participantsLength}.name`,
+          shouldFocus: false,
         }
       );
       setPartBib(
