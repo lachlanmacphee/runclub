@@ -13,7 +13,7 @@ export function DesktopNavMenu() {
   const { getPages } = useAccessiblePages();
 
   return (
-    <NavigationMenu className="hidden xl:block">
+    <NavigationMenu className="hidden 2xl:block">
       <NavigationMenuList>
         {getPages().map((page) => (
           <NavigationMenuItem key={page.path}>

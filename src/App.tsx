@@ -19,6 +19,7 @@ import { NotFound } from "./pages/notFound";
 import { Layout } from "./components/core/layout";
 import { RequireAuth } from "./components/core/requireAuth";
 import { Toaster } from "@/components/ui/toaster";
+import { Events } from "./pages/events";
 
 export default function App() {
   return (
@@ -32,15 +33,16 @@ export default function App() {
               <Route index element={<Home />} />
               <Route path="/runs" element={<Runs />} />
               <Route path="/leaderboard" element={<Leaderboard />} />
+              <Route path="/faqs" element={<FAQs />} />
+              <Route path="/contact" element={<ContactUs />} />
+              <Route path="/privacy" element={<Privacy />} />
+              <Route path="/events" element={<Events />} />
               <Route element={<RequireAuth />}>
                 <Route path="/newrun" element={<NewRun />} />
                 <Route path="/volunteer" element={<Volunteer />} />
                 <Route path="/manage" element={<ManageClub />} />
                 <Route path="/wiki" element={<Wiki />} />
               </Route>
-              <Route path="/faqs" element={<FAQs />} />
-              <Route path="/contact" element={<ContactUs />} />
-              <Route path="/privacy" element={<Privacy />} />
               <Route path="*" element={<NotFound />} />
             </Route>
           </Routes>

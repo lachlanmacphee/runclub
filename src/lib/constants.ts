@@ -63,9 +63,10 @@ export const ROLES = {
 export const ROUTES = [
   { path: "/", label: "Home", minRole: null },
   { path: "/runs", label: "Runs", minRole: null },
-  { path: "/newrun", label: "New Run", minRole: ROLES.MODERATOR },
+  { path: "/newrun", label: "Create Run", minRole: ROLES.MODERATOR },
   { path: "/volunteer", label: "Volunteer", minRole: ROLES.MODERATOR },
   { path: "/leaderboard", label: "Leaderboard", minRole: null },
+  { path: "/events", label: "Upcoming Events", minRole: ROLES.MODERATOR },
   { path: "/manage", label: "Manage", minRole: ROLES.ADMIN },
   { path: "/faqs", label: "FAQs", minRole: null },
   { path: "/wiki", label: "Wiki", minRole: ROLES.MODERATOR },

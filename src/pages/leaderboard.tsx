@@ -33,13 +33,13 @@ export function Leaderboard() {
         });
 
       const participants: Participant[] = [
-        ...threePointFiveKmParticipants,
         ...fiveKmParticipants,
+        ...threePointFiveKmParticipants,
       ];
 
-      participants
-        .sort((a, b) => b.distance - a.distance)
-        .forEach((participant, index) => (participant.position = index + 1));
+      participants.forEach(
+        (participant, index) => (participant.position = index + 1)
+      );
 
       setParticipants(participants);
       setIsLoading(false);
