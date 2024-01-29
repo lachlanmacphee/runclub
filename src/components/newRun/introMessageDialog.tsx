@@ -26,10 +26,9 @@ export function IntroMessageDialog({
           </DialogDescription>
         </DialogHeader>
         <p>
-          To make your life easier, please set your phone to{" "}
-          <strong>Do Not Disturb</strong> mode before entering participant
-          details. You should also set your screen to <strong>stay on</strong>{" "}
-          so it doesn't turn off while you're timing.
+          Please set your phone to <strong>Do Not Disturb</strong> mode before
+          entering participant details. You should also set your screen to{" "}
+          <strong>stay on</strong> so it doesn't turn off while you're timing.
         </p>
         <DialogFooter>
           <Button onClick={() => setIsIntroModalOpen(false)}>Okay!</Button>

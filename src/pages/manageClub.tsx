@@ -4,7 +4,7 @@ import { ClubNameForm } from "@/components/manage/clubNameForm";
 export function ManageClub() {
   return (
     <div className="flex justify-center">
-      <div className="flex flex-col gap-8 w-[48rem]">
+      <div className="flex flex-col grow gap-8 max-w-3xl">
         <ClubNameForm />
         <Announcements />
         <div className="flex flex-col gap-2">

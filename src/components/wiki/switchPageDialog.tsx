@@ -47,12 +47,9 @@ export function SwitchPageDialog({
               </h2>
               <div className="space-y-1">
                 {wikiData[category].map((page) => (
-                  <DialogClose asChild>
+                  <DialogClose key={page.id} asChild>
                     <Button
-                      key={page.name}
-                      variant={
-                        activePage?.name === page.name ? "default" : "ghost"
-                      }
+                      variant={activePage?.id === page.id ? "default" : "ghost"}
                       className="w-full justify-start"
                       onClick={() => setActivePage(page)}
                     >

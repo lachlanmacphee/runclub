@@ -46,10 +46,8 @@ export function Sidebar({
               <div className="space-y-1">
                 {wikiData[category].map((page) => (
                   <Button
-                    key={page.name}
-                    variant={
-                      activePage?.name === page.name ? "default" : "ghost"
-                    }
+                    key={page.id}
+                    variant={activePage?.id === page.id ? "default" : "ghost"}
                     className="w-full justify-start"
                     onClick={() => setActivePage(page)}
                   >

@@ -3,7 +3,7 @@ import { FAQData } from "@/lib/constants";
 export function FAQs() {
   return (
     <div className="flex justify-center">
-      <div className="flex flex-col gap-4 max-w-3xl">
+      <div className="flex flex-col gap-4 grow max-w-3xl">
         <h1 className="text-5xl font-bold">Frequently Asked Questions</h1>
         <div className="flex flex-col gap-4">
           {FAQData.map(({ question, answer }, index) => (

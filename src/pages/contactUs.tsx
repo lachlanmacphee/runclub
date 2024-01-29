@@ -89,7 +89,7 @@ export const ContactUs = () => {
 
   return (
     <div className="flex justify-center">
-      <div className="flex flex-col gap-8 w-[48rem]">
+      <div className="flex flex-col grow max-w-3xl gap-8">
         <h1 className="text-5xl font-bold">Contact Us</h1>
         <Form {...form}>
           <form

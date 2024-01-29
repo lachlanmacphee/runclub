@@ -1,26 +1,17 @@
-import { Calendar, dateFnsLocalizer } from "react-big-calendar";
-import "react-big-calendar/lib/css/react-big-calendar.css";
-import format from "date-fns/format";
-import parse from "date-fns/parse";
-import startOfWeek from "date-fns/startOfWeek";
-import getDay from "date-fns/getDay";
-import enUS from "date-fns/locale/en-US";
 import { useCallback, useEffect, useState } from "react";
 import { usePocket } from "@/contexts";
 import { EventCreationDialog } from "@/components/events/eventCreationDialog";
 import { ROLES } from "@/lib/constants";
 
-const locales = {
-  "en-US": enUS,
-};
-
-const localizer = dateFnsLocalizer({
-  format,
-  parse,
-  startOfWeek,
-  getDay,
-  locales,
-});
+// Components
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 
 type EventResType = {
   title: string;
@@ -60,16 +51,28 @@ export function Events() {
   }, []);
 
   return (
-    <div>
-      {isAdmin && <EventCreationDialog refreshEvents={fetchEvents} />}
-      <Calendar
-        localizer={localizer}
-        events={events}
-        startAccessor="start"
-        endAccessor="end"
-        style={{ height: 500 }}
-        className="mt-4"
-      />
+    <div className="flex justify-center">
+      <div className="flex flex-grow max-w-3xl">
+        <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHead>Date</TableHead>
+              <TableHead className="flex justify-between items-center">
+                Description
+                {isAdmin && <EventCreationDialog refreshEvents={fetchEvents} />}
+              </TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {events.map((event, idx) => (
+              <TableRow key={idx}>
+                <TableCell>{event.start.toLocaleDateString()}</TableCell>
+                <TableCell>{event.title}</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </div>
     </div>
   );
 }
