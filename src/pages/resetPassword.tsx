@@ -1,4 +1,4 @@
-import { useCallback } from "react";
+import { useCallback, useEffect } from "react";
 import { Link, Navigate } from "react-router-dom";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -34,10 +34,23 @@ export const ResetPassword = () => {
     },
   });
 
+  useEffect(() => {
+    if (form.formState.isSubmitSuccessful) {
+      form.reset();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [form.formState, form.reset]);
+
   const onSubmit = useCallback(
     async (data: z.infer<typeof FormSchema>) => {
       try {
         await resetPassword(data.email);
+        toast({
+          title: "Email sent!",
+          duration: 5000,
+          description:
+            "You should receive a reset password email any moment now. If not, please check your spam folder. Once reset, head back to the login page.",
+        });
       } catch {
         toast({
           title: "Reset password failed.",
