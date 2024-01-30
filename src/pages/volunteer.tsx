@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 import { usePocket } from "@/contexts";
 import { getTuesdaysForNext3Months } from "@/lib/utils";
@@ -24,92 +24,85 @@ export function Volunteer() {
   const pb = pocket.pb;
   const user = pocket.user as User;
 
+  const [isUpdating, setIsUpdating] = useState(false);
+
   const [volunteers, setVolunteers] = useState<{
     [key: string]: Volunteer[];
   }>({});
-  const [isLoading, setIsLoading] = useState(false);
 
-  const signUpToVolunteer = async (run_date: Date, user_id: string) => {
-    const res = await pb.collection("volunteers").getFullList({
-      filter: pb.filter("run_date = {:run_date}", {
-        run_date,
-      }),
-    });
-    if (res.length == 2) {
-      toast({
-        title: "Volunteer Signup Failed",
-        variant: "destructive",
-        duration: 5000,
-        description:
-          "There are already 2 volunteers signed up for this run. Please refresh the page to get the latest data",
+  const signUpToVolunteer = useCallback(
+    async (run_date: Date, user_id: string) => {
+      console.log("calling sign up function");
+      setIsUpdating(true);
+
+      const res = await pb.collection("volunteers").getFullList({
+        filter: pb.filter("run_date = {:run_date}", {
+          run_date,
+        }),
       });
-      return;
-    }
-    // should have a check here to confirm that two volunteers aren't already signed up (in case the page hasn't been refreshed for a while)
-    await pb.collection("volunteers").create({ run_date, user_id });
-    const volunteer: Volunteer = {
-      run_date,
-      user_id,
-      expand: { user_id: { name: user.name } },
-    };
+      if (res.length == 2) {
+        toast({
+          title: "Volunteer Signup Failed",
+          variant: "destructive",
+          duration: 5000,
+          description:
+            "There are already 2 volunteers signed up for this run. Please refresh the page to get the latest data",
+        });
+        return;
+      }
 
-    const dateStr = run_date.toISOString();
-    const newVolunteers = {
-      ...volunteers,
-      [dateStr]: [...(volunteers[dateStr] ?? []), volunteer],
-    };
-    setVolunteers(newVolunteers);
-  };
+      await pb.collection("volunteers").create({ run_date, user_id });
+      setIsUpdating(false);
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    []
+  );
 
-  const optOutOfVolunteering = async (run_date: Date, user_id: string) => {
-    const res = await pb.collection("volunteers").getFirstListItem(
-      pb.filter("run_date = {:run_date} && user_id = {:user_id}", {
-        run_date,
-        user_id,
-      })
-    );
-    await pb.collection("volunteers").delete(res.id);
-    const dateStr = run_date.toISOString();
-    const newVolunteers = {
-      ...volunteers,
-      [dateStr]: (volunteers[dateStr] ?? []).filter(
-        (volunteer) => volunteer.user_id !== user.id
-      ),
-    };
-    setVolunteers(newVolunteers);
-  };
+  const optOutOfVolunteering = useCallback(
+    async (run_date: Date, user_id: string) => {
+      console.log("calling opt out function");
+      setIsUpdating(true);
+      const res = await pb.collection("volunteers").getFirstListItem(
+        pb.filter("run_date = {:run_date} && user_id = {:user_id}", {
+          run_date,
+          user_id,
+        })
+      );
+      await pb.collection("volunteers").delete(res.id);
+      setIsUpdating(false);
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    []
+  );
+
+  const fetchVolunteers = useCallback(async () => {
+    console.log("calling fetch function");
+    const resVolunteers: Volunteer[] = await pb
+      .collection("volunteers")
+      .getFullList({
+        filter: pb.filter("run_date >= {:minDate} && run_date <= {:maxDate}", {
+          minDate: tuesdaysForNext3Months[0],
+          maxDate: tuesdaysForNext3Months[tuesdaysForNext3Months.length - 1],
+        }),
+        expand: "user_id",
+      });
+    const tempVolunteers: { [key: string]: Volunteer[] } = {};
+    resVolunteers.map((volunteer) => {
+      const dateStr = new Date(volunteer.run_date).toISOString();
+      tempVolunteers[dateStr] = [...(tempVolunteers[dateStr] ?? []), volunteer];
+    });
+    setVolunteers(tempVolunteers);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
-    const fetchVolunteers = async () => {
-      setIsLoading(true);
-      const resVolunteers: Volunteer[] = await pb
-        .collection("volunteers")
-        .getFullList({
-          filter: pb.filter(
-            "run_date >= {:minDate} && run_date <= {:maxDate}",
-            {
-              minDate: tuesdaysForNext3Months[0],
-              maxDate:
-                tuesdaysForNext3Months[tuesdaysForNext3Months.length - 1],
-            }
-          ),
-          expand: "user_id",
-        });
-      const tempVolunteers: { [key: string]: Volunteer[] } = {};
-      resVolunteers.map((volunteer) => {
-        const dateStr = new Date(volunteer.run_date).toISOString();
-        tempVolunteers[dateStr] = [
-          ...(tempVolunteers[dateStr] ?? []),
-          volunteer,
-        ];
-      });
-      setVolunteers(tempVolunteers);
-      setIsLoading(false);
-    };
     fetchVolunteers();
-  }, [pb]);
-
-  if (isLoading) return <p>Loading...</p>;
+    pb.collection("volunteers").subscribe("*", fetchVolunteers);
+    return () => {
+      pb.collection("volunteers").unsubscribe("*");
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <div className="flex justify-center">
@@ -141,6 +134,7 @@ export function Volunteer() {
                   volunteerOne?.user_id === user.id ? "destructive" : "outline"
                 }
                 disabled={
+                  isUpdating ||
                   volunteerTwo?.user_id === user.id ||
                   (volunteerOne?.user_id !== undefined &&
                     volunteerOne?.user_id !== user.id)
@@ -159,6 +153,7 @@ export function Volunteer() {
                   volunteerTwo?.user_id === user.id ? "destructive" : "outline"
                 }
                 disabled={
+                  isUpdating ||
                   volunteerOne?.user_id === user.id ||
                   (volunteerTwo?.user_id !== undefined &&
                     volunteerTwo?.user_id !== user.id)
