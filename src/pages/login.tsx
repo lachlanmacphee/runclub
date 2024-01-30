@@ -99,6 +99,12 @@ export const Login = () => {
                 </FormItem>
               )}
             />
+            <Link
+              to="/resetpassword"
+              className={buttonVariants({ variant: "link" })}
+            >
+              Forgot your password?
+            </Link>
             <div className="relative">
               <div className="absolute inset-0 flex items-center">
                 <span className="w-full border-t" />
@@ -128,7 +134,7 @@ export const Login = () => {
             <div className="flex justify-between mt-2">
               <Link
                 to="/signup"
-                className={buttonVariants({ variant: "default" })}
+                className={buttonVariants({ variant: "secondary" })}
               >
                 Go to Sign Up
               </Link>

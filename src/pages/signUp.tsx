@@ -165,7 +165,7 @@ export const SignUp = () => {
             <div className="flex justify-between mt-2">
               <Link
                 to="/login"
-                className={buttonVariants({ variant: "default" })}
+                className={buttonVariants({ variant: "secondary" })}
               >
                 Go to Login
               </Link>

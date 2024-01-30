@@ -20,6 +20,7 @@ import { Layout } from "./components/core/layout";
 import { RequireAuth } from "./components/core/requireAuth";
 import { Toaster } from "@/components/ui/toaster";
 import { Events } from "./pages/events";
+import { ResetPassword } from "./pages/resetPassword";
 
 export default function App() {
   return (
@@ -29,6 +30,7 @@ export default function App() {
           <Routes>
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<SignUp />} />
+            <Route path="/resetpassword" element={<ResetPassword />} />
             <Route element={<Layout />}>
               <Route index element={<Home />} />
               <Route path="/runs" element={<Runs />} />
