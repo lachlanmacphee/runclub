@@ -70,15 +70,12 @@ const FormSchema = z.object({
       message: "Gender is a required field.",
     }),
   }),
-  age: z.enum(
-    ["Under 18", "18 - 30", "31 - 40", "41 - 50", "Above 50", "Blank"],
-    {
-      errorMap: () => ({
-        message: "Age is a required field.",
-      }),
-    }
-  ),
-  satisfiesAgeReq: z.enum(["Over 18", "Have Permission"], {
+  age: z.enum(["Under18", "18-30", "31-40", "41-50", "Above50", "Blank"], {
+    errorMap: () => ({
+      message: "Age is a required field.",
+    }),
+  }),
+  satisfiesAgeReq: z.enum(["Over18", "HavePermission"], {
     errorMap: () => ({
       message: "This is a required field.",
     }),
@@ -125,7 +122,7 @@ export const Waiver = () => {
       phone: "",
       gender: "Blank",
       age: "Blank",
-      satisfiesAgeReq: "Over 18",
+      satisfiesAgeReq: "Over18",
       readTermsAndConditions: false,
       emergencyContactName: "",
       emergencyContactPhone: "",
@@ -315,31 +312,31 @@ export const Waiver = () => {
                     >
                       <FormItem className="flex items-center space-x-3 space-y-0">
                         <FormControl>
-                          <RadioGroupItem value="Under 18" />
+                          <RadioGroupItem value="Under18" />
                         </FormControl>
                         <FormLabel className="font-normal">Under 18</FormLabel>
                       </FormItem>
                       <FormItem className="flex items-center space-x-3 space-y-0">
                         <FormControl>
-                          <RadioGroupItem value="18 - 30" />
+                          <RadioGroupItem value="18-30" />
                         </FormControl>
                         <FormLabel className="font-normal">18 - 30</FormLabel>
                       </FormItem>
                       <FormItem className="flex items-center space-x-3 space-y-0">
                         <FormControl>
-                          <RadioGroupItem value="31 - 40" />
+                          <RadioGroupItem value="31-40" />
                         </FormControl>
                         <FormLabel className="font-normal">31 - 40</FormLabel>
                       </FormItem>
                       <FormItem className="flex items-center space-x-3 space-y-0">
                         <FormControl>
-                          <RadioGroupItem value="41 - 50" />
+                          <RadioGroupItem value="41-50" />
                         </FormControl>
                         <FormLabel className="font-normal">41 - 50</FormLabel>
                       </FormItem>
                       <FormItem className="flex items-center space-x-3 space-y-0">
                         <FormControl>
-                          <RadioGroupItem value="Above 50" />
+                          <RadioGroupItem value="Above50" />
                         </FormControl>
                         <FormLabel className="font-normal">Above 50</FormLabel>
                       </FormItem>
@@ -374,7 +371,7 @@ export const Waiver = () => {
                     >
                       <FormItem className="flex items-center space-x-3 space-y-0">
                         <FormControl>
-                          <RadioGroupItem value="Over 18" />
+                          <RadioGroupItem value="Over18" />
                         </FormControl>
                         <FormLabel className="font-normal">
                           I'm over 18
@@ -382,7 +379,7 @@ export const Waiver = () => {
                       </FormItem>
                       <FormItem className="flex items-center space-x-3 space-y-0">
                         <FormControl>
-                          <RadioGroupItem value="Have Permission" />
+                          <RadioGroupItem value="HavePermission" />
                         </FormControl>
                         <FormLabel className="font-normal">
                           I've got permission (under 18 only)
