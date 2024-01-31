@@ -11,7 +11,6 @@ import { distanceOptions } from "@/lib/constants";
 import CreatableSelect from "react-select/creatable";
 import Select from "react-select";
 import { Button } from "@/components/ui/button";
-import { toast } from "@/components/ui/use-toast";
 import { DatePicker } from "@/components/ui/date-picker";
 import {
   Form,
@@ -167,10 +166,6 @@ export function RunSetup({
     setStep(1);
     setParticipants(participants);
     localStorage.removeItem(localStorageKey);
-    toast({
-      title: "Run Created",
-      description: "Moving to timing page...",
-    });
   }
 
   const participants = form.getValues("participants");
