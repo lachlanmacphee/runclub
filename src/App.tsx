@@ -21,6 +21,7 @@ import { RequireAuth } from "./components/core/requireAuth";
 import { Toaster } from "@/components/ui/toaster";
 import { Events } from "./pages/events";
 import { ResetPassword } from "./pages/resetPassword";
+import { Waiver } from "./pages/waiver";
 
 export default function App() {
   return (
@@ -39,6 +40,7 @@ export default function App() {
               <Route path="/contact" element={<ContactUs />} />
               <Route path="/privacy" element={<Privacy />} />
               <Route path="/events" element={<Events />} />
+              <Route path="/waiver" element={<Waiver />} />
               <Route element={<RequireAuth />}>
                 <Route path="/newrun" element={<NewRun />} />
                 <Route path="/volunteer" element={<Volunteer />} />

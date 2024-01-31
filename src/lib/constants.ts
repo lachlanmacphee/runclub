@@ -54,6 +54,17 @@ export const homeImgLinks = [
   "https://gunnrunners.org.au/wp-content/uploads/2021/02/2021-02-26_12-09-45-700x475.png",
 ];
 
+export const WAIVER_PARAGRAPHS = [
+  "The Gunn Runners Incorporated (A0046461M) (Gunn Runners) is a not-for-profit organisation that conducts a weekly social run/walk (the Event), usually over distances of 3km and 5km at Albert Park or surrounds. Gunn Runners Incorporated is run by a 'Crew' of volunteers.",
+  "You are required to read and tick the box at the bottom of this waiver form in order to participate in the Event. This is an insurance requirement.",
+  "Declaration: I know and understand that running and/or walking is a potentially hazardous activity, and that participation in the Event involves sustained strenuous physical activity that can result in injury or even death. I am medically able and properly trained to participate in the Event, and I am not aware of any medical condition or impairment that will be detrimental to my health if I participate in the Event.",
+  "I appreciate and assume any and all risks involved in and associated with participating in the Event, including but not limited to falls, contact with other participants or with other persons, the conditions of the path and/or road, the effects of weather, over-exertion, dehydration, muscular injuries, and ankle, knee or other joint injuries.",
+  "Knowing these facts, and in consideration of the acceptance of my participation in the Event, I waive and release The Gunn Runners Incorporated, its officers, servants, agents and representatives, and all instrumentalities or councils responsible for the place where the Event is held, from any and all claims or liabilities arising out of or connected with my participation in the Event, including any injury that I may suffer before, during or after the Event, and whether or not such claim or liability arises out of negligence or carelessness.",
+  "I acknowledge that Gunn Runners does not have insurance in respect of personal injury to participants and understand that I should, in my own interests, obtain applicable health insurance.",
+  "I acknowledge that photographs may be taken in connection with the Event or other activities organised by The Gunn Runners Incorporated and posted on Facebook. I consent to the publication on the Gunn Runners website or elsewhere of any such photograph in which more than 3 people are depicted. In the case of photographs depicting 3 people or less, the specific consent of each individual will be obtained before any publication of the photograph on the Gunn Runners website.",
+  "I agree to abide by the Rules of Association, policies and procedures that may be adopted by the Committee from time to time.",
+];
+
 export const ROLES = {
   MEMBER: "member",
   MODERATOR: "moderator",
