@@ -1,4 +1,5 @@
 import { homeImgLinks } from "@/lib/constants";
+import { Link } from "react-router-dom";
 
 export function Home() {
   return (
@@ -51,13 +52,12 @@ export function Home() {
 
           <p>
             Please also complete our{" "}
-            <a
+            <Link
+              to="/waiver"
               className="text-blue-600 dark:text-blue-500 hover:underline"
-              target="_blank"
-              href="https://docs.google.com/forms/d/e/1FAIpQLSceTLRKG5asBOCasC6pw2nqOpgUKjcvFQxpd5juYu70KzphzA/viewform"
             >
-              online waiver form
-            </a>{" "}
+              waiver form
+            </Link>{" "}
             before arriving for the first time.
           </p>
           <strong className="text-center py-2">
