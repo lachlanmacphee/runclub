@@ -119,7 +119,7 @@ export function RunSetup({
     );
     return () => subscription.unsubscribe();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [form.watch]);
+  }, []);
 
   const handleSubmitConfirmation = () => {
     setIsConfirmationModalOpen(true);
