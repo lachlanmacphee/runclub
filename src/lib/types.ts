@@ -1,3 +1,6 @@
+import { z } from "zod";
+import { WaiverFormSchema } from "./schemas";
+
 export type User = {
   avatar: string;
   role: string;
@@ -34,3 +37,5 @@ export type Participant = {
   is_paid: boolean;
   is_new: boolean;
 };
+
+export type Waiver = z.infer<typeof WaiverFormSchema>;
