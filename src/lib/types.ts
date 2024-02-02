@@ -3,7 +3,7 @@ import { WaiverFormSchema } from "./schemas";
 
 export type User = {
   avatar: string;
-  role: string;
+  role: "member" | "moderator" | "admin";
   collectionId: string;
   collectionName: string;
   created: string;

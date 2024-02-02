@@ -87,5 +87,5 @@ export const WaiverFormSchema = z.object({
 
 export const UserFormSchema = z.object({
   name: z.string().min(3),
-  role: z.string(),
+  role: z.enum(["member", "moderator", "admin"]),
 });
