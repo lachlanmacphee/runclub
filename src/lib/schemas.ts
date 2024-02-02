@@ -84,3 +84,8 @@ export const WaiverFormSchema = z.object({
     .max(10),
   referredBy: z.string().optional(),
 });
+
+export const UserFormSchema = z.object({
+  name: z.string().min(3),
+  role: z.string(),
+});

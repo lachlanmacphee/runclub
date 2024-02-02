@@ -22,6 +22,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { Events } from "./pages/events";
 import { ResetPassword } from "./pages/resetPassword";
 import { Waiver } from "./pages/waiver";
+import { Account } from "./pages/user";
 
 export default function App() {
   return (
@@ -46,6 +47,7 @@ export default function App() {
                 <Route path="/volunteer" element={<Volunteer />} />
                 <Route path="/manage" element={<ManageClub />} />
                 <Route path="/wiki" element={<Wiki />} />
+                <Route path="/account" element={<Account />} />
               </Route>
               <Route path="*" element={<NotFound />} />
             </Route>
