@@ -29,9 +29,11 @@ func main() {
 	// Unauthenticated Pages
     app.Get("/", handlers.Home)
 	app.Get("/login", handlers.LoginPage)
+	app.Get("/signup", handlers.SignupPage)
 
 	// Unauthenticated API
 	api.Post("/login", handlers.Login)
+	api.Post("/signup", handlers.Signup)
 
 	app.Use(handlers.AuthMiddleware)
 

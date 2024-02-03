@@ -29,6 +29,14 @@ func LoginPage(c *fiber.Ctx) error {
 	return c.Render("pages/login/index", nil)
 }
 
+func SignupPage(c *fiber.Ctx) error {
+	if hxRequest := c.Get("HX-Request"); hxRequest == "" {
+		return c.Render("pages/signup/index", nil, "layout/main")
+	}
+
+	return c.Render("pages/signup/index", nil)
+}
+
 func Welcome(c *fiber.Ctx) error {
 	sessionToken := c.Cookies("session_token")
 
