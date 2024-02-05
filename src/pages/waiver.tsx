@@ -161,10 +161,7 @@ export const Waiver = () => {
                 <FormItem>
                   <FormLabel>Phone</FormLabel>
                   <FormControl>
-                    <Input
-                      placeholder="Your phone number in the format 0412345678"
-                      {...field}
-                    />
+                    <Input placeholder="Your phone number" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
