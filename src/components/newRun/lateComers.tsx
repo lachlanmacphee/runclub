@@ -100,7 +100,7 @@ export function Latecomers({
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4"
+          className="grid grid-cols-1 gap-4"
         >
           <FormField
             control={form.control}

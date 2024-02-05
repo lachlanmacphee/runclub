@@ -192,7 +192,7 @@ export function RunTiming({
           </div>
           <CollapsibleContent className="space-y-2">
             <Textarea
-              className="w-full md:w-1/2 h-[192px]"
+              className="w-full h-[192px]"
               placeholder="You can write notes for the run here, but they will disappear once the run finishes."
             />
           </CollapsibleContent>
