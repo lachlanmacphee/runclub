@@ -40,7 +40,7 @@ export function RunTiming({
       toast({
         title: "Run Complete!",
         description:
-          "All participants have crossed the finish line! Please screenshot your notes if necessary. Redirecting to the results in 15 seconds...",
+          "All participants have crossed the finish line! Please screenshot your notes if necessary. Redirecting to the results page in 15 seconds...",
       });
       setTimeout(() => {
         navigate("/runs");

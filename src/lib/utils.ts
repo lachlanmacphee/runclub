@@ -40,6 +40,12 @@ export function convertLocationValueToLabel(value: string) {
   switch (value) {
     case "albertParkLake":
       return "Albert Park Lake";
+    case "portMelbBeach":
+      return "Port Melbourne Beach";
+    case "southMelbBeach":
+      return "South Melbourne Beach";
+    case "tanGardens":
+      return "Botanical Gardens";
   }
 }
 

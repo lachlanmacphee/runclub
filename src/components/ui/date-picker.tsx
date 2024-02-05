@@ -34,17 +34,15 @@ export function DatePicker({
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-auto p-0" align="start">
-        {date && (
-          <Calendar
-            mode="single"
-            selected={date}
-            onDayClick={(newDate) => {
-              setDate(newDate);
-              setCalendarOpen(false);
-            }}
-            initialFocus
-          />
-        )}
+        <Calendar
+          mode="single"
+          selected={date || new Date()}
+          onDayClick={(newDate) => {
+            setDate(newDate);
+            setCalendarOpen(false);
+          }}
+          initialFocus
+        />
       </PopoverContent>
     </Popover>
   );
