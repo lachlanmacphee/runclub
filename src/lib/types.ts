@@ -38,4 +38,11 @@ export type Participant = {
   is_new: boolean;
 };
 
+export type RunDetails = {
+  run: GroupRun;
+  participants: Participant[];
+  description: string;
+  location: string;
+};
+
 export type Waiver = z.infer<typeof WaiverFormSchema>;

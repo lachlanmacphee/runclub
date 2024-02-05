@@ -46,6 +46,8 @@ export function convertLocationValueToLabel(value: string) {
       return "South Melbourne Beach";
     case "tanGardens":
       return "Botanical Gardens";
+    default:
+      return "Location NOt Found";
   }
 }
 

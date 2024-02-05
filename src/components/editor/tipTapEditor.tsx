@@ -43,7 +43,6 @@ const Tiptap = ({
 
   useEffect(() => {
     editor?.commands.setContent(content);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [editor, content]);
 
   return (

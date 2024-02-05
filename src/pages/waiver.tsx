@@ -73,7 +73,6 @@ export const Waiver = () => {
         });
       }
     },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     [pb, toast]
   );
 

@@ -9,16 +9,17 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { Dispatch, SetStateAction, useState } from "react";
+import { useState } from "react";
 
 export function DatePicker({
   date,
   setDate,
 }: {
   date: Date | null;
-  setDate: Dispatch<SetStateAction<Date | null>>;
+  setDate: (date: Date) => void;
 }) {
   const [calendarOpen, setCalendarOpen] = useState(false);
+
   return (
     <Popover open={calendarOpen} onOpenChange={setCalendarOpen}>
       <PopoverTrigger asChild>
