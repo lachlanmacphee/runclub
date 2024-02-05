@@ -30,7 +30,7 @@ export function usePastRuns() {
   const fetchLatestRun = useCallback(async () => {
     const res = await pb
       .collection("group_runs")
-      .getList(1, 1, { sort: "date" });
+      .getList(1, 1, { sort: "-date" });
 
     const runs: GroupRun[] = res.items as unknown as GroupRun[];
     if (runs.length == 0) return undefined;
