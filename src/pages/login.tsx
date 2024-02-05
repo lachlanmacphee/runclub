@@ -18,6 +18,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import { getErrorMessage } from "@/lib/utils";
 
 const FormSchema = z.object({
   email: z.string().email(),
@@ -47,12 +48,13 @@ export const Login = () => {
       try {
         await login(data.email, data.password);
         navigate("/");
-      } catch {
+      } catch (error) {
+        const message = getErrorMessage(error);
         toast({
           title: "Login Failed",
           variant: "destructive",
           duration: 3000,
-          description: "The server might be down...",
+          description: message,
         });
       }
     },

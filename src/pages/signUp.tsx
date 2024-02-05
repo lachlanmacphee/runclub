@@ -19,6 +19,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import { getErrorMessage } from "@/lib/utils";
 
 const FormSchema = z
   .object({
@@ -61,12 +62,13 @@ export const SignUp = () => {
         );
         await login(data.email, data.password);
         navigate("/");
-      } catch {
+      } catch (error) {
+        const message = getErrorMessage(error);
         toast({
           title: "Sign Up Failed",
           variant: "destructive",
           duration: 3000,
-          description: "The server might be down.",
+          description: message,
         });
       }
     },

@@ -1,23 +1,10 @@
 import { usePocket } from "@/contexts";
 import { GroupRun, Participant } from "@/lib/types";
-import { convertLocationValueToLabel } from "@/lib/utils";
+import { convertLocationValueToLabel, createRunDescription } from "@/lib/utils";
 import { useCallback } from "react";
 
 export function usePastRuns() {
   const { pb } = usePocket();
-
-  const createRunDescription = (
-    participants: Participant[],
-    location: string
-  ) => {
-    return `This week we had ${
-      participants.length
-    } Gunnies hit the track at ${location}. Congratulations to all participants, including ${
-      participants.find((participant) => participant.distance == 5)?.name
-    } for the fastest time in the 5km, and ${
-      participants.find((participant) => participant.distance == 3.5)?.name
-    } for the fastest time in the 3.5km.`;
-  };
 
   const getParticipantsForRun = useCallback(
     async (id: string) => {
