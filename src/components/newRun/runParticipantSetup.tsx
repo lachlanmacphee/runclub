@@ -21,11 +21,10 @@ import {
 import { Input } from "@/components/ui/input";
 
 // Icons
-import { ArrowDown10, ArrowUp10, Trash } from "lucide-react";
+import { Trash } from "lucide-react";
 import { usePastParticipants } from "@/hooks/usePastParticipants";
 import { RunSetupConfirmationAlert } from "./runSetupConfirmationAlert";
 import { Label } from "../ui/label";
-import { Switch } from "../ui/switch";
 import { Checkbox } from "../ui/checkbox";
 
 const FormSchema = z
@@ -70,10 +69,8 @@ export function RunParticipantSetup({
   const { pb } = usePocket();
   const pastParticipants = usePastParticipants();
 
-  const [order, setOrder] = useState<number>(-1);
   const [isConfirmationModalOpen, setIsConfirmationModalOpen] = useState(false);
 
-  const [partBib, setPartBib] = useState<string>("100");
   const [partName, setPartName] = useState<{
     value: string;
     label: string;
@@ -156,10 +153,14 @@ export function RunParticipantSetup({
   const participantsLength = participants.length;
 
   function addParticipant() {
-    if (partBib && partName && partDist) {
+    const latestParticipant = participants[0];
+    const nextBibNumber = latestParticipant
+      ? String(parseInt(latestParticipant.bib) - 1)
+      : "100";
+    if (partName && partDist) {
       prepend(
         {
-          bib: partBib,
+          bib: nextBibNumber,
           name: partName,
           distance: partDist,
           isNew: partIsNew,
@@ -168,11 +169,6 @@ export function RunParticipantSetup({
         {
           shouldFocus: false,
         }
-      );
-      setPartBib(
-        order == 1
-          ? String(parseInt(partBib) + 1)
-          : String(parseInt(partBib) - 1)
       );
       setPartName(null);
       setPartDist(distanceOptions[1]);
@@ -192,16 +188,12 @@ export function RunParticipantSetup({
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(handleSubmitConfirmation)}
-          className="space-y-8"
+          className="flex flex-col gap-8 md:gap-12"
         >
-          <div className="space-y-2">
-            <div>
-              <Label>Bib</Label>
-              <Input
-                value={partBib}
-                onChange={(e) => setPartBib(e.target.value)}
-              />
-            </div>
+          <h1 className="text-3xl md:text-5xl text-center md:text-left font-bold">
+            Run Participants
+          </h1>
+          <div className="space-y-4 md:space-y-6">
             <div>
               <Label>Name</Label>
               <CreatableSelect
@@ -225,18 +217,7 @@ export function RunParticipantSetup({
                   })}
               />
             </div>
-            <div>
-              <Label>Distance</Label>
-              <Select
-                className="custom-react-select-container"
-                classNamePrefix="custom-react-select"
-                placeholder="Select..."
-                value={partDist}
-                onChange={(newDistance) => setPartDist(newDistance)}
-                options={distanceOptions}
-              />
-            </div>
-            <div className="flex gap-x-4 py-2">
+            <div className="flex gap-x-4">
               <div className="flex items-center space-x-2">
                 <Checkbox
                   id="is_new"
@@ -264,19 +245,20 @@ export function RunParticipantSetup({
                 </label>
               </div>
             </div>
-            <div className="flex justify-between">
-              <div className="flex items-center space-x-2">
-                <ArrowDown10 />
-                <Switch
-                  id="order"
-                  onCheckedChange={(val) => setOrder(val ? 1 : -1)}
-                />
-                <ArrowUp10 />
-              </div>
-              <Button type="button" onClick={addParticipant}>
-                Add Participant
-              </Button>
+            <div>
+              <Label>Distance</Label>
+              <Select
+                className="custom-react-select-container"
+                classNamePrefix="custom-react-select"
+                placeholder="Select..."
+                value={partDist}
+                onChange={(newDistance) => setPartDist(newDistance)}
+                options={distanceOptions}
+              />
             </div>
+            <Button type="button" onClick={addParticipant}>
+              Add Participant
+            </Button>
           </div>
           <div className="flex flex-col gap-2">
             <div className="grid grid-cols-[65px_2fr_1fr_40px] gap-x-2">
@@ -377,7 +359,7 @@ export function RunParticipantSetup({
               disabled={participantsLength == 0}
               className="w-48"
             >
-              Move to Timing
+              Next Step
             </Button>
           </div>
         </form>

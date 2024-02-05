@@ -8,8 +8,15 @@ import { Participant } from "@/lib/types";
 import { toast } from "@/components/ui/use-toast";
 import { Stopwatch } from "@/components/newRun/stopwatch";
 import { Button } from "@/components/ui/button";
-import { LateComers } from "./lateComers";
+import { Latecomers } from "./lateComers";
 import { Textarea } from "../ui/textarea";
+import { ChevronsUpDown } from "lucide-react";
+
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@/components/ui/collapsible";
 
 export function RunTiming({
   participants,
@@ -23,6 +30,9 @@ export function RunTiming({
   const { start, pause, hours, minutes, seconds, isRunning } = useStopwatch();
   const navigate = useNavigate();
 
+  const [isLatecomersOpen, setIsLatecomersOpen] = useState(false);
+  const [isNewGunniesOpen, setIsNewGunniesOpen] = useState(false);
+  const [isRunNotesOpen, setIsRunNotesOpen] = useState(false);
   const [completed, setCompleted] = useState<Record<number, boolean>>({});
 
   const isRunComplete =
@@ -51,6 +61,10 @@ export function RunTiming({
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [completed]);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   const markParticipant = async (bib: number) => {
     const participant = participants.find((p) => p.bib === bib);
@@ -91,14 +105,6 @@ export function RunTiming({
         isRunning={isRunning}
         isRunComplete={isRunComplete}
       />
-      {!isRunning && !isRunComplete && newParticipants.length > 0 && (
-        <div className="text-center">
-          <h2 className="font-bold text-xl">New Gunnies</h2>
-          {newParticipants.map((participant) => (
-            <p key={participant.name}>{participant.name}</p>
-          ))}
-        </div>
-      )}
       {isRunning && (
         <div className="flex gap-4 justify-around flex-wrap">
           {participants.map((participant) => (
@@ -114,20 +120,81 @@ export function RunTiming({
           ))}
         </div>
       )}
-      {!isRunning && !isRunComplete && (
-        <div className="flex justify-center">
-          <LateComers
-            runId={runId}
-            participants={participants}
-            setParticipants={setParticipants}
-          />
-        </div>
-      )}
-      <div className="flex justify-center">
-        <Textarea
-          className="w-3/4 md:w-1/2 h-[192px]"
-          placeholder="You can write notes for the run here, but they will disappear once the run finishes."
-        />
+      <div className="space-y-2">
+        {!isRunning && !isRunComplete && (
+          <Collapsible
+            open={isNewGunniesOpen}
+            onOpenChange={setIsNewGunniesOpen}
+            className="space-y-2"
+          >
+            <div className="flex items-center justify-between space-x-4">
+              <h4 className="text-sm font-semibold">New Gunnies</h4>
+              <CollapsibleTrigger asChild>
+                <Button variant="ghost" size="sm" className="w-9 p-0">
+                  <ChevronsUpDown className="h-4 w-4" />
+                  <span className="sr-only">Toggle</span>
+                </Button>
+              </CollapsibleTrigger>
+            </div>
+            <CollapsibleContent className="space-y-2">
+              <div>
+                {newParticipants.map((participant) => (
+                  <p key={participant.name} className="text-sm">
+                    {participant.name}
+                  </p>
+                ))}
+                {newParticipants.length == 0 && (
+                  <p className="text-sm">There are no new Gunnies this week.</p>
+                )}
+              </div>
+            </CollapsibleContent>
+          </Collapsible>
+        )}
+        {!isRunning && !isRunComplete && (
+          <Collapsible
+            open={isLatecomersOpen}
+            onOpenChange={setIsLatecomersOpen}
+            className="space-y-2"
+          >
+            <div className="flex items-center justify-between space-x-4">
+              <h4 className="text-sm font-semibold">Latecomers</h4>
+              <CollapsibleTrigger asChild>
+                <Button variant="ghost" size="sm" className="w-9 p-0">
+                  <ChevronsUpDown className="h-4 w-4" />
+                  <span className="sr-only">Toggle</span>
+                </Button>
+              </CollapsibleTrigger>
+            </div>
+            <CollapsibleContent className="space-y-2">
+              <Latecomers
+                runId={runId}
+                participants={participants}
+                setParticipants={setParticipants}
+              />
+            </CollapsibleContent>
+          </Collapsible>
+        )}
+        <Collapsible
+          open={isRunNotesOpen}
+          onOpenChange={setIsRunNotesOpen}
+          className="space-y-2"
+        >
+          <div className="flex items-center justify-between space-x-4">
+            <h4 className="text-sm font-semibold">Run Notes</h4>
+            <CollapsibleTrigger asChild>
+              <Button variant="ghost" size="sm" className="w-9 p-0">
+                <ChevronsUpDown className="h-4 w-4" />
+                <span className="sr-only">Toggle</span>
+              </Button>
+            </CollapsibleTrigger>
+          </div>
+          <CollapsibleContent className="space-y-2">
+            <Textarea
+              className="w-full md:w-1/2 h-[192px]"
+              placeholder="You can write notes for the run here, but they will disappear once the run finishes."
+            />
+          </CollapsibleContent>
+        </Collapsible>
       </div>
     </div>
   );

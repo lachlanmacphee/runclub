@@ -29,13 +29,13 @@ export function RunSetupConfirmationAlert({
     >
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>
-            Are you sure you want to move to timing?
+          <AlertDialogTitle className="text-2xl text-red-600">
+            IMPORTANT
           </AlertDialogTitle>
-          <AlertDialogDescription>
-            You will not be able to come back to this screen after, but you can
-            still add latecomers on the next page. You should only click "Move
-            to Timing" as you are about to leave the pub.
+          <AlertDialogDescription className="text-xl">
+            You will not be able to come back to this screen, but you can still
+            add latecomers on the next page. You should only click "Next Step"
+            as you are about to leave the pub.
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
@@ -43,7 +43,7 @@ export function RunSetupConfirmationAlert({
             Cancel
           </AlertDialogCancel>
           <AlertDialogAction onClick={handleSubmitConfirmationConfirm}>
-            Go
+            Next Step
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>

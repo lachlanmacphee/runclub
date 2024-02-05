@@ -20,19 +20,21 @@ export function IntroMessageDialog({
     <Dialog open={isIntroModalOpen} onOpenChange={setIsIntroModalOpen}>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Warning!</DialogTitle>
-          <DialogDescription>
-            Please read this before starting!
+          <DialogTitle className="text-2xl text-red-600">IMPORTANT</DialogTitle>
+          <DialogDescription className="text-xl">
+            Read this before starting
           </DialogDescription>
         </DialogHeader>
-        <p>
-          Please set your phone to <strong>Do Not Disturb</strong> mode before
-          creating and timing a run. You should also set your screen to{" "}
-          <strong>never sleep</strong> so it doesn't turn off while you're
-          timing.
+        <p className="text-center">
+          Set your phone to <strong>Do Not Disturb</strong> mode before creating
+          and timing a run.
+        </p>
+        <p className="text-center">
+          In settings, set your screen to <strong>never sleep</strong> so it
+          stays on whilst timing.
         </p>
         <DialogFooter>
-          <Button onClick={() => setIsIntroModalOpen(false)}>Okay!</Button>
+          <Button onClick={() => setIsIntroModalOpen(false)}>Done</Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>

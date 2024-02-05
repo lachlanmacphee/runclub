@@ -76,6 +76,9 @@ export function RunDetailsSetup({
       />
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+          <h1 className="text-3xl md:text-5xl text-center md:text-left font-bold">
+            Run Details
+          </h1>
           <div className="space-y-2">
             <FormField
               control={form.control}

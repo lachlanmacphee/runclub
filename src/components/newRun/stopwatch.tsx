@@ -27,10 +27,6 @@ export function Stopwatch({
       {!isRunning && !isRunComplete && (
         <div className="text-center space-y-2">
           <Button onClick={start}>Start The Run</Button>
-          <p>
-            Once you click this button, you wont be able to add any more
-            latecomers.
-          </p>
         </div>
       )}
     </div>

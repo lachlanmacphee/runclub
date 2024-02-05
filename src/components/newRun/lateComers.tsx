@@ -31,7 +31,7 @@ const FormSchema = z.object({
   isPaid: z.boolean(),
 });
 
-export function LateComers({
+export function Latecomers({
   runId,
   participants,
   setParticipants,
@@ -96,24 +96,12 @@ export function LateComers({
   );
 
   return (
-    <div className="flex flex-col items-center gap-4">
-      <h2 className="text-xl font-bold">Latecomers</h2>
+    <div className="flex flex-col">
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
           className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4"
         >
-          <FormField
-            control={form.control}
-            name="bib"
-            render={({ field }) => (
-              <FormItem>
-                <Input {...field} placeholder="Bib" />
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
           <FormField
             control={form.control}
             name="name"
@@ -139,7 +127,48 @@ export function LateComers({
               />
             )}
           />
-
+          <FormField
+            control={form.control}
+            name="bib"
+            render={({ field }) => (
+              <FormItem>
+                <Input {...field} placeholder="Bib" />
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <div className="flex gap-x-4">
+            <FormField
+              control={form.control}
+              name="isNew"
+              render={({ field }) => (
+                <FormItem className="flex items-center space-x-2 space-y-0">
+                  <FormControl>
+                    <Checkbox
+                      checked={field.value}
+                      onCheckedChange={field.onChange}
+                    />
+                  </FormControl>
+                  <FormLabel>New to Gunnies</FormLabel>
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="isPaid"
+              render={({ field }) => (
+                <FormItem className="flex items-center space-x-2 space-y-0">
+                  <FormControl>
+                    <Checkbox
+                      checked={field.value}
+                      onCheckedChange={field.onChange}
+                    />
+                  </FormControl>
+                  <FormLabel>Paid $5</FormLabel>
+                </FormItem>
+              )}
+            />
+          </div>
           <FormField
             control={form.control}
             name="distance"
@@ -153,43 +182,6 @@ export function LateComers({
               />
             )}
           />
-
-          <FormField
-            control={form.control}
-            name="isNew"
-            render={({ field }) => (
-              <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4">
-                <FormControl>
-                  <Checkbox
-                    checked={field.value}
-                    onCheckedChange={field.onChange}
-                  />
-                </FormControl>
-                <div className="space-y-1 leading-none">
-                  <FormLabel>New to Gunnies</FormLabel>
-                </div>
-              </FormItem>
-            )}
-          />
-
-          <FormField
-            control={form.control}
-            name="isPaid"
-            render={({ field }) => (
-              <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4">
-                <FormControl>
-                  <Checkbox
-                    checked={field.value}
-                    onCheckedChange={field.onChange}
-                  />
-                </FormControl>
-                <div className="space-y-1 leading-none">
-                  <FormLabel>Paid $5</FormLabel>
-                </div>
-              </FormItem>
-            )}
-          />
-
           <Button type="submit" className="sm:h-full">
             Add
           </Button>
