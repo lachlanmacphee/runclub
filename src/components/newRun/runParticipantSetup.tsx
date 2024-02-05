@@ -4,29 +4,20 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useFieldArray, useForm } from "react-hook-form";
 import { usePocket } from "@/contexts";
 import { hasDuplicates } from "@/lib/utils";
-import { Participant } from "@/lib/types";
+import { GroupRun, Participant } from "@/lib/types";
 import { distanceOptions } from "@/lib/constants";
 
 // Components
 import CreatableSelect from "react-select/creatable";
 import Select from "react-select";
 import { Button } from "@/components/ui/button";
-import { DatePicker } from "@/components/ui/date-picker";
 import {
   Form,
   FormControl,
   FormField,
   FormItem,
-  FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import {
-  Select as ShadSelect,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
 
 // Icons
@@ -36,12 +27,9 @@ import { RunSetupConfirmationAlert } from "./runSetupConfirmationAlert";
 import { Label } from "../ui/label";
 import { Switch } from "../ui/switch";
 import { Checkbox } from "../ui/checkbox";
-import { IntroMessageDialog } from "./introMessageDialog";
 
 const FormSchema = z
   .object({
-    date: z.date(),
-    location: z.enum(["albertParkLake"]),
     participants: z.array(
       z.object({
         bib: z.string(),
@@ -69,13 +57,13 @@ const FormSchema = z
   );
 
 const localStorageKey = "participants";
-const initialDate = new Date();
-initialDate.setHours(0, 0, 0, 0);
 
-export function RunSetup({
+export function RunParticipantSetup({
+  groupRun,
   setStep,
   setParticipants,
 }: {
+  groupRun: GroupRun;
   setStep: Dispatch<SetStateAction<number>>;
   setParticipants: Dispatch<SetStateAction<Participant[]>>;
 }) {
@@ -84,7 +72,6 @@ export function RunSetup({
 
   const [order, setOrder] = useState<number>(-1);
   const [isConfirmationModalOpen, setIsConfirmationModalOpen] = useState(false);
-  const [isIntroModalOpen, setIsIntroModalOpen] = useState(true);
 
   const [partBib, setPartBib] = useState<string>("100");
   const [partName, setPartName] = useState<{
@@ -102,8 +89,6 @@ export function RunSetup({
     resolver: zodResolver(FormSchema),
     mode: "onBlur",
     defaultValues: {
-      date: initialDate,
-      location: "albertParkLake",
       participants: JSON.parse(localStorage.getItem(localStorageKey) ?? "[]"),
     },
   });
@@ -135,13 +120,9 @@ export function RunSetup({
   };
 
   async function onSubmit(data: z.infer<typeof FormSchema>) {
-    const { id: groupRunId } = await pb
-      .collection("group_runs")
-      .create({ date: data.date, location: data.location, isComplete: false });
-
     const participants = data.participants.map((participant) => {
       return {
-        group_run_id: groupRunId,
+        group_run_id: groupRun.id,
         user_id:
           participant.name.value == participant.name.label
             ? undefined
@@ -163,7 +144,7 @@ export function RunSetup({
       })
     );
 
-    setStep(1);
+    setStep(2);
     setParticipants(participants);
     localStorage.removeItem(localStorageKey);
   }
@@ -202,10 +183,6 @@ export function RunSetup({
 
   return (
     <>
-      <IntroMessageDialog
-        isIntroModalOpen={isIntroModalOpen}
-        setIsIntroModalOpen={setIsIntroModalOpen}
-      />
       <RunSetupConfirmationAlert
         isConfirmationModalOpen={isConfirmationModalOpen}
         setIsConfirmationModalOpen={setIsConfirmationModalOpen}
@@ -217,46 +194,6 @@ export function RunSetup({
           onSubmit={form.handleSubmit(handleSubmitConfirmation)}
           className="space-y-8"
         >
-          <div className="space-y-2">
-            <FormField
-              control={form.control}
-              name="date"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Date</FormLabel>
-                  <FormControl>
-                    <DatePicker date={field.value} setDate={field.onChange} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="location"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Location</FormLabel>
-                  <ShadSelect
-                    onValueChange={field.onChange}
-                    defaultValue={field.value}
-                  >
-                    <FormControl>
-                      <SelectTrigger>
-                        <SelectValue />
-                      </SelectTrigger>
-                    </FormControl>
-                    <SelectContent>
-                      <SelectItem value="albertParkLake">
-                        Albert Park Lake
-                      </SelectItem>
-                    </SelectContent>
-                  </ShadSelect>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          </div>
           <div className="space-y-2">
             <div>
               <Label>Bib</Label>
@@ -440,7 +377,7 @@ export function RunSetup({
               disabled={participantsLength == 0}
               className="w-48"
             >
-              Create Run
+              Move to Timing
             </Button>
           </div>
         </form>

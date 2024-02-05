@@ -3,18 +3,20 @@ import { usePocket } from "@/contexts";
 import { GroupRun, Participant } from "@/lib/types";
 
 // Components
-import { RunSetup } from "@/components/newRun/runSetup";
+import { RunDetailsSetup } from "@/components/newRun/runDetailsSetup";
 import { RunTiming } from "@/components/newRun/runTiming";
 import { RunsInProgress } from "@/components/newRun/runsInProgress";
 
 // Icons
 import { Loader2 } from "lucide-react";
+import { RunParticipantSetup } from "@/components/newRun/runParticipantSetup";
 
 export function NewRun() {
   const { pb } = usePocket();
   const [isLoading, setIsLoading] = useState(true);
   const [step, setStep] = useState(-1);
   const [inProgressRuns, setInProgressRuns] = useState<GroupRun[]>([]);
+  const [groupRun, setGroupRun] = useState<GroupRun>();
   const [participants, setParticipants] = useState<Participant[]>([]);
 
   useEffect(() => {
@@ -47,20 +49,34 @@ export function NewRun() {
       <RunsInProgress
         inProgressRuns={inProgressRuns}
         setStep={setStep}
+        setGroupRun={setGroupRun}
         setParticipants={setParticipants}
       />
     );
   }
 
-  switch (step) {
-    case 0:
-      return <RunSetup setStep={setStep} setParticipants={setParticipants} />;
-    case 1:
-      return (
-        <RunTiming
-          participants={participants}
-          setParticipants={setParticipants}
-        />
-      );
+  if (step == 0) {
+    return <RunDetailsSetup setGroupRun={setGroupRun} setStep={setStep} />;
   }
+
+  if (step == 1 && groupRun) {
+    return (
+      <RunParticipantSetup
+        groupRun={groupRun}
+        setStep={setStep}
+        setParticipants={setParticipants}
+      />
+    );
+  }
+
+  if (step == 2 && groupRun) {
+    return (
+      <RunTiming
+        participants={participants}
+        setParticipants={setParticipants}
+      />
+    );
+  }
+
+  return <p>Something went wrong...</p>;
 }

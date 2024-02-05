@@ -40,11 +40,11 @@ export function RunTiming({
       toast({
         title: "Run Complete!",
         description:
-          "All participants have crossed the finish line! Redirecting in 5 seconds...",
+          "All participants have crossed the finish line! Please screenshot your notes if necessary. Redirecting to the results in 15 seconds...",
       });
       setTimeout(() => {
         navigate("/runs");
-      }, 5000);
+      }, 15000);
     }
     if (isRunComplete) {
       markRunComplete();
@@ -126,7 +126,7 @@ export function RunTiming({
       <div className="flex justify-center">
         <Textarea
           className="w-3/4 md:w-1/2 h-[192px]"
-          placeholder="You can write notes for the run here, but they will not be saved to the cloud."
+          placeholder="You can write notes for the run here, but they will disappear once the run finishes."
         />
       </div>
     </div>

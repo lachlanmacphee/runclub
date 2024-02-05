@@ -24,11 +24,15 @@ export function Stopwatch({
   return (
     <div className="flex flex-col items-center gap-4">
       <h1 className="font-extrabold text-5xl">{`${fHours}:${fMins}:${fSecs}`}</h1>
-      <div>
-        {!isRunning && !isRunComplete && (
+      {!isRunning && !isRunComplete && (
+        <div className="text-center space-y-2">
           <Button onClick={start}>Start The Run</Button>
-        )}
-      </div>
+          <p>
+            Once you click this button, you wont be able to add any more
+            latecomers.
+          </p>
+        </div>
+      )}
     </div>
   );
 }

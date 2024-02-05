@@ -30,12 +30,12 @@ export function RunSetupConfirmationAlert({
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>
-            Are you sure you want to create a run?
+            Are you sure you want to move to timing?
           </AlertDialogTitle>
           <AlertDialogDescription>
             You will not be able to come back to this screen after, but you can
-            still add latecomers on the next page. You should only click "Create
-            Run" as you are about to leave the pub.
+            still add latecomers on the next page. You should only click "Move
+            to Timing" as you are about to leave the pub.
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
@@ -43,7 +43,7 @@ export function RunSetupConfirmationAlert({
             Cancel
           </AlertDialogCancel>
           <AlertDialogAction onClick={handleSubmitConfirmationConfirm}>
-            Create
+            Go
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>

@@ -12,24 +12,29 @@ import {
 
 import { GroupRun, Participant } from "@/lib/types";
 import { usePocket } from "@/contexts";
+import { Dispatch, SetStateAction } from "react";
 
 export function RunsInProgress({
   inProgressRuns,
   setStep,
+  setGroupRun,
   setParticipants,
 }: {
   inProgressRuns: GroupRun[];
-  setStep: React.Dispatch<React.SetStateAction<number>>;
-  setParticipants: React.Dispatch<React.SetStateAction<Participant[]>>;
+  setStep: Dispatch<SetStateAction<number>>;
+  setGroupRun: Dispatch<SetStateAction<GroupRun | undefined>>;
+  setParticipants: Dispatch<SetStateAction<Participant[]>>;
 }) {
   const { pb } = usePocket();
-  const continueHandler = async (runId: string) => {
+
+  const continueHandler = async (run: GroupRun) => {
     const participants = (await pb.collection("participant_runs").getFullList({
-      filter: pb.filter("group_run_id = {:runId}", { runId }),
+      filter: pb.filter("group_run_id = {:runId}", { runId: run.id }),
       sort: "bib",
     })) as Participant[];
 
     setParticipants(participants);
+    setGroupRun(run);
     setStep(1);
   };
 
@@ -52,7 +57,7 @@ export function RunsInProgress({
             />
           </CardContent>
           <CardFooter className="flex justify-end">
-            <Button onClick={() => continueHandler(run.id)}>Continue</Button>
+            <Button onClick={() => continueHandler(run)}>Continue</Button>
           </CardFooter>
         </Card>
       ))}
