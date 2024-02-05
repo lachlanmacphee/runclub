@@ -35,15 +35,15 @@ export const WaiverFormSchema = z.object({
         message: "Postcode is required and must be 4 characters minimum.",
       }),
     })
-    .min(4),
+    .min(4)
+    .max(10),
   phone: z
     .string({
       errorMap: () => ({
         message: "Phone number is required and must be 10 characters.",
       }),
     })
-    .min(10)
-    .max(10),
+    .min(10),
   gender: z.enum(["Male", "Female", "Other", "Blank"], {
     errorMap: () => ({
       message: "Gender is a required field.",
@@ -80,8 +80,7 @@ export const WaiverFormSchema = z.object({
           "Emergency contact phone is a required field and must be 10 characters.",
       }),
     })
-    .min(10)
-    .max(10),
+    .min(10),
   referredBy: z.string().optional(),
 });
 
