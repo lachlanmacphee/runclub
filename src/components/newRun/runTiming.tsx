@@ -139,12 +139,14 @@ export function RunTiming({
             <CollapsibleContent className="space-y-2">
               <div>
                 {newParticipants.map((participant) => (
-                  <p key={participant.name} className="text-sm">
+                  <p key={participant.name} className="text-sm sm:text-base">
                     {participant.name}
                   </p>
                 ))}
                 {newParticipants.length == 0 && (
-                  <p className="text-sm">There are no new Gunnies this week.</p>
+                  <p className="text-sm sm:text-base">
+                    There are no new Gunnies this week.
+                  </p>
                 )}
               </div>
             </CollapsibleContent>
