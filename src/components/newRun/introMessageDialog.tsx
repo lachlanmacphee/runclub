@@ -25,11 +25,11 @@ export function IntroMessageDialog({
             Read this before starting
           </DialogDescription>
         </DialogHeader>
-        <p className="text-center">
+        <p className="text-center sm:text-left">
           Set your phone to <strong>Do Not Disturb</strong> mode before creating
           and timing a run.
         </p>
-        <p className="text-center">
+        <p className="text-center sm:text-left">
           In settings, set your screen to <strong>never sleep</strong> so it
           stays on whilst timing.
         </p>
