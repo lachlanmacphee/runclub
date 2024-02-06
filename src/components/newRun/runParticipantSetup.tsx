@@ -67,7 +67,7 @@ export function RunParticipantSetup({
   setParticipants: Dispatch<SetStateAction<Participant[]>>;
 }) {
   const { pb } = usePocket();
-  const members = useMembers();
+  const { members, refreshMembers } = useMembers();
 
   const [isConfirmationModalOpen, setIsConfirmationModalOpen] = useState(false);
 
@@ -187,9 +187,14 @@ export function RunParticipantSetup({
           onSubmit={form.handleSubmit(handleSubmitConfirmation)}
           className="flex flex-col gap-8 md:gap-12"
         >
-          <h1 className="text-3xl md:text-5xl text-center md:text-left font-bold">
-            Run Participants
-          </h1>
+          <div className="flex justify-between">
+            <h1 className="text-3xl md:text-5xl text-center md:text-left font-bold">
+              Run Participants
+            </h1>
+            <Button type="button" variant="secondary" onClick={refreshMembers}>
+              Refresh Members
+            </Button>
+          </div>
           <div className="space-y-4 md:space-y-6">
             <div>
               <Label>Name</Label>

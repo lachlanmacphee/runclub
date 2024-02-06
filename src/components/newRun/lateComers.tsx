@@ -40,7 +40,8 @@ export function Latecomers({
   participants: Participant[];
   setParticipants: React.Dispatch<React.SetStateAction<Participant[]>>;
 }) {
-  const members = useMembers();
+  // Might need to add refresh members here in future
+  const { members } = useMembers();
   const { pb } = usePocket();
 
   const form = useForm<z.infer<typeof FormSchema>>({
