@@ -21,7 +21,7 @@ import {
 import { Input } from "@/components/ui/input";
 
 // Icons
-import { Trash } from "lucide-react";
+import { RefreshCw, Trash } from "lucide-react";
 import { useMembers } from "@/hooks/useMembers";
 import { RunSetupConfirmationAlert } from "./runSetupConfirmationAlert";
 import { Label } from "../ui/label";
@@ -191,14 +191,9 @@ export function RunParticipantSetup({
           onSubmit={form.handleSubmit(handleSubmitConfirmation)}
           className="flex flex-col gap-8 md:gap-12"
         >
-          <div className="flex justify-between">
-            <h1 className="text-3xl md:text-5xl text-center md:text-left font-bold">
-              Run Participants
-            </h1>
-            <Button type="button" variant="secondary" onClick={refreshMembers}>
-              Refresh Members
-            </Button>
-          </div>
+          <h1 className="text-3xl md:text-5xl text-center md:text-left font-bold">
+            Run Participants
+          </h1>
           <div className="space-y-4 md:space-y-6">
             <div>
               <Label>Name</Label>
@@ -218,33 +213,44 @@ export function RunParticipantSetup({
                   })}
               />
             </div>
-            <div className="flex gap-x-4">
-              <div className="flex items-center space-x-2">
-                <Checkbox
-                  id="is_new"
-                  checked={partIsNew}
-                  onCheckedChange={(e) => setPartIsNew(!!e.valueOf())}
-                />
-                <label
-                  htmlFor="is_new"
-                  className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                >
-                  New to Gunnies
-                </label>
+            <div className="flex justify-between">
+              <div className="flex gap-x-4">
+                <div className="flex items-center space-x-2">
+                  <Checkbox
+                    id="is_new"
+                    checked={partIsNew}
+                    onCheckedChange={(e) => setPartIsNew(!!e.valueOf())}
+                  />
+                  <label
+                    htmlFor="is_new"
+                    className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                  >
+                    New to Gunnies
+                  </label>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <Checkbox
+                    id="is_paid"
+                    checked={partIsPaid}
+                    onCheckedChange={(e) => setPartIsPaid(!!e.valueOf())}
+                  />
+                  <label
+                    htmlFor="is_paid"
+                    className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                  >
+                    Paid $5
+                  </label>
+                </div>
               </div>
-              <div className="flex items-center space-x-2">
-                <Checkbox
-                  id="is_paid"
-                  checked={partIsPaid}
-                  onCheckedChange={(e) => setPartIsPaid(!!e.valueOf())}
-                />
-                <label
-                  htmlFor="is_paid"
-                  className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                >
-                  Paid $5
-                </label>
-              </div>
+              <Button
+                type="button"
+                variant="ghost"
+                onClick={refreshMembers}
+                className="p-0 h-4 gap-1"
+              >
+                <RefreshCw className="w-4 h-4" />
+                <p>Members</p>
+              </Button>
             </div>
             <div>
               <Label>Distance</Label>
