@@ -4,7 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 
 import { usePocket } from "@/contexts";
-import { usePastParticipants } from "@/hooks/usePastParticipants";
+import { useMembers } from "@/hooks/useMembers";
 
 import { Participant } from "@/lib/types";
 import { distanceOptions } from "@/lib/constants";
@@ -40,7 +40,7 @@ export function Latecomers({
   participants: Participant[];
   setParticipants: React.Dispatch<React.SetStateAction<Participant[]>>;
 }) {
-  const pastParticipants = usePastParticipants();
+  const members = useMembers();
   const { pb } = usePocket();
 
   const form = useForm<z.infer<typeof FormSchema>>({
@@ -91,10 +91,6 @@ export function Latecomers({
     setParticipants([...participants, res]);
   }
 
-  const participantNames: string[] = participants.map(
-    (participant) => participant.name
-  );
-
   return (
     <div className="flex flex-col">
       <Form {...form}>
@@ -111,19 +107,12 @@ export function Latecomers({
                 className="custom-react-select-container"
                 classNamePrefix="custom-react-select"
                 placeholder="Name"
-                options={pastParticipants
-                  .filter(
-                    (participant) =>
-                      !participantNames.includes(participant.name)
-                  )
-                  .map((participant) => {
-                    return {
-                      label: participant.name,
-                      value: participant.user_id
-                        ? participant.user_id
-                        : participant.name,
-                    };
-                  })}
+                options={members.map((member) => {
+                  return {
+                    label: member.name,
+                    value: member.user_id ? member.user_id : member.name,
+                  };
+                })}
               />
             )}
           />

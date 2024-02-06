@@ -22,7 +22,7 @@ import { Input } from "@/components/ui/input";
 
 // Icons
 import { Trash } from "lucide-react";
-import { usePastParticipants } from "@/hooks/usePastParticipants";
+import { useMembers } from "@/hooks/useMembers";
 import { RunSetupConfirmationAlert } from "./runSetupConfirmationAlert";
 import { Label } from "../ui/label";
 import { Checkbox } from "../ui/checkbox";
@@ -67,7 +67,7 @@ export function RunParticipantSetup({
   setParticipants: Dispatch<SetStateAction<Participant[]>>;
 }) {
   const { pb } = usePocket();
-  const pastParticipants = usePastParticipants();
+  const members = useMembers();
 
   const [isConfirmationModalOpen, setIsConfirmationModalOpen] = useState(false);
 
@@ -147,9 +147,6 @@ export function RunParticipantSetup({
   }
 
   const participants = form.getValues("participants");
-  const participantNames: string[] = participants.map(
-    (participant) => participant.name?.label
-  );
   const participantsLength = participants.length;
 
   function addParticipant() {
@@ -202,19 +199,12 @@ export function RunParticipantSetup({
                 placeholder="Select..."
                 value={partName}
                 onChange={(newName) => setPartName(newName)}
-                options={pastParticipants
-                  .filter(
-                    (participant) =>
-                      !participantNames.includes(participant.name)
-                  )
-                  .map((participant) => {
-                    return {
-                      label: participant.name,
-                      value: participant.user_id
-                        ? participant.user_id
-                        : participant.name,
-                    };
-                  })}
+                options={members.map((member) => {
+                  return {
+                    label: member.name,
+                    value: member.user_id ? member.user_id : member.name,
+                  };
+                })}
               />
             </div>
             <div className="flex gap-x-4">
@@ -294,19 +284,14 @@ export function RunParticipantSetup({
                           className="custom-react-select-container"
                           classNamePrefix="custom-react-select"
                           placeholder="Select..."
-                          options={pastParticipants
-                            .filter(
-                              (participant) =>
-                                !participantNames.includes(participant.name)
-                            )
-                            .map((participant) => {
-                              return {
-                                label: participant.name,
-                                value: participant.user_id
-                                  ? participant.user_id
-                                  : participant.name,
-                              };
-                            })}
+                          options={members.map((member) => {
+                            return {
+                              label: member.name,
+                              value: member.user_id
+                                ? member.user_id
+                                : member.name,
+                            };
+                          })}
                         />
                       </FormControl>
                       <FormMessage />

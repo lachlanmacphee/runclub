@@ -38,6 +38,11 @@ export type Participant = {
   is_new: boolean;
 };
 
+export type Member = {
+  user_id?: string;
+  name: string;
+};
+
 export type RunDetails = {
   run: GroupRun;
   participants: Participant[];
