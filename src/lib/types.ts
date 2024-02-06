@@ -51,4 +51,15 @@ export type RunDetails = {
   location: string;
 };
 
+export type Volunteer = {
+  run_date: Date;
+  user_id?: string;
+  name?: string;
+  expand: {
+    user_id: {
+      name: string;
+    };
+  };
+};
+
 export type Waiver = z.infer<typeof WaiverFormSchema>;

@@ -2,20 +2,10 @@ import { useCallback, useEffect, useState } from "react";
 
 import { usePocket } from "@/contexts";
 import { getTuesdaysForNext3Months } from "@/lib/utils";
-import { User } from "@/lib/types";
+import type { User, Volunteer } from "@/lib/types";
 
 import { toast } from "@/components/ui/use-toast";
 import { Button } from "@/components/ui/button";
-
-type Volunteer = {
-  run_date: Date;
-  user_id: string;
-  expand: {
-    user_id: {
-      name: string;
-    };
-  };
-};
 
 const tuesdaysForNext3Months: Date[] = getTuesdaysForNext3Months();
 
@@ -32,7 +22,6 @@ export function Volunteer() {
 
   const signUpToVolunteer = useCallback(
     async (run_date: Date, user_id: string) => {
-      console.log("calling sign up function");
       setIsUpdating(true);
 
       const res = await pb.collection("volunteers").getFullList({
@@ -40,6 +29,7 @@ export function Volunteer() {
           run_date,
         }),
       });
+
       if (res.length == 2) {
         toast({
           title: "Volunteer Signup Failed",
@@ -60,7 +50,6 @@ export function Volunteer() {
 
   const optOutOfVolunteering = useCallback(
     async (run_date: Date, user_id: string) => {
-      console.log("calling opt out function");
       setIsUpdating(true);
       const res = await pb.collection("volunteers").getFirstListItem(
         pb.filter("run_date = {:run_date} && user_id = {:user_id}", {
@@ -76,7 +65,6 @@ export function Volunteer() {
   );
 
   const fetchVolunteers = useCallback(async () => {
-    console.log("calling fetch function");
     const resVolunteers: Volunteer[] = await pb
       .collection("volunteers")
       .getFullList({
