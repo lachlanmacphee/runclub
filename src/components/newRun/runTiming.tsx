@@ -10,7 +10,7 @@ import { Stopwatch } from "@/components/newRun/stopwatch";
 import { Button } from "@/components/ui/button";
 import { Latecomers } from "./lateComers";
 import { Textarea } from "../ui/textarea";
-import { ChevronsUpDown } from "lucide-react";
+import { ChevronsUpDown, Loader2 } from "lucide-react";
 
 import {
   Collapsible,
@@ -34,6 +34,7 @@ export function RunTiming({
   const [isNewGunniesOpen, setIsNewGunniesOpen] = useState(false);
   const [isRunNotesOpen, setIsRunNotesOpen] = useState(false);
   const [completed, setCompleted] = useState<Record<number, boolean>>({});
+  const [changing, setChanging] = useState<Record<number, boolean>>({});
 
   const isRunComplete =
     Object.keys(completed).length === participants.length &&
@@ -79,11 +80,16 @@ export function RunTiming({
       return;
     }
 
+    setChanging((prevState) => ({ ...prevState, [bib]: true }));
+
     if (completed[bib]) {
       await pb
         .collection("participant_runs")
         .update(participant?.id, { time_seconds: 0 });
-      setCompleted({ ...completed, [bib]: false });
+
+      setCompleted((prevState) => ({ ...prevState, [bib]: false }));
+      setChanging((prevState) => ({ ...prevState, [bib]: false }));
+
       return;
     }
 
@@ -92,7 +98,8 @@ export function RunTiming({
       .collection("participant_runs")
       .update(participant?.id, { time_seconds: time });
 
-    setCompleted({ ...completed, [bib]: true });
+    setCompleted((prevState) => ({ ...prevState, [bib]: true }));
+    setChanging((prevState) => ({ ...prevState, [bib]: false }));
   };
 
   return (
@@ -107,17 +114,23 @@ export function RunTiming({
       />
       {isRunning && (
         <div className="flex gap-4 justify-around flex-wrap">
-          {participants.map((participant) => (
-            <Button
-              onClick={() => markParticipant(participant.bib)}
-              key={participant.bib}
-              className="md:w-24 md:h-16 font-bold text-xl"
-              variant={completed[participant.bib] ? "secondary" : "default"}
-              disabled={!isRunning}
-            >
-              {participant.bib}
-            </Button>
-          ))}
+          {participants
+            .sort((a, b) => b.bib - a.bib)
+            .map((participant) => (
+              <Button
+                onClick={() => markParticipant(participant.bib)}
+                key={participant.bib}
+                className="w-14 h-10 md:w-24 md:h-16 font-bold text-base md:text-xl"
+                variant={completed[participant.bib] ? "secondary" : "default"}
+                disabled={!isRunning}
+              >
+                {changing[participant.bib] ? (
+                  <Loader2 className="h-4 w-4 md:h-8 md:w-8 animate-spin" />
+                ) : (
+                  participant.bib
+                )}
+              </Button>
+            ))}
         </div>
       )}
       <div className="space-y-2">

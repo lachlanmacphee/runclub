@@ -92,6 +92,10 @@ export function Latecomers({
     setParticipants([...participants, res]);
   }
 
+  const participantNames: string[] = participants.map(
+    (participant) => participant.name
+  );
+
   return (
     <div className="flex flex-col">
       <Form {...form}>
@@ -108,23 +112,15 @@ export function Latecomers({
                 className="custom-react-select-container"
                 classNamePrefix="custom-react-select"
                 placeholder="Name"
-                options={members.map((member) => {
-                  return {
-                    label: member.name,
-                    value: member.user_id ? member.user_id : member.name,
-                  };
-                })}
+                options={members
+                  .filter((member) => !participantNames.includes(member.name))
+                  .map((member) => {
+                    return {
+                      label: member.name,
+                      value: member.user_id ? member.user_id : member.name,
+                    };
+                  })}
               />
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="bib"
-            render={({ field }) => (
-              <FormItem>
-                <Input {...field} placeholder="Bib" />
-                <FormMessage />
-              </FormItem>
             )}
           />
           <div className="flex gap-x-4">
@@ -159,6 +155,16 @@ export function Latecomers({
               )}
             />
           </div>
+          <FormField
+            control={form.control}
+            name="bib"
+            render={({ field }) => (
+              <FormItem>
+                <Input {...field} placeholder="Bib" />
+                <FormMessage />
+              </FormItem>
+            )}
+          />
           <FormField
             control={form.control}
             name="distance"

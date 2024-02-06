@@ -174,6 +174,10 @@ export function RunParticipantSetup({
     }
   }
 
+  const participantNames: string[] = participants.map(
+    (participant) => participant.name?.label
+  );
+
   return (
     <>
       <RunSetupConfirmationAlert
@@ -204,12 +208,14 @@ export function RunParticipantSetup({
                 placeholder="Select..."
                 value={partName}
                 onChange={(newName) => setPartName(newName)}
-                options={members.map((member) => {
-                  return {
-                    label: member.name,
-                    value: member.user_id ? member.user_id : member.name,
-                  };
-                })}
+                options={members
+                  .filter((member) => !participantNames.includes(member.name))
+                  .map((member) => {
+                    return {
+                      label: member.name,
+                      value: member.user_id ? member.user_id : member.name,
+                    };
+                  })}
               />
             </div>
             <div className="flex gap-x-4">
