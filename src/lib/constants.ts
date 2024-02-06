@@ -71,7 +71,7 @@ export const ROLES = {
   ADMIN: "admin",
 };
 
-export const ROUTES = [
+export const NAV_ROUTES = [
   { path: "/", label: "Home", minRole: null },
   { path: "/runs", label: "Runs", minRole: null },
   { path: "/newrun", label: "Create Run", minRole: ROLES.MODERATOR },
