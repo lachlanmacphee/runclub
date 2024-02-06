@@ -20,6 +20,7 @@ export type GroupRun = {
   id: string;
   date: string;
   location: string;
+  conditions?: string;
   isComplete: boolean;
   created: string;
   updated: string;

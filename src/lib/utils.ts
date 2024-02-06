@@ -117,6 +117,18 @@ export function getTuesdaysForNext3Months(): Date[] {
   return tuesdays;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function getWeatherString(current: any) {
+  const {
+    temperature_2m,
+    relative_humidity_2m,
+    precipitation,
+    wind_direction_10m,
+    wind_speed_10m,
+  } = current;
+  return `Temperature: ${temperature_2m}°C, Humidity: ${relative_humidity_2m}%, Precipitation: ${precipitation}mm, Wind Direction: ${wind_direction_10m}°, Wind Speed: ${wind_speed_10m}km/h`;
+}
+
 export function getErrorMessage(error: unknown) {
   if (error instanceof Error) return error.message;
   return String(error);

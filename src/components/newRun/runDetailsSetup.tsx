@@ -26,6 +26,9 @@ import {
 
 // Icons
 import { IntroMessageDialog } from "./introMessageDialog";
+import { WEATHER_URL } from "@/lib/constants";
+import { toast } from "../ui/use-toast";
+import { getWeatherString } from "@/lib/utils";
 
 const FormSchema = z.object({
   date: z.date(),
@@ -61,9 +64,29 @@ export function RunDetailsSetup({
   });
 
   async function onSubmit(data: z.infer<typeof FormSchema>) {
-    const groupRun: GroupRun = await pb
-      .collection("group_runs")
-      .create({ date: data.date, location: data.location, isComplete: false });
+    let weatherStr: string | null = null;
+
+    try {
+      // In future need to fetch weather based on date input when submitting
+      const res = await fetch(WEATHER_URL);
+      const { current } = await res.json();
+      weatherStr = getWeatherString(current);
+    } catch (e) {
+      toast({
+        title: "Weather Failed",
+        variant: "destructive",
+        duration: 5000,
+        description:
+          "Failed to fetch the weather. Please report this to the committee.",
+      });
+    }
+
+    const groupRun: GroupRun = await pb.collection("group_runs").create({
+      date: data.date,
+      location: data.location,
+      isComplete: false,
+      conditions: weatherStr,
+    });
     setGroupRun(groupRun);
     setStep(1);
   }

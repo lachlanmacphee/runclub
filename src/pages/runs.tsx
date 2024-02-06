@@ -93,6 +93,7 @@ export function Runs() {
           <h2>{runDetails.location}</h2>
         </div>
       </div>
+      {runDetails.run.conditions && <p>{runDetails.run.conditions}</p>}
       <p>{runDetails.description}</p>
       <RunTable participants={runDetails.participants} />
     </div>
