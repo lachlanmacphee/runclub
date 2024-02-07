@@ -1,6 +1,3 @@
-import { z } from "zod";
-import { WaiverFormSchema } from "./schemas";
-
 export type User = {
   avatar: string;
   role: "member" | "moderator" | "admin";
@@ -27,9 +24,9 @@ export type GroupRun = {
 };
 
 export type Participant = {
+  waiver_id: string;
   position?: number;
   id?: string;
-  user_id?: string;
   group_run_id: string;
   name: string;
   distance: number;
@@ -40,6 +37,7 @@ export type Participant = {
 };
 
 export type Member = {
+  waiver_id: string;
   user_id?: string;
   name: string;
 };
@@ -62,4 +60,20 @@ export type Volunteer = {
   };
 };
 
-export type Waiver = z.infer<typeof WaiverFormSchema>;
+export type Waiver = {
+  id: string;
+  user_id?: string;
+  email: string;
+  fname: string;
+  lname: string;
+  suburb: string;
+  postcode: string;
+  phone: string;
+  gender: "Male" | "Female" | "Other" | "Blank";
+  age: "Blank" | "Under18" | "18-30" | "31-40" | "41-50" | "Above50";
+  satisfiesAgeReq: "Over18" | "HavePermission";
+  readTermsAndConditions: boolean;
+  emergencyContactName: string;
+  emergencyContactPhone: string;
+  referredBy: string;
+};

@@ -8,7 +8,6 @@ import { GroupRun, Participant } from "@/lib/types";
 import { distanceOptions } from "@/lib/constants";
 
 // Components
-import CreatableSelect from "react-select/creatable";
 import Select from "react-select";
 import { Button } from "@/components/ui/button";
 import {
@@ -32,7 +31,7 @@ const FormSchema = z
     participants: z.array(
       z.object({
         bib: z.string(),
-        name: z.object(
+        details: z.object(
           { value: z.string(), label: z.string() },
           {
             invalid_type_error: "A name is required here.",
@@ -53,6 +52,16 @@ const FormSchema = z
       path: ["participants"],
       message: "You cannot have duplicate bib numbers.",
     }
+  )
+  .refine(
+    (schema) => {
+      const waiverIdArr = schema.participants.map((elem) => elem.details.value);
+      return !hasDuplicates(waiverIdArr);
+    },
+    {
+      path: ["participants"],
+      message: "You cannot have duplicate participants.",
+    }
   );
 
 const localStorageKey = "participants";
@@ -71,9 +80,9 @@ export function RunParticipantSetup({
 
   const [isConfirmationModalOpen, setIsConfirmationModalOpen] = useState(false);
 
-  const [partName, setPartName] = useState<{
-    value: string;
+  const [partDetails, setPartDetails] = useState<{
     label: string;
+    value: string;
   } | null>();
   const [partDist, setPartDist] = useState<{
     value: string;
@@ -119,12 +128,9 @@ export function RunParticipantSetup({
   async function onSubmit(data: z.infer<typeof FormSchema>) {
     const participants = data.participants.map((participant) => {
       return {
+        waiver_id: participant.details.value,
+        name: participant.details.label,
         group_run_id: groupRun.id,
-        user_id:
-          participant.name.value == participant.name.label
-            ? undefined
-            : participant.name.value,
-        name: participant.name.label,
         distance: Number(participant.distance.value),
         bib: Number(participant.bib),
         is_new: participant.isNew,
@@ -154,11 +160,11 @@ export function RunParticipantSetup({
     const nextBibNumber = latestParticipant
       ? String(parseInt(latestParticipant.bib) - 1)
       : "100";
-    if (partName && partDist) {
+    if (partDetails && partDist) {
       prepend(
         {
           bib: nextBibNumber,
-          name: partName,
+          details: { label: partDetails.label, value: partDetails.value },
           distance: partDist,
           isNew: partIsNew,
           isPaid: partIsPaid,
@@ -167,15 +173,15 @@ export function RunParticipantSetup({
           shouldFocus: false,
         }
       );
-      setPartName(null);
+      setPartDetails(null);
       setPartDist(distanceOptions[1]);
       setPartIsNew(false);
       setPartIsPaid(true);
     }
   }
 
-  const participantNames: string[] = participants.map(
-    (participant) => participant.name?.label
+  const addedParticipants: string[] = participants.map(
+    (participant) => participant.details.value
   );
 
   return (
@@ -197,18 +203,20 @@ export function RunParticipantSetup({
           <div className="space-y-4 md:space-y-6">
             <div>
               <Label>Name</Label>
-              <CreatableSelect
+              <Select
                 className="custom-react-select-container"
                 classNamePrefix="custom-react-select"
                 placeholder="Select..."
-                value={partName}
-                onChange={(newName) => setPartName(newName)}
+                value={partDetails}
+                onChange={(details) => setPartDetails(details)}
                 options={members
-                  .filter((member) => !participantNames.includes(member.name))
+                  .filter(
+                    (member) => !addedParticipants.includes(member.waiver_id)
+                  )
                   .map((member) => {
                     return {
                       label: member.name,
-                      value: member.user_id ? member.user_id : member.name,
+                      value: member.waiver_id,
                     };
                   })}
               />
@@ -292,11 +300,11 @@ export function RunParticipantSetup({
                 />
                 <FormField
                   control={form.control}
-                  name={`participants.${index}.name`}
+                  name={`participants.${index}.details`}
                   render={({ field }) => (
                     <FormItem>
                       <FormControl>
-                        <CreatableSelect
+                        <Select
                           {...field}
                           className="custom-react-select-container"
                           classNamePrefix="custom-react-select"
@@ -304,9 +312,7 @@ export function RunParticipantSetup({
                           options={members.map((member) => {
                             return {
                               label: member.name,
-                              value: member.user_id
-                                ? member.user_id
-                                : member.name,
+                              value: member.waiver_id,
                             };
                           })}
                         />

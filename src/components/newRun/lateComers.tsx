@@ -10,7 +10,6 @@ import { Participant } from "@/lib/types";
 import { distanceOptions } from "@/lib/constants";
 
 import Select from "react-select";
-import CreatableSelect from "react-select/creatable";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import {
@@ -25,7 +24,7 @@ import { Checkbox } from "../ui/checkbox";
 
 const FormSchema = z.object({
   bib: z.string(),
-  name: z.object({ value: z.string(), label: z.string() }),
+  details: z.object({ value: z.string(), label: z.string() }),
   distance: z.object({ value: z.string(), label: z.string() }),
   isNew: z.boolean(),
   isPaid: z.boolean(),
@@ -50,7 +49,7 @@ export function Latecomers({
     defaultValues: {
       bib: "",
       // @ts-ignore
-      name: null,
+      details: null,
       distance: distanceOptions[1],
       isNew: false,
       isPaid: true,
@@ -79,21 +78,22 @@ export function Latecomers({
 
     const newParticipant: Participant = {
       group_run_id: runId,
-      user_id: data.name.value == data.name.label ? undefined : data.name.value,
-      name: data.name.label,
+      waiver_id: data.details.value,
+      name: data.details.label,
       distance: Number(data.distance.value),
       bib: Number(data.bib),
       is_new: data.isNew,
       is_paid: data.isPaid,
     };
+
     const res = (await pb
       .collection("participant_runs")
       .create(newParticipant)) as Participant;
     setParticipants([...participants, res]);
   }
 
-  const participantNames: string[] = participants.map(
-    (participant) => participant.name
+  const addedParticipants: string[] = participants.map(
+    (participant) => participant.waiver_id
   );
 
   return (
@@ -105,19 +105,21 @@ export function Latecomers({
         >
           <FormField
             control={form.control}
-            name="name"
+            name="details"
             render={({ field }) => (
-              <CreatableSelect
+              <Select
                 {...field}
                 className="custom-react-select-container"
                 classNamePrefix="custom-react-select"
                 placeholder="Name"
                 options={members
-                  .filter((member) => !participantNames.includes(member.name))
+                  .filter(
+                    (member) => !addedParticipants.includes(member.waiver_id)
+                  )
                   .map((member) => {
                     return {
                       label: member.name,
-                      value: member.user_id ? member.user_id : member.name,
+                      value: member.waiver_id,
                     };
                   })}
               />
