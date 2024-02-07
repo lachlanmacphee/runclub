@@ -11,7 +11,7 @@ export function useMembers() {
 
     const waiverRes = (await pb
       .collection("waivers")
-      .getFullList()) as Waiver[];
+      .getFullList({ fields: "id,fname,lname,user_id" })) as Waiver[];
 
     for (const waiver of waiverRes) {
       const combinedName = waiver.fname + " " + waiver.lname;
