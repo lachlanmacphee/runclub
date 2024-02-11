@@ -22,7 +22,6 @@ export function EmergencyContactSearch() {
     async function fetchWaivers() {
       setIsLoading(true);
       const res = (await pb.collection("waivers").getFullList()) as Waiver[];
-      console.log(res);
       setResults(res);
       setIsLoading(false);
     }

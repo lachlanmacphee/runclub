@@ -24,6 +24,7 @@ import { getErrorMessage } from "@/lib/utils";
 const FormSchema = z
   .object({
     fullName: z.string().min(5),
+    alias: z.string().min(5).optional(),
     email: z.string().email(),
     password: z.string().min(10),
     passwordConfirm: z.string().min(10),
@@ -47,6 +48,7 @@ export const SignUp = () => {
       password: "",
       passwordConfirm: "",
       isVolunteer: false,
+      alias: "",
     },
   });
 
@@ -58,7 +60,8 @@ export const SignUp = () => {
           data.email,
           data.password,
           data.passwordConfirm,
-          data.isVolunteer
+          data.isVolunteer,
+          data.alias
         );
         await login(data.email, data.password);
         navigate("/");
@@ -97,6 +100,19 @@ export const SignUp = () => {
                   <FormLabel>Full Name</FormLabel>
                   <FormControl>
                     <Input placeholder="John Smith" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="alias"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Alias (optional)</FormLabel>
+                  <FormControl>
+                    <Input placeholder="John S" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

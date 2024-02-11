@@ -39,6 +39,7 @@ export const Account = () => {
     reValidateMode: "onBlur",
     defaultValues: {
       name: user.name,
+      alias: user.alias,
       role: user.role,
     },
   });
@@ -89,10 +90,23 @@ export const Account = () => {
             />
             <FormField
               control={form.control}
+              name="alias"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Your Alias (optional)</FormLabel>
+                  <FormControl>
+                    <Input {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
               name="role"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Role</FormLabel>
+                  <FormLabel>Your Role</FormLabel>
                   <Select
                     onValueChange={field.onChange}
                     defaultValue={field.value}

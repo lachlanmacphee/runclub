@@ -22,6 +22,7 @@ export const WaiverFormSchema = z.object({
       }),
     })
     .min(2),
+  alias: z.string().min(5).optional(),
   suburb: z
     .string({
       errorMap: () => ({
@@ -85,6 +86,7 @@ export const WaiverFormSchema = z.object({
 });
 
 export const UserFormSchema = z.object({
-  name: z.string().min(3),
+  name: z.string().min(5),
+  alias: z.string().min(5).optional(),
   role: z.enum(["member", "moderator", "admin"]),
 });

@@ -8,6 +8,7 @@ export type User = {
   emailVisibility: boolean;
   id: string;
   name: string;
+  alias: string;
   updated: string;
   username: string;
   verified: boolean;
@@ -66,6 +67,7 @@ export type Waiver = {
   email: string;
   fname: string;
   lname: string;
+  alias?: string;
   suburb: string;
   postcode: string;
   phone: string;

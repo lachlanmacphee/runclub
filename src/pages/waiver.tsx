@@ -2,6 +2,7 @@ import { useCallback, useEffect } from "react";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 import { usePocket } from "@/contexts";
 
 // Components
@@ -25,6 +26,7 @@ import { WaiverFormSchema } from "@/lib/schemas";
 export const Waiver = () => {
   const { pb } = usePocket();
   const { toast } = useToast();
+  const navigate = useNavigate();
 
   const form = useForm<z.infer<typeof WaiverFormSchema>>({
     resolver: zodResolver(WaiverFormSchema),
@@ -33,6 +35,7 @@ export const Waiver = () => {
       email: "",
       fname: "",
       lname: "",
+      alias: "",
       suburb: "",
       postcode: "",
       phone: "",
@@ -63,6 +66,7 @@ export const Waiver = () => {
           description:
             "You're all ready to go! If you haven't already, you can create an account to access other great features.",
         });
+        navigate("/");
       } catch {
         toast({
           title: "Waiver failed to submit.",
@@ -73,7 +77,7 @@ export const Waiver = () => {
         });
       }
     },
-    [pb, toast]
+    [navigate, pb, toast]
   );
 
   return (
@@ -95,7 +99,7 @@ export const Waiver = () => {
                 <FormItem>
                   <FormLabel>First Name</FormLabel>
                   <FormControl>
-                    <Input placeholder="Your first name" {...field} />
+                    <Input placeholder="John" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -108,7 +112,22 @@ export const Waiver = () => {
                 <FormItem>
                   <FormLabel>Last Name</FormLabel>
                   <FormControl>
-                    <Input placeholder="Your last name" {...field} />
+                    <Input placeholder="Smith" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="alias"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>
+                    Alias (optional - please use this only if you have to)
+                  </FormLabel>
+                  <FormControl>
+                    <Input placeholder="John S" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -121,7 +140,11 @@ export const Waiver = () => {
                 <FormItem>
                   <FormLabel>Email</FormLabel>
                   <FormControl>
-                    <Input type="email" placeholder="Your email" {...field} />
+                    <Input
+                      type="email"
+                      placeholder="john.smith@gmail.com"
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -134,7 +157,7 @@ export const Waiver = () => {
                 <FormItem>
                   <FormLabel>Suburb</FormLabel>
                   <FormControl>
-                    <Input placeholder="Your suburb" {...field} />
+                    <Input placeholder="South Melbourne" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -147,7 +170,7 @@ export const Waiver = () => {
                 <FormItem>
                   <FormLabel>Postcode</FormLabel>
                   <FormControl>
-                    <Input placeholder="Your postcode" {...field} />
+                    <Input placeholder="3205" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -160,7 +183,7 @@ export const Waiver = () => {
                 <FormItem>
                   <FormLabel>Phone</FormLabel>
                   <FormControl>
-                    <Input placeholder="Your phone number" {...field} />
+                    <Input placeholder="0412345678" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
