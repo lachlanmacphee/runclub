@@ -21,7 +21,7 @@ export function FAQs() {
             We provide a zip archive of the previous results from the last Gunn
             Runners website.{" "}
             <a
-              href="/pastResults.zip"
+              href="https://drive.google.com/file/d/1dQltNde2Ewuy3tRZT2C0VifW4zmEgm7a/view?usp=sharing"
               className="text-blue-600 dark:text-blue-500 hover:underline"
             >
               Click here
