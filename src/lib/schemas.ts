@@ -22,7 +22,10 @@ export const WaiverFormSchema = z.object({
       }),
     })
     .min(2),
-  alias: z.string().min(5).optional(),
+  alias: z
+    .union([z.string().length(0), z.string().min(5)])
+    .optional()
+    .transform((e) => (e === "" ? undefined : e)),
   suburb: z
     .string({
       errorMap: () => ({
@@ -82,11 +85,17 @@ export const WaiverFormSchema = z.object({
       }),
     })
     .min(10),
-  referredBy: z.string().optional(),
+  referredBy: z
+    .union([z.string().length(0), z.string()])
+    .optional()
+    .transform((e) => (e === "" ? undefined : e)),
 });
 
 export const UserFormSchema = z.object({
   name: z.string().min(5),
-  alias: z.string().min(5).optional(),
+  alias: z
+    .union([z.string().length(0), z.string().min(5)])
+    .optional()
+    .transform((e) => (e === "" ? undefined : e)),
   role: z.enum(["member", "moderator", "admin"]),
 });

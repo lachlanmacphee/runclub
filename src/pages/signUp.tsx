@@ -24,7 +24,10 @@ import { getErrorMessage } from "@/lib/utils";
 const FormSchema = z
   .object({
     fullName: z.string().min(5),
-    alias: z.string().min(5).optional(),
+    alias: z
+      .union([z.string().length(0), z.string().min(5)])
+      .optional()
+      .transform((e) => (e === "" ? undefined : e)),
     email: z.string().email(),
     password: z.string().min(10),
     passwordConfirm: z.string().min(10),
