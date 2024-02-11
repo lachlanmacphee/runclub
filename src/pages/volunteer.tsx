@@ -110,6 +110,15 @@ export function Volunteer() {
             volunteerOne = arr[0];
             volunteerTwo = arr[1];
           }
+          const exVolunteerOne = volunteerOne?.expand?.user_id;
+          const exVolunteerTwo = volunteerTwo?.expand?.user_id;
+
+          const volunteerOneName = exVolunteerOne?.alias
+            ? exVolunteerOne?.alias
+            : exVolunteerOne?.name ?? "Volunteer";
+          const volunteerTwoName = exVolunteerTwo?.alias
+            ? exVolunteerTwo?.alias
+            : exVolunteerTwo?.name ?? "Volunteer";
 
           return (
             <div
@@ -134,7 +143,7 @@ export function Volunteer() {
                 }
                 className="h-full whitespace-normal"
               >
-                {volunteerOne?.expand?.user_id.name ?? "Volunteer"}
+                {volunteerOneName}
               </Button>
               <Button
                 variant={
@@ -153,7 +162,7 @@ export function Volunteer() {
                 }
                 className="h-full whitespace-normal"
               >
-                {volunteerTwo?.expand?.user_id.name ?? "Volunteer"}
+                {volunteerTwoName}
               </Button>
             </div>
           );

@@ -53,10 +53,10 @@ export type RunDetails = {
 export type Volunteer = {
   run_date: Date;
   user_id?: string;
-  name?: string;
   expand: {
     user_id: {
       name: string;
+      alias?: string;
     };
   };
 };
