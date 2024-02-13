@@ -31,45 +31,51 @@ export function Home() {
           </h2>
         </div>
         <div className="flex flex-col gap-4">
-          <h2>
-            We meet every Tuesday night for a run at Albert Park Lake over a
-            3.5km or 5km timed circuit.
-          </h2>
+          <h3 className="text-xl font-bold">New Members</h3>
           <p>
-            Join us at 6pm at The Limerick Arms Hotel (364 Clarendon Street,
-            South Melbourne) before we head over to the lake. Afterwards,
-            everyone is welcome back to the pub for a meal and a free drink -
-            compliments of the Limerick Arms.
-          </p>
-          <p>
-            While your first run is on us, each run after costs $5 and helps
-            support the Gunn Runners club and the various charities that we
-            donate to throughout the year.
-          </p>
-          <p>
-            You can pay with cash or preferably via bank transfer:
-            <br />
-            <br />
-            <strong>Account Name:</strong> Gunn Runners
-            <br />
-            <strong>BSB:</strong> 083-054
-            <br />
-            <strong>Account Number:</strong> 87 284 4868
-          </p>
-
-          <p>
-            Please also complete our{" "}
+            Please click{" "}
             <Link
               to="/waiver"
               className="text-blue-600 dark:text-blue-500 hover:underline"
             >
-              waiver form
+              here
             </Link>{" "}
-            before arriving for the first time.
+            to complete our waiver form. We're required to have these details
+            before you can run with us.
           </p>
-          <strong className="text-center py-2">
-            We hope to see you there!
-          </strong>
+          <h3 className="text-xl font-bold">Essential Info</h3>
+          <p>
+            We meet <strong>every Tuesday night</strong> for a run at Albert
+            Park Lake over a 3.5km or 5km timed circuit.
+          </p>
+          <p>
+            Join us at <strong>6pm</strong> at the{" "}
+            <strong>Limerick Arms Hotel</strong> (364 Clarendon Street, South
+            Melbourne) before we head over to the lake. Afterwards, everyone is
+            welcome back to the pub for a meal and a free drink - compliments of
+            the Limerick Arms.
+          </p>
+          <p>
+            While your first run is on us,
+            <strong> each run after costs $5</strong> and helps support the Gunn
+            Runners club and the various charities that we donate to throughout
+            the year.
+          </p>
+          <p>
+            We prefer payment via bank transfer to minimise cash handling. Thank
+            you for your understanding.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 mb-4">
+            <p>
+              <strong>Account Name:</strong> Gunn Runners
+            </p>
+            <p>
+              <strong>BSB:</strong> 083-054
+            </p>
+            <p>
+              <strong>Account Number:</strong> 87 284 4868
+            </p>
+          </div>
         </div>
       </div>
     </div>
