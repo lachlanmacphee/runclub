@@ -44,14 +44,14 @@ export const FAQ_DATA = [
 ];
 
 export const HOME_IMAGE_LINKS = [
-  "https://gunnrunners.org.au/wp-content/uploads/2021/02/2021-02-26_12-09-45-700x475.png",
-  "https://gunnrunners.org.au/wp-content/uploads/2021/02/2021-02-26_12-19-17-700x475.png",
-  "https://gunnrunners.org.au/wp-content/uploads/2019/08/Echuca-Sweat-vs-Steam-2018_-700x475.jpg",
-  "https://gunnrunners.org.au/wp-content/uploads/2019/08/Christmas-Run-2018-700x475.jpg",
-  "https://gunnrunners.org.au/wp-content/uploads/2021/02/2021-02-26_12-11-04-700x475.png",
-  "https://gunnrunners.org.au/wp-content/uploads/2021/02/2021-02-26_12-19-58-671x455.png",
-  "https://gunnrunners.org.au/wp-content/uploads/2021/02/2021-02-26_12-23-48-700x475.png",
-  "https://gunnrunners.org.au/wp-content/uploads/2021/02/2021-02-26_12-09-45-700x475.png",
+  "group-huddle.png",
+  "limerick-arms.jpg",
+  "grand-prix.png",
+  "echuca-finish.jpg",
+  "christmas-group.jpg",
+  "group-on-structure.png",
+  "post-parkrun.png",
+  "post-event-group.png",
 ];
 
 export const WAIVER_PARAGRAPHS = [
