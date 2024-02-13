@@ -20,7 +20,7 @@ import {
 import { Input } from "@/components/ui/input";
 
 // Icons
-import { RefreshCw, Trash } from "lucide-react";
+import { Trash } from "lucide-react";
 import { useMembers } from "@/hooks/useMembers";
 import { RunSetupConfirmationAlert } from "./runSetupConfirmationAlert";
 import { Label } from "../ui/label";
@@ -76,7 +76,7 @@ export function RunParticipantSetup({
   setParticipants: Dispatch<SetStateAction<Participant[]>>;
 }) {
   const { pb } = usePocket();
-  const { members, refreshMembers } = useMembers();
+  const { members } = useMembers();
 
   const [isConfirmationModalOpen, setIsConfirmationModalOpen] = useState(false);
 
@@ -250,15 +250,6 @@ export function RunParticipantSetup({
                   </label>
                 </div>
               </div>
-              <Button
-                type="button"
-                variant="ghost"
-                onClick={refreshMembers}
-                className="p-0 h-4 gap-1"
-              >
-                <RefreshCw className="w-4 h-4" />
-                <p>Members</p>
-              </Button>
             </div>
             <div>
               <Label>Distance</Label>
