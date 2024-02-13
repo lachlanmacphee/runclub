@@ -1,20 +1,27 @@
-import { HOME_IMAGE_LINKS } from "@/lib/constants";
 import { Link } from "react-router-dom";
+
+import image1 from "@/assets/1.jpg";
+import image2 from "@/assets/2.png";
+import image3 from "@/assets/3.jpg";
+import image4 from "@/assets/4.png";
+import image5 from "@/assets/5.jpg";
+import image6 from "@/assets/6.png";
+import image7 from "@/assets/7.png";
+import image8 from "@/assets/8.png";
+import { Image } from "@/components/home/Image";
 
 export function Home() {
   return (
     <div className="flex items-center flex-col gap-8">
       <div className="grid gap-4 grid-cols-2 h-64 grid-rows-2 md:grid-cols-4 md:grid-rows-2 max-w-3xl">
-        {HOME_IMAGE_LINKS.map((imgLink, index) => (
-          <div
-            className={`${
-              index > 3 ? "hidden md:flex" : "flex"
-            } justify-center`}
-            key={index}
-          >
-            <img className="rounded-lg aspect-video" src={imgLink} />
-          </div>
-        ))}
+        <Image src={image1} />
+        <Image src={image2} />
+        <Image src={image3} />
+        <Image src={image4} />
+        <Image secondRow src={image5} />
+        <Image secondRow src={image6} />
+        <Image secondRow src={image7} />
+        <Image secondRow src={image8} />
       </div>
       <div className="flex flex-col items-center gap-6 max-w-3xl">
         <div className="flex flex-col gap-2 items-center text-center">
@@ -29,7 +36,7 @@ export function Home() {
             3.5km or 5km timed circuit.
           </h2>
           <p>
-            Join us at 6:15pm at The Limerick Arms Hotel (364 Clarendon Street,
+            Join us at 6pm at The Limerick Arms Hotel (364 Clarendon Street,
             South Melbourne) before we head over to the lake. Afterwards,
             everyone is welcome back to the pub for a meal and a free drink -
             compliments of the Limerick Arms.
