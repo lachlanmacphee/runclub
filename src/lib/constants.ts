@@ -1,4 +1,4 @@
-export const FAQData = [
+export const FAQ_DATA = [
   {
     question: "Where can I run with a group in Melbourne?",
     answer:
@@ -43,7 +43,7 @@ export const FAQData = [
   },
 ];
 
-export const homeImgLinks = [
+export const HOME_IMAGE_LINKS = [
   "https://gunnrunners.org.au/wp-content/uploads/2021/02/2021-02-26_12-09-45-700x475.png",
   "https://gunnrunners.org.au/wp-content/uploads/2021/02/2021-02-26_12-19-17-700x475.png",
   "https://gunnrunners.org.au/wp-content/uploads/2019/08/Echuca-Sweat-vs-Steam-2018_-700x475.jpg",
@@ -84,7 +84,7 @@ export const NAV_ROUTES = [
   { path: "/contact", label: "Contact Us", minRole: null },
 ];
 
-export const distanceOptions = [
+export const DISTANCE_OPTIONS = [
   { label: "3.5km", value: "3.5" },
   { label: "5km", value: "5" },
 ];

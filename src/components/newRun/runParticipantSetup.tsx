@@ -5,7 +5,7 @@ import { useFieldArray, useForm } from "react-hook-form";
 import { usePocket } from "@/contexts";
 import { hasDuplicates } from "@/lib/utils";
 import { GroupRun, Participant } from "@/lib/types";
-import { distanceOptions } from "@/lib/constants";
+import { DISTANCE_OPTIONS } from "@/lib/constants";
 
 // Components
 import Select from "react-select";
@@ -87,7 +87,7 @@ export function RunParticipantSetup({
   const [partDist, setPartDist] = useState<{
     value: string;
     label: string;
-  } | null>(distanceOptions[1]);
+  } | null>(DISTANCE_OPTIONS[1]);
   const [partIsNew, setPartIsNew] = useState<boolean>(false);
   const [partIsPaid, setPartIsPaid] = useState<boolean>(true);
 
@@ -174,7 +174,7 @@ export function RunParticipantSetup({
         }
       );
       setPartDetails(null);
-      setPartDist(distanceOptions[1]);
+      setPartDist(DISTANCE_OPTIONS[1]);
       setPartIsNew(false);
       setPartIsPaid(true);
     }
@@ -268,7 +268,7 @@ export function RunParticipantSetup({
                 placeholder="Select..."
                 value={partDist}
                 onChange={(newDistance) => setPartDist(newDistance)}
-                options={distanceOptions}
+                options={DISTANCE_OPTIONS}
               />
             </div>
             <Button type="button" onClick={addParticipant}>
@@ -332,7 +332,7 @@ export function RunParticipantSetup({
                           className="custom-react-select-container"
                           classNamePrefix="custom-react-select"
                           placeholder="Select..."
-                          options={distanceOptions}
+                          options={DISTANCE_OPTIONS}
                         />
                       </FormControl>
                       <FormMessage />

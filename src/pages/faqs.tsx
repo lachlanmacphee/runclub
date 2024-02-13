@@ -1,4 +1,4 @@
-import { FAQData } from "@/lib/constants";
+import { FAQ_DATA } from "@/lib/constants";
 
 export function FAQs() {
   return (
@@ -6,7 +6,7 @@ export function FAQs() {
       <div className="flex flex-col gap-4 grow max-w-3xl">
         <h1 className="text-5xl font-bold">Frequently Asked Questions</h1>
         <div className="flex flex-col gap-4">
-          {FAQData.map(({ question, answer }, index) => (
+          {FAQ_DATA.map(({ question, answer }, index) => (
             <div className="flex flex-col gap-2" key={index}>
               <h2 className="text-lg font-semibold">{question}</h2>
               <p>{answer}</p>

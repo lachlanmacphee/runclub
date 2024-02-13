@@ -1,11 +1,11 @@
-import { homeImgLinks } from "@/lib/constants";
+import { HOME_IMAGE_LINKS } from "@/lib/constants";
 import { Link } from "react-router-dom";
 
 export function Home() {
   return (
     <div className="flex items-center flex-col gap-8">
       <div className="grid gap-4 grid-cols-2 h-64 grid-rows-2 md:grid-cols-4 md:grid-rows-2 max-w-3xl">
-        {homeImgLinks.map((imgLink, index) => (
+        {HOME_IMAGE_LINKS.map((imgLink, index) => (
           <div
             className={`${
               index > 3 ? "hidden md:flex" : "flex"

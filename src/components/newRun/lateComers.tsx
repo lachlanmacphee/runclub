@@ -7,7 +7,7 @@ import { usePocket } from "@/contexts";
 import { useMembers } from "@/hooks/useMembers";
 
 import { Participant } from "@/lib/types";
-import { distanceOptions } from "@/lib/constants";
+import { DISTANCE_OPTIONS } from "@/lib/constants";
 
 import Select from "react-select";
 import { Input } from "@/components/ui/input";
@@ -50,7 +50,7 @@ export function Latecomers({
       bib: "",
       // @ts-ignore
       details: null,
-      distance: distanceOptions[1],
+      distance: DISTANCE_OPTIONS[1],
       isNew: false,
       isPaid: true,
     },
@@ -176,7 +176,7 @@ export function Latecomers({
                 className="custom-react-select-container"
                 classNamePrefix="custom-react-select"
                 placeholder="Select..."
-                options={distanceOptions}
+                options={DISTANCE_OPTIONS}
               />
             )}
           />
