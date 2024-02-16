@@ -6,7 +6,7 @@ import { Button } from "../ui/button";
 import { toast } from "../ui/use-toast";
 
 export const JudgeRoleRequests = () => {
-  const { pb } = usePocket();
+  const { pb, user } = usePocket();
   const [roleRequests, setRoleRequests] = useState<RoleRequest[]>();
 
   const fetchRoleRequests = useCallback(async () => {
@@ -80,6 +80,7 @@ export const JudgeRoleRequests = () => {
           <div className="flex gap-4">
             <Button
               variant="ghost"
+              disabled={request.expand.user_id.id == user?.id}
               onClick={() =>
                 approveRequest(
                   request.id,
