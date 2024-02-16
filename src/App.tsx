@@ -27,7 +27,7 @@ import { Account } from "./pages/user";
 export default function App() {
   return (
     <PocketProvider>
-      <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+      <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
         <BrowserRouter>
           <Routes>
             <Route path="/login" element={<Login />} />
