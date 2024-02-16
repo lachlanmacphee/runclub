@@ -15,12 +15,14 @@ import {
 
 type EventResType = {
   title: string;
-  start: Date;
-  end: Date;
+  description: string;
+  start: string;
+  end: string;
 };
 
 type EventType = {
   title: string;
+  description: string;
   start: Date;
   end: Date;
 };
@@ -37,6 +39,7 @@ export function Events() {
     const newEvents: EventType[] = eventsRes
       .map((event) => ({
         title: event.title,
+        description: event.description,
         start: new Date(event.start),
         end: new Date(event.end),
       }))
@@ -56,6 +59,7 @@ export function Events() {
           <TableHeader>
             <TableRow>
               <TableHead>Date</TableHead>
+              <TableHead>Title</TableHead>
               <TableHead className="flex justify-between items-center">
                 Description
                 {isAdmin && <EventCreationDialog refreshEvents={fetchEvents} />}
@@ -65,8 +69,13 @@ export function Events() {
           <TableBody>
             {events.map((event, idx) => (
               <TableRow key={idx}>
-                <TableCell>{event.start.toLocaleDateString()}</TableCell>
+                <TableCell>
+                  {event.start == event.end
+                    ? event.start.toLocaleDateString()
+                    : `${event.start.toLocaleDateString()} - ${event.end.toLocaleDateString()}`}
+                </TableCell>
                 <TableCell>{event.title}</TableCell>
+                <TableCell>{event.description}</TableCell>
               </TableRow>
             ))}
           </TableBody>

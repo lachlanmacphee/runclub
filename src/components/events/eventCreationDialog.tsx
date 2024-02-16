@@ -36,6 +36,7 @@ import { CalendarIcon } from "lucide-react";
 
 const FormSchema = z.object({
   title: z.string(),
+  description: z.string(),
   start: z.date(),
   end: z.date(),
 });
@@ -52,19 +53,21 @@ export function EventCreationDialog({
     resolver: zodResolver(FormSchema),
     defaultValues: {
       title: "",
+      description: "",
     },
   });
 
   async function onSubmit(data: z.infer<typeof FormSchema>) {
     await pb.collection("events").create({
       title: data.title,
+      description: data.description,
       start: data.start,
       end: data.end,
     });
     refreshEvents();
     toast({
       title: "Event Added",
-      description: `We've added "${data.title}" to the events calendar.`,
+      description: `We've added "${data.title}" to the events list.`,
     });
   }
 
@@ -86,6 +89,19 @@ export function EventCreationDialog({
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Event Title</FormLabel>
+                    <FormControl>
+                      <Input {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="description"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Event Description</FormLabel>
                     <FormControl>
                       <Input {...field} />
                     </FormControl>
