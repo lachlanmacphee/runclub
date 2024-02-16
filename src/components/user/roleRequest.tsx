@@ -41,15 +41,16 @@ export const RoleRequest = () => {
     },
   });
 
-  const newRole = form.watch("role");
-
   const onSubmit = useCallback(
     async (data: z.infer<typeof RoleRequestSchema>) => {
       try {
+        await pb
+          .collection("role_requests")
+          .create({ user_id: user.id, new_role: data.role });
         toast({
           title: "Role Requested",
           duration: 5000,
-          description: `Your role will be adjusted to ${data.role} as soon as an admin approves the request.`,
+          description: `Your role will be adjusted as soon as an admin approves the request.`,
         });
       } catch {
         toast({
@@ -63,6 +64,8 @@ export const RoleRequest = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [pb, toast]
   );
+
+  const newRole = form.watch("role");
 
   return (
     <div className="flex justify-center">
