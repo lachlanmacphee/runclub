@@ -19,17 +19,19 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { getErrorMessage } from "@/lib/utils";
+import { Checkbox } from "@/components/ui/checkbox";
 
 const FormSchema = z
   .object({
     fullName: z.string().min(5),
+    email: z.string().email(),
+    password: z.string().min(10),
+    passwordConfirm: z.string().min(10),
+    requestVolunteer: z.boolean().default(false),
     alias: z
       .union([z.string().length(0), z.string().min(5)])
       .optional()
       .transform((e) => (e === "" ? undefined : e)),
-    email: z.string().email(),
-    password: z.string().min(10),
-    passwordConfirm: z.string().min(10),
   })
   .refine((schema) => schema.password === schema.passwordConfirm, {
     message: "Passwords must match",
@@ -48,6 +50,7 @@ export const SignUp = () => {
       email: "",
       password: "",
       passwordConfirm: "",
+      requestVolunteer: false,
       alias: "",
     },
   });
@@ -60,6 +63,7 @@ export const SignUp = () => {
           data.email,
           data.password,
           data.passwordConfirm,
+          data.requestVolunteer,
           data.alias
         );
         await login(data.email, data.password);
@@ -83,7 +87,7 @@ export const SignUp = () => {
 
   return (
     <div className="flex h-screen flex-col justify-center items-center">
-      <section className="flex w-full sm:w-1/2 flex-col gap-4 rounded-md p-8">
+      <section className="flex w-full sm:w-3/4 md:w-1/2 flex-col gap-4 rounded-md p-8">
         <h1 className="text-center text-3xl font-extrabold">Gunn Runners</h1>
         <h2 className="text-xl text-center">Sign Up</h2>
         <Form {...form}>
@@ -162,6 +166,27 @@ export const SignUp = () => {
                 </FormItem>
               )}
             />
+            <FormField
+              control={form.control}
+              name="requestVolunteer"
+              render={({ field }) => (
+                <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4">
+                  <FormControl>
+                    <Checkbox
+                      checked={field.value}
+                      onCheckedChange={field.onChange}
+                    />
+                  </FormControl>
+                  <div className="space-y-1 leading-none">
+                    <FormLabel>
+                      Request volunteering capabilities? You will need to wait
+                      for committee approval.
+                    </FormLabel>
+                  </div>
+                </FormItem>
+              )}
+            />
+
             <div className="flex justify-between mt-2">
               <Link
                 to="/login"

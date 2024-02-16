@@ -20,6 +20,7 @@ export type PocketContextType = {
     email: string,
     password: string,
     passwordConfirm: string,
+    requestVolunteer: boolean,
     alias?: string
   ) => Promise<RecordModel>;
   login: (
@@ -69,16 +70,23 @@ export const PocketProvider = ({ children }: PocketProviderProps) => {
       email: string,
       password: string,
       passwordConfirm: string,
+      requestVolunteer: boolean,
       alias?: string
     ) => {
-      return await pb.collection("users").create({
+      const res = (await pb.collection("users").create({
         name,
         alias,
         email,
         password,
         passwordConfirm,
         role: "member",
-      });
+      })) as User;
+      if (requestVolunteer) {
+        await pb
+          .collection("role_requests")
+          .create({ user_id: res.id, new_role: "moderator" });
+      }
+      return res;
     },
     [pb]
   );
@@ -131,7 +139,7 @@ export const PocketProvider = ({ children }: PocketProviderProps) => {
       return;
     }
     const tokenExpiration = decoded.exp;
-    const expirationWithBuffer = (tokenExpiration + fiveMinutesInMs) / 1000;
+    const expirationWithBuffer = tokenExpiration + fiveMinutesInMs / 1000;
     if (tokenExpiration < expirationWithBuffer) {
       await pb.collection("users").authRefresh();
     }
