@@ -132,7 +132,20 @@ export function Volunteer() {
             exVolunteerThree?.id,
           ].includes(user.id);
 
-          const isEmptySpots = 3 - (arr?.length ?? 0);
+          const volunteerOneDisabled =
+            isUpdating ||
+            (exVolunteerOne && exVolunteerOne.id !== user.id) ||
+            (isAlreadyVolunteer && exVolunteerOne?.id !== user.id);
+
+          const volunteerTwoDisabled =
+            isUpdating ||
+            (exVolunteerTwo && exVolunteerTwo.id !== user.id) ||
+            (isAlreadyVolunteer && exVolunteerTwo?.id !== user.id);
+
+          const volunteerThreeDisabled =
+            isUpdating ||
+            (exVolunteerThree && exVolunteerThree.id !== user.id) ||
+            (isAlreadyVolunteer && exVolunteerThree?.id !== user.id);
 
           return (
             <div
@@ -149,13 +162,7 @@ export function Volunteer() {
                 variant={
                   volunteerOne?.user_id === user.id ? "destructive" : "outline"
                 }
-                disabled={
-                  (isUpdating ||
-                    isAlreadyVolunteer ||
-                    !isEmptySpots ||
-                    exVolunteerOne?.id != user.id) &&
-                  exVolunteerOne?.id != user.id
-                }
+                disabled={volunteerOneDisabled}
                 onClick={() =>
                   volunteerOne?.user_id === user.id
                     ? optOutOfVolunteering(date, user.id)
@@ -169,13 +176,7 @@ export function Volunteer() {
                 variant={
                   volunteerTwo?.user_id === user.id ? "destructive" : "outline"
                 }
-                disabled={
-                  (isUpdating ||
-                    isAlreadyVolunteer ||
-                    !isEmptySpots ||
-                    exVolunteerTwo?.id != user.id) &&
-                  exVolunteerTwo?.id != user.id
-                }
+                disabled={volunteerTwoDisabled}
                 onClick={() =>
                   volunteerTwo?.user_id === user.id
                     ? optOutOfVolunteering(date, user.id)
@@ -191,13 +192,7 @@ export function Volunteer() {
                     ? "destructive"
                     : "outline"
                 }
-                disabled={
-                  (isUpdating ||
-                    isAlreadyVolunteer ||
-                    !isEmptySpots ||
-                    exVolunteerThree?.id != user.id) &&
-                  exVolunteerThree?.id != user.id
-                }
+                disabled={volunteerThreeDisabled}
                 onClick={() =>
                   volunteerThree?.user_id === user.id
                     ? optOutOfVolunteering(date, user.id)
