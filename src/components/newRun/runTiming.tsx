@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useStopwatch } from "react-timer-hook";
 import { usePocket } from "@/contexts";
@@ -8,15 +8,20 @@ import { Participant } from "@/lib/types";
 import { toast } from "@/components/ui/use-toast";
 import { Stopwatch } from "@/components/newRun/stopwatch";
 import { Button } from "@/components/ui/button";
-import { Latecomers } from "./lateComers";
-import { Textarea } from "../ui/textarea";
-import { ChevronsUpDown, Loader2 } from "lucide-react";
+import { Loader2 } from "lucide-react";
 
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "@/components/ui/collapsible";
+import { Latecomers } from "./collapsibles/latecomers";
+import { NewParticipants } from "./collapsibles/newParticipants";
+import { RemainingParticipants } from "./collapsibles/remainingParticipants";
+import { RunNotes } from "./collapsibles/runNotes";
+
+function getCompletedDefault(participants: Participant[]) {
+  const res: Record<number, boolean> = {};
+  participants.forEach(({ bib }) => {
+    res[bib] = false;
+  });
+  return res;
+}
 
 export function RunTiming({
   participants,
@@ -30,19 +35,14 @@ export function RunTiming({
   const { start, pause, hours, minutes, seconds, isRunning } = useStopwatch();
   const navigate = useNavigate();
 
-  const [isLatecomersOpen, setIsLatecomersOpen] = useState(false);
-  const [isNewGunniesOpen, setIsNewGunniesOpen] = useState(false);
-  const [isRunNotesOpen, setIsRunNotesOpen] = useState(false);
-  const [completed, setCompleted] = useState<Record<number, boolean>>({});
+  const [completed, setCompleted] = useState<Record<number, boolean>>(
+    getCompletedDefault(participants)
+  );
   const [changing, setChanging] = useState<Record<number, boolean>>({});
 
   const isRunComplete =
     Object.keys(completed).length === participants.length &&
     Object.values(completed).every(Boolean);
-
-  const newParticipants = participants.filter(
-    (participant) => participant.is_new
-  );
 
   useEffect(() => {
     async function markRunComplete() {
@@ -67,40 +67,43 @@ export function RunTiming({
     window.scrollTo(0, 0);
   }, []);
 
-  const markParticipant = async (bib: number) => {
-    const participant = participants.find((p) => p.bib === bib);
+  const markParticipant = useCallback(
+    async (bib: number) => {
+      const participant = participants.find((p) => p.bib === bib);
 
-    if (!participant || !participant.id) {
-      toast({
-        title: "Participant Not Found",
-        description:
-          "We couldn't find that participant or they do not have an id.",
-        variant: "destructive",
-      });
-      return;
-    }
+      if (!participant || !participant.id) {
+        toast({
+          title: "Participant Not Found",
+          description:
+            "We couldn't find that participant or they do not have an id.",
+          variant: "destructive",
+        });
+        return;
+      }
 
-    setChanging((prevState) => ({ ...prevState, [bib]: true }));
+      setChanging((prevState) => ({ ...prevState, [bib]: true }));
 
-    if (completed[bib]) {
+      if (completed[bib]) {
+        await pb
+          .collection("participant_runs")
+          .update(participant?.id, { time_seconds: 0 });
+
+        setCompleted((prevState) => ({ ...prevState, [bib]: false }));
+        setChanging((prevState) => ({ ...prevState, [bib]: false }));
+
+        return;
+      }
+
+      const time = convertTimesToSeconds(hours, minutes, seconds);
       await pb
         .collection("participant_runs")
-        .update(participant?.id, { time_seconds: 0 });
+        .update(participant?.id, { time_seconds: time });
 
-      setCompleted((prevState) => ({ ...prevState, [bib]: false }));
+      setCompleted((prevState) => ({ ...prevState, [bib]: true }));
       setChanging((prevState) => ({ ...prevState, [bib]: false }));
-
-      return;
-    }
-
-    const time = convertTimesToSeconds(hours, minutes, seconds);
-    await pb
-      .collection("participant_runs")
-      .update(participant?.id, { time_seconds: time });
-
-    setCompleted((prevState) => ({ ...prevState, [bib]: true }));
-    setChanging((prevState) => ({ ...prevState, [bib]: false }));
-  };
+    },
+    [completed, hours, minutes, participants, pb, seconds]
+  );
 
   return (
     <div className="flex flex-col gap-8">
@@ -135,81 +138,22 @@ export function RunTiming({
       )}
       <div className="space-y-2">
         {!isRunning && !isRunComplete && (
-          <Collapsible
-            open={isNewGunniesOpen}
-            onOpenChange={setIsNewGunniesOpen}
-            className="space-y-2"
-          >
-            <div className="flex items-center justify-between space-x-4">
-              <h4 className="text-sm font-semibold">New Gunnies</h4>
-              <CollapsibleTrigger asChild>
-                <Button variant="ghost" size="sm" className="w-9 p-0">
-                  <ChevronsUpDown className="h-4 w-4" />
-                  <span className="sr-only">Toggle</span>
-                </Button>
-              </CollapsibleTrigger>
-            </div>
-            <CollapsibleContent className="space-y-2">
-              <div>
-                {newParticipants.map((participant) => (
-                  <p key={participant.name} className="text-sm sm:text-base">
-                    {participant.name}
-                  </p>
-                ))}
-                {newParticipants.length == 0 && (
-                  <p className="text-sm sm:text-base">
-                    There are no new Gunnies this week.
-                  </p>
-                )}
-              </div>
-            </CollapsibleContent>
-          </Collapsible>
+          <NewParticipants participants={participants} />
         )}
         {!isRunning && !isRunComplete && (
-          <Collapsible
-            open={isLatecomersOpen}
-            onOpenChange={setIsLatecomersOpen}
-            className="space-y-2"
-          >
-            <div className="flex items-center justify-between space-x-4">
-              <h4 className="text-sm font-semibold">Latecomers</h4>
-              <CollapsibleTrigger asChild>
-                <Button variant="ghost" size="sm" className="w-9 p-0">
-                  <ChevronsUpDown className="h-4 w-4" />
-                  <span className="sr-only">Toggle</span>
-                </Button>
-              </CollapsibleTrigger>
-            </div>
-            <CollapsibleContent className="space-y-2">
-              <Latecomers
-                runId={runId}
-                participants={participants}
-                setParticipants={setParticipants}
-              />
-            </CollapsibleContent>
-          </Collapsible>
+          <Latecomers
+            runId={runId}
+            participants={participants}
+            setParticipants={setParticipants}
+          />
         )}
-        <Collapsible
-          open={isRunNotesOpen}
-          onOpenChange={setIsRunNotesOpen}
-          className="space-y-2"
-        >
-          <div className="flex items-center justify-between space-x-4">
-            <h4 className="text-sm font-semibold">Run Notes</h4>
-            <CollapsibleTrigger asChild>
-              <Button variant="ghost" size="sm" className="w-9 p-0">
-                <ChevronsUpDown className="h-4 w-4" />
-                <span className="sr-only">Toggle</span>
-              </Button>
-            </CollapsibleTrigger>
-          </div>
-          <CollapsibleContent className="space-y-2">
-            <Textarea
-              className="w-full h-[192px]"
-              placeholder="You can write notes for the run here, but they will disappear once the run finishes."
-            />
-          </CollapsibleContent>
-        </Collapsible>
+        {isRunning && !isRunComplete && (
+          <RemainingParticipants
+            participants={participants}
+            completed={completed}
+          />
+        )}
+        <RunNotes />
       </div>
     </div>
   );

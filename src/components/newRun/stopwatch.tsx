@@ -23,7 +23,7 @@ export function Stopwatch({
 
   return (
     <div className="flex flex-col items-center gap-4">
-      <h1 className="font-extrabold text-5xl">{`${fHours}:${fMins}:${fSecs}`}</h1>
+      <h1 className="font-extrabold font-mono text-5xl">{`${fHours}:${fMins}:${fSecs}`}</h1>
       {!isRunning && !isRunComplete && (
         <div className="text-center space-y-2">
           <Button onClick={start}>Start The Run</Button>
