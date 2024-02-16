@@ -91,11 +91,14 @@ export const WaiverFormSchema = z.object({
     .transform((e) => (e === "" ? undefined : e)),
 });
 
-export const UserFormSchema = z.object({
+export const AccountDetailsSchema = z.object({
   name: z.string().min(5),
   alias: z
     .union([z.string().length(0), z.string().min(5)])
     .optional()
     .transform((e) => (e === "" ? undefined : e)),
+});
+
+export const RoleRequestSchema = z.object({
   role: z.enum(["member", "moderator", "admin"]),
 });

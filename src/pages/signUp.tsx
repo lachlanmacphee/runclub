@@ -8,7 +8,6 @@ import { usePocket } from "@/contexts";
 // Components
 import { Input } from "@/components/ui/input";
 import { Button, buttonVariants } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
 import { useToast } from "@/components/ui/use-toast";
 
 import {
@@ -31,7 +30,6 @@ const FormSchema = z
     email: z.string().email(),
     password: z.string().min(10),
     passwordConfirm: z.string().min(10),
-    isVolunteer: z.boolean().default(false),
   })
   .refine((schema) => schema.password === schema.passwordConfirm, {
     message: "Passwords must match",
@@ -50,7 +48,6 @@ export const SignUp = () => {
       email: "",
       password: "",
       passwordConfirm: "",
-      isVolunteer: false,
       alias: "",
     },
   });
@@ -63,7 +60,6 @@ export const SignUp = () => {
           data.email,
           data.password,
           data.passwordConfirm,
-          data.isVolunteer,
           data.alias
         );
         await login(data.email, data.password);
@@ -113,7 +109,9 @@ export const SignUp = () => {
               name="alias"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Alias (optional)</FormLabel>
+                  <FormLabel>
+                    Alias (optional - please use this only if you have to)
+                  </FormLabel>
                   <FormControl>
                     <Input placeholder="John S" {...field} />
                   </FormControl>
@@ -161,25 +159,6 @@ export const SignUp = () => {
                     <Input placeholder="Password" type="password" {...field} />
                   </FormControl>
                   <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="isVolunteer"
-              render={({ field }) => (
-                <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4">
-                  <FormControl>
-                    <Checkbox
-                      checked={field.value}
-                      onCheckedChange={field.onChange}
-                    />
-                  </FormControl>
-                  <div className="space-y-1 leading-none">
-                    <FormLabel>
-                      Do you wish to sign up as a volunteer?
-                    </FormLabel>
-                  </div>
                 </FormItem>
               )}
             />
