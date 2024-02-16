@@ -80,3 +80,14 @@ export type Waiver = {
   emergencyContactPhone: string;
   referredBy: string;
 };
+
+export type RoleRequest = {
+  id: string;
+  new_role: string;
+  expand: {
+    user_id: {
+      id: string;
+      name: string;
+    };
+  };
+};

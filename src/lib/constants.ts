@@ -74,7 +74,7 @@ export const NAV_ROUTES = [
   { path: "/events", label: "Events", minRole: null },
   { path: "/manage", label: "Manage", minRole: ROLES.ADMIN },
   { path: "/faqs", label: "FAQs", minRole: null },
-  { path: "/wiki", label: "Wiki", minRole: ROLES.MODERATOR },
+  { path: "/wiki", label: "Wiki", minRole: ROLES.ADMIN },
   { path: "/contact", label: "Contact Us", minRole: null },
 ];
 
