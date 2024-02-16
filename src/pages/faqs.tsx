@@ -13,6 +13,27 @@ export function FAQs() {
             </div>
           ))}
         </div>
+        <div className="flex flex-col gap-4">
+          <h2 className="text-lg font-semibold">
+            What are the routes for the run?
+          </h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-10">
+            <iframe
+              width="315"
+              height="560"
+              src="https://www.youtube.com/embed/ZcQ2tR63tvw"
+              title="YouTube video player"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            ></iframe>
+            <iframe
+              width="315"
+              height="560"
+              src="https://www.youtube.com/embed/37ODnWmFLH0"
+              title="YouTube video player"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            ></iframe>
+          </div>
+        </div>
         <div className="flex flex-col gap-2">
           <h2 className="text-lg font-semibold">
             Where can I access the results from the previous website?
@@ -31,6 +52,11 @@ export function FAQs() {
         </div>
         <div className="flex flex-col gap-2">
           <h2 className="text-xl font-bold">How do I use this site?</h2>
+          <p>
+            These videos are now outdated, but give a somewhat general idea of
+            the key functionality. New videos will be coming sometime in
+            February.
+          </p>
           <iframe
             height="315"
             src="https://www.youtube.com/embed/AnM3uq0jtWY?si=5F86eFHo3f-_PiJL"
