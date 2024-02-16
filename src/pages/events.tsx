@@ -34,14 +34,13 @@ export function Events() {
     const eventsRes = (await pb
       .collection("events")
       .getFullList()) as EventResType[];
-    const newEvents: EventType[] = [];
-    eventsRes.map((event) => {
-      newEvents.push({
+    const newEvents: EventType[] = eventsRes
+      .map((event) => ({
         title: event.title,
         start: new Date(event.start),
         end: new Date(event.end),
-      });
-    });
+      }))
+      .sort((a, b) => a.start.getTime() - b.start.getTime());
     setEvents(newEvents);
   }, [pb]);
 
