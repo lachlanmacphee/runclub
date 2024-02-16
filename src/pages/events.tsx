@@ -70,7 +70,7 @@ export function Events() {
             {events.map((event, idx) => (
               <TableRow key={idx}>
                 <TableCell>
-                  {event.start == event.end
+                  {event.start.getTime() == event.end.getTime()
                     ? event.start.toLocaleDateString()
                     : `${event.start.toLocaleDateString()} - ${event.end.toLocaleDateString()}`}
                 </TableCell>
