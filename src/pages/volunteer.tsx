@@ -150,9 +150,10 @@ export function Volunteer() {
                   volunteerOne?.user_id === user.id ? "destructive" : "outline"
                 }
                 disabled={
-                  isUpdating ||
-                  isAlreadyVolunteer ||
-                  !isEmptySpots ||
+                  (isUpdating ||
+                    isAlreadyVolunteer ||
+                    !isEmptySpots ||
+                    exVolunteerOne?.id != user.id) &&
                   exVolunteerOne?.id != user.id
                 }
                 onClick={() =>
@@ -169,9 +170,10 @@ export function Volunteer() {
                   volunteerTwo?.user_id === user.id ? "destructive" : "outline"
                 }
                 disabled={
-                  isUpdating ||
-                  isAlreadyVolunteer ||
-                  !isEmptySpots ||
+                  (isUpdating ||
+                    isAlreadyVolunteer ||
+                    !isEmptySpots ||
+                    exVolunteerTwo?.id != user.id) &&
                   exVolunteerTwo?.id != user.id
                 }
                 onClick={() =>
@@ -190,9 +192,10 @@ export function Volunteer() {
                     : "outline"
                 }
                 disabled={
-                  isUpdating ||
-                  isAlreadyVolunteer ||
-                  !isEmptySpots ||
+                  (isUpdating ||
+                    isAlreadyVolunteer ||
+                    !isEmptySpots ||
+                    exVolunteerThree?.id != user.id) &&
                   exVolunteerThree?.id != user.id
                 }
                 onClick={() =>
