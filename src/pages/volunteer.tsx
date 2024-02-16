@@ -30,13 +30,13 @@ export function Volunteer() {
         }),
       });
 
-      if (res.length == 2) {
+      if (res.length == 3) {
         toast({
           title: "Volunteer Signup Failed",
           variant: "destructive",
           duration: 5000,
           description:
-            "There are already 2 volunteers signed up for this run. Please refresh the page to get the latest data",
+            "There are already 3 volunteers signed up for this run. Please refresh the page to get the latest data",
         });
         return;
       }
