@@ -94,24 +94,27 @@ export function Volunteer() {
 
   return (
     <div className="flex justify-center">
-      <div className="flex flex-col gap-4 w-10/12 max-w-3xl">
-        <div className="grid grid-cols-3 gap-4 font-bold">
+      <div className="flex flex-col gap-4 max-w-3xl">
+        <div className="grid grid-cols-4 gap-4 font-bold">
           <p>Date</p>
-          <p>Volunteer One</p>
-          <p>Volunteer Two</p>
+          <p className="col-start-2 col-end-5">Volunteers</p>
         </div>
         {tuesdaysForNext3Months.map((date) => {
           const arr = volunteers[date.toISOString()];
 
           let volunteerOne: Volunteer | undefined;
           let volunteerTwo: Volunteer | undefined;
+          let volunteerThree: Volunteer | undefined;
 
           if (arr) {
             volunteerOne = arr[0];
             volunteerTwo = arr[1];
+            volunteerThree = arr[2];
           }
+
           const exVolunteerOne = volunteerOne?.expand?.user_id;
           const exVolunteerTwo = volunteerTwo?.expand?.user_id;
+          const exVolunteerThree = volunteerThree?.expand?.user_id;
 
           const volunteerOneName = exVolunteerOne?.alias
             ? exVolunteerOne?.alias
@@ -119,22 +122,36 @@ export function Volunteer() {
           const volunteerTwoName = exVolunteerTwo?.alias
             ? exVolunteerTwo?.alias
             : exVolunteerTwo?.name ?? "Volunteer";
+          const volunteerThreeName = exVolunteerThree?.alias
+            ? exVolunteerThree?.alias
+            : exVolunteerThree?.name ?? "Volunteer";
+
+          const isAlreadyVolunteer = [
+            exVolunteerOne?.id,
+            exVolunteerTwo?.id,
+            exVolunteerThree?.id,
+          ].includes(user.id);
+
+          const isEmptySpots = 3 - (arr?.length ?? 0);
 
           return (
             <div
               key={date.toISOString()}
-              className="grid grid-cols-3 gap-4 items-center"
+              className="grid grid-cols-4 gap-2 items-center min-h-[60px]"
             >
-              <p>{date.toLocaleDateString()}</p>
+              <p className="text-sm sm:text-base">
+                {date.toLocaleDateString("en-us", {
+                  month: "short",
+                  day: "numeric",
+                })}
+              </p>
               <Button
                 variant={
                   volunteerOne?.user_id === user.id ? "destructive" : "outline"
                 }
                 disabled={
-                  isUpdating ||
-                  volunteerTwo?.user_id === user.id ||
-                  (volunteerOne?.user_id !== undefined &&
-                    volunteerOne?.user_id !== user.id)
+                  (isUpdating || isAlreadyVolunteer || !isEmptySpots) &&
+                  exVolunteerOne?.id != user.id
                 }
                 onClick={() =>
                   volunteerOne?.user_id === user.id
@@ -150,10 +167,8 @@ export function Volunteer() {
                   volunteerTwo?.user_id === user.id ? "destructive" : "outline"
                 }
                 disabled={
-                  isUpdating ||
-                  volunteerOne?.user_id === user.id ||
-                  (volunteerTwo?.user_id !== undefined &&
-                    volunteerTwo?.user_id !== user.id)
+                  (isUpdating || isAlreadyVolunteer || !isEmptySpots) &&
+                  exVolunteerTwo?.id != user.id
                 }
                 onClick={() =>
                   volunteerTwo?.user_id === user.id
@@ -163,6 +178,25 @@ export function Volunteer() {
                 className="h-full whitespace-normal"
               >
                 {volunteerTwoName}
+              </Button>
+              <Button
+                variant={
+                  volunteerThree?.user_id === user.id
+                    ? "destructive"
+                    : "outline"
+                }
+                disabled={
+                  (isUpdating || isAlreadyVolunteer || !isEmptySpots) &&
+                  exVolunteerThree?.id != user.id
+                }
+                onClick={() =>
+                  volunteerThree?.user_id === user.id
+                    ? optOutOfVolunteering(date, user.id)
+                    : signUpToVolunteer(date, user.id)
+                }
+                className="h-full whitespace-normal"
+              >
+                {volunteerThreeName}
               </Button>
             </div>
           );

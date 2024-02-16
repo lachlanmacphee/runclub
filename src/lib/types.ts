@@ -55,6 +55,7 @@ export type Volunteer = {
   user_id?: string;
   expand: {
     user_id: {
+      id: string;
       name: string;
       alias?: string;
     };
