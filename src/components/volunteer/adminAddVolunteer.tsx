@@ -12,6 +12,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Button } from "../ui/button";
+import ReactSelect from "react-select";
 import {
   Select,
   SelectContent,
@@ -37,7 +38,12 @@ const tuesdaysForNext3Months: Date[] = getTuesdaysForNext3Months();
 
 const FormSchema = z.object({
   run_date: z.string(),
-  waiver_id: z.string(),
+  member: z.object(
+    { value: z.string(), label: z.string() },
+    {
+      invalid_type_error: "A name is required here.",
+    }
+  ),
 });
 
 export function AdminAddVolunteer() {
@@ -55,7 +61,7 @@ export function AdminAddVolunteer() {
 
   async function onSubmit({
     run_date: run_date_str,
-    waiver_id,
+    member,
   }: z.infer<typeof FormSchema>) {
     const run_date = new Date(run_date_str);
 
@@ -77,7 +83,9 @@ export function AdminAddVolunteer() {
       return;
     }
 
-    await pb.collection("volunteers").create({ run_date, waiver_id });
+    await pb
+      .collection("volunteers")
+      .create({ run_date, waiver_id: member.value });
     setIsOpen(false);
   }
 
@@ -128,30 +136,23 @@ export function AdminAddVolunteer() {
               />
               <FormField
                 control={form.control}
-                name="waiver_id"
+                name="member"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Member</FormLabel>
-                    <Select
-                      onValueChange={field.onChange}
-                      defaultValue={field.value}
-                    >
-                      <FormControl>
-                        <SelectTrigger>
-                          <SelectValue />
-                        </SelectTrigger>
-                      </FormControl>
-                      <SelectContent>
-                        {members.map((member) => (
-                          <SelectItem
-                            key={member.waiver_id}
-                            value={member.waiver_id}
-                          >
-                            {member.name}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
+                    <FormControl>
+                      <ReactSelect
+                        {...field}
+                        className="custom-react-select-container"
+                        classNamePrefix="custom-react-select"
+                        placeholder="Select..."
+                        options={members.map((member) => {
+                          return {
+                            label: member.name,
+                            value: member.waiver_id,
+                          };
+                        })}
+                      />
+                    </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
