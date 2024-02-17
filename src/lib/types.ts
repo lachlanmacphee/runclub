@@ -35,6 +35,7 @@ export type Participant = {
   bib: number;
   is_paid: boolean;
   is_new: boolean;
+  created: string;
 };
 
 export type Member = {

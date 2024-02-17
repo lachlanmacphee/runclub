@@ -8,7 +8,7 @@ import { RunTable } from "@/components/runs/runTable";
 
 import { Loader2 } from "lucide-react";
 
-export function Leaderboard() {
+export function ClubStats() {
   const { pb } = usePocket();
   const [isLoading, setIsLoading] = useState(true);
   const [participants, setParticipants] = useState<Participant[]>([]);
@@ -49,7 +49,7 @@ export function Leaderboard() {
 
   return (
     <div className="flex flex-col gap-4">
-      <h1 className="text-5xl font-bold">Leaderboard</h1>
+      <h1 className="text-5xl font-bold">Club Stats</h1>
       <h2>Top 10 3.5km and Top 10 5km Runs since 21st November 2023</h2>
       {isLoading ? (
         <div className="flex justify-center">
