@@ -84,7 +84,6 @@ export function MemberStats() {
 
   useEffect(() => {
     fetchUserStats();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [fetchUserStats]);
 
   if (isLoading) {
@@ -114,12 +113,12 @@ export function MemberStats() {
   );
 
   const fiveKmGraphData = fiveKmResults.map((result) => ({
-    date: new Date(result.created).toLocaleDateString(),
+    date: new Date(result.created as string).toLocaleDateString(),
     time: result.time_seconds ?? 0,
   }));
 
   const threeKmGraphData = threeKmResults.map((result) => ({
-    date: new Date(result.created).toLocaleDateString(),
+    date: new Date(result.created as string).toLocaleDateString(),
     time: result.time_seconds ?? 0,
   }));
 
