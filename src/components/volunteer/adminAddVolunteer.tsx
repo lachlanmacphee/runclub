@@ -84,7 +84,7 @@ export function AdminAddVolunteer() {
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <Button>Add Volunteer</Button>
+        <Button>Add Volunteer Manually</Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-md">
         <Form {...form}>
