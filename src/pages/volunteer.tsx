@@ -6,8 +6,15 @@ import type { User, Volunteer } from "@/lib/types";
 
 import { toast } from "@/components/ui/use-toast";
 import { Button } from "@/components/ui/button";
+import { AdminAddVolunteer } from "@/components/volunteer/adminAddVolunteer";
 
 const tuesdaysForNext3Months: Date[] = getTuesdaysForNext3Months();
+
+function isUserVolunteer(volunteer: Volunteer): volunteer is Volunteer & {
+  expand: { user_id?: { id: string; name: string; alias?: string } };
+} {
+  return "user_id" in volunteer.expand;
+}
 
 export function Volunteer() {
   const pocket = usePocket();
@@ -72,7 +79,7 @@ export function Volunteer() {
           minDate: tuesdaysForNext3Months[0],
           maxDate: tuesdaysForNext3Months[tuesdaysForNext3Months.length - 1],
         }),
-        expand: "user_id",
+        expand: "user_id,waiver_id",
       });
     const tempVolunteers: { [key: string]: Volunteer[] } = {};
     resVolunteers.map((volunteer) => {
@@ -95,6 +102,7 @@ export function Volunteer() {
   return (
     <div className="flex justify-center">
       <div className="flex flex-col gap-4 max-w-3xl">
+        {user.role == "admin" && <AdminAddVolunteer />}
         <div className="grid grid-cols-4 gap-4 font-bold">
           <p>Date</p>
           <p className="col-start-2 col-end-5">Volunteers</p>
@@ -107,24 +115,44 @@ export function Volunteer() {
           let volunteerThree: Volunteer | undefined;
 
           if (arr) {
-            volunteerOne = arr[0];
-            volunteerTwo = arr[1];
-            volunteerThree = arr[2];
+            volunteerOne = arr[0] ?? undefined;
+            volunteerTwo = arr[1] ?? undefined;
+            volunteerThree = arr[2] ?? undefined;
           }
 
-          const exVolunteerOne = volunteerOne?.expand?.user_id;
-          const exVolunteerTwo = volunteerTwo?.expand?.user_id;
-          const exVolunteerThree = volunteerThree?.expand?.user_id;
+          const exVolunteerOne = volunteerOne
+            ? isUserVolunteer(volunteerOne)
+              ? volunteerOne.expand.user_id
+              : volunteerOne?.expand.waiver_id
+            : undefined;
 
-          const volunteerOneName = exVolunteerOne?.alias
-            ? exVolunteerOne?.alias
-            : exVolunteerOne?.name ?? "Volunteer";
-          const volunteerTwoName = exVolunteerTwo?.alias
-            ? exVolunteerTwo?.alias
-            : exVolunteerTwo?.name ?? "Volunteer";
-          const volunteerThreeName = exVolunteerThree?.alias
-            ? exVolunteerThree?.alias
-            : exVolunteerThree?.name ?? "Volunteer";
+          const exVolunteerTwo = volunteerTwo
+            ? isUserVolunteer(volunteerTwo)
+              ? volunteerTwo.expand.user_id
+              : volunteerTwo.expand.waiver_id
+            : undefined;
+
+          const exVolunteerThree = volunteerThree
+            ? isUserVolunteer(volunteerThree)
+              ? volunteerThree.expand.user_id
+              : volunteerThree.expand.waiver_id
+            : undefined;
+
+          const volunteerOneName: string = exVolunteerOne
+            ? "name" in exVolunteerOne
+              ? exVolunteerOne.name
+              : exVolunteerOne.fname + " " + exVolunteerOne.lname
+            : "Volunteer";
+          const volunteerTwoName: string = exVolunteerTwo
+            ? "name" in exVolunteerTwo
+              ? exVolunteerTwo.name
+              : exVolunteerTwo.fname + " " + exVolunteerTwo.lname
+            : "Volunteer";
+          const volunteerThreeName: string = exVolunteerThree
+            ? "name" in exVolunteerThree
+              ? exVolunteerThree.name
+              : exVolunteerThree.fname + " " + exVolunteerThree.lname
+            : "Volunteer";
 
           const isAlreadyVolunteer = [
             exVolunteerOne?.id,
@@ -160,10 +188,18 @@ export function Volunteer() {
               </p>
               <Button
                 variant={
-                  volunteerOne?.user_id === user.id ? "destructive" : "outline"
+                  volunteerOne
+                    ? "user_id" in volunteerOne
+                      ? volunteerOne.user_id === user.id
+                        ? "destructive"
+                        : "outline"
+                      : "outline"
+                    : "outline"
                 }
                 disabled={volunteerOneDisabled}
                 onClick={() =>
+                  volunteerOne &&
+                  "user_id" in volunteerOne &&
                   volunteerOne?.user_id === user.id
                     ? optOutOfVolunteering(date, user.id)
                     : signUpToVolunteer(date, user.id)
@@ -174,10 +210,18 @@ export function Volunteer() {
               </Button>
               <Button
                 variant={
-                  volunteerTwo?.user_id === user.id ? "destructive" : "outline"
+                  volunteerTwo
+                    ? "user_id" in volunteerTwo
+                      ? volunteerTwo.user_id === user.id
+                        ? "destructive"
+                        : "outline"
+                      : "outline"
+                    : "outline"
                 }
                 disabled={volunteerTwoDisabled}
                 onClick={() =>
+                  volunteerTwo &&
+                  "user_id" in volunteerTwo &&
                   volunteerTwo?.user_id === user.id
                     ? optOutOfVolunteering(date, user.id)
                     : signUpToVolunteer(date, user.id)
@@ -188,12 +232,18 @@ export function Volunteer() {
               </Button>
               <Button
                 variant={
-                  volunteerThree?.user_id === user.id
-                    ? "destructive"
+                  volunteerThree
+                    ? "user_id" in volunteerThree
+                      ? volunteerThree.user_id === user.id
+                        ? "destructive"
+                        : "outline"
+                      : "outline"
                     : "outline"
                 }
                 disabled={volunteerThreeDisabled}
                 onClick={() =>
+                  volunteerThree &&
+                  "user_id" in volunteerThree &&
                   volunteerThree?.user_id === user.id
                     ? optOutOfVolunteering(date, user.id)
                     : signUpToVolunteer(date, user.id)
