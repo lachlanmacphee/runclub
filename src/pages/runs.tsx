@@ -42,44 +42,6 @@ export function Runs() {
     setIsLoading(false);
   };
 
-  if (isLoading) {
-    return (
-      <div className="flex flex-col gap-4">
-        <div className="grid grid-cols-1 gap-4 md:gap-0 md:grid-cols-[0.5fr_1fr]">
-          <div className="row-start-2 md:row-start-1">
-            <DatePicker date={date} setDate={dateChangeHandler} />
-          </div>
-          <div className="flex flex-col items-center md:items-end justify-center ">
-            <h1 className="text-xl font-bold">
-              {date && formatDateWithSuffix(date)}
-            </h1>
-          </div>
-        </div>
-        <div className="flex justify-center">
-          <Loader2 className="h-12 w-12 animate-spin" />
-        </div>
-      </div>
-    );
-  }
-
-  if (!runDetails) {
-    return (
-      <div className="flex flex-col gap-4">
-        <div className="grid grid-cols-1 gap-4 md:gap-0 md:grid-cols-[0.5fr_1fr]">
-          <div className="row-start-2 md:row-start-1">
-            <DatePicker date={date} setDate={dateChangeHandler} />
-          </div>
-          <div className="flex flex-col items-center md:items-end justify-center ">
-            <h1 className="text-xl font-bold">
-              {date && formatDateWithSuffix(date)}
-            </h1>
-          </div>
-        </div>
-        <RunTable participants={[]} />
-      </div>
-    );
-  }
-
   return (
     <div className="flex flex-col gap-4">
       <div className="grid grid-cols-1 gap-4 md:gap-0 md:grid-cols-[0.5fr_1fr]">
@@ -90,12 +52,22 @@ export function Runs() {
           <h1 className="text-xl font-bold">
             {date && formatDateWithSuffix(date)}
           </h1>
-          <h2>{runDetails.location}</h2>
+          {!isLoading && runDetails && <h2>{runDetails.location}</h2>}
         </div>
       </div>
-      {runDetails.run.conditions && <p>{runDetails.run.conditions}</p>}
-      <p>{runDetails.description}</p>
-      <RunTable participants={runDetails.participants} />
+      {isLoading && (
+        <div className="flex justify-center">
+          <Loader2 className="h-12 w-12 animate-spin" />
+        </div>
+      )}
+      {!isLoading && !runDetails && <RunTable participants={[]} />}
+      {!isLoading && runDetails && (
+        <>
+          {runDetails.run.conditions && <p>{runDetails.run.conditions}</p>}
+          <p>{runDetails.description}</p>
+          <RunTable participants={runDetails.participants} />
+        </>
+      )}
     </div>
   );
 }
