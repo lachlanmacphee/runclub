@@ -48,6 +48,9 @@ export const FAQ_DATA = [
   },
 ];
 
+export const PAST_RESULTS_DOWNLOAD_LINK =
+  "https://drive.google.com/file/d/1a0GmwSpOzbJIJfCLiHYv6Cyr5HB5WUGQ/view?usp=sharing";
+
 export const WAIVER_PARAGRAPHS = [
   "The Gunn Runners Incorporated (A0046461M) (Gunn Runners) is a not-for-profit organisation that conducts a weekly social run/walk (the Event), usually over distances of 3km and 5km at Albert Park or surrounds. Gunn Runners Incorporated is run by a 'Crew' of volunteers.",
   "You are required to read and tick the box at the bottom of this waiver form in order to participate in the Event. This is an insurance requirement.",

@@ -1,4 +1,4 @@
-import { FAQ_DATA } from "@/lib/constants";
+import { FAQ_DATA, PAST_RESULTS_DOWNLOAD_LINK } from "@/lib/constants";
 
 export function FAQs() {
   return (
@@ -42,7 +42,7 @@ export function FAQs() {
             We provide a zip archive of the previous results from the last Gunn
             Runners website.{" "}
             <a
-              href="https://drive.google.com/file/d/1dQltNde2Ewuy3tRZT2C0VifW4zmEgm7a/view?usp=sharing"
+              href={PAST_RESULTS_DOWNLOAD_LINK}
               className="text-blue-600 dark:text-blue-500 hover:underline"
             >
               Click here
