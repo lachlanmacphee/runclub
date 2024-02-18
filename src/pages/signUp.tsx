@@ -179,8 +179,8 @@ export const SignUp = () => {
                   </FormControl>
                   <div className="space-y-1 leading-none">
                     <FormLabel>
-                      Request volunteering capabilities? You will need to wait
-                      for committee approval.
+                      Request volunteering capabilities? Tick this if you plan
+                      to volunteer in future.
                     </FormLabel>
                   </div>
                 </FormItem>
