@@ -21,14 +21,14 @@ export function FAQs() {
             <iframe
               width="315"
               height="560"
-              src="https://www.youtube.com/embed/ZcQ2tR63tvw"
+              src="https://www.youtube.com/embed/OgFjGT0Vn88"
               title="YouTube video player"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
             ></iframe>
             <iframe
               width="315"
               height="560"
-              src="https://www.youtube.com/embed/37ODnWmFLH0"
+              src="https://www.youtube.com/embed/HWIE3ikO4lY"
               title="YouTube video player"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
             ></iframe>
