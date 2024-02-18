@@ -239,13 +239,15 @@ export function MemberStats() {
           </CardContent>
         </Card>
       </div>
-      <div>
-        <h2 className="font-bold text-2xl">Your 5km Results</h2>
-        <RunTable participants={fiveKmResults} />
-      </div>
-      <div>
-        <h2 className="font-bold text-2xl">Your 3.5km Results</h2>
-        <RunTable participants={threeKmResults} />
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
+        <div>
+          <h2 className="font-bold text-2xl">Your 5km Results</h2>
+          <RunTable columnsType="stats" participants={fiveKmResults} />
+        </div>
+        <div>
+          <h2 className="font-bold text-2xl">Your 3.5km Results</h2>
+          <RunTable columnsType="stats" participants={threeKmResults} />
+        </div>
       </div>
     </div>
   );

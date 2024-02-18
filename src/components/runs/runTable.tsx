@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 import { ArrowUpDown } from "lucide-react";
 import { DataTable } from "../ui/data-table";
 
-const runTableColumns: ColumnDef<Participant>[] = [
+const standardRunTableColumns: ColumnDef<Participant>[] = [
   {
     accessorKey: "position",
     header: ({ column }) => {
@@ -73,6 +73,51 @@ const runTableColumns: ColumnDef<Participant>[] = [
   },
 ];
 
-export const RunTable = ({ participants }: { participants: Participant[] }) => (
-  <DataTable columns={runTableColumns} data={participants} />
+const statsRunTableColumns: ColumnDef<Participant>[] = [
+  {
+    accessorKey: "name",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          className="px-0 hover:bg-transparent"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Name
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
+  },
+  {
+    accessorKey: "time_seconds",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          className="px-0 hover:bg-transparent"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Time
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
+    cell: ({ row }) => formatTime(row.getValue("time_seconds")),
+  },
+];
+
+export const RunTable = ({
+  participants,
+  columnsType = "standard",
+}: {
+  participants: Participant[];
+  columnsType?: "standard" | "stats";
+}) => (
+  <DataTable
+    columns={
+      columnsType == "standard" ? standardRunTableColumns : statsRunTableColumns
+    }
+    data={participants}
+  />
 );
