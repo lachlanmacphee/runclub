@@ -3,7 +3,7 @@ import {
   NavigationMenuItem,
   navigationMenuTriggerStyle,
 } from "../ui/navigation-menu";
-import { Circle, Dot } from "lucide-react";
+import { Circle } from "lucide-react";
 
 export function DesktopLink({
   path,

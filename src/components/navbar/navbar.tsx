@@ -7,7 +7,7 @@ import { AvatarIconModal } from "./avatar";
 import { ModeToggle } from "./mode-toggle";
 import { LogInOut } from "./logInOut";
 import { AnnouncementBanner } from "./announcementBanner";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { usePocket } from "@/contexts";
 import { RecordModel } from "pocketbase";
 import { ROLES } from "@/lib/constants";
@@ -20,23 +20,33 @@ export function Navbar() {
     useState<boolean>(false);
   const [announcement, setAnnouncement] = useState<RecordModel | null>(null);
 
+  const fetchLatestAnnouncement = useCallback(async () => {
+    const record = await pb.collection("announcements").getList(1, 1, {
+      sort: "-created",
+    });
+    setAnnouncement(record.items[0]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const fetchRoleRequests = useCallback(async () => {
+    const record = await pb.collection("role_requests").getList(1, 1);
+    if (record?.items?.length > 0) {
+      setIsPendingRoleRequest(true);
+      return;
+    }
+    setIsPendingRoleRequest(false);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   useEffect(() => {
-    async function fetchLatestAnnouncement() {
-      const record = await pb.collection("announcements").getList(1, 1, {
-        sort: "-created",
-      });
-      setAnnouncement(record.items[0]);
-    }
-    async function fetchRoleRequests() {
-      const record = await pb.collection("role_requests").getFirstListItem("");
-      if (record) {
-        setIsPendingRoleRequest(true);
-      }
-    }
     fetchLatestAnnouncement();
     if (user && user.role == ROLES.ADMIN) {
       fetchRoleRequests();
+      pb.collection("role_requests").subscribe("*", fetchRoleRequests);
     }
+    return () => {
+      pb.collection("role_requests").unsubscribe("*");
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
