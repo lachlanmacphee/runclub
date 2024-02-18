@@ -10,11 +10,14 @@ import { AnnouncementBanner } from "./announcementBanner";
 import { useEffect, useState } from "react";
 import { usePocket } from "@/contexts";
 import { RecordModel } from "pocketbase";
+import { ROLES } from "@/lib/constants";
 
 const currentTime = Date.now();
 
 export function Navbar() {
-  const { pb } = usePocket();
+  const { user, pb } = usePocket();
+  const [isPendingRoleRequest, setIsPendingRoleRequest] =
+    useState<boolean>(false);
   const [announcement, setAnnouncement] = useState<RecordModel | null>(null);
 
   useEffect(() => {
@@ -24,9 +27,20 @@ export function Navbar() {
       });
       setAnnouncement(record.items[0]);
     }
+    async function fetchRoleRequests() {
+      const record = await pb.collection("role_requests").getFirstListItem("");
+      if (record) {
+        setIsPendingRoleRequest(true);
+      }
+    }
     fetchLatestAnnouncement();
+    if (user && user.role == ROLES.ADMIN) {
+      fetchRoleRequests();
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const notifications = isPendingRoleRequest ? ["Manage"] : [];
 
   return (
     <>
@@ -46,12 +60,12 @@ export function Navbar() {
             <span className="hidden xl:block">Gunn Runners</span>
           </div>
         </Link>
-        <DesktopNavMenu />
+        <DesktopNavMenu notifications={notifications} />
         <div className="flex gap-3 justify-end w-[250px]">
           <AvatarIconModal />
           <ModeToggle />
           <LogInOut />
-          <MobileNavMenu />
+          <MobileNavMenu notifications={notifications} />
         </div>
       </div>
     </>

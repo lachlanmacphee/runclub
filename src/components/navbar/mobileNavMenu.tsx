@@ -14,7 +14,7 @@ import {
 import { Menu } from "lucide-react";
 import { useAccessiblePages } from "@/hooks/useAccessiblePages";
 
-export function MobileNavMenu() {
+export function MobileNavMenu({ notifications }: { notifications: string[] }) {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const { getPages } = useAccessiblePages();
 
@@ -33,6 +33,7 @@ export function MobileNavMenu() {
             key={page.path}
             path={page.path}
             label={page.label}
+            notification={notifications.includes(page.label)}
             setter={setDropdownOpen}
           />
         ))}

@@ -1,26 +1,25 @@
-import { Link } from "react-router-dom";
+import { useAccessiblePages } from "@/hooks/useAccessiblePages";
 
 // Components
 import {
   NavigationMenu,
-  NavigationMenuItem,
   NavigationMenuList,
-  navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
-import { useAccessiblePages } from "@/hooks/useAccessiblePages";
+import { DesktopLink } from "./desktopLink";
 
-export function DesktopNavMenu() {
+export function DesktopNavMenu({ notifications }: { notifications: string[] }) {
   const { getPages } = useAccessiblePages();
 
   return (
     <NavigationMenu className="hidden 2xl:block">
       <NavigationMenuList>
         {getPages().map((page) => (
-          <NavigationMenuItem key={page.path}>
-            <Link to={page.path} className={navigationMenuTriggerStyle()}>
-              {page.label}
-            </Link>
-          </NavigationMenuItem>
+          <DesktopLink
+            key={page.path}
+            path={page.path}
+            label={page.label}
+            notification={notifications.includes(page.label)}
+          />
         ))}
       </NavigationMenuList>
     </NavigationMenu>
