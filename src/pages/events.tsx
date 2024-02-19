@@ -33,9 +33,11 @@ export function Events() {
   const isAdmin = user?.role === ROLES.ADMIN;
 
   const fetchEvents = useCallback(async () => {
-    const eventsRes = (await pb
-      .collection("events")
-      .getFullList()) as EventResType[];
+    const eventsRes = (await pb.collection("events").getFullList({
+      filter: pb.filter("end > {:currentDate}", {
+        currentDate: new Date(),
+      }),
+    })) as EventResType[];
     const newEvents: EventType[] = eventsRes
       .map((event) => ({
         title: event.title,
@@ -53,7 +55,10 @@ export function Events() {
   }, []);
 
   return (
-    <div className="flex justify-center">
+    <div className="space-y-4">
+      <h1 className="text-3xl md:text-5xl text-center md:text-left font-bold">
+        Upcoming Events
+      </h1>
       <div className="flex flex-grow max-w-3xl">
         <Table>
           <TableHeader>
@@ -62,7 +67,6 @@ export function Events() {
               <TableHead>Title</TableHead>
               <TableHead className="flex justify-between items-center">
                 Description
-                {isAdmin && <EventCreationDialog refreshEvents={fetchEvents} />}
               </TableHead>
             </TableRow>
           </TableHeader>
@@ -81,6 +85,7 @@ export function Events() {
           </TableBody>
         </Table>
       </div>
+      {isAdmin && <EventCreationDialog refreshEvents={fetchEvents} />}
     </div>
   );
 }

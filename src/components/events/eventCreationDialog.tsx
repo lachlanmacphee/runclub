@@ -74,7 +74,7 @@ export function EventCreationDialog({
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button>Add Event</Button>
+        <Button className="w-full sm:w-48">Add Event</Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-md">
         <Form {...form}>
