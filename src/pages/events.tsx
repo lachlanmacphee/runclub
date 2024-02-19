@@ -34,7 +34,7 @@ export function Events() {
 
   const fetchEvents = useCallback(async () => {
     const eventsRes = (await pb.collection("events").getFullList({
-      filter: pb.filter("end > {:currentDate}", {
+      filter: pb.filter("end >= {:currentDate}", {
         currentDate: new Date(),
       }),
     })) as EventResType[];
