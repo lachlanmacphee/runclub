@@ -112,19 +112,19 @@ export function Privacy() {
           of your personal information that is collected and held by us. If at
           any time you would like to access or correct the personal information
           that we hold about you, or you would like more information on our
-          approach to privacy, please contact us at info@gunnrunners.org.au. We
-          will grant access to and correction of personal information to the
-          extent required or authorised by the Privacy Act or other law. Upon
-          making a request, you may be required to provide proof of identity
-          and/or provide further details. We endeavour to respond to requests
-          within 30 days and, if we refuse your request, will notify you of the
-          refusal in writing.
+          approach to privacy, please contact us at
+          gunnrunnersmelbourne@gmail.com. We will grant access to and correction
+          of personal information to the extent required or authorised by the
+          Privacy Act or other law. Upon making a request, you may be required
+          to provide proof of identity and/or provide further details. We
+          endeavour to respond to requests within 30 days and, if we refuse your
+          request, will notify you of the refusal in writing.
         </p>
         <p>
           When you participate in a Gunn Runners run, we publish your name and
           finish time on our website. Should you wish for your data to be
-          deleted, you will need to contact us at info@gunnrunners.org.au and we
-          will endeavour to respond to your request within 30 days.
+          deleted, you will need to contact us at gunnrunnersmelbourne@gmail.com
+          and we will endeavour to respond to your request within 30 days.
         </p>
         <h2 className="text-xl font-bold">Privacy complaints</h2>
         <p>
