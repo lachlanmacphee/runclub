@@ -57,7 +57,8 @@ export const RoleRequest = () => {
           title: "Role Request Failed.",
           variant: "destructive",
           duration: 5000,
-          description: "We failed to request that role.",
+          description:
+            "Something went wrong. Please note you can only have one role change request at a time.",
         });
       }
     },
