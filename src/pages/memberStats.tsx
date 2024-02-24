@@ -23,6 +23,7 @@ import {
 } from "@/components/ui/card";
 import { RunTable } from "@/components/runs/runTable";
 import { Loader2 } from "lucide-react";
+import { formatTime } from "@/lib/utils";
 
 export function MemberStats() {
   const { pb, user } = usePocket();
@@ -192,7 +193,12 @@ export function MemberStats() {
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis dataKey="date" />
                 <YAxis />
-                <Tooltip />
+                <Tooltip
+                  formatter={(value, name) => [
+                    formatTime(value as number),
+                    name,
+                  ]}
+                />
                 <Legend />
                 <Line
                   type="monotone"
@@ -226,7 +232,12 @@ export function MemberStats() {
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis dataKey="date" />
                 <YAxis />
-                <Tooltip />
+                <Tooltip
+                  formatter={(value, name) => [
+                    formatTime(value as number),
+                    name,
+                  ]}
+                />
                 <Legend />
                 <Line
                   type="monotone"
