@@ -83,7 +83,7 @@ export function Volunteer() {
       });
     const tempVolunteers: { [key: string]: Volunteer[] } = {};
     resVolunteers.map((volunteer) => {
-      const dateStr = new Date(volunteer.run_date).toISOString();
+      const dateStr = new Date(volunteer.run_date).toDateString();
       tempVolunteers[dateStr] = [...(tempVolunteers[dateStr] ?? []), volunteer];
     });
     setVolunteers(tempVolunteers);
@@ -108,7 +108,7 @@ export function Volunteer() {
           <p className="col-start-2 col-end-5">Volunteers</p>
         </div>
         {tuesdaysForNext3Months.map((date) => {
-          const arr = volunteers[date.toISOString()];
+          const arr = volunteers[date.toDateString()];
 
           let volunteerOne: Volunteer | undefined;
           let volunteerTwo: Volunteer | undefined;
