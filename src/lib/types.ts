@@ -46,7 +46,8 @@ export type Member = {
 
 export type RunDetails = {
   run: GroupRun;
-  participants: Participant[];
+  threeKmParticipants: Participant[];
+  fiveKmParticipants: Participant[];
   description: string;
   location: string;
 };

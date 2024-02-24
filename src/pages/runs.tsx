@@ -60,12 +60,22 @@ export function Runs() {
           <Loader2 className="h-12 w-12 animate-spin" />
         </div>
       )}
-      {!isLoading && !runDetails && <RunTable participants={[]} />}
+      {!isLoading && !runDetails && (
+        <>
+          <h2 className="text-xl font-bold">5km</h2>
+          <RunTable participants={[]} />
+          <h2 className="text-xl font-bold">3.5km</h2>
+          <RunTable participants={[]} />
+        </>
+      )}
       {!isLoading && runDetails && (
         <>
           {runDetails.run.conditions && <p>{runDetails.run.conditions}</p>}
           <p>{runDetails.description}</p>
-          <RunTable participants={runDetails.participants} />
+          <h2 className="text-xl font-bold">5km</h2>
+          <RunTable participants={runDetails.fiveKmParticipants} />
+          <h2 className="text-xl font-bold">3.5km</h2>
+          <RunTable participants={runDetails.threeKmParticipants} />
         </>
       )}
     </div>

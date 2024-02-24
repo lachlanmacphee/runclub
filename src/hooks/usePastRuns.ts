@@ -9,20 +9,33 @@ export function usePastRuns() {
   const getParticipantsForRun = useCallback(
     async (id: string) => {
       // Find all the participants that were part of that run
-      const participants: Participant[] = await pb
+      const threeKmParticipants: Participant[] = await pb
         .collection("participant_runs")
         .getFullList({
-          filter: pb.filter("group_run_id = {:id}", {
+          filter: pb.filter("group_run_id = {:id} && distance = 3.5", {
             id,
           }),
           sort: "time_seconds",
         });
 
-      participants.forEach(
+      const fiveKmParticipants: Participant[] = await pb
+        .collection("participant_runs")
+        .getFullList({
+          filter: pb.filter("group_run_id = {:id} && distance = 5", {
+            id,
+          }),
+          sort: "time_seconds",
+        });
+
+      threeKmParticipants.forEach(
         (participant, index) => (participant.position = index + 1)
       );
 
-      return participants;
+      fiveKmParticipants.forEach(
+        (participant, index) => (participant.position = index + 1)
+      );
+
+      return { threeKmParticipants, fiveKmParticipants };
     },
     [pb]
   );
@@ -36,11 +49,21 @@ export function usePastRuns() {
     if (runs.length == 0) return undefined;
 
     const run = runs[0];
-    const participants = await getParticipantsForRun(run.id);
+    const { threeKmParticipants, fiveKmParticipants } =
+      await getParticipantsForRun(run.id);
     const location = convertLocationValueToLabel(run.location);
-    const description = createRunDescription(participants, location);
+    const description = createRunDescription(
+      [...threeKmParticipants, ...fiveKmParticipants],
+      location
+    );
 
-    return { run, participants, description, location };
+    return {
+      run,
+      threeKmParticipants,
+      fiveKmParticipants,
+      description,
+      location,
+    };
   }, [pb, getParticipantsForRun]);
 
   const fetchRunFromDate = useCallback(
@@ -62,11 +85,21 @@ export function usePastRuns() {
       if (runs.length == 0) return undefined;
 
       const run: GroupRun = runs[0];
-      const participants = await getParticipantsForRun(run.id);
+      const { threeKmParticipants, fiveKmParticipants } =
+        await getParticipantsForRun(run.id);
       const location = convertLocationValueToLabel(run.location);
-      const description = createRunDescription(participants, location);
+      const description = createRunDescription(
+        [...threeKmParticipants, ...fiveKmParticipants],
+        location
+      );
 
-      return { run, participants, description, location };
+      return {
+        run,
+        threeKmParticipants,
+        fiveKmParticipants,
+        description,
+        location,
+      };
     },
     [pb, getParticipantsForRun]
   );
