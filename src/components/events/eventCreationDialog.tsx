@@ -37,6 +37,7 @@ import { CalendarIcon } from "lucide-react";
 const FormSchema = z.object({
   title: z.string(),
   description: z.string(),
+  link: z.string(),
   start: z.date(),
   end: z.date(),
 });
@@ -54,6 +55,7 @@ export function EventCreationDialog({
     defaultValues: {
       title: "",
       description: "",
+      link: "",
     },
   });
 
@@ -61,6 +63,7 @@ export function EventCreationDialog({
     await pb.collection("events").create({
       title: data.title,
       description: data.description,
+      link: data.link,
       start: data.start,
       end: data.end,
     });
@@ -101,7 +104,20 @@ export function EventCreationDialog({
                 name="description"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Event Description</FormLabel>
+                    <FormLabel>Event Description (encouraged)</FormLabel>
+                    <FormControl>
+                      <Input {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="link"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Event Link (optional)</FormLabel>
                     <FormControl>
                       <Input {...field} />
                     </FormControl>

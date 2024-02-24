@@ -16,6 +16,7 @@ import {
 type EventResType = {
   title: string;
   description: string;
+  link: string;
   start: string;
   end: string;
 };
@@ -23,6 +24,7 @@ type EventResType = {
 type EventType = {
   title: string;
   description: string;
+  link: string;
   start: Date;
   end: Date;
 };
@@ -42,6 +44,7 @@ export function Events() {
       .map((event) => ({
         title: event.title,
         description: event.description,
+        link: event.link,
         start: new Date(event.start),
         end: new Date(event.end),
       }))
@@ -65,9 +68,8 @@ export function Events() {
             <TableRow>
               <TableHead>Date</TableHead>
               <TableHead>Title</TableHead>
-              <TableHead className="flex justify-between items-center">
-                Description
-              </TableHead>
+              <TableHead>Description</TableHead>
+              <TableHead>Link</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -80,6 +82,14 @@ export function Events() {
                 </TableCell>
                 <TableCell>{event.title}</TableCell>
                 <TableCell>{event.description}</TableCell>
+                <TableCell>
+                  <a
+                    href={event.link}
+                    className="text-primary underline-offset-4 hover:underline"
+                  >
+                    {event.link}
+                  </a>
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>

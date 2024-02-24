@@ -36,7 +36,7 @@ export function Home() {
             Please click{" "}
             <Link
               to="/waiver"
-              className="text-blue-600 dark:text-blue-500 hover:underline"
+              className="text-primary underline-offset-4 hover:underline"
             >
               here
             </Link>{" "}
