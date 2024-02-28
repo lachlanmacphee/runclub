@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 
 import {
   AlertDialog,
@@ -22,6 +22,28 @@ export function RunSetupConfirmationAlert({
   handleSubmitConfirmationConfirm: VoidFunction;
   handleSubmitConfirmationCancel: VoidFunction;
 }) {
+  const [isDisabled, setIsDisabled] = useState(true);
+  const [countdown, setCountdown] = useState(10);
+
+  useEffect(() => {
+    let timer: NodeJS.Timeout;
+    if (isConfirmationModalOpen && countdown > 0) {
+      timer = setTimeout(() => {
+        setCountdown(countdown - 1);
+      }, 1000);
+    } else if (countdown === 0) {
+      setIsDisabled(false);
+    }
+    return () => clearTimeout(timer);
+  }, [isConfirmationModalOpen, countdown]);
+
+  useEffect(() => {
+    if (!isConfirmationModalOpen) {
+      setCountdown(10);
+      setIsDisabled(true);
+    }
+  }, [isConfirmationModalOpen]);
+
   return (
     <AlertDialog
       open={isConfirmationModalOpen}
@@ -42,8 +64,11 @@ export function RunSetupConfirmationAlert({
           <AlertDialogCancel onClick={handleSubmitConfirmationCancel}>
             Cancel
           </AlertDialogCancel>
-          <AlertDialogAction onClick={handleSubmitConfirmationConfirm}>
-            Next Step
+          <AlertDialogAction
+            disabled={isDisabled}
+            onClick={handleSubmitConfirmationConfirm}
+          >
+            {countdown > 0 ? `Next Step (${countdown})` : "Next Step"}
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
