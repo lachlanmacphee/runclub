@@ -29,6 +29,7 @@ import { IntroMessageDialog } from "./introMessageDialog";
 import { WEATHER_URL } from "@/lib/constants";
 import { toast } from "../ui/use-toast";
 import { getWeatherString } from "@/lib/utils";
+import { ListResult, RecordModel } from "pocketbase";
 
 const FormSchema = z.object({
   date: z.date(),
@@ -79,6 +80,23 @@ export function RunDetailsSetup({
         description:
           "Failed to fetch the weather. Please report this to the committee.",
       });
+    }
+
+    const existingRun: ListResult<RecordModel> = await pb
+      .collection("group_runs")
+      .getList(1, 1, {
+        filter: pb.filter("date = {:date}", { date: data.date }),
+      });
+
+    if (existingRun.items.length > 0) {
+      toast({
+        title: "Existing Run",
+        variant: "destructive",
+        duration: 5000,
+        description:
+          "There is already a run setup for this day. Please refresh and continue the run that appears.",
+      });
+      return;
     }
 
     const groupRun: GroupRun = await pb.collection("group_runs").create({
