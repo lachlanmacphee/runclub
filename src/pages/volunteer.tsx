@@ -140,17 +140,29 @@ export function Volunteer() {
 
           const volunteerOneName: string = exVolunteerOne
             ? "name" in exVolunteerOne
-              ? exVolunteerOne.name
+              ? exVolunteerOne.alias
+                ? exVolunteerOne.alias
+                : exVolunteerOne.name
+              : exVolunteerOne.alias
+              ? exVolunteerOne.alias
               : exVolunteerOne.fname + " " + exVolunteerOne.lname
             : "Volunteer";
           const volunteerTwoName: string = exVolunteerTwo
             ? "name" in exVolunteerTwo
-              ? exVolunteerTwo.name
+              ? exVolunteerTwo.alias
+                ? exVolunteerTwo.alias
+                : exVolunteerTwo.name
+              : exVolunteerTwo.alias
+              ? exVolunteerTwo.alias
               : exVolunteerTwo.fname + " " + exVolunteerTwo.lname
             : "Volunteer";
           const volunteerThreeName: string = exVolunteerThree
             ? "name" in exVolunteerThree
-              ? exVolunteerThree.name
+              ? exVolunteerThree.alias
+                ? exVolunteerThree.alias
+                : exVolunteerThree.name
+              : exVolunteerThree.alias
+              ? exVolunteerThree.alias
               : exVolunteerThree.fname + " " + exVolunteerThree.lname
             : "Volunteer";
 
