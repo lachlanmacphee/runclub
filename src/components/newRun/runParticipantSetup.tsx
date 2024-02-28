@@ -275,7 +275,7 @@ export function RunParticipantSetup({
             {fields.map((item, index) => (
               <div
                 key={item.id}
-                className="grid grid-cols-[65px_2fr_1fr_40px] gap-x-2"
+                className="grid grid-cols-[65px_1.75fr_1.25fr_40px] gap-x-2"
               >
                 <FormField
                   control={form.control}
