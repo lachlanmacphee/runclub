@@ -94,9 +94,17 @@ export const WaiverFormSchema = z.object({
 export const AccountDetailsSchema = z.object({
   name: z.string().min(5),
   alias: z
-    .union([z.string().length(0), z.string().min(5)])
-    .optional()
-    .transform((e) => (e === "" ? undefined : e)),
+    .union([
+      z
+        .string({
+          errorMap: () => ({
+            message: "Alias must be either blank or 5 characters minimum.",
+          }),
+        })
+        .length(0),
+      z.string().min(5),
+    ])
+    .optional(),
 });
 
 export const RoleRequestSchema = z.object({
