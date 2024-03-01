@@ -75,13 +75,13 @@ export function ClubStats() {
       <div className="flex flex-col gap-4">
         <h1 className="text-5xl font-bold">Club Stats</h1>
         <h2 className="text-xl font-bold">Top 10 Male 5km</h2>
-        <RunTable participants={[]} />
+        <RunTable participants={[]} columnsType="stats" />
         <h2 className="text-xl font-bold">Top 10 Female 5km</h2>
-        <RunTable participants={[]} />
+        <RunTable participants={[]} columnsType="stats" />
         <h2 className="text-xl font-bold">Top 10 Male 3.5km</h2>
-        <RunTable participants={[]} />
+        <RunTable participants={[]} columnsType="stats" />
         <h2 className="text-xl font-bold">Top 10 Female 3.5km</h2>
-        <RunTable participants={[]} />
+        <RunTable participants={[]} columnsType="stats" />
       </div>
     );
 
@@ -89,13 +89,13 @@ export function ClubStats() {
     <div className="flex flex-col gap-4">
       <h1 className="text-5xl font-bold">Club Stats</h1>
       <h2 className="text-xl font-bold">Top 10 Male 5km</h2>
-      <RunTable participants={clubStats.male5k} />
+      <RunTable participants={clubStats.male5k} columnsType="stats" />
       <h2 className="text-xl font-bold">Top 10 Female 5km</h2>
-      <RunTable participants={clubStats.female5k} />
+      <RunTable participants={clubStats.female5k} columnsType="stats" />
       <h2 className="text-xl font-bold">Top 10 Male 3.5km</h2>
-      <RunTable participants={clubStats.male3k} />
+      <RunTable participants={clubStats.male3k} columnsType="stats" />
       <h2 className="text-xl font-bold">Top 10 Female 3.5km</h2>
-      <RunTable participants={clubStats.female3k} />
+      <RunTable participants={clubStats.female3k} columnsType="stats" />
     </div>
   );
 }
