@@ -11,63 +11,91 @@ import { Loader2 } from "lucide-react";
 export function ClubStats() {
   const { pb } = usePocket();
   const [isLoading, setIsLoading] = useState(true);
-  const [threeKmParticipants, setThreeKmParticipants] = useState<Participant[]>(
-    []
-  );
-  const [fiveKmParticipants, setFiveKmParticipants] = useState<Participant[]>(
-    []
-  );
+  const [clubStats, setClubStats] = useState<{
+    male5k: Participant[];
+    female5k: Participant[];
+    male3k: Participant[];
+    female3k: Participant[];
+  } | null>(null);
 
   useEffect(() => {
     async function fetchLeaderboard() {
       setIsLoading(true);
-      setThreeKmParticipants([]);
-      setFiveKmParticipants([]);
 
-      const { items: fiveKmParticipants } = await pb
-        .collection("participant_runs")
-        .getList<Participant>(1, 10, {
-          sort: "time_seconds",
-          filter: pb.filter("distance = 5"),
-        });
+      const male5k = await pb
+        .collection("top_10_male_5k")
+        .getFullList<Participant>();
 
-      const { items: threeKmParticipants } = await pb
-        .collection("participant_runs")
-        .getList<Participant>(1, 10, {
-          sort: "time_seconds",
-          filter: pb.filter("distance = 3.5"),
-        });
+      const female5k = await pb
+        .collection("top_10_female_5k")
+        .getFullList<Participant>();
 
-      threeKmParticipants.forEach(
+      const male3k = await pb
+        .collection("top_10_male_3k")
+        .getFullList<Participant>();
+
+      const female3k = await pb
+        .collection("top_10_female_3k")
+        .getFullList<Participant>();
+
+      male5k.forEach(
         (participant, index) => (participant.position = index + 1)
       );
 
-      fiveKmParticipants.forEach(
+      female5k.forEach(
         (participant, index) => (participant.position = index + 1)
       );
 
-      setThreeKmParticipants(threeKmParticipants);
-      setFiveKmParticipants(fiveKmParticipants);
+      male3k.forEach(
+        (participant, index) => (participant.position = index + 1)
+      );
+
+      female3k.forEach(
+        (participant, index) => (participant.position = index + 1)
+      );
+
+      setClubStats({ male5k, female5k, male3k, female3k });
       setIsLoading(false);
     }
     fetchLeaderboard();
   }, [pb]);
 
-  return (
-    <div className="flex flex-col gap-4">
-      <h1 className="text-5xl font-bold">Club Stats</h1>
-      {isLoading ? (
+  if (isLoading)
+    return (
+      <div className="flex flex-col gap-4">
+        <h1 className="text-5xl font-bold">Club Stats</h1>
         <div className="flex justify-center">
           <Loader2 className="h-12 w-12 animate-spin" />
         </div>
-      ) : (
-        <>
-          <h2 className="text-xl font-bold">Top 10 5km</h2>
-          <RunTable participants={fiveKmParticipants} />
-          <h2 className="text-xl font-bold">Top 10 3.5km</h2>
-          <RunTable participants={threeKmParticipants} />
-        </>
-      )}
+      </div>
+    );
+
+  if (!clubStats)
+    return (
+      <div className="flex flex-col gap-4">
+        <h1 className="text-5xl font-bold">Club Stats</h1>
+        <h2 className="text-xl font-bold">Top 10 Male 5km</h2>
+        <RunTable participants={[]} />
+        <h2 className="text-xl font-bold">Top 10 Female 5km</h2>
+        <RunTable participants={[]} />
+        <h2 className="text-xl font-bold">Top 10 Male 3.5km</h2>
+        <RunTable participants={[]} />
+        <h2 className="text-xl font-bold">Top 10 Female 3.5km</h2>
+        <RunTable participants={[]} />
+      </div>
+    );
+
+  return (
+    <div className="flex flex-col gap-4">
+      <h1 className="text-5xl font-bold">Club Stats</h1>
+      <h2 className="text-xl font-bold">Top 10 Male 5km</h2>
+      <RunTable participants={clubStats.male5k} />
+      <h2 className="text-xl font-bold">Top 10 Female 5km</h2>
+      <RunTable participants={clubStats.female5k} />
+      <h2 className="text-xl font-bold">Top 10 Male 3.5km</h2>
+      <RunTable participants={clubStats.male3k} />
+      <h2 className="text-xl font-bold">Top 10 Female 3.5km</h2>
+      <RunTable participants={clubStats.female3k} />
     </div>
   );
 }
