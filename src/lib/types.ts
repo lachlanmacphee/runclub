@@ -52,30 +52,24 @@ export type RunDetails = {
   location: string;
 };
 
-export type Volunteer =
-  | {
-      run_date: Date;
-      user_id?: string;
-      expand: {
-        user_id?: {
-          id: string;
-          name: string;
-          alias?: string;
-        };
-      };
-    }
-  | {
-      run_date: Date;
-      waiver_id?: string;
-      expand: {
-        waiver_id?: {
-          id: string;
-          fname: string;
-          lname: string;
-          alias?: string;
-        };
-      };
+export type Volunteer = {
+  run_date: Date;
+  user_id?: string;
+  waiver_id?: string;
+  expand: {
+    user_id?: {
+      id: string;
+      name: string;
+      alias?: string;
     };
+    waiver_id?: {
+      id: string;
+      fname: string;
+      lname: string;
+      alias?: string;
+    };
+  };
+};
 
 export type Waiver = {
   id: string;
