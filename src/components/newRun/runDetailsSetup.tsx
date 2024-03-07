@@ -30,6 +30,7 @@ import { WEATHER_URL } from "@/lib/constants";
 import { toast } from "../ui/use-toast";
 import { getWeatherString } from "@/lib/utils";
 import { ListResult, RecordModel } from "pocketbase";
+import { Loader2 } from "lucide-react";
 
 const FormSchema = z.object({
   date: z.date(),
@@ -54,6 +55,7 @@ export function RunDetailsSetup({
   const { pb } = usePocket();
 
   const [isIntroModalOpen, setIsIntroModalOpen] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
 
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
@@ -65,6 +67,7 @@ export function RunDetailsSetup({
   });
 
   async function onSubmit(data: z.infer<typeof FormSchema>) {
+    setIsLoading(true);
     let weatherStr: string | null = null;
 
     try {
@@ -73,6 +76,7 @@ export function RunDetailsSetup({
       const { current } = await res.json();
       weatherStr = getWeatherString(current);
     } catch (e) {
+      setIsLoading(false);
       toast({
         title: "Weather Failed",
         variant: "destructive",
@@ -96,6 +100,7 @@ export function RunDetailsSetup({
         description:
           "There is already a run setup for this day. Please refresh and continue the run that appears.",
       });
+      setIsLoading(false);
       return;
     }
 
@@ -105,6 +110,7 @@ export function RunDetailsSetup({
       isComplete: false,
       conditions: weatherStr,
     });
+    setIsLoading(false);
     setGroupRun(groupRun);
     setStep(1);
   }
@@ -170,8 +176,12 @@ export function RunDetailsSetup({
             />
           </div>
           <div className="flex justify-center">
-            <Button type="submit" className="w-48">
-              Create Run
+            <Button type="submit" className="w-48" disabled={isLoading}>
+              {isLoading ? (
+                <Loader2 className="h-4 w-4 md:h-8 md:w-8 animate-spin" />
+              ) : (
+                "Create Run"
+              )}
             </Button>
           </div>
         </form>
