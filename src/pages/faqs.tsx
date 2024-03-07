@@ -52,28 +52,23 @@ export function FAQs() {
         </div>
         <div className="flex flex-col gap-2">
           <h2 className="text-xl font-bold">How do I use this site?</h2>
-          <p>
-            These videos are now outdated, but give a somewhat general idea of
-            the key functionality. New videos will be coming sometime in
-            February.
-          </p>
           <iframe
             height="315"
-            src="https://www.youtube.com/embed/AnM3uq0jtWY?si=5F86eFHo3f-_PiJL"
+            src="https://www.youtube.com/embed/YWA0TDDhYjg?si=AQHcemVaAMK3PA76"
             title="YouTube video player"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
             allowFullScreen
           ></iframe>
           <iframe
             height="315"
-            src="https://www.youtube.com/embed/_u9m-tyygD0?si=_7fhsYgvdMV6RIDZ"
+            src="https://www.youtube.com/embed/bEygBdUzRps?si=i7uQSkUlgKMsn-o8"
             title="YouTube video player"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
             allowFullScreen
           ></iframe>
           <iframe
             height="315"
-            src="https://www.youtube.com/embed/EAGqJjKvuq4?si=YR3UG8CBof3-znRg"
+            src="https://www.youtube.com/embed/xyIejFjwKgQ?si=hL2-n6qJGV0DZpeh"
             title="YouTube video player"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
             allowFullScreen
