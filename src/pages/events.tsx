@@ -81,14 +81,16 @@ export function Events() {
             <CardContent>
               <p>{event.description}</p>
             </CardContent>
-            <CardFooter>
-              <a
-                href={event.link}
-                className="text-primary underline-offset-4 hover:underline"
-              >
-                Link
-              </a>
-            </CardFooter>
+            {event.link && (
+              <CardFooter>
+                <a
+                  href={event.link}
+                  className="text-primary underline-offset-4 hover:underline"
+                >
+                  Click for details
+                </a>
+              </CardFooter>
+            )}
           </Card>
         ))}
       </div>
