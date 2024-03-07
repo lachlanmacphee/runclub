@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+  <url>
+    <loc>https://gunnies.app/</loc>
+  </url>
+  <url>
+    <loc>https://gunnies.app/login</loc>
+  </url>
+  <url>
+    <loc>https://gunnies.app/signup</loc>
+  </url>
+  <url>
+    <loc>https://gunnies.app/resetpassword</loc>
+  </url>
+  <url>
+    <loc>https://gunnies.app/runs</loc>
+  </url>
+  <url>
+    <loc>https://gunnies.app/faqs</loc>
+  </url>
+  <url>
+    <loc>https://gunnies.app/contact</loc>
+  </url>
+  <url>
+    <loc>https://gunnies.app/privacy</loc>
+  </url>
+  <url>
+    <loc>https://gunnies.app/events</loc>
+  </url>
+  <url>
+    <loc>https://gunnies.app/waiver</loc>
+  </url>
+
+  <!-- Catch all route -->
+  <url>
+    <loc>https://gunnies.app/*</loc>
+  </url>
+
+</urlset>
