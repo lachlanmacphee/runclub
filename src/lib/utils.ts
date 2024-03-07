@@ -25,14 +25,6 @@ export function convertLocationValueToLabel(value: string) {
   }
 }
 
-export function convertTimesToSeconds(
-  hours: number,
-  minutes: number,
-  seconds: number
-) {
-  return seconds + minutes * 60 + hours * 3600;
-}
-
 export function formatTime(seconds: number): string {
   const hours = Math.floor(seconds / 3600);
   const minutes = Math.floor((seconds % 3600) / 60);
@@ -70,24 +62,6 @@ export function createRunDescription(
   }
 
   return outputStr;
-}
-
-export function getTuesdaysForNext3Months(): Date[] {
-  const tuesdays: Date[] = [];
-  const currentDate: Date = new Date();
-  const endDate: Date = new Date(currentDate);
-  endDate.setMonth(endDate.getMonth() + 3);
-
-  while (currentDate < endDate) {
-    if (currentDate.getDay() === 2) {
-      const newDate = new Date(currentDate);
-      newDate.setHours(0, 0, 0, 0);
-      tuesdays.push(newDate);
-    }
-    currentDate.setDate(currentDate.getDate() + 1);
-  }
-
-  return tuesdays;
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any

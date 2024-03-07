@@ -2,7 +2,6 @@ import { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useStopwatch } from "react-timer-hook";
 import { usePocket } from "@/contexts";
-import { convertTimesToSeconds } from "@/lib/utils";
 import { Participant } from "@/lib/types";
 
 import { toast } from "@/components/ui/use-toast";
@@ -32,7 +31,8 @@ export function RunTiming({
 }) {
   const { pb } = usePocket();
   const runId = participants[0].group_run_id;
-  const { start, pause, hours, minutes, seconds, isRunning } = useStopwatch();
+  const { start, pause, hours, minutes, seconds, totalSeconds, isRunning } =
+    useStopwatch();
   const navigate = useNavigate();
 
   const [completed, setCompleted] = useState<Record<number, boolean>>(
@@ -94,15 +94,14 @@ export function RunTiming({
         return;
       }
 
-      const time = convertTimesToSeconds(hours, minutes, seconds);
       await pb
         .collection("participant_runs")
-        .update(participant?.id, { time_seconds: time });
+        .update(participant?.id, { time_seconds: totalSeconds });
 
       setCompleted((prevState) => ({ ...prevState, [bib]: true }));
       setChanging((prevState) => ({ ...prevState, [bib]: false }));
     },
-    [completed, hours, minutes, participants, pb, seconds]
+    [completed, participants, pb, totalSeconds]
   );
 
   return (

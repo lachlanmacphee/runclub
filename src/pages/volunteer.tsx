@@ -3,40 +3,29 @@ import type { Volunteer } from "@/lib/types";
 
 import { Button } from "@/components/ui/button";
 import { AdminAddVolunteer } from "@/components/volunteer/adminAddVolunteer";
-import { getTuesdaysForNext3Months } from "@/lib/utils";
 import { useVolunteers } from "@/hooks/useVolunteers";
 import { Navigate } from "react-router-dom";
-
-const tuesdaysForNext3Months: Date[] = getTuesdaysForNext3Months();
-const currentTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-const requiredTimeZone = "Australia/Melbourne";
+import { useUpcomingTuesdays } from "@/hooks/useUpcomingTuesdays";
 
 export function Volunteer() {
   const { user } = usePocket();
+  const { tuesdays } = useUpcomingTuesdays();
   const { signUp, optOut, volunteers, isUpdating } = useVolunteers();
 
   if (!user) return <Navigate to="/" replace />;
-
-  if (currentTimeZone !== requiredTimeZone)
-    return (
-      <p>
-        For now, this page only works in the Australia/Melbourne time zone. If
-        you are overseas, please ask a committee member to add you as a
-        volunteer.
-      </p>
-    );
+  if (!tuesdays) return <p>Loading...</p>;
 
   return (
     <div className="flex justify-center">
       <div className="flex flex-col gap-4 max-w-3xl">
-        {user.role == "admin" && <AdminAddVolunteer />}
+        {user.role == "admin" && <AdminAddVolunteer tuesdays={tuesdays} />}
         <div className="grid grid-cols-4 gap-4 font-bold">
           <p>Date</p>
           <p className="col-start-2 col-end-5">Volunteers</p>
         </div>
-        {tuesdaysForNext3Months.map((date) => {
+        {tuesdays.map((dateStr) => {
           const curVolunteers: (Volunteer | undefined)[] = Array.from({
-            ...volunteers[date.toLocaleDateString("en-AU")],
+            ...volunteers[dateStr],
             length: 3,
           });
 
@@ -45,11 +34,11 @@ export function Volunteer() {
 
           return (
             <div
-              key={date.toLocaleDateString("en-AU")}
+              key={dateStr}
               className="grid grid-cols-4 gap-2 items-center min-h-[60px]"
             >
               <p className="text-sm sm:text-base">
-                {date.toLocaleDateString("en-us", {
+                {new Date(dateStr).toLocaleDateString("en-us", {
                   month: "short",
                   day: "numeric",
                 })}
@@ -61,7 +50,7 @@ export function Volunteer() {
                   (isAlreadyVolunteer && vol?.user_id !== user.id);
                 return (
                   <Button
-                    key={date.toDateString() + idx.toString()}
+                    key={dateStr + idx.toString()}
                     variant={
                       vol?.user_id === user.id ? "destructive" : "outline"
                     }
@@ -69,7 +58,7 @@ export function Volunteer() {
                     onClick={() =>
                       vol?.user_id === user.id
                         ? optOut(vol.id)
-                        : signUp(date, user.id)
+                        : signUp(dateStr, user.id)
                     }
                     className="h-full whitespace-normal"
                   >

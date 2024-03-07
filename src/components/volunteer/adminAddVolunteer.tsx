@@ -30,11 +30,8 @@ import {
 } from "@/components/ui/form";
 import { usePocket } from "@/contexts";
 import { useToast } from "../ui/use-toast";
-import { getTuesdaysForNext3Months } from "@/lib/utils";
 import { useMembers } from "@/hooks/useMembers";
 import { useState } from "react";
-
-const tuesdaysForNext3Months: Date[] = getTuesdaysForNext3Months();
 
 const FormSchema = z.object({
   run_date: z.string(),
@@ -46,7 +43,7 @@ const FormSchema = z.object({
   ),
 });
 
-export function AdminAddVolunteer() {
+export function AdminAddVolunteer({ tuesdays }: { tuesdays: string[] }) {
   const [isOpen, setIsOpen] = useState(false);
   const { pb } = usePocket();
   const { toast } = useToast();
@@ -55,7 +52,7 @@ export function AdminAddVolunteer() {
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
-      run_date: tuesdaysForNext3Months[0].toDateString(),
+      run_date: tuesdays[0],
     },
   });
 
@@ -117,17 +114,17 @@ export function AdminAddVolunteer() {
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
-                        {tuesdaysForNext3Months.map((date) => (
-                          <SelectItem
-                            key={date.toDateString()}
-                            value={date.toDateString()}
-                          >
-                            {date.toLocaleDateString("en-us", {
-                              month: "short",
-                              day: "numeric",
-                            })}
-                          </SelectItem>
-                        ))}
+                        {tuesdays.map((dateStr) => {
+                          const date = new Date(dateStr);
+                          return (
+                            <SelectItem key={dateStr} value={dateStr}>
+                              {date.toLocaleDateString("en-us", {
+                                month: "short",
+                                day: "numeric",
+                              })}
+                            </SelectItem>
+                          );
+                        })}
                       </SelectContent>
                     </Select>
                     <FormMessage />
