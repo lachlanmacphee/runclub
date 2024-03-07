@@ -101,7 +101,9 @@ export function EventUpsertDialog({
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)}>
             <DialogHeader>
-              <DialogTitle>Add New Event</DialogTitle>
+              <DialogTitle>
+                {event ? "Edit Event" : "Add New Event"}
+              </DialogTitle>
             </DialogHeader>
             <div className="space-y-4 py-4">
               <FormField
