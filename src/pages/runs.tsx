@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 
-import { formatDateWithSuffix } from "@/lib/utils";
 import { RunDetails } from "@/lib/types";
 
 import { RunTable } from "@/components/runs/runTable";
@@ -8,6 +7,7 @@ import { DatePicker } from "@/components/ui/date-picker";
 
 import { Loader2 } from "lucide-react";
 import { usePastRuns } from "@/hooks/usePastRuns";
+import { format } from "date-fns";
 
 export function Runs() {
   const { fetchLatestRun, fetchRunFromDate } = usePastRuns();
@@ -50,7 +50,7 @@ export function Runs() {
         </div>
         <div className="flex flex-col items-center md:items-end justify-center ">
           <h1 className="text-xl font-bold">
-            {date && formatDateWithSuffix(date)}
+            {date && format(date, "do 'of' MMMM")}
           </h1>
           {!isLoading && runDetails && <h2>{runDetails.location}</h2>}
         </div>
