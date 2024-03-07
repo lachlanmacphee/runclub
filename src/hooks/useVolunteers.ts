@@ -44,15 +44,9 @@ export function useVolunteers() {
   );
 
   const optOut = useCallback(
-    async (run_date: Date, user_id: string) => {
+    async (id: string) => {
       setIsUpdating(true);
-      const res = await pb.collection("volunteers").getFirstListItem(
-        pb.filter("run_date = {:run_date} && user_id = {:user_id}", {
-          run_date,
-          user_id,
-        })
-      );
-      await pb.collection("volunteers").delete(res.id);
+      await pb.collection("volunteers").delete(id);
       setIsUpdating(false);
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps

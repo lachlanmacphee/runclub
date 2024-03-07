@@ -53,6 +53,7 @@ export type RunDetails = {
 };
 
 export type Volunteer = {
+  id: string;
   run_date: Date;
   user_id?: string;
   waiver_id?: string;

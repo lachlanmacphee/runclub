@@ -57,7 +57,7 @@ export function Volunteer() {
                     disabled={volDisabled}
                     onClick={() =>
                       vol?.user_id === user.id
-                        ? optOut(date, user.id)
+                        ? optOut(vol.id)
                         : signUp(date, user.id)
                     }
                     className="h-full whitespace-normal"
