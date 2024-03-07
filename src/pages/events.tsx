@@ -1,47 +1,37 @@
 import { useCallback, useEffect, useState } from "react";
 import { usePocket } from "@/contexts";
-import { EventCreationDialog } from "@/components/events/eventCreationDialog";
+import { EventUpsertDialog } from "@/components/events/eventUpsertDialog";
+import type { Event } from "@/lib/types";
 import { ROLES } from "@/lib/constants";
 
 // Components
 import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
-
-type EventResType = {
-  title: string;
-  description: string;
-  link: string;
-  start: string;
-  end: string;
-};
-
-type EventType = {
-  title: string;
-  description: string;
-  link: string;
-  start: Date;
-  end: Date;
-};
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { EventDeleteAlertDialog } from "@/components/events/eventDeleteAlertDialog";
 
 export function Events() {
   const { pb, user } = usePocket();
-  const [events, setEvents] = useState<EventType[]>([]);
+  const [events, setEvents] = useState<Event[]>([]);
   const isAdmin = user?.role === ROLES.ADMIN;
+
+  const todayDate = new Date();
+  todayDate.setHours(0, 0, 0, 0);
 
   const fetchEvents = useCallback(async () => {
     const eventsRes = (await pb.collection("events").getFullList({
       filter: pb.filter("end >= {:currentDate}", {
-        currentDate: new Date(),
+        currentDate: todayDate,
       }),
-    })) as EventResType[];
-    const newEvents: EventType[] = eventsRes
+    })) as Event[];
+    const newEvents: Event[] = eventsRes
       .map((event) => ({
+        id: event.id,
         title: event.title,
         description: event.description,
         link: event.link,
@@ -50,6 +40,7 @@ export function Events() {
       }))
       .sort((a, b) => a.start.getTime() - b.start.getTime());
     setEvents(newEvents);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pb]);
 
   useEffect(() => {
@@ -58,44 +49,50 @@ export function Events() {
   }, []);
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-16">
       <h1 className="text-3xl md:text-5xl text-center md:text-left font-bold">
         Upcoming Events
       </h1>
-      <div className="flex flex-grow max-w-3xl">
-        <Table>
-          <TableHeader>
-            <TableRow>
-              <TableHead>Date</TableHead>
-              <TableHead>Title</TableHead>
-              <TableHead>Description</TableHead>
-              <TableHead>Link</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {events.map((event, idx) => (
-              <TableRow key={idx}>
-                <TableCell>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-3xl">
+        {events.map((event, idx) => (
+          <Card key={idx}>
+            <div className="flex justify-between items-center pr-6">
+              <CardHeader>
+                <CardTitle>{event.title}</CardTitle>
+                <CardDescription>
                   {event.start.getTime() == event.end.getTime()
                     ? event.start.toLocaleDateString()
                     : `${event.start.toLocaleDateString()} - ${event.end.toLocaleDateString()}`}
-                </TableCell>
-                <TableCell>{event.title}</TableCell>
-                <TableCell>{event.description}</TableCell>
-                <TableCell>
-                  <a
-                    href={event.link}
-                    className="text-primary underline-offset-4 hover:underline"
-                  >
-                    {event.link}
-                  </a>
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
+                </CardDescription>
+              </CardHeader>
+              {isAdmin && (
+                <div className="flex gap-2">
+                  <EventUpsertDialog
+                    event={event}
+                    refreshEvents={fetchEvents}
+                  />
+                  <EventDeleteAlertDialog
+                    event={event}
+                    refreshEvents={fetchEvents}
+                  />
+                </div>
+              )}
+            </div>
+            <CardContent>
+              <p>{event.description}</p>
+            </CardContent>
+            <CardFooter>
+              <a
+                href={event.link}
+                className="text-primary underline-offset-4 hover:underline"
+              >
+                {event.link}
+              </a>
+            </CardFooter>
+          </Card>
+        ))}
       </div>
-      {isAdmin && <EventCreationDialog refreshEvents={fetchEvents} />}
+      {isAdmin && <EventUpsertDialog refreshEvents={fetchEvents} />}
     </div>
   );
 }

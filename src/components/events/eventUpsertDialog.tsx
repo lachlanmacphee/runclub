@@ -1,9 +1,6 @@
 import { z } from "zod";
 import { useForm } from "react-hook-form";
-import { format } from "date-fns";
 import { zodResolver } from "@hookform/resolvers/zod";
-
-import { cn } from "@/lib/utils";
 
 import {
   Dialog,
@@ -24,15 +21,11 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
 import { usePocket } from "@/contexts";
 import { useToast } from "../ui/use-toast";
-import { Calendar } from "../ui/calendar";
-import { CalendarIcon } from "lucide-react";
+import { Pencil } from "lucide-react";
+import type { Event } from "@/lib/types";
+import { DatePicker } from "../ui/date-picker";
 
 const FormSchema = z.object({
   title: z.string(),
@@ -42,10 +35,12 @@ const FormSchema = z.object({
   end: z.date(),
 });
 
-export function EventCreationDialog({
+export function EventUpsertDialog({
   refreshEvents,
+  event,
 }: {
   refreshEvents: VoidFunction;
+  event?: Event;
 }) {
   const { pb } = usePocket();
   const { toast } = useToast();
@@ -53,31 +48,54 @@ export function EventCreationDialog({
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
-      title: "",
-      description: "",
-      link: "",
+      title: event?.title ?? "",
+      description: event?.description ?? "",
+      link: event?.link ?? "",
+      start: event?.start,
+      end: event?.end,
     },
   });
 
   async function onSubmit(data: z.infer<typeof FormSchema>) {
-    await pb.collection("events").create({
-      title: data.title,
-      description: data.description,
-      link: data.link,
-      start: data.start,
-      end: data.end,
-    });
+    if (event && event.id) {
+      await pb.collection("events").update(event.id, {
+        title: data.title,
+        description: data.description,
+        link: data.link,
+        start: data.start,
+        end: data.end,
+      });
+      toast({
+        title: "Event Updated",
+        description: `"${data.title}" has been updated with the information you provided.`,
+      });
+    } else {
+      await pb.collection("events").create({
+        title: data.title,
+        description: data.description,
+        link: data.link,
+        start: data.start,
+        end: data.end,
+      });
+      toast({
+        title: "Event Added",
+        description: `We've added "${data.title}" to the events list.`,
+      });
+    }
+
     refreshEvents();
-    toast({
-      title: "Event Added",
-      description: `We've added "${data.title}" to the events list.`,
-    });
   }
 
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button className="w-full sm:w-48">Add Event</Button>
+        {event ? (
+          <Button variant="outline" size="icon">
+            <Pencil className="h-4 w-4" />
+          </Button>
+        ) : (
+          <Button className="w-full sm:w-48">Add Event</Button>
+        )}
       </DialogTrigger>
       <DialogContent className="sm:max-w-md">
         <Form {...form}>
@@ -129,37 +147,11 @@ export function EventCreationDialog({
                 control={form.control}
                 name="start"
                 render={({ field }) => (
-                  <FormItem className="flex flex-col">
+                  <FormItem>
                     <FormLabel>Start Date</FormLabel>
-                    <Popover>
-                      <PopoverTrigger asChild>
-                        <FormControl>
-                          <Button
-                            variant={"outline"}
-                            className={cn(
-                              "pl-3 text-left font-normal",
-                              !field.value && "text-muted-foreground"
-                            )}
-                          >
-                            {field.value ? (
-                              format(field.value, "PPP")
-                            ) : (
-                              <span>Pick a date</span>
-                            )}
-                            <CalendarIcon className="ml-auto h-4 w-4" />
-                          </Button>
-                        </FormControl>
-                      </PopoverTrigger>
-                      <PopoverContent className="w-auto p-0" align="start">
-                        <Calendar
-                          mode="single"
-                          selected={field.value}
-                          onSelect={field.onChange}
-                          disabled={(date) => date < new Date("1900-01-01")}
-                          initialFocus
-                        />
-                      </PopoverContent>
-                    </Popover>
+                    <FormControl>
+                      <DatePicker date={field.value} setDate={field.onChange} />
+                    </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
@@ -168,37 +160,11 @@ export function EventCreationDialog({
                 control={form.control}
                 name="end"
                 render={({ field }) => (
-                  <FormItem className="flex flex-col">
+                  <FormItem>
                     <FormLabel>End Date</FormLabel>
-                    <Popover>
-                      <PopoverTrigger asChild>
-                        <FormControl>
-                          <Button
-                            variant={"outline"}
-                            className={cn(
-                              "pl-3 text-left font-normal",
-                              !field.value && "text-muted-foreground"
-                            )}
-                          >
-                            {field.value ? (
-                              format(field.value, "PPP")
-                            ) : (
-                              <span>Pick a date</span>
-                            )}
-                            <CalendarIcon className="ml-auto h-4 w-4" />
-                          </Button>
-                        </FormControl>
-                      </PopoverTrigger>
-                      <PopoverContent className="w-auto p-0" align="start">
-                        <Calendar
-                          mode="single"
-                          selected={field.value}
-                          onSelect={field.onChange}
-                          disabled={(date) => date < new Date("1900-01-01")}
-                          initialFocus
-                        />
-                      </PopoverContent>
-                    </Popover>
+                    <FormControl>
+                      <DatePicker date={field.value} setDate={field.onChange} />
+                    </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
@@ -211,7 +177,7 @@ export function EventCreationDialog({
                 </Button>
               </DialogClose>
               <DialogClose asChild>
-                <Button type="submit">Add</Button>
+                <Button type="submit">{event ? "Update" : "Add"}</Button>
               </DialogClose>
             </DialogFooter>
           </form>

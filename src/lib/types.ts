@@ -101,3 +101,12 @@ export type RoleRequest = {
     };
   };
 };
+
+export type Event = {
+  id?: string;
+  title: string;
+  description: string;
+  link: string;
+  start: Date;
+  end: Date;
+};
