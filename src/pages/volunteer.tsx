@@ -8,12 +8,23 @@ import { useVolunteers } from "@/hooks/useVolunteers";
 import { Navigate } from "react-router-dom";
 
 const tuesdaysForNext3Months: Date[] = getTuesdaysForNext3Months();
+const currentTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+const requiredTimeZone = "Australia/Melbourne";
 
 export function Volunteer() {
   const { user } = usePocket();
   const { signUp, optOut, volunteers, isUpdating } = useVolunteers();
 
   if (!user) return <Navigate to="/" replace />;
+
+  if (currentTimeZone !== requiredTimeZone)
+    return (
+      <p>
+        For now, this page only works in the Australia/Melbourne time zone. If
+        you are overseas, please ask a committee member to add you as a
+        volunteer.
+      </p>
+    );
 
   return (
     <div className="flex justify-center">
