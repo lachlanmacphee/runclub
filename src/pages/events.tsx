@@ -53,7 +53,7 @@ export function Events() {
       <h1 className="text-3xl md:text-5xl text-center md:text-left font-bold">
         Upcoming Events
       </h1>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-3xl">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 3xl:grid-cols-6 gap-8">
         {events.map((event, idx) => (
           <Card key={idx}>
             <div className="flex justify-between items-center pr-6">
@@ -86,7 +86,7 @@ export function Events() {
                 href={event.link}
                 className="text-primary underline-offset-4 hover:underline"
               >
-                {event.link}
+                Link
               </a>
             </CardFooter>
           </Card>
