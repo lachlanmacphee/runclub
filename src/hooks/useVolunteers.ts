@@ -60,6 +60,7 @@ export function useVolunteers() {
           maxDate: add(new Date(), { months: 3 }),
         }),
         expand: "user_id,waiver_id",
+        sort: "created",
       });
     const tempVolunteers: { [key: string]: Volunteer[] } = {};
     resVolunteers.forEach((volunteer) => {

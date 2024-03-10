@@ -40,12 +40,12 @@ export function FAQs() {
           </h2>
           <p>
             We provide a zip archive of the previous results from the last Gunn
-            Runners website.{" "}
+            Runners website. Click{" "}
             <a
               href={PAST_RESULTS_DOWNLOAD_LINK}
-              className="text-primary underline-offset-4 hover:underline"
+              className="text-primary font-bold underline-offset-4 hover:underline"
             >
-              Click here
+              here
             </a>{" "}
             to download.
           </p>
