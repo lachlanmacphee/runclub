@@ -33,12 +33,12 @@ export function Home() {
         <div className="flex flex-col gap-4">
           <h3 className="text-xl font-bold">New Members</h3>
           <p>
-            Please click{" "}
+            Please{" "}
             <Link
               to="/waiver"
-              className="text-primary underline-offset-4 hover:underline"
+              className="text-primary underline-offset-4 bold hover:underline"
             >
-              here
+              click here
             </Link>{" "}
             to complete our waiver form. We're required to have these details
             before you can run with us.
