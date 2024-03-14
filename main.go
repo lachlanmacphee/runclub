@@ -29,6 +29,9 @@ func main() {
     app.Get("/", handlers.Home)
 	app.Get("/login", handlers.LoginPage)
 	app.Get("/signup", handlers.SignupPage)
+	app.Get("/setup", handlers.Setup)
+	app.Get("/faq", handlers.Faq)
+	app.Get("/contact", handlers.Contact)
 
 	api := app.Group("/api")
 
@@ -39,13 +42,10 @@ func main() {
 	app.Use(handlers.AuthMiddleware)
 
 	// Authenticated Pages
-	app.Get("/setup", handlers.Setup)
 	app.Get("/pastevents", handlers.PastEvents)
 	app.Get("/events", handlers.Event)
 	app.Get("/participants/:eventId", handlers.Participants)
 	app.Get("/timing/:eventId", handlers.Timing)
-	app.Get("/faq", handlers.Faq)
-	app.Get("/contact", handlers.Contact)
 	
 	// Authenticated API
 
