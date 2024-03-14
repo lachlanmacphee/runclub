@@ -4,13 +4,13 @@ import (
 	"runclub/models"
 )
 
-templ Event(events []models.Event) {
+templ Event(events []models.Event, today string) {
 	<div class="container">
 		<h1 style="margin-bottom: 20px">Create New Event</h1>
 		<form hx-post="/api/event">
 			<div>
 				<label>Date</label>
-				<input name="date" type="date" value="{{ .today }}" required/>
+				<input name="date" type="date" value={ today } required/>
 			</div>
 			<div>
 				<label>Location</label>

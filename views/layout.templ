@@ -1,0 +1,75 @@
+package views
+
+templ Navbar() {
+	<nav class="container">
+		<ul>
+			<li>
+				<strong>Run Club</strong>
+			</li>
+		</ul>
+		<ul>
+			<li>
+				<a href="/" style="cursor: pointer">Home</a>
+			</li>
+			<li>
+				<a
+					href="/pastevents"
+					style="cursor: pointer"
+				>Past Events</a>
+			</li>
+			<li>
+				<a
+					href="/events"
+					style="cursor: pointer"
+				>New Event</a>
+			</li>
+			<li>
+				<a
+					href="/faq"
+					style="cursor: pointer"
+				>FAQ</a>
+			</li>
+			<li>
+				<a
+					href="/contact"
+					style="cursor: pointer"
+				>Contact</a>
+			</li>
+			<li>
+				<a
+					href="/login"
+					style="cursor: pointer"
+				>Login</a>
+			</li>
+		</ul>
+	</nav>
+}
+
+templ Layout(contents templ.Component) {
+	<html lang="en">
+		<head>
+			<title>Run Club</title>
+			<meta charset="UTF-8"/>
+			<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+			<!-- Favicons and Manifest -->
+			<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"/>
+			<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png"/>
+			<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"/>
+			<link rel="manifest" href="/site.webmanifest"/>
+			<!-- CSS -->
+			<link rel="stylesheet" href="/css/pico.min.css"/>
+			<!-- Fonts -->
+			<link
+				rel="stylesheet"
+				href="https://fonts.googleapis.com/css?family=Roboto+Mono"
+			/>
+			<!-- JavaScript -->
+			<script src="/js/htmx.min.js"></script>
+			<script src="/js/alpine.min.js" defer></script>
+		</head>
+		<body>
+			<header style="padding: 0px">@Navbar()</header>
+			<main id="main" style="padding: 0px">@contents</main>
+		</body>
+	</html>
+}

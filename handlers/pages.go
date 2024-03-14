@@ -24,27 +24,27 @@ func Render(c *fiber.Ctx, component templ.Component, options ...func(*templ.Comp
 }
 
 func Home(c *fiber.Ctx) error {
-	return Render(c, views.Home())
+	return Render(c, views.Layout(views.Home()))
 }
 
 func LoginPage(c *fiber.Ctx) error {
-	return Render(c, views.Login())
+	return Render(c, views.Layout(views.Login()))
 }
 
 func SignupPage(c *fiber.Ctx) error {
-	return Render(c, views.Signup())
+	return Render(c, views.Layout(views.Signup()))
 }
 
 func Setup(c *fiber.Ctx) error {
-	return Render(c, views.Setup())
+	return Render(c, views.Layout(views.Setup()))
 }
 
 func Faq(c *fiber.Ctx) error {
-	return Render(c, views.FAQ())
+	return Render(c, views.Layout(views.FAQ()))
 }
 
 func Contact(c *fiber.Ctx) error {
-	return Render(c, views.Contact())
+	return Render(c, views.Layout(views.Contact()))
 }
 
 func PastEvents(c *fiber.Ctx) error {
@@ -65,7 +65,7 @@ func PastEvents(c *fiber.Ctx) error {
 		fmt.Println(err)
 	}
 
-	return Render(c, views.PastEvents(participants, todayHtmlFormat))
+	return Render(c, views.Layout(views.PastEvents(participants, todayHtmlFormat)))
 }
 
 func Event(c *fiber.Ctx) error {
@@ -78,18 +78,7 @@ func Event(c *fiber.Ctx) error {
 		return c.Redirect("/")
 	}
 
-	if hxRequest := c.Get("HX-Request"); hxRequest == "" {
-		return c.Render("pages/events/index", fiber.Map{
-			"events": events,
-			"today": time.Now().Format("2006-01-02"),
-		}, "layout/main")
-	}
-
-	return c.Render("pages/events/index", fiber.Map{
-		"events": events,
-		"today": time.Now().Format("2006-01-02"),
-	})
-	
+	return Render(c, views.Layout(views.Event(events, time.Now().Format("2006-01-02"))))
 	
 }
 
@@ -114,17 +103,7 @@ func Participants(c *fiber.Ctx) error {
 		fmt.Println(err)
 	}
 
-	if hxRequest := c.Get("HX-Request"); hxRequest == "" {
-		return c.Render("pages/participants/index", fiber.Map{
-			"eventId": c.Params("eventId"),
-			"participants": participants,
-		}, "layout/main")
-	}
-
-	return c.Render("pages/participants/index", fiber.Map{
-		"eventId": c.Params("eventId"),
-		"participants": participants,
-	})
+	return Render(c, views.Layout(views.Participants(c.Params("eventId"), participants)))
 	
 }
 
@@ -149,16 +128,6 @@ func Timing(c *fiber.Ctx) error {
 		fmt.Println(err)
 	}
 
-	if hxRequest := c.Get("HX-Request"); hxRequest == "" {
-		return c.Render("pages/timing/index", fiber.Map{
-			"participants": participants,
-			"eventId": c.Params("eventId"),
-		}, "layout/main")
-	}
-
-	return c.Render("pages/timing/index", fiber.Map{
-		"participants": participants,
-		"eventId": c.Params("eventId"),
-	})
+	return Render(c, views.Layout(views.Timing(c.Params("eventId"), participants)))
 	
 }

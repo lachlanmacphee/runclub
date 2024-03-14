@@ -54,7 +54,11 @@ func SearchResults(names []string) templ.Component {
 	})
 }
 
-func Participants(participants []models.Participant) templ.Component {
+func getApiString(eventId string) string {
+	return "/api/participant/event/" + eventId
+}
+
+func Participants(eventId string, participants []models.Participant) templ.Component {
 	return templ.ComponentFunc(func(ctx context.Context, templ_7745c5c3_W io.Writer) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_Buffer, templ_7745c5c3_IsBuffer := templ_7745c5c3_W.(*bytes.Buffer)
 		if !templ_7745c5c3_IsBuffer {
@@ -67,7 +71,15 @@ func Participants(participants []models.Participant) templ.Component {
 			templ_7745c5c3_Var3 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div class=\"container\"><form hx-post=\"/api/participant/event/{{ .eventId }}\" hx-target=\"#participants\" hx-swap=\"afterbegin\" hx-on::after-request=\"if(event.detail.successful &amp;&amp; event.detail.target.id != &#39;search-results&#39;) resetForm()\"><div><label>Bib</label> <input id=\"bib\" name=\"bib\" type=\"number\" value=\"1\" step=\"1\" required></div><div><label>Name</label> <input id=\"nameInput\" name=\"name\" type=\"text\" placeholder=\"Enter a new name or search existing participants\" hx-post=\"/api/participant/find\" hx-trigger=\"input changed delay:500ms, search\" hx-target=\"#search-results\" hx-swap=\"innerHTML\" required><table class=\"table\"><thead><tr><th>Past Participants</th></tr></thead> <tbody id=\"search-results\"><tr><td>No results...</td></tr></tbody></table></div><div><label>Distance</label> <input id=\"distanceInput\" name=\"distance\" type=\"number\" value=\"5.0\" step=\"0.5\" required></div><button id=\"addParticipant\" type=\"submit\">Add</button></form><table role=\"grid\"><thead><tr><th>Bib</th><th>Name</th><th>Distance</th></tr></thead> <tbody id=\"participants\">")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div class=\"container\"><form hx-post=\"")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(getApiString(eventId)))
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\" hx-target=\"#participants\" hx-swap=\"afterbegin\" hx-on::after-request=\"if(event.detail.successful &amp;&amp; event.detail.target.id != &#39;search-results&#39;) resetForm()\"><div><label>Bib</label> <input id=\"bib\" name=\"bib\" type=\"number\" value=\"1\" step=\"1\" required></div><div><label>Name</label> <input id=\"nameInput\" name=\"name\" type=\"text\" placeholder=\"Enter a new name or search existing participants\" hx-post=\"/api/participant/find\" hx-trigger=\"input changed delay:500ms, search\" hx-target=\"#search-results\" hx-swap=\"innerHTML\" required><table class=\"table\"><thead><tr><th>Past Participants</th></tr></thead> <tbody id=\"search-results\"><tr><td>No results...</td></tr></tbody></table></div><div><label>Distance</label> <input id=\"distanceInput\" name=\"distance\" type=\"number\" value=\"5.0\" step=\"0.5\" required></div><button id=\"addParticipant\" type=\"submit\">Add</button></form><table role=\"grid\"><thead><tr><th>Bib</th><th>Name</th><th>Distance</th></tr></thead> <tbody id=\"participants\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -79,7 +91,7 @@ func Participants(participants []models.Participant) templ.Component {
 			var templ_7745c5c3_Var4 string
 			templ_7745c5c3_Var4, templ_7745c5c3_Err = templ.JoinStringErrs(strconv.Itoa(participant.Bib))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/participants.templ`, Line: 85, Col: 41}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/participants.templ`, Line: 89, Col: 41}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var4))
 			if templ_7745c5c3_Err != nil {
@@ -92,7 +104,7 @@ func Participants(participants []models.Participant) templ.Component {
 			var templ_7745c5c3_Var5 string
 			templ_7745c5c3_Var5, templ_7745c5c3_Err = templ.JoinStringErrs(participant.Name)
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/participants.templ`, Line: 86, Col: 28}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/participants.templ`, Line: 90, Col: 28}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var5))
 			if templ_7745c5c3_Err != nil {
@@ -105,7 +117,7 @@ func Participants(participants []models.Participant) templ.Component {
 			var templ_7745c5c3_Var6 string
 			templ_7745c5c3_Var6, templ_7745c5c3_Err = templ.JoinStringErrs(participant.Distance)
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/participants.templ`, Line: 87, Col: 32}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/participants.templ`, Line: 91, Col: 32}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var6))
 			if templ_7745c5c3_Err != nil {

@@ -14,7 +14,7 @@ import (
 	"runclub/models"
 )
 
-func Event(events []models.Event) templ.Component {
+func Event(events []models.Event, today string) templ.Component {
 	return templ.ComponentFunc(func(ctx context.Context, templ_7745c5c3_W io.Writer) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_Buffer, templ_7745c5c3_IsBuffer := templ_7745c5c3_W.(*bytes.Buffer)
 		if !templ_7745c5c3_IsBuffer {
@@ -27,7 +27,15 @@ func Event(events []models.Event) templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div class=\"container\"><h1 style=\"margin-bottom: 20px\">Create New Event</h1><form hx-post=\"/api/event\"><div><label>Date</label> <input name=\"date\" type=\"date\" value=\"{{ .today }}\" required></div><div><label>Location</label> <select name=\"location\" required><option value=\"albertParkLake\" selected>Albert Park Lake</option> <option value=\"southMelbourneBeach\">South Melbourne Beach</option></select></div><button type=\"submit\">Create</button></form><h1 style=\"margin-bottom: 0px\">In Progress Events</h1><div class=\"grid\">")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div class=\"container\"><h1 style=\"margin-bottom: 20px\">Create New Event</h1><form hx-post=\"/api/event\"><div><label>Date</label> <input name=\"date\" type=\"date\" value=\"")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(today))
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\" required></div><div><label>Location</label> <select name=\"location\" required><option value=\"albertParkLake\" selected>Albert Park Lake</option> <option value=\"southMelbourneBeach\">South Melbourne Beach</option></select></div><button type=\"submit\">Create</button></form><h1 style=\"margin-bottom: 0px\">In Progress Events</h1><div class=\"grid\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

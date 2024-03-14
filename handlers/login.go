@@ -4,7 +4,6 @@ import (
 	"net/http"
 	"runclub/database"
 	"runclub/models"
-	"runclub/types"
 	"time"
 
 	"github.com/gofiber/fiber/v2"
@@ -12,7 +11,7 @@ import (
 )
 
 func Login(c *fiber.Ctx) error {
-	var creds types.LoginCredentials
+	var creds models.LoginCredentials
 
 	if err := c.BodyParser(&creds); err != nil {
 		return c.Status(http.StatusBadRequest).SendString("Bad Request")

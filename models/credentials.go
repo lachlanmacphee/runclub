@@ -1,4 +1,4 @@
-package types
+package models
 
 type SignupCredentials struct {
 	Name string `json:"name"`

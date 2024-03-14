@@ -9,7 +9,11 @@ templ DisabledButton(bib int) {
 	<button type="button" disabled style="width: 120px">{ strconv.Itoa(bib) }</button>
 }
 
-templ Timing(participants []models.Participant) {
+func getTimingApiURL(eventId string, bib int) string {
+	return "/api/timing/" + eventId + "/" + strconv.Itoa(bib)
+}
+
+templ Timing(eventId string, participants []models.Participant) {
 	<div class="container" id="timer" x-data="{ start: null, current: null, interval: null, startStopwatch() { this.start = Date.now(); this.current = this.start; this.interval = setInterval(() => { this.current = Date.now() }, 100)}, getTime() { return new Date(this.current - this.start).toISOString().substr(11, 8) }}">
 		<button x-show="!start" @click="startStopwatch()">Start</button>
 		<h1
@@ -19,7 +23,7 @@ templ Timing(participants []models.Participant) {
 		></h1>
 		<div style="display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center">
 			for _, participant := range participants {
-				<button type="button" hx-vals="js:{time: Math.floor((Alpine.$data(timer).current - Alpine.$data(timer).start) / 1000)}" hx-post="/api/timing/{{ $.eventId }}/{{ $participant.Bib }}" hx-target="this" hx-swap="outerHTML" x-bind:disabled="!start" style="width: 120px">{ strconv.Itoa(participant.Bib) }</button>
+				<button type="button" hx-vals="js:{time: Math.floor((Alpine.$data(timer).current - Alpine.$data(timer).start) / 1000)}" hx-post={ getTimingApiURL(eventId, participant.Bib) } hx-target="this" hx-swap="outerHTML" x-bind:disabled="!start" style="width: 120px">{ strconv.Itoa(participant.Bib) }</button>
 			}
 		</div>
 	</div>

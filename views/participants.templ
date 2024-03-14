@@ -21,10 +21,14 @@ templ SearchResults(names []string) {
 	}
 }
 
-templ Participants(participants []models.Participant) {
+func getApiString(eventId string) string {
+	return "/api/participant/event/" + eventId
+}
+
+templ Participants(eventId string, participants []models.Participant) {
 	<div class="container">
 		<form
-			hx-post="/api/participant/event/{{ .eventId }}"
+			hx-post={ getApiString(eventId) }
 			hx-target="#participants"
 			hx-swap="afterbegin"
 			hx-on::after-request="if(event.detail.successful && event.detail.target.id != 'search-results') resetForm()"
