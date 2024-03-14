@@ -1,0 +1,118 @@
+package views
+
+import (
+	"strconv"
+	"runclub/models"
+)
+
+templ SearchResults(names []string) {
+	for _, name := range names {
+		<tr>
+			<td>
+				<button
+					type="button"
+					class="secondary"
+					onclick="document.getElementById('nameInput').value = '{{$val}}'; document.getElementById('distanceInput').focus();"
+				>
+					{ name }
+				</button>
+			</td>
+		</tr>
+	}
+}
+
+templ Participants(participants []models.Participant) {
+	<div class="container">
+		<form
+			hx-post="/api/participant/event/{{ .eventId }}"
+			hx-target="#participants"
+			hx-swap="afterbegin"
+			hx-on::after-request="if(event.detail.successful && event.detail.target.id != 'search-results') resetForm()"
+		>
+			<div>
+				<label>Bib</label>
+				<input id="bib" name="bib" type="number" value="1" step="1" required/>
+			</div>
+			<div>
+				<label>Name</label>
+				<input
+					id="nameInput"
+					name="name"
+					type="text"
+					placeholder="Enter a new name or search existing participants"
+					hx-post="/api/participant/find"
+					hx-trigger="input changed delay:500ms, search"
+					hx-target="#search-results"
+					hx-swap="innerHTML"
+					required
+				/>
+				<table class="table">
+					<thead>
+						<tr>
+							<th>Past Participants</th>
+						</tr>
+					</thead>
+					<tbody id="search-results">
+						<tr>
+							<td>No results...</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<div>
+				<label>Distance</label>
+				<input
+					id="distanceInput"
+					name="distance"
+					type="number"
+					value="5.0"
+					step="0.5"
+					required
+				/>
+			</div>
+			<button id="addParticipant" type="submit">Add</button>
+		</form>
+		<table role="grid">
+			<thead>
+				<tr>
+					<th>Bib</th>
+					<th>Name</th>
+					<th>Distance</th>
+				</tr>
+			</thead>
+			<tbody id="participants">
+				for _, participant := range participants {
+					<tr>
+						<td>{ strconv.Itoa(participant.Bib) }</td>
+						<td>{ participant.Name }</td>
+						<td>{ participant.Distance }</td>
+					</tr>
+				}
+			</tbody>
+		</table>
+		<button
+			hx-get="/timing/{{ .eventId }}"
+			hx-push-url="true"
+			hx-target="#main"
+			style="width: 100%; margin-bottom: 17px"
+		>
+			Start Timing
+		</button>
+	</div>
+	<script>
+  function resetForm() {
+    var nameInput = document.getElementById("nameInput");
+    nameInput.value = nameInput.defaultValue;
+
+    var distanceInput = document.getElementById("distanceInput");
+    distanceInput.value = distanceInput.defaultValue;
+
+    var bibInput = document.getElementById("bib");
+    bibInput.value = (parseInt(bibInput.value) + 1).toString();
+
+    document.getElementById("search-results").innerHTML =
+      "<tr><td>No results...</td></tr>";
+    document.getElementById("nameInput").focus();
+  }
+</script>
+}

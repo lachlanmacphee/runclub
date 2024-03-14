@@ -5,43 +5,46 @@ import (
 	"fmt"
 	"runclub/database"
 	"runclub/models"
+	"runclub/views"
 	"strconv"
 	"time"
 
+	"github.com/a-h/templ"
 	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/middleware/adaptor"
 	"gorm.io/gorm"
 )
 
-func Home(c *fiber.Ctx) error {
-	if hxRequest := c.Get("HX-Request"); hxRequest == "" {
-		return c.Render("pages/home/index", nil, "layout/main")
+func Render(c *fiber.Ctx, component templ.Component, options ...func(*templ.ComponentHandler)) error {
+	componentHandler := templ.Handler(component)
+	for _, o := range options {
+		o(componentHandler)
 	}
+	return adaptor.HTTPHandler(componentHandler)(c)
+}
 
-	return c.Render("pages/home/index", nil)
+func Home(c *fiber.Ctx) error {
+	return Render(c, views.Home())
 }
 
 func LoginPage(c *fiber.Ctx) error {
-	if hxRequest := c.Get("HX-Request"); hxRequest == "" {
-		return c.Render("pages/login/index", nil, "layout/main")
-	}
-
-	return c.Render("pages/login/index", nil)
+	return Render(c, views.Login())
 }
 
 func SignupPage(c *fiber.Ctx) error {
-	if hxRequest := c.Get("HX-Request"); hxRequest == "" {
-		return c.Render("pages/signup/index", nil, "layout/main")
-	}
-
-	return c.Render("pages/signup/index", nil)
+	return Render(c, views.Signup())
 }
 
 func Setup(c *fiber.Ctx) error {
-	if hxRequest := c.Get("HX-Request"); hxRequest == "" {
-		return c.Render("pages/setup/index", nil, "layout/main")
-	}
+	return Render(c, views.Setup())
+}
 
-	return c.Render("pages/setup/index", nil)
+func Faq(c *fiber.Ctx) error {
+	return Render(c, views.FAQ())
+}
+
+func Contact(c *fiber.Ctx) error {
+	return Render(c, views.Contact())
 }
 
 func PastEvents(c *fiber.Ctx) error {
@@ -62,17 +65,7 @@ func PastEvents(c *fiber.Ctx) error {
 		fmt.Println(err)
 	}
 
-	if hxRequest := c.Get("HX-Request"); hxRequest == "" {
-		return c.Render("pages/pastEvents/index", fiber.Map{
-			"participants": participants,
-			"today": todayHtmlFormat,
-		}, "layout/main")
-	}
-
-	return c.Render("pages/pastEvents/index", fiber.Map{
-		"participants": participants,
-		"today": time.Now().Format("2006-01-02"),
-	},)
+	return Render(c, views.PastEvents(participants, todayHtmlFormat))
 }
 
 func Event(c *fiber.Ctx) error {
@@ -168,20 +161,4 @@ func Timing(c *fiber.Ctx) error {
 		"eventId": c.Params("eventId"),
 	})
 	
-}
-
-func Faq(c *fiber.Ctx) error {
-	if hxRequest := c.Get("HX-Request"); hxRequest == "" {
-		return c.Render("pages/faq/index", nil, "layout/main")
-	}
-
-	return c.Render("pages/faq/index", nil)
-}
-
-func Contact(c *fiber.Ctx) error {
-	if hxRequest := c.Get("HX-Request"); hxRequest == "" {
-		return c.Render("pages/contact/index", nil, "layout/main")
-	}
-
-	return c.Render("pages/contact/index", nil)
 }

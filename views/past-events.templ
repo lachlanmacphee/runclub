@@ -1,0 +1,56 @@
+package views
+
+import (
+	"strconv"
+	"runclub/models"
+)
+
+templ PastEventsTable(participants []models.Participant) {
+	for _, participant := range participants {
+		<tr>
+			<td>{ strconv.Itoa(participant.Bib) }</td>
+			<td>{ participant.Name }</td>
+			<td>{ participant.Distance }</td>
+			<td style="font-family: 'Roboto Mono', monospace">
+				{ participant.FormatTime(participant.Time) }
+			</td>
+		</tr>
+	}
+}
+
+templ PastEvents(participants []models.Participant, today string) {
+	<div class="container">
+		<h1>Past Events</h1>
+		<form
+			hx-trigger="change"
+			hx-get="/api/participant/date"
+			hx-target="#participants"
+			hx-swap="innerHTML"
+		>
+			<label>Date</label>
+			<input name="date" type="date" value={ today }/>
+		</form>
+		<table role="grid">
+			<thead>
+				<tr>
+					<th>Bib</th>
+					<th>Name</th>
+					<th>Distance</th>
+					<th>Time</th>
+				</tr>
+			</thead>
+			<tbody id="participants">
+				for _, participant := range participants {
+					<tr>
+						<td>{ strconv.Itoa(participant.Bib) }</td>
+						<td>{ participant.Name }</td>
+						<td>{ participant.Distance }</td>
+						<td style="font-family: 'Roboto Mono', monospace">
+							{ participant.FormatTime(participant.Time) }
+						</td>
+					</tr>
+				}
+			</tbody>
+		</table>
+	</div>
+}

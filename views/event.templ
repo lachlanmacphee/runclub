@@ -1,0 +1,54 @@
+package views
+
+import (
+	"runclub/models"
+)
+
+templ Event(events []models.Event) {
+	<div class="container">
+		<h1 style="margin-bottom: 20px">Create New Event</h1>
+		<form hx-post="/api/event">
+			<div>
+				<label>Date</label>
+				<input name="date" type="date" value="{{ .today }}" required/>
+			</div>
+			<div>
+				<label>Location</label>
+				<select name="location" required>
+					<option value="albertParkLake" selected>Albert Park Lake</option>
+					<option value="southMelbourneBeach">South Melbourne Beach</option>
+				</select>
+			</div>
+			<button type="submit">Create</button>
+		</form>
+		<h1 style="margin-bottom: 0px">In Progress Events</h1>
+		<div class="grid">
+			for _, event := range events {
+				<article>
+					<header>
+						<hgroup>
+							<h2>{ event.FormatLocation(event.Location) }</h2>
+							<h3>{ event.FormatDate(event.Date) }</h3>
+						</hgroup>
+					</header>
+					<div style="display: flex; justify-content: center">
+						<img
+							src="{{ .GetLocationImage $event.Location }}"
+							style="width: 450px; height: 300px"
+						/>
+					</div>
+					<footer>
+						<button
+							hx-get="/participants/{{ $event.ID }}"
+							hx-push-url="true"
+							hx-target="#main"
+							style="width: 100%"
+						>
+							Continue
+						</button>
+					</footer>
+				</article>
+			}
+		</div>
+	</div>
+}
