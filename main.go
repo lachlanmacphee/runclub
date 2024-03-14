@@ -22,7 +22,6 @@ func main() {
     app := fiber.New(fiber.Config{
         Views: engine,
     })
-	api := app.Group("/api")
 
 	app.Static("/", "./public")
 
@@ -31,6 +30,8 @@ func main() {
 	app.Get("/login", handlers.LoginPage)
 	app.Get("/signup", handlers.SignupPage)
 
+	api := app.Group("/api")
+
 	// Unauthenticated API
 	api.Post("/login", handlers.Login)
 	api.Post("/signup", handlers.Signup)
@@ -38,7 +39,6 @@ func main() {
 	app.Use(handlers.AuthMiddleware)
 
 	// Authenticated Pages
-	app.Get("/welcome", handlers.Welcome)
 	app.Get("/setup", handlers.Setup)
 	app.Get("/pastevents", handlers.PastEvents)
 	app.Get("/events", handlers.Event)
