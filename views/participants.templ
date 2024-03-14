@@ -5,6 +5,14 @@ import (
 	"runclub/models"
 )
 
+templ ParticipantsRow(participant models.Participant) {
+	<tr>
+		<td>{ strconv.Itoa(participant.Bib) }</td>
+		<td>{ participant.Name }</td>
+		<td>{ participant.Distance }</td>
+	</tr>
+}
+
 templ SearchResults(names []string) {
 	for _, name := range names {
 		<tr>
@@ -21,14 +29,10 @@ templ SearchResults(names []string) {
 	}
 }
 
-func getApiString(eventId string) string {
-	return "/api/participant/event/" + eventId
-}
-
 templ Participants(eventId string, participants []models.Participant) {
 	<div class="container">
 		<form
-			hx-post={ getApiString(eventId) }
+			hx-post={ "/api/participant/event/" + eventId }
 			hx-target="#participants"
 			hx-swap="afterbegin"
 			hx-on::after-request="if(event.detail.successful && event.detail.target.id != 'search-results') resetForm()"
@@ -94,14 +98,12 @@ templ Participants(eventId string, participants []models.Participant) {
 				}
 			</tbody>
 		</table>
-		<button
-			hx-get="/timing/{{ .eventId }}"
-			hx-push-url="true"
-			hx-target="#main"
+		<a
+			href={"/timing/" + eventId}
 			style="width: 100%; margin-bottom: 17px"
 		>
 			Start Timing
-		</button>
+		</a>
 	</div>
 	<script>
   function resetForm() {

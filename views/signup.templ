@@ -2,7 +2,7 @@ package views
 
 templ Signup() {
 	<div class="container">
-		<form action="/api/signup" method="post">
+		<form hx-post="/api/signup" hx-redirect="/login">
 			<label for="name">Name</label>
 			<input id="name" name="name"/>
 			<label for="role">Role</label>

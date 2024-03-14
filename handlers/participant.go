@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"runclub/database"
 	"runclub/models"
+	"runclub/views"
 	"strconv"
 
 	"github.com/gofiber/fiber/v2"
@@ -38,11 +39,7 @@ func AddParticipant(c *fiber.Ctx) error {
 		fmt.Println(err)
 	}
 	
-	return c.Render("pages/participants/row", fiber.Map{
-		"bib": participant.Bib,
-		"name": participant.Name,
-		"distance": participant.Distance,
-	})
+	return Render(c, views.ParticipantsRow(participant))
 }
 
 func GetParticipantsByDate(c *fiber.Ctx) error {
@@ -63,9 +60,7 @@ func GetParticipantsByDate(c *fiber.Ctx) error {
 		fmt.Println(err)
 	}
 
-	return c.Render("pages/pastEvents/table", fiber.Map{
-		"participants": participants,
-	})
+	return Render(c, views.PastEventsTable(participants))
 }
 
 func GetParticipants(c *fiber.Ctx) error {
@@ -93,7 +88,5 @@ func GetParticipants(c *fiber.Ctx) error {
 		fmt.Println(err)
 	}
 	
-	return c.Render("pages/participants/searchResults", fiber.Map{
-		"names": names,
-	})
+	return Render(c, views.SearchResults(names))
 }

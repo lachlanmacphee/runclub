@@ -23,7 +23,7 @@ func Signup() templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div class=\"container\"><form action=\"/api/signup\" method=\"post\"><label for=\"name\">Name</label> <input id=\"name\" name=\"name\"> <label for=\"role\">Role</label> <input id=\"role\" name=\"role\"> <label for=\"email\">Email</label> <input id=\"email\" name=\"email\" type=\"email\"> <label for=\"password\">Password</label> <input id=\"password\" name=\"password\" type=\"password\"> <button type=\"submit\">Sign Up</button></form></div>")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div class=\"container\"><form hx-post=\"/api/signup\" hx-redirect=\"/login\"><label for=\"name\">Name</label> <input id=\"name\" name=\"name\"> <label for=\"role\">Role</label> <input id=\"role\" name=\"role\"> <label for=\"email\">Email</label> <input id=\"email\" name=\"email\" type=\"email\"> <label for=\"password\">Password</label> <input id=\"password\" name=\"password\" type=\"password\"> <button type=\"submit\">Sign Up</button></form></div>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
