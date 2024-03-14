@@ -1,6 +1,6 @@
 package views
 
-templ Navbar() {
+templ NavbarAuthed() {
 	<nav class="container">
 		<ul>
 			<li>
@@ -37,6 +37,39 @@ templ Navbar() {
 			</li>
 			<li>
 				<a
+					href="/logout"
+					style="cursor: pointer"
+				>Logout</a>
+			</li>
+		</ul>
+	</nav>
+}
+
+templ NavbarUnauthed() {
+	<nav class="container">
+		<ul>
+			<li>
+				<strong>Run Club</strong>
+			</li>
+		</ul>
+		<ul>
+			<li>
+				<a href="/" style="cursor: pointer">Home</a>
+			</li>
+			<li>
+				<a
+					href="/faq"
+					style="cursor: pointer"
+				>FAQ</a>
+			</li>
+			<li>
+				<a
+					href="/contact"
+					style="cursor: pointer"
+				>Contact</a>
+			</li>
+			<li>
+				<a
 					href="/login"
 					style="cursor: pointer"
 				>Login</a>
@@ -45,7 +78,7 @@ templ Navbar() {
 	</nav>
 }
 
-templ Layout(contents templ.Component) {
+templ Layout(isAuthed bool, contents templ.Component) {
 	<html lang="en">
 		<head>
 			<title>Run Club</title>
@@ -68,8 +101,15 @@ templ Layout(contents templ.Component) {
 			<script src="/js/alpine.min.js" defer></script>
 		</head>
 		<body>
-			<header style="padding: 0px">@Navbar()</header>
-			<main id="main" style="padding: 0px">@contents</main>
+			<header style="padding: 0px">
+				if isAuthed {
+					@NavbarAuthed()
+				} else {
+					@NavbarUnauthed()
+				}
+			</header>
+			<main id="main" style="padding: 0px">@contents
+</main>
 		</body>
 	</html>
 }

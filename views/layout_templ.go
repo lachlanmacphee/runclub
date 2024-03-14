@@ -10,7 +10,7 @@ import "context"
 import "io"
 import "bytes"
 
-func Navbar() templ.Component {
+func NavbarAuthed() templ.Component {
 	return templ.ComponentFunc(func(ctx context.Context, templ_7745c5c3_W io.Writer) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_Buffer, templ_7745c5c3_IsBuffer := templ_7745c5c3_W.(*bytes.Buffer)
 		if !templ_7745c5c3_IsBuffer {
@@ -23,7 +23,7 @@ func Navbar() templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<nav class=\"container\"><ul><li><strong>Run Club</strong></li></ul><ul><li><a href=\"/\" style=\"cursor: pointer\">Home</a></li><li><a href=\"/pastevents\" style=\"cursor: pointer\">Past Events</a></li><li><a href=\"/events\" style=\"cursor: pointer\">New Event</a></li><li><a href=\"/faq\" style=\"cursor: pointer\">FAQ</a></li><li><a href=\"/contact\" style=\"cursor: pointer\">Contact</a></li><li><a href=\"/login\" style=\"cursor: pointer\">Login</a></li></ul></nav>")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<nav class=\"container\"><ul><li><strong>Run Club</strong></li></ul><ul><li><a href=\"/\" style=\"cursor: pointer\">Home</a></li><li><a href=\"/pastevents\" style=\"cursor: pointer\">Past Events</a></li><li><a href=\"/events\" style=\"cursor: pointer\">New Event</a></li><li><a href=\"/faq\" style=\"cursor: pointer\">FAQ</a></li><li><a href=\"/contact\" style=\"cursor: pointer\">Contact</a></li><li><a href=\"/logout\" style=\"cursor: pointer\">Logout</a></li></ul></nav>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -34,7 +34,7 @@ func Navbar() templ.Component {
 	})
 }
 
-func Layout(contents templ.Component) templ.Component {
+func NavbarUnauthed() templ.Component {
 	return templ.ComponentFunc(func(ctx context.Context, templ_7745c5c3_W io.Writer) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_Buffer, templ_7745c5c3_IsBuffer := templ_7745c5c3_W.(*bytes.Buffer)
 		if !templ_7745c5c3_IsBuffer {
@@ -47,13 +47,44 @@ func Layout(contents templ.Component) templ.Component {
 			templ_7745c5c3_Var2 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<nav class=\"container\"><ul><li><strong>Run Club</strong></li></ul><ul><li><a href=\"/\" style=\"cursor: pointer\">Home</a></li><li><a href=\"/faq\" style=\"cursor: pointer\">FAQ</a></li><li><a href=\"/contact\" style=\"cursor: pointer\">Contact</a></li><li><a href=\"/login\" style=\"cursor: pointer\">Login</a></li></ul></nav>")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		if !templ_7745c5c3_IsBuffer {
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteTo(templ_7745c5c3_W)
+		}
+		return templ_7745c5c3_Err
+	})
+}
+
+func Layout(isAuthed bool, contents templ.Component) templ.Component {
+	return templ.ComponentFunc(func(ctx context.Context, templ_7745c5c3_W io.Writer) (templ_7745c5c3_Err error) {
+		templ_7745c5c3_Buffer, templ_7745c5c3_IsBuffer := templ_7745c5c3_W.(*bytes.Buffer)
+		if !templ_7745c5c3_IsBuffer {
+			templ_7745c5c3_Buffer = templ.GetBuffer()
+			defer templ.ReleaseBuffer(templ_7745c5c3_Buffer)
+		}
+		ctx = templ.InitializeContext(ctx)
+		templ_7745c5c3_Var3 := templ.GetChildren(ctx)
+		if templ_7745c5c3_Var3 == nil {
+			templ_7745c5c3_Var3 = templ.NopComponent
+		}
+		ctx = templ.ClearChildren(ctx)
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<html lang=\"en\"><head><title>Run Club</title><meta charset=\"UTF-8\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"><!-- Favicons and Manifest --><link rel=\"apple-touch-icon\" sizes=\"180x180\" href=\"/apple-touch-icon.png\"><link rel=\"icon\" type=\"image/png\" sizes=\"32x32\" href=\"/favicon-32x32.png\"><link rel=\"icon\" type=\"image/png\" sizes=\"16x16\" href=\"/favicon-16x16.png\"><link rel=\"manifest\" href=\"/site.webmanifest\"><!-- CSS --><link rel=\"stylesheet\" href=\"/css/pico.min.css\"><!-- Fonts --><link rel=\"stylesheet\" href=\"https://fonts.googleapis.com/css?family=Roboto+Mono\"><!-- JavaScript --><script src=\"/js/htmx.min.js\"></script><script src=\"/js/alpine.min.js\" defer></script></head><body><header style=\"padding: 0px\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = Navbar().Render(ctx, templ_7745c5c3_Buffer)
-		if templ_7745c5c3_Err != nil {
-			return templ_7745c5c3_Err
+		if isAuthed {
+			templ_7745c5c3_Err = NavbarAuthed().Render(ctx, templ_7745c5c3_Buffer)
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+		} else {
+			templ_7745c5c3_Err = NavbarUnauthed().Render(ctx, templ_7745c5c3_Buffer)
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</header><main id=\"main\" style=\"padding: 0px\">")
 		if templ_7745c5c3_Err != nil {

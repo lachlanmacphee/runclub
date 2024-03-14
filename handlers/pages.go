@@ -24,30 +24,37 @@ func Render(c *fiber.Ctx, component templ.Component, options ...func(*templ.Comp
 }
 
 func Home(c *fiber.Ctx) error {
-	return Render(c, views.Layout(views.Home()))
+	isAuthed := c.Cookies("session_token") != ""
+	return Render(c, views.Layout(isAuthed, views.Home()))
 }
 
 func LoginPage(c *fiber.Ctx) error {
-	return Render(c, views.Layout(views.Login()))
+	isAuthed := c.Cookies("session_token") != ""
+	return Render(c, views.Layout(isAuthed, views.Login()))
 }
 
 func SignupPage(c *fiber.Ctx) error {
-	return Render(c, views.Layout(views.Signup()))
+	isAuthed := c.Cookies("session_token") != ""
+	return Render(c, views.Layout(isAuthed, views.Signup()))
 }
 
 func Setup(c *fiber.Ctx) error {
-	return Render(c, views.Layout(views.Setup()))
+	isAuthed := c.Cookies("session_token") != ""
+	return Render(c, views.Layout(isAuthed, views.Setup()))
 }
 
 func Faq(c *fiber.Ctx) error {
-	return Render(c, views.Layout(views.FAQ()))
+	isAuthed := c.Cookies("session_token") != ""
+	return Render(c, views.Layout(isAuthed, views.FAQ()))
 }
 
 func Contact(c *fiber.Ctx) error {
-	return Render(c, views.Layout(views.Contact()))
+	isAuthed := c.Cookies("session_token") != ""
+	return Render(c, views.Layout(isAuthed, views.Contact()))
 }
 
 func PastEvents(c *fiber.Ctx) error {
+	isAuthed := c.Cookies("session_token") != ""
 	db := database.Get()
 	today := time.Now()
 	todayDbFormat := today.Format("2006-01-02 00:00:00+00:00")
@@ -65,10 +72,11 @@ func PastEvents(c *fiber.Ctx) error {
 		fmt.Println(err)
 	}
 
-	return Render(c, views.Layout(views.PastEvents(participants, todayHtmlFormat)))
+	return Render(c, views.Layout(isAuthed, views.PastEvents(participants, todayHtmlFormat)))
 }
 
 func Event(c *fiber.Ctx) error {
+	isAuthed := c.Cookies("session_token") != ""
 	db := database.Get()
 
 	var events []models.Event
@@ -78,11 +86,12 @@ func Event(c *fiber.Ctx) error {
 		return c.Redirect("/")
 	}
 
-	return Render(c, views.Layout(views.Event(events, time.Now().Format("2006-01-02"))))
+	return Render(c, views.Layout(isAuthed, views.Event(events, time.Now().Format("2006-01-02"))))
 	
 }
 
 func Participants(c *fiber.Ctx) error {
+	isAuthed := c.Cookies("session_token") != ""
 	db := database.Get()
 
 	eventIdInt, err := strconv.Atoi(c.Params("eventId"))
@@ -103,11 +112,12 @@ func Participants(c *fiber.Ctx) error {
 		fmt.Println(err)
 	}
 
-	return Render(c, views.Layout(views.Participants(c.Params("eventId"), participants)))
+	return Render(c, views.Layout(isAuthed, views.Participants(c.Params("eventId"), participants)))
 	
 }
 
 func Timing(c *fiber.Ctx) error {
+	isAuthed := c.Cookies("session_token") != ""
 	db := database.Get()
 
 	eventIdInt, err := strconv.Atoi(c.Params("eventId"))
@@ -128,6 +138,6 @@ func Timing(c *fiber.Ctx) error {
 		fmt.Println(err)
 	}
 
-	return Render(c, views.Layout(views.Timing(c.Params("eventId"), participants)))
+	return Render(c, views.Layout(isAuthed, views.Timing(c.Params("eventId"), participants)))
 	
 }
