@@ -52,10 +52,6 @@ func DisabledButton(bib int) templ.Component {
 	})
 }
 
-func getTimingApiURL(eventId string, bib int) string {
-	return "/api/timing/" + eventId + "/" + strconv.Itoa(bib)
-}
-
 func Timing(eventId string, participants []models.Participant) templ.Component {
 	return templ.ComponentFunc(func(ctx context.Context, templ_7745c5c3_W io.Writer) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_Buffer, templ_7745c5c3_IsBuffer := templ_7745c5c3_W.(*bytes.Buffer)
@@ -78,7 +74,7 @@ func Timing(eventId string, participants []models.Participant) templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(getTimingApiURL(eventId, participant.Bib)))
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString("/api/timing/" + eventId + "/" + strconv.Itoa(participant.Bib)))
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -89,7 +85,7 @@ func Timing(eventId string, participants []models.Participant) templ.Component {
 			var templ_7745c5c3_Var4 string
 			templ_7745c5c3_Var4, templ_7745c5c3_Err = templ.JoinStringErrs(strconv.Itoa(participant.Bib))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/timing.templ`, Line: 25, Col: 292}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `views/timing.templ`, Line: 21, Col: 313}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var4))
 			if templ_7745c5c3_Err != nil {

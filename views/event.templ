@@ -1,6 +1,7 @@
 package views
 
 import (
+	"strconv"
 	"runclub/models"
 )
 
@@ -33,19 +34,12 @@ templ Event(events []models.Event, today string) {
 					</header>
 					<div style="display: flex; justify-content: center">
 						<img
-							src="{{ .GetLocationImage $event.Location }}"
+							src={ event.GetLocationImage(event.Location) }
 							style="width: 450px; height: 300px"
 						/>
 					</div>
 					<footer>
-						<button
-							hx-get="/participants/{{ $event.ID }}"
-							hx-push-url="true"
-							hx-target="#main"
-							style="width: 100%"
-						>
-							Continue
-						</button>
+						<a href={ templ.URL("/participants/" + strconv.FormatUint(uint64(event.ID), 10)) } style="width: 100%">Continue</a>
 					</footer>
 				</article>
 			}

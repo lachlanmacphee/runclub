@@ -13,6 +13,11 @@ templ ParticipantsRow(participant models.Participant) {
 	</tr>
 }
 
+script getSearchResultsOnClick(name string) {
+	document.getElementById('nameInput').value = name;
+	document.getElementById('distanceInput').focus();
+}
+
 templ SearchResults(names []string) {
 	for _, name := range names {
 		<tr>
@@ -20,7 +25,7 @@ templ SearchResults(names []string) {
 				<button
 					type="button"
 					class="secondary"
-					onclick="document.getElementById('nameInput').value = '{{$val}}'; document.getElementById('distanceInput').focus();"
+					onclick={getSearchResultsOnClick(name)}
 				>
 					{ name }
 				</button>
@@ -99,7 +104,7 @@ templ Participants(eventId string, participants []models.Participant) {
 			</tbody>
 		</table>
 		<a
-			href={"/timing/" + eventId}
+			href={ templ.URL("/timing/" + eventId) }
 			style="width: 100%; margin-bottom: 17px"
 		>
 			Start Timing

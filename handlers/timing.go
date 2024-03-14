@@ -3,6 +3,7 @@ package handlers
 import (
 	"runclub/database"
 	"runclub/models"
+	"runclub/views"
 	"strconv"
 
 	"github.com/gofiber/fiber/v2"
@@ -44,7 +45,5 @@ func TimeParticipant(c *fiber.Ctx) error {
 		return c.SendStatus(200)
 	}
 	
-	return c.Render("pages/timing/disabledButton", fiber.Map{
-		"bib": bib,
-	})
+	return Render(c, views.DisabledButton(bib))
 }

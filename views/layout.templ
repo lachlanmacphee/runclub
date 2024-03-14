@@ -108,8 +108,9 @@ templ Layout(isAuthed bool, contents templ.Component) {
 					@NavbarUnauthed()
 				}
 			</header>
-			<main id="main" style="padding: 0px">@contents
-</main>
+			<main id="main" style="padding: 0px">
+				@contents
+			</main>
 		</body>
 	</html>
 }
