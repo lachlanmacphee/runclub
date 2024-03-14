@@ -3,7 +3,6 @@ package handlers
 import (
 	"errors"
 	"fmt"
-	"net/http"
 	"runclub/database"
 	"runclub/models"
 	"strconv"
@@ -35,30 +34,6 @@ func SignupPage(c *fiber.Ctx) error {
 	}
 
 	return c.Render("pages/signup/index", nil)
-}
-
-func Welcome(c *fiber.Ctx) error {
-	sessionToken := c.Cookies("session_token")
-
-	if sessionToken == "" {
-		// If the cookie is not set, return an unauthorized status
-		return c.Status(http.StatusUnauthorized).SendString("Unauthorized")
-	}
-
-	db := database.Get()
-	var session models.Session
-	err := db.Where("token = ?", sessionToken).First(&session).Error
-
-	if err != nil {
-		return c.Status(http.StatusUnauthorized).SendString("Unauthorized")
-	}
-
-	if session.Expiry.Before(time.Now()) {
-		db.Delete(session)
-		return c.Status(http.StatusUnauthorized).SendString("Session expired")
-	}
-
-	return c.SendString(fmt.Sprintf("Welcome %s!", session.Email))
 }
 
 func Setup(c *fiber.Ctx) error {
