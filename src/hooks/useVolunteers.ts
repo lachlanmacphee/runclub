@@ -1,7 +1,7 @@
 import { toast } from "@/components/ui/use-toast";
 import { usePocket } from "@/contexts";
 import { Volunteer } from "@/lib/types";
-import { add } from "date-fns";
+import { add, startOfToday } from "date-fns";
 import { useCallback, useEffect, useState } from "react";
 
 export function useVolunteers() {
@@ -56,7 +56,7 @@ export function useVolunteers() {
       .collection("volunteers")
       .getFullList({
         filter: pb.filter("run_date >= {:minDate} && run_date <= {:maxDate}", {
-          minDate: new Date(),
+          minDate: startOfToday(),
           maxDate: add(new Date(), { months: 3 }),
         }),
         expand: "user_id,waiver_id",
