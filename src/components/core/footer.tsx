@@ -12,7 +12,7 @@ const SocialLinks = () => (
       <Instagram className="w-8 h-8" />
     </Link>
     <Link to="https://chat.whatsapp.com/HLf0ViSAJD77iGmuWGMORV">
-      <Whatsapp className="w-8 h-8" />
+      <Whatsapp className="w-8 h-8 dark:fill-white" />
     </Link>
   </>
 );
