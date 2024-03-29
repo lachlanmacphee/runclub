@@ -115,14 +115,14 @@ export function RunTiming({
         isRunComplete={isRunComplete}
       />
       {isRunning && (
-        <div className="flex gap-4 justify-around flex-wrap">
+        <div className="grid grid-cols-5 md:grid-cols-10 gap-4 justify-around">
           {participants
             .sort((a, b) => b.bib - a.bib)
             .map((participant) => (
               <Button
                 onClick={() => markParticipant(participant.bib)}
                 key={participant.bib}
-                className="w-14 h-10 md:w-24 md:h-16 font-bold text-base md:text-xl"
+                className="w-14 h-10 md:w-24 md:h-16 font-bold text-base md:text-xl mx-auto"
                 variant={completed[participant.bib] ? "secondary" : "default"}
                 disabled={!isRunning}
               >
