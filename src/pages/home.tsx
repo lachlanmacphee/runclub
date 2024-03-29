@@ -36,7 +36,7 @@ export function Home() {
             Please{" "}
             <Link
               to="/waiver"
-              className="text-primary underline-offset-4 bold hover:underline"
+              className="text-primary underline-offset-4 font-bold hover:underline"
             >
               click here
             </Link>{" "}
