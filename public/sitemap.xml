@@ -32,9 +32,4 @@
     <loc>https://gunnies.app/waiver</loc>
   </url>
 
-  <!-- Catch all route -->
-  <url>
-    <loc>https://gunnies.app/*</loc>
-  </url>
-
 </urlset>

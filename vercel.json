@@ -1,12 +1,26 @@
 {
   "routes": [
+    { "src": "/login", "dest": "/" },
+    { "src": "/signup", "dest": "/" },
+    { "src": "/resetpassword", "dest": "/" },
+    { "src": "/runs", "dest": "/" },
+    { "src": "/faqs", "dest": "/" },
+    { "src": "/contact", "dest": "/" },
+    { "src": "/privacy", "dest": "/" },
+    { "src": "/events", "dest": "/" },
+    { "src": "/waiver", "dest": "/" },
+    { "src": "/newrun", "dest": "/" },
+    { "src": "/volunteer", "dest": "/" },
+    { "src": "/manage", "dest": "/" },
+    { "src": "/wiki", "dest": "/" },
+    { "src": "/account", "dest": "/" },
+    { "src": "/stats/[^.]+", "dest": "/" },
     { "src": "/robots.txt", "dest": "/robots.txt" },
     { "src": "/sitemap.xml", "dest": "/sitemap.xml" },
     {
       "src": "/sw.js",
       "dest": "/sw.js",
       "headers": { "Cache-Control": "public, max-age=0, must-revalidate" }
-    },
-    { "src": "/[^.]+", "dest": "/" }
+    }
   ]
 }

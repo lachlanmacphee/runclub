@@ -14,7 +14,6 @@ import { FAQs } from "./pages/faqs";
 import { Wiki } from "./pages/wiki";
 import { ContactUs } from "./pages/contactUs";
 import { Privacy } from "./pages/privacy";
-import { NotFound } from "./pages/notFound";
 
 import { Layout } from "./components/core/layout";
 import { RequireAuth } from "./components/core/requireAuth";
@@ -54,7 +53,6 @@ export default function App() {
                   <Route path="club" element={<ClubStats />} />
                 </Route>
               </Route>
-              <Route path="*" element={<NotFound />} />
             </Route>
           </Routes>
           <Toaster />
