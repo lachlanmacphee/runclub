@@ -1,12 +1,12 @@
 {
   "routes": [
-    { "src": "/[^.]+", "dest": "/" },
     { "src": "/robots.txt", "dest": "/robots.txt" },
     { "src": "/sitemap.xml", "dest": "/sitemap.xml" },
     {
       "src": "/sw.js",
       "dest": "/sw.js",
       "headers": { "Cache-Control": "public, max-age=0, must-revalidate" }
-    }
+    },
+    { "src": "/[^.]+", "dest": "/" }
   ]
 }
