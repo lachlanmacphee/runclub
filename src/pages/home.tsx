@@ -41,7 +41,8 @@ export function Home() {
               click here
             </Link>{" "}
             to complete our waiver form. We're required to have these details
-            before you can run with us.
+            before you can run with us. Please note that signing up to the site
+            is not the same as filling out the waiver form.
           </p>
           <h3 className="text-xl font-bold">Essential Info</h3>
           <p>
