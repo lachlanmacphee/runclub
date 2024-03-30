@@ -1,18 +1,12 @@
 {
-  "rewrites": [
+  "routes": [
     { "src": "/[^.]+", "dest": "/" },
     { "src": "/robots.txt", "dest": "/robots.txt" },
-    { "src": "/sitemap.xml", "dest": "/sitemap.xml" }
-  ],
-  "headers": [
+    { "src": "/sitemap.xml", "dest": "/sitemap.xml" },
     {
-      "source": "/sw.js",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=0, must-revalidate"
-        }
-      ]
+      "src": "/sw.js",
+      "dest": "/sw.js",
+      "headers": { "Cache-Control": "public, max-age=0, must-revalidate" }
     }
   ]
 }
