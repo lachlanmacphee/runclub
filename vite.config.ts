@@ -8,6 +8,7 @@ export default defineConfig({
     react(),
     VitePWA({
       includeAssets: ["favicon.ico", "apple-touch-icon.png", "mask-icon.svg"],
+      registerType: "autoUpdate",
       manifest: {
         name: "Gunn Runners App",
         short_name: "Gunnies",

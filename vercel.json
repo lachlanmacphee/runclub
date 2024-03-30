@@ -1,3 +1,18 @@
 {
-  "routes": [{ "src": "/[^.]+", "dest": "/", "status": 200 }]
+  "routes": [
+    { "src": "/[^.]+", "dest": "/", "status": 200 },
+    { "src": "/robots.txt", "dest": "/robots.txt", "status": 200 },
+    { "src": "/sitemap.xml", "dest": "/sitemap.xml", "status": 200 }
+  ],
+  "headers": [
+    {
+      "source": "/sw.js",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=0, must-revalidate"
+        }
+      ]
+    }
+  ]
 }
