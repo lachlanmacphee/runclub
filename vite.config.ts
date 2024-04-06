@@ -7,6 +7,7 @@ export default defineConfig({
   plugins: [
     react(),
     VitePWA({
+      registerType: "autoUpdate",
       includeAssets: [
         "favicon.ico",
         "apple-touch-icon.png",
@@ -15,7 +16,7 @@ export default defineConfig({
         "sitemap.xml",
       ],
       manifest: {
-        name: "Gunn Runners App",
+        name: "Gunn Runners",
         short_name: "Gunnies",
         description: "Manage timing and operations for Gunn Runners",
         theme_color: "#ffffff",
