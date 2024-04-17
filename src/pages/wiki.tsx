@@ -44,7 +44,9 @@ export const Wiki = () => {
       newWikiData[page.category] = [page];
     });
     setWikiData(newWikiData);
-    setActivePage(newWikiData["App"][0]);
+    if (newWikiData["App"]?.length > 0) {
+      setActivePage(newWikiData["App"][0]);
+    }
   }, [pb]);
 
   useEffect(() => {

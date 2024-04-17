@@ -33,7 +33,7 @@ import { usePocket } from "@/contexts";
 import { useToast } from "../ui/use-toast";
 
 const FormSchema = z.object({
-  category: z.enum(["App", "Operations", "Communication"]),
+  category: z.enum(["App", "Operations", "Communication", "Finance"]),
   name: z.string(),
 });
 
