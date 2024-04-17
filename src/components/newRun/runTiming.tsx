@@ -55,6 +55,7 @@ export function RunTiming({
       });
       setTimeout(() => {
         navigate("/runs");
+        localStorage.removeItem("run_notes");
       }, 15000);
     }
     if (isRunComplete) {

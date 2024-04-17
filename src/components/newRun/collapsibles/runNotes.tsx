@@ -24,8 +24,10 @@ export const RunNotes = () => {
       </div>
       <CollapsibleContent className="space-y-2">
         <Textarea
+          defaultValue={localStorage.getItem("run_notes") || ""}
+          onChange={(e) => localStorage.setItem("run_notes", e.target.value)}
           className="w-full h-[192px]"
-          placeholder="You can write notes for the run here, but they will disappear once the run finishes."
+          placeholder="You can write notes for the run here, but they will disappear once the run finishes. Screenshot if you need to keep them."
         />
       </CollapsibleContent>
     </Collapsible>
