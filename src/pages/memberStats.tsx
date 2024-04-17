@@ -51,11 +51,15 @@ export function MemberStats() {
         setIsLoading(false);
         return;
       }
-      const { id } = await pb
-        .collection("waivers")
-        .getFirstListItem(pb.filter("user_id = {:userId}", { userId }));
 
-      if (!id) {
+      let id: string;
+
+      try {
+        const response = await pb
+          .collection("waivers")
+          .getFirstListItem(pb.filter("user_id = {:userId}", { userId }));
+        id = response.id;
+      } catch {
         toast({
           title: "Waiver ID Not Found",
           variant: "destructive",
