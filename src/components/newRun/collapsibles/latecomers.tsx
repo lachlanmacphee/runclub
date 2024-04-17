@@ -29,7 +29,9 @@ import {
 import { ChevronsUpDown } from "lucide-react";
 
 const FormSchema = z.object({
-  bib: z.string(),
+  bib: z.string().min(1, {
+    message: "Bib number is required",
+  }),
   details: z.object({ value: z.string(), label: z.string() }),
   distance: z.object({ value: z.string(), label: z.string() }),
   isNew: z.boolean(),
