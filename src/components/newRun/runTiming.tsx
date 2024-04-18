@@ -124,7 +124,7 @@ export function RunTiming({
                 onClick={() => markParticipant(participant.bib)}
                 key={participant.bib}
                 className="w-14 h-10 md:w-24 md:h-16 font-bold text-base md:text-xl mx-auto"
-                variant={completed[participant.bib] ? "secondary" : "default"}
+                variant={completed[participant.bib] ? "destructive" : "default"}
                 disabled={!isRunning}
               >
                 {changing[participant.bib] ? (
