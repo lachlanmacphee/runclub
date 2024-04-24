@@ -35,15 +35,19 @@ import { Input } from "@/components/ui/input";
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
+  defaultVisibilityState?: Record<string, boolean>;
 }
 
 export function DataTable<TData, TValue>({
   columns,
   data,
+  defaultVisibilityState,
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
-  const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
+  const [columnVisibility, setColumnVisibility] = useState<VisibilityState>(
+    defaultVisibilityState ?? {}
+  );
 
   const table = useReactTable({
     data,
@@ -93,7 +97,7 @@ export function DataTable<TData, TValue>({
                       column.toggleVisibility(!!value)
                     }
                   >
-                    {column.id === "time_seconds" ? "Time" : column.id}
+                    {column.id}
                   </DropdownMenuCheckboxItem>
                 );
               })}

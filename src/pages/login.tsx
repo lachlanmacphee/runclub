@@ -19,6 +19,8 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { getErrorMessage } from "@/lib/utils";
+import Facebook from "@/components/icons/Facebook";
+import Google from "@/components/icons/Google";
 
 const FormSchema = z.object({
   email: z.string().email(),
@@ -67,7 +69,7 @@ export const Login = () => {
 
   return (
     <div className="flex h-screen flex-col justify-center items-center">
-      <section className="flex w-full sm:w-1/2 flex-col gap-4 rounded-md p-8">
+      <section className="flex w-full md:w-1/2 max-w-xl flex-col gap-4 rounded-md p-8">
         <h1 className="text-center text-3xl font-extrabold">Gunn Runners</h1>
         <h2 className="text-xl text-center">Login</h2>
         <Form {...form}>
@@ -101,12 +103,21 @@ export const Login = () => {
                 </FormItem>
               )}
             />
-            <Link
-              to="/resetpassword"
-              className={buttonVariants({ variant: "link" })}
-            >
-              Forgot your password?
-            </Link>
+            <div className="flex justify-between">
+              <Link
+                to="/signup"
+                className={buttonVariants({ variant: "link" })}
+              >
+                Need an account?
+              </Link>
+              <Link
+                to="/resetpassword"
+                className={buttonVariants({ variant: "link" })}
+              >
+                Forgot password?
+              </Link>
+            </div>
+            <Button type="submit">Login</Button>
             <div className="relative">
               <div className="absolute inset-0 flex items-center">
                 <span className="w-full border-t" />
@@ -117,30 +128,21 @@ export const Login = () => {
                 </span>
               </div>
             </div>
-            <Button
-              variant="outline"
-              type="button"
-              className="flex gap-1"
-              onClick={() => handleOAuthLogin("google")}
-            >
-              <span>Google</span>
-            </Button>
-            <Button
-              variant="outline"
-              type="button"
-              className="flex gap-1"
-              onClick={() => handleOAuthLogin("facebook")}
-            >
-              <span>Facebook</span>
-            </Button>
-            <div className="flex justify-between mt-2">
-              <Link
-                to="/signup"
-                className={buttonVariants({ variant: "secondary" })}
+            <div className="grid grid-cols-2 gap-4">
+              <Button
+                variant="outline"
+                type="button"
+                onClick={() => handleOAuthLogin("google")}
               >
-                Go to Sign Up
-              </Link>
-              <Button type="submit">Login</Button>
+                <Google className="w-6 h-6 dark:fill-white" />
+              </Button>
+              <Button
+                variant="outline"
+                type="button"
+                onClick={() => handleOAuthLogin("facebook")}
+              >
+                <Facebook className="w-6 h-6 dark:fill-white" />
+              </Button>
             </div>
           </form>
         </Form>

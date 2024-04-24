@@ -71,7 +71,7 @@ export const SignUp = () => {
       } catch (error) {
         const message = getErrorMessage(error);
         toast({
-          title: "Sign Up Failed",
+          title: "Account Creation Failed",
           variant: "destructive",
           duration: 3000,
           description: message,
@@ -89,7 +89,7 @@ export const SignUp = () => {
     <div className="flex h-screen flex-col justify-center items-center">
       <section className="flex w-full sm:w-3/4 md:w-1/2 flex-col gap-4 rounded-md p-8">
         <h1 className="text-center text-3xl font-extrabold">Gunn Runners</h1>
-        <h2 className="text-xl text-center">Sign Up</h2>
+        <h2 className="text-xl text-center">Create an Account</h2>
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}
@@ -194,7 +194,7 @@ export const SignUp = () => {
               >
                 Go to Login
               </Link>
-              <Button type="submit">Sign Up</Button>
+              <Button type="submit">Create Account</Button>
             </div>
           </form>
         </Form>

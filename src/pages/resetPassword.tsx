@@ -95,7 +95,7 @@ export const ResetPassword = () => {
                 to="/login"
                 className={buttonVariants({ variant: "secondary" })}
               >
-                Go back to Login
+                Back to Login
               </Link>
               <Button type="submit">Send reset email</Button>
             </div>

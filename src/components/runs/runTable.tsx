@@ -25,6 +25,21 @@ const standardRunTableColumns: ColumnDef<Participant>[] = [
     },
   },
   {
+    accessorKey: "bib",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          className="px-0 hover:bg-transparent"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Bib
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
+  },
+  {
     accessorKey: "name",
     header: ({ column }) => {
       return (
@@ -172,5 +187,8 @@ export const RunTable = ({
         : clubStatsRunTableColumns
     }
     data={participants}
+    defaultVisibilityState={
+      columnsType == "standard" ? { bib: false } : undefined
+    }
   />
 );
