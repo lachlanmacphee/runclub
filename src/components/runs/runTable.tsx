@@ -54,6 +54,14 @@ const standardRunTableColumns: ColumnDef<Participant>[] = [
         </Button>
       );
     },
+    cell: ({ row }) =>
+      row.original.is_new ? (
+        <span className="underline underline-offset-4 decoration-red-600 dark:decoration-red-800 decoration-2">
+          {row.getValue("name")}
+        </span>
+      ) : (
+        row.getValue("name")
+      ),
   },
   {
     accessorKey: "distance",
