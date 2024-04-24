@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 
 import { ArrowUpDown } from "lucide-react";
 import { DataTable } from "../ui/data-table";
+import { format } from "date-fns";
 
 const standardRunTableColumns: ColumnDef<Participant>[] = [
   {
@@ -168,6 +169,23 @@ const clubStatsRunTableColumns: ColumnDef<Participant>[] = [
       );
     },
     cell: ({ row }) => formatTime(row.getValue("time_seconds")),
+  },
+  {
+    accessorKey: "created",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          className="px-0 hover:bg-transparent"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Date
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
+    cell: ({ row }) =>
+      format(new Date(row.getValue("created")), "do 'of' MMMM"),
   },
 ];
 
