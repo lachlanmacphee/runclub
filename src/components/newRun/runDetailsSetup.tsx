@@ -68,7 +68,7 @@ export function RunDetailsSetup({
 
   async function onSubmit(data: z.infer<typeof FormSchema>) {
     setIsLoading(true);
-    let weatherStr: string | null = null;
+    let weatherStr: string = "Weather data not available for this run.";
 
     try {
       // In future need to fetch weather based on date input when submitting
