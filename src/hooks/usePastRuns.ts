@@ -104,5 +104,5 @@ export function usePastRuns() {
     [pb, getParticipantsForRun]
   );
 
-  return { fetchLatestRun, fetchRunFromDate };
+  return { fetchLatestRun, fetchRunFromDate, getParticipantsForRun };
 }

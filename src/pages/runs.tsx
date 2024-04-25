@@ -8,8 +8,13 @@ import { DatePicker } from "@/components/ui/date-picker";
 import { Loader2 } from "lucide-react";
 import { usePastRuns } from "@/hooks/usePastRuns";
 import { format } from "date-fns";
+import { usePocket } from "@/contexts";
+import { ROLES } from "@/lib/constants";
+import { Link } from "react-router-dom";
+import { buttonVariants } from "@/components/ui/button";
 
 export function Runs() {
+  const { user } = usePocket();
   const { fetchLatestRun, fetchRunFromDate } = usePastRuns();
   const [isLoading, setIsLoading] = useState(true);
   const [runDetails, setRunDetails] = useState<RunDetails>();
@@ -46,7 +51,17 @@ export function Runs() {
     <div className="flex flex-col gap-4">
       <div className="grid grid-cols-1 gap-4 md:gap-0 md:grid-cols-[0.5fr_1fr]">
         <div className="row-start-2 md:row-start-1">
-          <DatePicker date={date} setDate={dateChangeHandler} />
+          <div className="flex gap-4">
+            <DatePicker date={date} setDate={dateChangeHandler} />
+            {user?.role == ROLES.ADMIN && runDetails?.run.id && (
+              <Link
+                to={`/runs/${runDetails.run.id}/edit`}
+                className={buttonVariants({ variant: "default" })}
+              >
+                Edit Run
+              </Link>
+            )}
+          </div>
         </div>
         <div className="flex flex-col items-center md:items-end justify-center ">
           <h1 className="text-xl font-bold">

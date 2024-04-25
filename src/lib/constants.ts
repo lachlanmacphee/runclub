@@ -68,6 +68,10 @@ export const ROLES = {
   ADMIN: "admin",
 };
 
+export const COLLECTIONS = {
+  PARTICIPANT_RUNS: "participant_runs",
+};
+
 export const NAV_ROUTES = [
   { path: "/", label: "Home", minRole: null },
   { path: "/runs", label: "Runs", minRole: null },
