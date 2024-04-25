@@ -97,7 +97,7 @@ export function DataTable<TData, TValue>({
                       column.toggleVisibility(!!value)
                     }
                   >
-                    {column.id}
+                    {column.id === "time_seconds" ? "Time" : column.id}
                   </DropdownMenuCheckboxItem>
                 );
               })}
