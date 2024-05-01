@@ -10,8 +10,10 @@ import { COLLECTIONS } from "@/lib/constants";
 
 export function SwapTimes({
   participants,
+  update,
 }: {
   participants: Participant[] | undefined;
+  update: VoidFunction;
 }) {
   const { pb } = usePocket();
   const { toast } = useToast();
@@ -76,8 +78,10 @@ export function SwapTimes({
 
     setParticipantOne(undefined);
     setParticipantTwo(undefined);
+    update();
 
     return;
+      // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [participantOne, participantTwo, pb, toast]);
 
   if (!participants) {

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
 import { usePastRuns } from "@/hooks/usePastRuns";
@@ -12,12 +12,14 @@ export function EditRun() {
   const { getParticipantsForRun } = usePastRuns();
   const [participants, setParticipants] = useState<Participant[]>();
 
+  const getParticipants = useCallback(async () => {
+    const { threeKmParticipants, fiveKmParticipants } =
+      await getParticipantsForRun(runId as string);
+    setParticipants([...threeKmParticipants, ...fiveKmParticipants]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   useEffect(() => {
-    async function getParticipants() {
-      const { threeKmParticipants, fiveKmParticipants } =
-        await getParticipantsForRun(runId as string);
-      setParticipants([...threeKmParticipants, ...fiveKmParticipants]);
-    }
     getParticipants();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -25,8 +27,8 @@ export function EditRun() {
   return (
     <div className="flex justify-center">
       <div className="flex flex-col gap-16 grow max-w-3xl">
-        <SwapTimes participants={participants} />
-        <EditTime participants={participants} />
+        <SwapTimes participants={participants} update={getParticipants} />
+        <EditTime participants={participants} update={getParticipants} />
       </div>
     </div>
   );

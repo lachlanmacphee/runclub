@@ -22,8 +22,10 @@ function secondsToHms(seconds: number) {
 
 export function EditTime({
   participants,
+  update,
 }: {
   participants: Participant[] | undefined;
+  update: VoidFunction;
 }) {
   const { pb } = usePocket();
   const { toast } = useToast();
@@ -101,7 +103,9 @@ export function EditTime({
     });
 
     setParticipant(undefined);
+    update();
     return;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [hours, minutes, participant, pb, seconds, toast]);
 
   if (!participants) {
