@@ -50,7 +50,7 @@ export function createRunDescription(
   )?.name;
 
   let outputStr = `This week we had ${numParticipants} ${
-    numParticipants == 0 ? "Gunny" : "Gunnies"
+    numParticipants == 1 ? "Gunny" : "Gunnies"
   } hit the track at ${location}.`;
 
   if (fastest5000mName && fastest3500mName) {
