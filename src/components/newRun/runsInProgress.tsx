@@ -47,7 +47,7 @@ export function RunsInProgress({
           <CardHeader>
             <CardTitle>{convertLocationValueToLabel(run.location)}</CardTitle>
             <CardDescription>
-              {new Date(run.created).toLocaleDateString()}
+              {new Date(run.date).toLocaleDateString()}
             </CardDescription>
           </CardHeader>
           <CardContent>
