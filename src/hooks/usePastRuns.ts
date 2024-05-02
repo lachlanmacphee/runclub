@@ -12,18 +12,24 @@ export function usePastRuns() {
       const threeKmParticipants: Participant[] = await pb
         .collection("participant_runs")
         .getFullList({
-          filter: pb.filter("group_run_id = {:id} && distance = 3.5", {
-            id,
-          }),
+          filter: pb.filter(
+            "group_run_id = {:id} && distance = 3.5 && time_seconds != 0",
+            {
+              id,
+            }
+          ),
           sort: "time_seconds",
         });
 
       const fiveKmParticipants: Participant[] = await pb
         .collection("participant_runs")
         .getFullList({
-          filter: pb.filter("group_run_id = {:id} && distance = 5", {
-            id,
-          }),
+          filter: pb.filter(
+            "group_run_id = {:id} && distance = 5 && time_seconds != 0",
+            {
+              id,
+            }
+          ),
           sort: "time_seconds",
         });
 
