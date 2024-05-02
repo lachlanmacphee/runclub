@@ -7,12 +7,13 @@ import { Participant } from "@/lib/types";
 import { toast } from "@/components/ui/use-toast";
 import { Stopwatch } from "@/components/newRun/stopwatch";
 import { Button } from "@/components/ui/button";
-import { Loader2 } from "lucide-react";
+import { ArrowDown10, ArrowUp10, Loader2 } from "lucide-react";
 
 import { Latecomers } from "./collapsibles/latecomers";
 import { NewParticipants } from "./collapsibles/newParticipants";
 import { RemainingParticipants } from "./collapsibles/remainingParticipants";
 import { RunNotes } from "./collapsibles/runNotes";
+import { Switch } from "../ui/switch";
 
 function getCompletedDefault(participants: Participant[]) {
   const res: Record<number, boolean> = {};
@@ -39,6 +40,7 @@ export function RunTiming({
     getCompletedDefault(participants)
   );
   const [changing, setChanging] = useState<Record<number, boolean>>({});
+  const [numberDir, setNumberDir] = useState<"asc" | "desc">("asc");
 
   const isRunComplete =
     Object.keys(completed).length === participants.length &&
@@ -105,6 +107,11 @@ export function RunTiming({
     [completed, participants, pb, totalSeconds]
   );
 
+  const sortFunc =
+    numberDir == "asc"
+      ? (a: Participant, b: Participant) => b.bib - a.bib
+      : (a: Participant, b: Participant) => a.bib - b.bib;
+
   return (
     <div className="flex flex-col gap-8">
       <Stopwatch
@@ -116,24 +123,34 @@ export function RunTiming({
         isRunComplete={isRunComplete}
       />
       {isRunning && (
+        <div className="flex gap-4 justify-center">
+          <ArrowDown10 />
+          <Switch
+            checked={numberDir == "desc"}
+            onCheckedChange={(boolVal) =>
+              setNumberDir(boolVal ? "desc" : "asc")
+            }
+          />
+          <ArrowUp10 />
+        </div>
+      )}
+      {isRunning && (
         <div className="grid grid-cols-5 md:grid-cols-10 gap-4 justify-around">
-          {participants
-            .sort((a, b) => b.bib - a.bib)
-            .map((participant) => (
-              <Button
-                onClick={() => markParticipant(participant.bib)}
-                key={participant.bib}
-                className="w-14 h-10 md:w-24 md:h-16 font-bold text-base md:text-xl mx-auto"
-                variant={completed[participant.bib] ? "destructive" : "default"}
-                disabled={!isRunning}
-              >
-                {changing[participant.bib] ? (
-                  <Loader2 className="h-4 w-4 md:h-8 md:w-8 animate-spin" />
-                ) : (
-                  participant.bib
-                )}
-              </Button>
-            ))}
+          {participants.sort(sortFunc).map((participant) => (
+            <Button
+              onClick={() => markParticipant(participant.bib)}
+              key={participant.bib}
+              className="w-14 h-10 md:w-24 md:h-16 font-bold text-base md:text-xl mx-auto"
+              variant={completed[participant.bib] ? "destructive" : "default"}
+              disabled={!isRunning}
+            >
+              {changing[participant.bib] ? (
+                <Loader2 className="h-4 w-4 md:h-8 md:w-8 animate-spin" />
+              ) : (
+                participant.bib
+              )}
+            </Button>
+          ))}
         </div>
       )}
       <div className="space-y-2">
