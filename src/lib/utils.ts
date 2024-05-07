@@ -53,6 +53,15 @@ export function createRunDescription(
     numParticipants == 1 ? "Gunny" : "Gunnies"
   } hit the track at ${location}.`;
 
+  const numNewGunnies: number = participants.filter(
+    (participant) => !!participant.is_new
+  ).length;
+  if (numNewGunnies > 0) {
+    outputStr += ` Welcome to the ${numNewGunnies} new ${
+      numNewGunnies == 1 ? "Gunny" : "Gunnies"
+    } that joined us for the first time tonight.`;
+  }
+
   if (fastest5000mName && fastest3500mName) {
     outputStr += ` Congratulations to all participants, including ${fastest5000mName} for the fastest time in the 5km, and ${fastest3500mName} for the fastest time in the 3.5km.`;
   } else if (fastest5000mName) {

@@ -31,7 +31,7 @@ export type Participant = {
   group_run_id: string;
   name: string;
   distance: number;
-  time_seconds?: number;
+  time_seconds: number;
   bib: number;
   is_paid: boolean;
   is_new: boolean;

@@ -3,17 +3,24 @@ import { GroupRun, Participant } from "@/lib/types";
 import { convertLocationValueToLabel, createRunDescription } from "@/lib/utils";
 import { useCallback } from "react";
 
+const THREE_KM_ZEROES = "group_run_id = {:id} && distance = 3.5";
+const FIVE_KM_ZEROES = "group_run_id = {:id} && distance = 5";
+const THREE_KM_NO_ZEROES =
+  "group_run_id = {:id} && distance = 3.5 && time_seconds != 0";
+const FIVE_KM_NO_ZEROES =
+  "group_run_id = {:id} && distance = 5 && time_seconds != 0";
+
 export function usePastRuns() {
   const { pb } = usePocket();
 
   const getParticipantsForRun = useCallback(
-    async (id: string) => {
+    async (id: string, doesIncludeZeroes: boolean = false) => {
       // Find all the participants that were part of that run
       const threeKmParticipants: Participant[] = await pb
         .collection("participant_runs")
         .getFullList({
           filter: pb.filter(
-            "group_run_id = {:id} && distance = 3.5 && time_seconds != 0",
+            doesIncludeZeroes ? THREE_KM_ZEROES : THREE_KM_NO_ZEROES,
             {
               id,
             }
@@ -25,7 +32,7 @@ export function usePastRuns() {
         .collection("participant_runs")
         .getFullList({
           filter: pb.filter(
-            "group_run_id = {:id} && distance = 5 && time_seconds != 0",
+            doesIncludeZeroes ? FIVE_KM_ZEROES : FIVE_KM_NO_ZEROES,
             {
               id,
             }

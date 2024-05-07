@@ -40,19 +40,22 @@ export function EditTime({
     const newParticipant: Participant | undefined = participants?.find(
       (participant) => participant.waiver_id == selection?.value
     );
-    setParticipant(newParticipant);
 
-    if (newParticipant?.time_seconds) {
-      const timeCalc = secondsToHms(newParticipant?.time_seconds ?? 0);
-      setHours(timeCalc.hours.toString());
-      setMinutes(timeCalc.minutes.toString());
-      setSeconds(timeCalc.seconds.toString());
+    if (!newParticipant) {
+      toast({
+        title: "Error 571",
+        description: "New participant was invalid!",
+        variant: "destructive",
+      });
       return;
     }
 
-    setHours(undefined);
-    setMinutes(undefined);
-    setSeconds(undefined);
+    setParticipant(newParticipant);
+    const timeCalc = secondsToHms(newParticipant.time_seconds);
+    setHours(timeCalc.hours.toString());
+    setMinutes(timeCalc.minutes.toString());
+    setSeconds(timeCalc.seconds.toString());
+    return;
   };
 
   const onChange = useCallback(async () => {
@@ -112,6 +115,30 @@ export function EditTime({
     return <p>Failed to get participants for this run...</p>;
   }
 
+  if (!participant) {
+    return (
+      <div className="flex flex-col gap-4 grow max-w-3xl">
+        <h1 className="text-5xl font-bold">Edit Time</h1>
+        <h2>Choose a participant to edit their time</h2>
+        <Select
+          className="custom-react-select-container"
+          classNamePrefix="custom-react-select"
+          placeholder="Select a participant..."
+          value={null}
+          onChange={(selection) =>
+            !!selection && onSelectParticipant(selection)
+          }
+          options={participants.map((participant) => {
+            return {
+              label: participant.name,
+              value: participant.waiver_id,
+            };
+          })}
+        />
+      </div>
+    );
+  }
+
   return (
     <div className="flex flex-col gap-4 grow max-w-3xl">
       <h1 className="text-5xl font-bold">Edit Time</h1>
@@ -120,11 +147,7 @@ export function EditTime({
         className="custom-react-select-container"
         classNamePrefix="custom-react-select"
         placeholder="Select a participant..."
-        value={
-          participant
-            ? { label: participant.name, value: participant.waiver_id }
-            : null
-        }
+        value={{ label: participant.name, value: participant.waiver_id }}
         onChange={(selection) => !!selection && onSelectParticipant(selection)}
         options={participants.map((participant) => {
           return {
@@ -133,7 +156,7 @@ export function EditTime({
           };
         })}
       />
-      {participant?.time_seconds && (
+      {participant.time_seconds >= 0 && (
         <>
           <div className="grid grid-cols-3 gap-4">
             <div>

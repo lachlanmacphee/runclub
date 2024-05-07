@@ -13,8 +13,11 @@ export function EditRun() {
   const [participants, setParticipants] = useState<Participant[]>();
 
   const getParticipants = useCallback(async () => {
+    if (!runId) {
+      return;
+    }
     const { threeKmParticipants, fiveKmParticipants } =
-      await getParticipantsForRun(runId as string);
+      await getParticipantsForRun(runId, true);
     setParticipants([...threeKmParticipants, ...fiveKmParticipants]);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -23,6 +26,10 @@ export function EditRun() {
     getParticipants();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  if (!runId) {
+    return <p>URL is missing runId</p>;
+  }
 
   return (
     <div className="flex justify-center">

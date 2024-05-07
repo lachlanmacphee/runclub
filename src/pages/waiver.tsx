@@ -67,7 +67,19 @@ export const Waiver = () => {
             "You're all ready to go! If you haven't already, you can create an account to access other great features.",
         });
         navigate("/");
-      } catch {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      } catch (e: any) {
+        if (e.data?.data?.email?.code == "validation_not_unique") {
+          toast({
+            title: "Duplicate waiver",
+            variant: "destructive",
+            duration: 5000,
+            description:
+              "We already have a waiver in the system with that email address.",
+          });
+          return;
+        }
+
         toast({
           title: "Waiver failed to submit.",
           variant: "destructive",
@@ -84,8 +96,8 @@ export const Waiver = () => {
     <div className="flex justify-center">
       <div className="flex flex-col gap-4 grow max-w-3xl">
         <h1 className="text-5xl font-bold">Gunn Runners - Waiver Form</h1>
-        {WAIVER_PARAGRAPHS.map((text) => (
-          <p>{text}</p>
+        {WAIVER_PARAGRAPHS.map((text, index) => (
+          <p key={index}>{text}</p>
         ))}
         <Form {...form}>
           <form
