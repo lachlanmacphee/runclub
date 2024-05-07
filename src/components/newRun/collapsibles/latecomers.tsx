@@ -92,6 +92,7 @@ export function Latecomers({
       bib: Number(data.bib),
       is_new: data.isNew,
       is_paid: data.isPaid,
+      time_seconds: 0,
     };
 
     const res = (await pb

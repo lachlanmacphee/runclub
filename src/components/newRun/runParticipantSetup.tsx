@@ -135,6 +135,7 @@ export function RunParticipantSetup({
         bib: Number(participant.bib),
         is_new: participant.isNew,
         is_paid: participant.isPaid,
+        time_seconds: 0,
       };
     });
 
