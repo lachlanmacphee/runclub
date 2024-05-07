@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { usePocket } from "@/contexts";
 import { GroupRun, Participant } from "@/lib/types";
 
@@ -19,23 +19,26 @@ export function NewRun() {
   const [groupRun, setGroupRun] = useState<GroupRun>();
   const [participants, setParticipants] = useState<Participant[]>([]);
 
-  useEffect(() => {
-    async function fetchInProgressRuns() {
-      const inProgressRuns = (await pb.collection("group_runs").getFullList({
-        filter: "isComplete = false",
-      })) as GroupRun[];
+  const fetchInProgressRuns = useCallback(async () => {
+    const inProgressRuns = (await pb.collection("group_runs").getFullList({
+      filter: "isComplete = false",
+    })) as GroupRun[];
 
-      if (inProgressRuns.length == 0) {
-        setStep(0);
-        setIsLoading(false);
-        return;
-      }
-
+    if (inProgressRuns.length == 0) {
+      setStep(0);
       setIsLoading(false);
-      setInProgressRuns(inProgressRuns);
+      return;
     }
+
+    setIsLoading(false);
+    setInProgressRuns(inProgressRuns);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
     fetchInProgressRuns();
-  }, [pb]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   if (isLoading)
     return (
@@ -51,6 +54,7 @@ export function NewRun() {
         setStep={setStep}
         setGroupRun={setGroupRun}
         setParticipants={setParticipants}
+        update={fetchInProgressRuns}
       />
     );
   }

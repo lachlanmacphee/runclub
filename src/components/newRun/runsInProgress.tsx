@@ -19,11 +19,13 @@ export function RunsInProgress({
   setStep,
   setGroupRun,
   setParticipants,
+  update,
 }: {
   inProgressRuns: GroupRun[];
   setStep: Dispatch<SetStateAction<number>>;
   setGroupRun: Dispatch<SetStateAction<GroupRun | undefined>>;
   setParticipants: Dispatch<SetStateAction<Participant[]>>;
+  update: VoidFunction;
 }) {
   const { pb } = usePocket();
 
@@ -36,6 +38,11 @@ export function RunsInProgress({
     setParticipants(participants);
     setGroupRun(run);
     setStep(1);
+  };
+
+  const markCompleteHandler = async (run: GroupRun) => {
+    await pb.collection("group_runs").update(run.id, { isComplete: true });
+    update();
   };
 
   return (
@@ -56,7 +63,13 @@ export function RunsInProgress({
               src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/55/Albert_park_aerial.jpg/640px-Albert_park_aerial.jpg"
             />
           </CardContent>
-          <CardFooter className="flex justify-end">
+          <CardFooter className="flex justify-end gap-2">
+            <Button
+              variant="destructive"
+              onClick={() => markCompleteHandler(run)}
+            >
+              Mark Complete
+            </Button>
             <Button onClick={() => continueHandler(run)}>Continue</Button>
           </CardFooter>
         </Card>
