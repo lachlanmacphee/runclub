@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 import { usePastRuns } from "@/hooks/usePastRuns";
 import { Participant } from "@/lib/types";
 import { SwapTimes } from "@/components/editRun/SwapTimes";
-import { EditTime } from "@/components/editRun/EditTime";
+import { EditDistanceTime } from "@/components/editRun/EditDistanceTime";
 import { Loader2 } from "lucide-react";
 
 export function EditRun() {
@@ -48,7 +48,10 @@ export function EditRun() {
     <div className="flex justify-center">
       <div className="flex flex-col gap-16 grow max-w-3xl">
         <SwapTimes participants={participants} update={getParticipants} />
-        <EditTime participants={participants} update={getParticipants} />
+        <EditDistanceTime
+          participants={participants}
+          update={getParticipants}
+        />
       </div>
     </div>
   );

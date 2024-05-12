@@ -90,7 +90,7 @@ export function SwapTimes({
 
   return (
     <div className="flex flex-col gap-4 grow max-w-3xl">
-      <h1 className="text-5xl font-bold">Swap Times</h1>
+      <h1 className="text-4xl font-bold">Swap Times</h1>
       <h2>Choose two participants and click the button</h2>
       <Select
         className="custom-react-select-container"

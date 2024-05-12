@@ -5,8 +5,14 @@ import { Input } from "../ui/input";
 import { Label } from "../ui/label";
 import { Button } from "../ui/button";
 import { useToast } from "../ui/use-toast";
-import { COLLECTIONS } from "@/lib/constants";
+import { COLLECTIONS, DISTANCE_OPTIONS } from "@/lib/constants";
 import { usePocket } from "@/contexts";
+
+function convertStrDistanceToNumber(distance: string) {
+  if (distance == "3.5") return 3.5;
+  if (distance == "5") return 5;
+  return 5;
+}
 
 function secondsToHms(seconds: number) {
   const hours = Math.floor(seconds / 3600);
@@ -20,7 +26,7 @@ function secondsToHms(seconds: number) {
   };
 }
 
-export function EditTime({
+export function EditDistanceTime({
   participants,
   update,
 }: {
@@ -35,6 +41,10 @@ export function EditTime({
   const [hours, setHours] = useState<string | undefined>();
   const [minutes, setMinutes] = useState<string | undefined>();
   const [seconds, setSeconds] = useState<string | undefined>();
+  const [distance, setDistance] = useState<{
+    label: string;
+    value: string;
+  } | null>();
 
   const onSelectParticipant = (selection: { label: string; value: string }) => {
     const newParticipant: Participant | undefined = participants?.find(
@@ -55,6 +65,11 @@ export function EditTime({
     setHours(timeCalc.hours.toString());
     setMinutes(timeCalc.minutes.toString());
     setSeconds(timeCalc.seconds.toString());
+    setDistance(
+      DISTANCE_OPTIONS.find(
+        (option) => option.value == newParticipant?.distance.toString() ?? "5"
+      )
+    );
     return;
   };
 
@@ -86,68 +101,60 @@ export function EditTime({
       return;
     }
 
+    if (!distance) {
+      toast({
+        title: "Error 570",
+        description: "Distance not entered correctly!",
+        variant: "destructive",
+      });
+      return;
+    }
+
     try {
       const newTime =
         parseInt(hours) * 3600 + parseInt(minutes) * 60 + parseInt(seconds);
+      const newDistance = convertStrDistanceToNumber(distance.value);
       await pb.collection(COLLECTIONS.PARTICIPANT_RUNS).update(participant.id, {
         time_seconds: newTime,
+        distance: newDistance,
       });
     } catch {
       toast({
-        title: "Error 570",
+        title: "Error 571",
         description: "Something went wrong while converting times...",
         variant: "destructive",
       });
+      return;
     }
 
     toast({
-      title: "Changed!",
-      description: `${participant.name}'s time has been adjusted.`,
+      title: "Success!",
+      description: `${participant.name}'s run entry has been adjusted.`,
     });
 
     setParticipant(undefined);
     update();
     return;
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [hours, minutes, participant, pb, seconds, toast]);
+  }, [hours, minutes, participant, pb, seconds, distance, toast]);
 
   if (!participants) {
     return <p>Failed to get participants for this run...</p>;
   }
 
-  if (!participant) {
-    return (
-      <div className="flex flex-col gap-4 grow max-w-3xl">
-        <h1 className="text-5xl font-bold">Edit Time</h1>
-        <h2>Choose a participant to edit their time</h2>
-        <Select
-          className="custom-react-select-container"
-          classNamePrefix="custom-react-select"
-          placeholder="Select a participant..."
-          value={null}
-          onChange={(selection) =>
-            !!selection && onSelectParticipant(selection)
-          }
-          options={participants.map((participant) => {
-            return {
-              label: participant.name,
-              value: participant.waiver_id,
-            };
-          })}
-        />
-      </div>
-    );
-  }
-
   return (
     <div className="flex flex-col gap-4 grow max-w-3xl">
-      <h1 className="text-5xl font-bold">Edit Time</h1>
-      <h2>Choose a participant to edit their time</h2>
+      <h1 className="text-5xl font-bold">Edit Participant</h1>
+      <h2>Choose a participant to edit their distance and time</h2>
       <Select
         className="custom-react-select-container"
         classNamePrefix="custom-react-select"
         placeholder="Select a participant..."
-        value={{ label: participant.name, value: participant.waiver_id }}
+        value={
+          participant
+            ? { label: participant.name, value: participant.waiver_id }
+            : null
+        }
         onChange={(selection) => !!selection && onSelectParticipant(selection)}
         options={participants.map((participant) => {
           return {
@@ -156,7 +163,7 @@ export function EditTime({
           };
         })}
       />
-      {participant.time_seconds >= 0 && (
+      {participant && participant.time_seconds >= 0 && (
         <>
           <div className="grid grid-cols-3 gap-4">
             <div>
@@ -184,6 +191,14 @@ export function EditTime({
               />
             </div>
           </div>
+          <Select
+            className="custom-react-select-container"
+            classNamePrefix="custom-react-select"
+            placeholder="Select distance..."
+            value={distance}
+            onChange={setDistance}
+            options={DISTANCE_OPTIONS}
+          />
           <Button onClick={onChange}>Change</Button>
         </>
       )}
