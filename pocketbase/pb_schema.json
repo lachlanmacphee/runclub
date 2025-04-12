@@ -1,0 +1,1177 @@
+[
+  {
+    "id": "0wxg1m9cyi4fzs1",
+    "name": "contact_us_submissions",
+    "type": "base",
+    "system": false,
+    "schema": [
+      {
+        "system": false,
+        "id": "yw5is16b",
+        "name": "firstName",
+        "type": "text",
+        "required": true,
+        "presentable": false,
+        "unique": false,
+        "options": {
+          "min": 2,
+          "max": null,
+          "pattern": ""
+        }
+      },
+      {
+        "system": false,
+        "id": "tqlsxmto",
+        "name": "lastName",
+        "type": "text",
+        "required": true,
+        "presentable": false,
+        "unique": false,
+        "options": {
+          "min": 2,
+          "max": null,
+          "pattern": ""
+        }
+      },
+      {
+        "system": false,
+        "id": "lot5uxyp",
+        "name": "emailAddress",
+        "type": "email",
+        "required": true,
+        "presentable": false,
+        "unique": false,
+        "options": {
+          "exceptDomains": [],
+          "onlyDomains": []
+        }
+      },
+      {
+        "system": false,
+        "id": "qmsyjrtk",
+        "name": "phoneNumber",
+        "type": "text",
+        "required": false,
+        "presentable": false,
+        "unique": false,
+        "options": {
+          "min": 10,
+          "max": null,
+          "pattern": ""
+        }
+      },
+      {
+        "system": false,
+        "id": "xx5guqia",
+        "name": "subject",
+        "type": "select",
+        "required": true,
+        "presentable": false,
+        "unique": false,
+        "options": {
+          "maxSelect": 1,
+          "values": [
+            "general",
+            "sponsor",
+            "fundraising",
+            "advertising",
+            "runningTip"
+          ]
+        }
+      },
+      {
+        "system": false,
+        "id": "fz19zblu",
+        "name": "comments",
+        "type": "text",
+        "required": true,
+        "presentable": false,
+        "unique": false,
+        "options": {
+          "min": 10,
+          "max": 160,
+          "pattern": ""
+        }
+      }
+    ],
+    "indexes": [],
+    "listRule": null,
+    "viewRule": null,
+    "createRule": "",
+    "updateRule": null,
+    "deleteRule": null,
+    "options": {}
+  },
+  {
+    "id": "bwjg6ijka9ws3go",
+    "name": "wiki_pages",
+    "type": "base",
+    "system": false,
+    "schema": [
+      {
+        "system": false,
+        "id": "fkfuaa3d",
+        "name": "name",
+        "type": "text",
+        "required": false,
+        "presentable": false,
+        "unique": false,
+        "options": {
+          "min": null,
+          "max": null,
+          "pattern": ""
+        }
+      },
+      {
+        "system": false,
+        "id": "j5oaqukr",
+        "name": "category",
+        "type": "text",
+        "required": false,
+        "presentable": false,
+        "unique": false,
+        "options": {
+          "min": null,
+          "max": null,
+          "pattern": ""
+        }
+      },
+      {
+        "system": false,
+        "id": "2inuwzz1",
+        "name": "content",
+        "type": "editor",
+        "required": false,
+        "presentable": false,
+        "unique": false,
+        "options": {
+          "convertUrls": false
+        }
+      }
+    ],
+    "indexes": [],
+    "listRule": "@request.auth.id != '' && @request.auth.role = 'admin' ",
+    "viewRule": "@request.auth.id != '' && @request.auth.role = 'admin' ",
+    "createRule": "@request.auth.id != '' && @request.auth.role = 'admin' ",
+    "updateRule": "@request.auth.id != '' && @request.auth.role = 'admin' ",
+    "deleteRule": null,
+    "options": {}
+  },
+  {
+    "id": "hnslkuuhoouj2k6",
+    "name": "announcements",
+    "type": "base",
+    "system": false,
+    "schema": [
+      {
+        "system": false,
+        "id": "hcvjbwgm",
+        "name": "endUnixTime",
+        "type": "number",
+        "required": false,
+        "presentable": false,
+        "unique": false,
+        "options": {
+          "min": null,
+          "max": null,
+          "noDecimal": false
+        }
+      },
+      {
+        "system": false,
+        "id": "nmsvunb8",
+        "name": "icon",
+        "type": "text",
+        "required": false,
+        "presentable": false,
+        "unique": false,
+        "options": {
+          "min": null,
+          "max": null,
+          "pattern": ""
+        }
+      },
+      {
+        "system": false,
+        "id": "vbwoivha",
+        "name": "message",
+        "type": "text",
+        "required": false,
+        "presentable": false,
+        "unique": false,
+        "options": {
+          "min": null,
+          "max": null,
+          "pattern": ""
+        }
+      }
+    ],
+    "indexes": [],
+    "listRule": "",
+    "viewRule": "",
+    "createRule": "@request.auth.id != '' && @request.auth.role = 'admin'",
+    "updateRule": "@request.auth.id != '' && @request.auth.role = 'admin'",
+    "deleteRule": null,
+    "options": {}
+  },
+  {
+    "id": "5jminqlkcyutdwq",
+    "name": "group_runs",
+    "type": "base",
+    "system": false,
+    "schema": [
+      {
+        "system": false,
+        "id": "q0qofgtr",
+        "name": "date",
+        "type": "date",
+        "required": true,
+        "presentable": false,
+        "unique": false,
+        "options": {
+          "min": "",
+          "max": ""
+        }
+      },
+      {
+        "system": false,
+        "id": "kdqga7jk",
+        "name": "location",
+        "type": "select",
+        "required": true,
+        "presentable": false,
+        "unique": false,
+        "options": {
+          "maxSelect": 1,
+          "values": [
+            "albertParkLake",
+            "southMelbBeach",
+            "portMelbBeach",
+            "tanGardens"
+          ]
+        }
+      },
+      {
+        "system": false,
+        "id": "pr72v5ut",
+        "name": "isComplete",
+        "type": "bool",
+        "required": false,
+        "presentable": false,
+        "unique": false,
+        "options": {}
+      },
+      {
+        "system": false,
+        "id": "e3lxpgeg",
+        "name": "conditions",
+        "type": "text",
+        "required": false,
+        "presentable": false,
+        "unique": false,
+        "options": {
+          "min": null,
+          "max": null,
+          "pattern": ""
+        }
+      }
+    ],
+    "indexes": [],
+    "listRule": "",
+    "viewRule": "",
+    "createRule": "@request.auth.id != '' && (@request.auth.role = 'moderator' || @request.auth.role = 'admin')",
+    "updateRule": "@request.auth.id != '' && (@request.auth.role = 'moderator' || @request.auth.role = 'admin')",
+    "deleteRule": null,
+    "options": {}
+  },
+  {
+    "id": "h91sle66x0z6g12",
+    "name": "participant_runs",
+    "type": "base",
+    "system": false,
+    "schema": [
+      {
+        "system": false,
+        "id": "iks1oyik",
+        "name": "group_run_id",
+        "type": "relation",
+        "required": false,
+        "presentable": false,
+        "unique": false,
+        "options": {
+          "collectionId": "5jminqlkcyutdwq",
+          "cascadeDelete": false,
+          "minSelect": null,
+          "maxSelect": 1,
+          "displayFields": null
+        }
+      },
+      {
+        "system": false,
+        "id": "bpndu3by",
+        "name": "waiver_id",
+        "type": "relation",
+        "required": false,
+        "presentable": false,
+        "unique": false,
+        "options": {
+          "collectionId": "n1tatva9niw2dyi",
+          "cascadeDelete": false,
+          "minSelect": null,
+          "maxSelect": 1,
+          "displayFields": null
+        }
+      },
+      {
+        "system": false,
+        "id": "z9azgfvf",
+        "name": "name",
+        "type": "text",
+        "required": true,
+        "presentable": false,
+        "unique": false,
+        "options": {
+          "min": 2,
+          "max": null,
+          "pattern": ""
+        }
+      },
+      {
+        "system": false,
+        "id": "tdlpg6ee",
+        "name": "distance",
+        "type": "number",
+        "required": false,
+        "presentable": false,
+        "unique": false,
+        "options": {
+          "min": null,
+          "max": null,
+          "noDecimal": false
+        }
+      },
+      {
+        "system": false,
+        "id": "ys8gncyo",
+        "name": "time_seconds",
+        "type": "number",
+        "required": false,
+        "presentable": false,
+        "unique": false,
+        "options": {
+          "min": null,
+          "max": null,
+          "noDecimal": false
+        }
+      },
+      {
+        "system": false,
+        "id": "fk2slakn",
+        "name": "bib",
+        "type": "number",
+        "required": false,
+        "presentable": false,
+        "unique": false,
+        "options": {
+          "min": null,
+          "max": null,
+          "noDecimal": false
+        }
+      },
+      {
+        "system": false,
+        "id": "ybxnvdmt",
+        "name": "is_paid",
+        "type": "bool",
+        "required": false,
+        "presentable": false,
+        "unique": false,
+        "options": {}
+      },
+      {
+        "system": false,
+        "id": "sjiysxge",
+        "name": "is_new",
+        "type": "bool",
+        "required": false,
+        "presentable": false,
+        "unique": false,
+        "options": {}
+      }
+    ],
+    "indexes": [],
+    "listRule": "",
+    "viewRule": "",
+    "createRule": "@request.auth.id != '' && (@request.auth.role = 'moderator' || @request.auth.role = 'admin')",
+    "updateRule": "@request.auth.id != '' && (@request.auth.role = 'moderator' || @request.auth.role = 'admin')",
+    "deleteRule": null,
+    "options": {}
+  },
+  {
+    "id": "q2pmk21bq1xhobr",
+    "name": "events",
+    "type": "base",
+    "system": false,
+    "schema": [
+      {
+        "system": false,
+        "id": "9o08oszy",
+        "name": "title",
+        "type": "text",
+        "required": true,
+        "presentable": false,
+        "unique": false,
+        "options": {
+          "min": null,
+          "max": null,
+          "pattern": ""
+        }
+      },
+      {
+        "system": false,
+        "id": "bgtok39h",
+        "name": "description",
+        "type": "text",
+        "required": false,
+        "presentable": false,
+        "unique": false,
+        "options": {
+          "min": null,
+          "max": null,
+          "pattern": ""
+        }
+      },
+      {
+        "system": false,
+        "id": "rzm9lued",
+        "name": "link",
+        "type": "text",
+        "required": false,
+        "presentable": false,
+        "unique": false,
+        "options": {
+          "min": null,
+          "max": null,
+          "pattern": ""
+        }
+      },
+      {
+        "system": false,
+        "id": "wa5uwgpb",
+        "name": "start",
+        "type": "date",
+        "required": true,
+        "presentable": false,
+        "unique": false,
+        "options": {
+          "min": "",
+          "max": ""
+        }
+      },
+      {
+        "system": false,
+        "id": "uxw1czrd",
+        "name": "end",
+        "type": "date",
+        "required": true,
+        "presentable": false,
+        "unique": false,
+        "options": {
+          "min": "",
+          "max": ""
+        }
+      }
+    ],
+    "indexes": [],
+    "listRule": "",
+    "viewRule": "",
+    "createRule": "@request.auth.id != '' && @request.auth.role = 'admin'",
+    "updateRule": "@request.auth.id != '' && @request.auth.role = 'admin'",
+    "deleteRule": "@request.auth.id != '' && @request.auth.role = 'admin'",
+    "options": {}
+  },
+  {
+    "id": "7o25oqtj55qe30c",
+    "name": "role_requests",
+    "type": "base",
+    "system": false,
+    "schema": [
+      {
+        "system": false,
+        "id": "xsqmt2gv",
+        "name": "user_id",
+        "type": "relation",
+        "required": false,
+        "presentable": false,
+        "unique": false,
+        "options": {
+          "collectionId": "_pb_users_auth_",
+          "cascadeDelete": false,
+          "minSelect": null,
+          "maxSelect": 1,
+          "displayFields": null
+        }
+      },
+      {
+        "system": false,
+        "id": "uaf55w6w",
+        "name": "new_role",
+        "type": "text",
+        "required": false,
+        "presentable": false,
+        "unique": false,
+        "options": {
+          "min": null,
+          "max": null,
+          "pattern": ""
+        }
+      }
+    ],
+    "indexes": [
+      "CREATE UNIQUE INDEX `idx_0j41xGm` ON `role_requests` (`user_id`)"
+    ],
+    "listRule": "@request.auth.role = 'admin'",
+    "viewRule": "@request.auth.role = 'admin'",
+    "createRule": "",
+    "updateRule": null,
+    "deleteRule": "@request.auth.role = 'admin'",
+    "options": {}
+  },
+  {
+    "id": "_pb_users_auth_",
+    "name": "users",
+    "type": "auth",
+    "system": false,
+    "schema": [
+      {
+        "system": false,
+        "id": "users_name",
+        "name": "name",
+        "type": "text",
+        "required": false,
+        "presentable": false,
+        "unique": false,
+        "options": {
+          "min": 5,
+          "max": null,
+          "pattern": ""
+        }
+      },
+      {
+        "system": false,
+        "id": "sottmtgf",
+        "name": "alias",
+        "type": "text",
+        "required": false,
+        "presentable": false,
+        "unique": false,
+        "options": {
+          "min": 5,
+          "max": null,
+          "pattern": ""
+        }
+      },
+      {
+        "system": false,
+        "id": "kh1xeomf",
+        "name": "role",
+        "type": "select",
+        "required": false,
+        "presentable": false,
+        "unique": false,
+        "options": {
+          "maxSelect": 1,
+          "values": ["admin", "moderator", "member"]
+        }
+      },
+      {
+        "system": false,
+        "id": "users_avatar",
+        "name": "avatar",
+        "type": "file",
+        "required": false,
+        "presentable": false,
+        "unique": false,
+        "options": {
+          "mimeTypes": [
+            "image/jpeg",
+            "image/png",
+            "image/svg+xml",
+            "image/gif",
+            "image/webp"
+          ],
+          "thumbs": null,
+          "maxSelect": 1,
+          "maxSize": 5242880,
+          "protected": false
+        }
+      }
+    ],
+    "indexes": [],
+    "listRule": "@request.auth.id != ''",
+    "viewRule": "@request.auth.id != '' && (id = @request.auth.id || @request.auth.role = 'moderator' || @request.auth.role = 'admin')",
+    "createRule": "@request.data.role = null || @request.data.role = 'member'",
+    "updateRule": "@request.auth.role = 'admin' || (id = @request.auth.id && (@request.data.role = null || @request.data.role = 'member'))",
+    "deleteRule": "id = @request.auth.id",
+    "options": {
+      "allowEmailAuth": true,
+      "allowOAuth2Auth": true,
+      "allowUsernameAuth": false,
+      "exceptEmailDomains": null,
+      "manageRule": null,
+      "minPasswordLength": 10,
+      "onlyEmailDomains": null,
+      "onlyVerified": false,
+      "requireEmail": false
+    }
+  },
+  {
+    "id": "up7mq6sfq7qc9cu",
+    "name": "volunteers",
+    "type": "base",
+    "system": false,
+    "schema": [
+      {
+        "system": false,
+        "id": "cq1mcc5a",
+        "name": "run_date",
+        "type": "date",
+        "required": true,
+        "presentable": false,
+        "unique": false,
+        "options": {
+          "min": "",
+          "max": ""
+        }
+      },
+      {
+        "system": false,
+        "id": "ayt0aqhm",
+        "name": "user_id",
+        "type": "relation",
+        "required": false,
+        "presentable": false,
+        "unique": false,
+        "options": {
+          "collectionId": "_pb_users_auth_",
+          "cascadeDelete": false,
+          "minSelect": null,
+          "maxSelect": 1,
+          "displayFields": null
+        }
+      },
+      {
+        "system": false,
+        "id": "1vgm3ekc",
+        "name": "waiver_id",
+        "type": "relation",
+        "required": false,
+        "presentable": false,
+        "unique": false,
+        "options": {
+          "collectionId": "n1tatva9niw2dyi",
+          "cascadeDelete": false,
+          "minSelect": null,
+          "maxSelect": 1,
+          "displayFields": null
+        }
+      }
+    ],
+    "indexes": [],
+    "listRule": "@request.auth.id != '' && (@request.auth.role = 'moderator' || @request.auth.role = 'admin')",
+    "viewRule": "@request.auth.id != '' && (@request.auth.role = 'moderator' || @request.auth.role = 'admin')",
+    "createRule": "@request.auth.id != '' && (@request.auth.role = 'moderator' || @request.auth.role = 'admin')",
+    "updateRule": "@request.auth.id != '' && (@request.auth.role = 'moderator' || @request.auth.role = 'admin')",
+    "deleteRule": "@request.auth.id != '' && (@request.auth.role = 'moderator' || @request.auth.role = 'admin')",
+    "options": {}
+  },
+  {
+    "id": "n1tatva9niw2dyi",
+    "name": "waivers",
+    "type": "base",
+    "system": false,
+    "schema": [
+      {
+        "system": false,
+        "id": "d8kgdtsq",
+        "name": "user_id",
+        "type": "relation",
+        "required": false,
+        "presentable": false,
+        "unique": false,
+        "options": {
+          "collectionId": "_pb_users_auth_",
+          "cascadeDelete": false,
+          "minSelect": null,
+          "maxSelect": 1,
+          "displayFields": null
+        }
+      },
+      {
+        "system": false,
+        "id": "tj7qbrpz",
+        "name": "email",
+        "type": "email",
+        "required": true,
+        "presentable": false,
+        "unique": false,
+        "options": {
+          "exceptDomains": [],
+          "onlyDomains": []
+        }
+      },
+      {
+        "system": false,
+        "id": "drsji9tf",
+        "name": "fname",
+        "type": "text",
+        "required": true,
+        "presentable": false,
+        "unique": false,
+        "options": {
+          "min": 2,
+          "max": null,
+          "pattern": ""
+        }
+      },
+      {
+        "system": false,
+        "id": "4dy8z83f",
+        "name": "lname",
+        "type": "text",
+        "required": true,
+        "presentable": false,
+        "unique": false,
+        "options": {
+          "min": 2,
+          "max": null,
+          "pattern": ""
+        }
+      },
+      {
+        "system": false,
+        "id": "lgptbmz8",
+        "name": "alias",
+        "type": "text",
+        "required": false,
+        "presentable": false,
+        "unique": false,
+        "options": {
+          "min": 5,
+          "max": null,
+          "pattern": ""
+        }
+      },
+      {
+        "system": false,
+        "id": "1qzyb1lg",
+        "name": "suburb",
+        "type": "text",
+        "required": true,
+        "presentable": false,
+        "unique": false,
+        "options": {
+          "min": 3,
+          "max": null,
+          "pattern": ""
+        }
+      },
+      {
+        "system": false,
+        "id": "e9qxdwdf",
+        "name": "postcode",
+        "type": "text",
+        "required": true,
+        "presentable": false,
+        "unique": false,
+        "options": {
+          "min": 4,
+          "max": 10,
+          "pattern": ""
+        }
+      },
+      {
+        "system": false,
+        "id": "ztk8jmhc",
+        "name": "phone",
+        "type": "text",
+        "required": true,
+        "presentable": false,
+        "unique": false,
+        "options": {
+          "min": 9,
+          "max": null,
+          "pattern": ""
+        }
+      },
+      {
+        "system": false,
+        "id": "irrwfex9",
+        "name": "gender",
+        "type": "select",
+        "required": true,
+        "presentable": false,
+        "unique": false,
+        "options": {
+          "maxSelect": 1,
+          "values": ["Male", "Female", "Other", "Blank"]
+        }
+      },
+      {
+        "system": false,
+        "id": "poeqstgy",
+        "name": "age",
+        "type": "select",
+        "required": true,
+        "presentable": false,
+        "unique": false,
+        "options": {
+          "maxSelect": 1,
+          "values": ["Under18", "18-30", "31-40", "41-50", "Above50", "Blank"]
+        }
+      },
+      {
+        "system": false,
+        "id": "onhlpwfq",
+        "name": "satisfiesAgeReq",
+        "type": "select",
+        "required": true,
+        "presentable": false,
+        "unique": false,
+        "options": {
+          "maxSelect": 1,
+          "values": ["Over18", "HavePermission"]
+        }
+      },
+      {
+        "system": false,
+        "id": "ovwhjvb2",
+        "name": "readTermsAndConditions",
+        "type": "bool",
+        "required": true,
+        "presentable": false,
+        "unique": false,
+        "options": {}
+      },
+      {
+        "system": false,
+        "id": "zaijmxdu",
+        "name": "emergencyContactName",
+        "type": "text",
+        "required": true,
+        "presentable": false,
+        "unique": false,
+        "options": {
+          "min": 2,
+          "max": null,
+          "pattern": ""
+        }
+      },
+      {
+        "system": false,
+        "id": "paodfx8c",
+        "name": "emergencyContactPhone",
+        "type": "text",
+        "required": true,
+        "presentable": false,
+        "unique": false,
+        "options": {
+          "min": 9,
+          "max": null,
+          "pattern": ""
+        }
+      },
+      {
+        "system": false,
+        "id": "likgm7rm",
+        "name": "referredBy",
+        "type": "text",
+        "required": false,
+        "presentable": false,
+        "unique": false,
+        "options": {
+          "min": null,
+          "max": null,
+          "pattern": ""
+        }
+      }
+    ],
+    "indexes": ["CREATE UNIQUE INDEX `idx_pODofIB` ON `waivers` (`email`)"],
+    "listRule": "@request.auth.id != '' && (@request.auth.role = 'moderator' || @request.auth.role = 'admin' || @request.auth.id = user_id.id)",
+    "viewRule": "@request.auth.id != '' && (@request.auth.role = 'moderator' || @request.auth.role = 'admin' || @request.auth.id = user_id.id)",
+    "createRule": "",
+    "updateRule": "@request.auth.id != '' && @request.auth.role = 'admin'",
+    "deleteRule": null,
+    "options": {}
+  },
+  {
+    "id": "qkc9zmj2hs0ua4b",
+    "name": "top_10_male_5k",
+    "type": "view",
+    "system": false,
+    "schema": [
+      {
+        "system": false,
+        "id": "i4vmp36o",
+        "name": "name",
+        "type": "json",
+        "required": false,
+        "presentable": false,
+        "unique": false,
+        "options": {
+          "maxSize": 1
+        }
+      },
+      {
+        "system": false,
+        "id": "1zw8pjox",
+        "name": "time_seconds",
+        "type": "json",
+        "required": false,
+        "presentable": false,
+        "unique": false,
+        "options": {
+          "maxSize": 1
+        }
+      }
+    ],
+    "indexes": [],
+    "listRule": "",
+    "viewRule": "",
+    "createRule": null,
+    "updateRule": null,
+    "deleteRule": null,
+    "options": {
+      "query": "SELECT \n    (ROW_NUMBER() OVER (ORDER BY min_time)) as id,\n    name,\n    min_time as time_seconds,\n    created\nFROM (\n    SELECT \n        participant_runs.name,\n        MIN(participant_runs.time_seconds) as min_time,\n        participant_runs.created as created\n    FROM \n        participant_runs \n    JOIN \n        waivers ON participant_runs.waiver_id = waivers.id\n    WHERE \n        participant_runs.distance = 5\n        AND participant_runs.time_seconds != 0\n        AND waivers.gender = 'Male' \n    GROUP BY \n        participant_runs.name\n) as distinct_runs\nORDER BY \n    min_time \nLIMIT 10;"
+    }
+  },
+  {
+    "id": "swin70bwvk8ozlw",
+    "name": "top_10_male_3k",
+    "type": "view",
+    "system": false,
+    "schema": [
+      {
+        "system": false,
+        "id": "8e2kdiqb",
+        "name": "name",
+        "type": "json",
+        "required": false,
+        "presentable": false,
+        "unique": false,
+        "options": {
+          "maxSize": 1
+        }
+      },
+      {
+        "system": false,
+        "id": "aephzdov",
+        "name": "time_seconds",
+        "type": "json",
+        "required": false,
+        "presentable": false,
+        "unique": false,
+        "options": {
+          "maxSize": 1
+        }
+      }
+    ],
+    "indexes": [],
+    "listRule": "",
+    "viewRule": "",
+    "createRule": null,
+    "updateRule": null,
+    "deleteRule": null,
+    "options": {
+      "query": "SELECT \n    (ROW_NUMBER() OVER (ORDER BY min_time)) as id,\n    name,\n    min_time as time_seconds,\n    created\nFROM (\n    SELECT \n        participant_runs.name,\n        MIN(participant_runs.time_seconds) as min_time,\n        participant_runs.created as created\n    FROM \n        participant_runs \n    JOIN \n        waivers ON participant_runs.waiver_id = waivers.id\n    WHERE \n        participant_runs.distance = 3.5\n        AND participant_runs.time_seconds != 0\n        AND waivers.gender = 'Male' \n    GROUP BY \n        participant_runs.name\n) as distinct_runs\nORDER BY \n    min_time \nLIMIT 10;"
+    }
+  },
+  {
+    "id": "ib2a5ada1pdo9jk",
+    "name": "top_10_female_5k",
+    "type": "view",
+    "system": false,
+    "schema": [
+      {
+        "system": false,
+        "id": "ffoxsxfk",
+        "name": "name",
+        "type": "json",
+        "required": false,
+        "presentable": false,
+        "unique": false,
+        "options": {
+          "maxSize": 1
+        }
+      },
+      {
+        "system": false,
+        "id": "ywjlftzt",
+        "name": "time_seconds",
+        "type": "json",
+        "required": false,
+        "presentable": false,
+        "unique": false,
+        "options": {
+          "maxSize": 1
+        }
+      }
+    ],
+    "indexes": [],
+    "listRule": "",
+    "viewRule": "",
+    "createRule": null,
+    "updateRule": null,
+    "deleteRule": null,
+    "options": {
+      "query": "SELECT \n    (ROW_NUMBER() OVER (ORDER BY min_time)) as id,\n    name,\n    min_time as time_seconds,\n    created\nFROM (\n    SELECT \n        participant_runs.name,\n        MIN(participant_runs.time_seconds) as min_time,\n        participant_runs.created as created\n    FROM \n        participant_runs \n    JOIN \n        waivers ON participant_runs.waiver_id = waivers.id\n    WHERE \n        participant_runs.distance = 5\n        AND participant_runs.time_seconds != 0\n        AND waivers.gender = 'Female' \n    GROUP BY \n        participant_runs.name\n) as distinct_runs\nORDER BY \n    min_time \nLIMIT 10;"
+    }
+  },
+  {
+    "id": "kqug33s0plbuy88",
+    "name": "top_10_female_3k",
+    "type": "view",
+    "system": false,
+    "schema": [
+      {
+        "system": false,
+        "id": "ngxlqjxd",
+        "name": "name",
+        "type": "json",
+        "required": false,
+        "presentable": false,
+        "unique": false,
+        "options": {
+          "maxSize": 1
+        }
+      },
+      {
+        "system": false,
+        "id": "iw9fsfqb",
+        "name": "time_seconds",
+        "type": "json",
+        "required": false,
+        "presentable": false,
+        "unique": false,
+        "options": {
+          "maxSize": 1
+        }
+      }
+    ],
+    "indexes": [],
+    "listRule": "",
+    "viewRule": "",
+    "createRule": null,
+    "updateRule": null,
+    "deleteRule": null,
+    "options": {
+      "query": "SELECT \n    (ROW_NUMBER() OVER (ORDER BY min_time)) as id,\n    name,\n    min_time as time_seconds,\n    created\nFROM (\n    SELECT \n        participant_runs.name,\n        MIN(participant_runs.time_seconds) as min_time,\n        participant_runs.created as created\n    FROM \n        participant_runs \n    JOIN \n        waivers ON participant_runs.waiver_id = waivers.id\n    WHERE \n        participant_runs.distance = 3.5\n        AND participant_runs.time_seconds != 0\n        AND waivers.gender = 'Female' \n    GROUP BY \n        participant_runs.name\n) as distinct_runs\nORDER BY \n    min_time \nLIMIT 10;"
+    }
+  },
+  {
+    "id": "6z3pkigtvav8gq8",
+    "name": "trivia",
+    "type": "base",
+    "system": false,
+    "schema": [
+      {
+        "system": false,
+        "id": "wfrjna6s",
+        "name": "user",
+        "type": "relation",
+        "required": false,
+        "presentable": false,
+        "unique": false,
+        "options": {
+          "collectionId": "_pb_users_auth_",
+          "cascadeDelete": false,
+          "minSelect": null,
+          "maxSelect": 1,
+          "displayFields": null
+        }
+      },
+      {
+        "system": false,
+        "id": "c9bblewe",
+        "name": "correct",
+        "type": "number",
+        "required": false,
+        "presentable": false,
+        "unique": false,
+        "options": {
+          "min": null,
+          "max": null,
+          "noDecimal": false
+        }
+      },
+      {
+        "system": false,
+        "id": "vkxuq01z",
+        "name": "incorrect",
+        "type": "number",
+        "required": false,
+        "presentable": false,
+        "unique": false,
+        "options": {
+          "min": null,
+          "max": null,
+          "noDecimal": false
+        }
+      }
+    ],
+    "indexes": [],
+    "listRule": "@request.auth.id != ''",
+    "viewRule": "@request.auth.id != ''",
+    "createRule": "@request.auth.id != '' && @request.data.user = @request.auth.id",
+    "updateRule": "@request.auth.id != '' && @request.auth.id = user.id",
+    "deleteRule": null,
+    "options": {}
+  },
+  {
+    "id": "za37sstzz62qjho",
+    "name": "event_attendance",
+    "type": "base",
+    "system": false,
+    "schema": [
+      {
+        "system": false,
+        "id": "hbsg2ik9",
+        "name": "user_id",
+        "type": "relation",
+        "required": false,
+        "presentable": false,
+        "unique": false,
+        "options": {
+          "collectionId": "_pb_users_auth_",
+          "cascadeDelete": false,
+          "minSelect": null,
+          "maxSelect": 1,
+          "displayFields": null
+        }
+      },
+      {
+        "system": false,
+        "id": "uhr2hprx",
+        "name": "event_id",
+        "type": "relation",
+        "required": false,
+        "presentable": false,
+        "unique": false,
+        "options": {
+          "collectionId": "q2pmk21bq1xhobr",
+          "cascadeDelete": false,
+          "minSelect": null,
+          "maxSelect": 1,
+          "displayFields": null
+        }
+      }
+    ],
+    "indexes": [],
+    "listRule": "@request.auth.id != '' && @request.auth.id = user_id",
+    "viewRule": "@request.auth.id != '' && @request.auth.id = user_id",
+    "createRule": "@request.auth.id != '' && @request.data.user_id = @request.auth.id",
+    "updateRule": null,
+    "deleteRule": "@request.auth.id != '' && @request.auth.id = user_id",
+    "options": {}
+  }
+]

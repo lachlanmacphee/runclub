@@ -1,0 +1,36 @@
+{
+  "routes": [
+    {
+      "src": "/assets/(.+\\.js)$",
+      "headers": {
+        "Cache-Control": "public, max-age=0, must-revalidate",
+        "CDN-Cache-Control": "max-age=3600",
+        "Vercel-CDN-Cache-Control": "max-age=86400"
+      }
+    },
+    {
+      "src": "/assets/(.+\\.css)$",
+      "headers": {
+        "Cache-Control": "public, max-age=604800"
+      }
+    },
+    {
+      "src": "/assets/(.*)",
+      "headers": {
+        "Cache-Control": "public, max-age=31556952, immutable"
+      }
+    },
+    {
+      "src": "/(.+\\.ico)",
+      "headers": { "Cache-Control": "public, max-age=31556952, immutable" },
+      "continue": true
+    },
+    {
+      "src": "/(.+\\.png)",
+      "headers": { "Cache-Control": "public, max-age=31556952, immutable" },
+      "continue": true
+    },
+    { "handle": "filesystem" },
+    { "src": "/(.*)", "dest": "/" }
+  ]
+}
