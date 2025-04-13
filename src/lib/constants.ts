@@ -87,7 +87,7 @@ export const NAV_ROUTES = [
   { path: "/volunteer", label: "Volunteer", minRole: ROLES.MODERATOR },
   { path: "/stats/club", label: "Club Stats", minRole: ROLES.MEMBER },
   { path: "/stats/member", label: "Your Stats", minRole: ROLES.MEMBER },
-  { path: "/events", label: "Events", minRole: null },
+  { path: "/events", label: "Events", minRole: ROLES.MEMBER },
   { path: "/trivia", label: "Trivia", minRole: ROLES.MEMBER },
   { path: "/manage", label: "Manage", minRole: ROLES.ADMIN },
   { path: "/faqs", label: "FAQs", minRole: null },
