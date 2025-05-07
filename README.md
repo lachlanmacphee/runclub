@@ -60,9 +60,9 @@ Also, you'll need to install Docker. Follow the guide [here](https://docs.docker
 
 Buy a domain if you don't have one already and setup the following DNS records:
 
-An A record with the host as `@` pointing to your VPS IPv4 IP
-An A record with the host as `www` pointing to your VPS IPv4 IP
-An A record with the host as `pb` pointing to your VPS IPv4 IP
+- An A record with the host as `@` pointing to your VPS IPv4 IP
+- An A record with the host as `www` pointing to your VPS IPv4 IP
+- An A record with the host as `pb` pointing to your VPS IPv4 IP
 
 #### Step 4: Clone this repo and edit some stuff
 
