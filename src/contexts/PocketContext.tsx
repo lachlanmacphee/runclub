@@ -101,9 +101,14 @@ export const PocketProvider = ({ children }: PocketProviderProps) => {
 
   const OAuthLogin = useCallback(
     async (provider: string) => {
-      const authData = await pb
-        .collection("users")
-        .authWithOAuth2({ provider });
+      const w = window.open() as Window;
+
+      const authData = await pb.collection("users").authWithOAuth2({
+        provider,
+        urlCallback: (url) => {
+          w.location.href = url;
+        },
+      });
 
       const meta = authData.meta;
 
