@@ -85,7 +85,7 @@ export const WaiverFormSchema = z.object({
 });
 
 export const AccountDetailsSchema = z.object({
-  name: z.string().min(5),
+  name: z.string().min(5, "Full name must be at least 5 characters long"),
   alias: z
     .union([
       z

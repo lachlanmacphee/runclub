@@ -23,13 +23,17 @@ import { Checkbox } from "@/components/ui/checkbox";
 
 const FormSchema = z
   .object({
-    fullName: z.string().min(5),
+    fullName: z.string().min(5, "Full name must be at least 5 characters long"),
     email: z.string().email(),
-    password: z.string().min(10),
-    passwordConfirm: z.string().min(10),
+    password: z
+      .string()
+      .min(10, "Password must be at least 10 characters long"),
+    passwordConfirm: z
+      .string()
+      .min(10, "Password must be at least 10 characters long"),
     requestVolunteer: z.boolean().default(false),
     alias: z
-      .union([z.string().length(0), z.string().min(5)])
+      .union([z.string().min(5), z.string().length(0)])
       .optional()
       .transform((e) => (e === "" ? undefined : e)),
   })
