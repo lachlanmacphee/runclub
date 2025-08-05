@@ -2,7 +2,7 @@ export const FAQ_DATA = [
   {
     question: "Where can I run with a group in Melbourne?",
     answer:
-      "Every Tuesday night you can run the Albert Park Lake with the Gunn Runners. We meet at the Limerick Arms Hotel (corner of Clarendon St and Park St) at 6pm.",
+      "Every Tuesday night you can run the Albert Park Lake with Gunn Runners. We meet at the Limerick Arms Hotel (corner of Clarendon St and Park St) at 6pm.",
   },
   {
     question: "How good of a runner do I need to be / what pace do you run at?",
@@ -44,12 +44,12 @@ export const FAQ_DATA = [
   {
     question: "Are there promo codes available for upcoming running events?",
     answer:
-      "For Run the Pen's 2024 events use the discount code CLUB for 10% off. All Sole Motive's 2024 events have 10% off with promo code SM-MEMBER-GR.",
+      "Promo codes can be found under each respective event in the Events page. You must be a member to access this page.",
   },
   {
     question: "What is the history of Gunn Runners?",
     answer:
-      'Originally set up 21 years ago by a group of friends, the Gunn Runners met at the Gunn Island Hotel once a week for a simple "Run and a Beer". The format remains much the same, with the group now meeting at the Limerick Arms Hotel in South Melbourne.',
+      'Originally set up in 2003 by a group of friends, Gunn Runners met at the Gunn Island Hotel once a week for a simple "Run and a Beer". The format remains much the same, with the group now meeting at the Limerick Arms Hotel in South Melbourne.',
   },
 ];
 
