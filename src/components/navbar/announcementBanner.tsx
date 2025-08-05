@@ -33,7 +33,7 @@ export function AnnouncementBanner({
   return (
     <div
       className={`${
-        !isPreview && "fixed bottom-0 left-0 z-10 w-full rounded-t-xl"
+        !isPreview && "fixed bottom-0 left-0 z-50 w-full rounded-t-xl"
       } flex justify-between items-center py-2 pl-8 pr-4 ${
         icon == "Alert"
           ? "bg-red-500"
