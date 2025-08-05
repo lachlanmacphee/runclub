@@ -25,14 +25,6 @@ export function Home() {
       <section className="relative min-h-[90vh] bg-gradient-to-b from-background to-muted/30 overflow-hidden">
         {/* Background Images Grid */}
         <div className="absolute inset-0 opacity-60 dark:opacity-50">
-          {/* Mobile: Single Image */}
-          <div className="md:hidden h-full">
-            <Image
-              alt="A group of Gunn Runners celebrating after completing the Sunbury Parkrun."
-              src={image4}
-            />
-          </div>
-
           {/* Desktop: Grid Layout */}
           <div className="hidden md:grid gap-4 grid-cols-4 h-full grid-rows-2 max-w-6xl mx-auto p-4">
             <Image
