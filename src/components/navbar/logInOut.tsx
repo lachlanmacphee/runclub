@@ -9,7 +9,7 @@ export function LogInOut() {
 
   if (user) {
     return (
-      <Button onClick={logout} variant="outline" size="icon">
+      <Button onClick={logout} variant="ghost" size="icon">
         <LogOut className="h-[1.2rem] w-[1.2rem]" />
       </Button>
     );
@@ -18,7 +18,7 @@ export function LogInOut() {
   return (
     <Link
       to="/login"
-      className={buttonVariants({ variant: "outline", size: "icon" })}
+      className={buttonVariants({ variant: "ghost", size: "icon" })}
     >
       <User2 className="h-[1.2rem] w-[1.2rem]" />
     </Link>

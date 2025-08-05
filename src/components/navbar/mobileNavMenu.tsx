@@ -24,7 +24,7 @@ export function MobileNavMenu({ notifications }: { notifications: string[] }) {
     <Drawer open={dropdownOpen} onOpenChange={setDropdownOpen}>
       <DrawerTrigger
         className={
-          buttonVariants({ variant: "outline", size: "icon" }) + " 2xl:hidden"
+          buttonVariants({ variant: "ghost", size: "icon" }) + " 2xl:hidden"
         }
       >
         <Menu className="h-[1.2rem] w-[1.2rem]" />

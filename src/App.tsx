@@ -35,7 +35,7 @@ export default function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <PocketProvider>
-        <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
+        <ThemeProvider defaultTheme="system" storageKey="vite-ui-theme">
           <BrowserRouter>
             <Routes>
               <Route path="/login" element={<Login />} />

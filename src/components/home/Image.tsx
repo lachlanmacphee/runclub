@@ -8,10 +8,14 @@ export function Image({
   secondRow?: boolean;
 }) {
   return (
-    <div className={`${secondRow ? "hidden md:flex" : "flex"} justify-center`}>
+    <div
+      className={`${
+        secondRow ? "hidden md:flex" : "flex"
+      } justify-center group h-full`}
+    >
       <img
         loading="lazy"
-        className="rounded-lg aspect-video"
+        className="rounded-2xl aspect-video object-cover w-full h-full transition-all duration-500 group-hover:scale-110 group-hover:brightness-110 filter grayscale-0 hover:grayscale-0"
         src={src}
         alt={alt}
       />

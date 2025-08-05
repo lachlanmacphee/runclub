@@ -66,17 +66,14 @@ export function Navbar() {
           to="/"
           className="normal-case font-bold text-2xl w-[250px]"
         >
-          <div className="flex gap-4 items-center">
-            <img
-              alt="Gunn Runners Logo. It has a blue circle, with a red inner circle, and a swan in the very centre. The Gunn Runners text is curved on the top and bottom of the red circle."
-              className="w-10 h-10 rounded-full"
-              src="/android-chrome-512x512.png"
-            />
-            <span className="hidden xl:block">Gunn Runners</span>
-          </div>
+          <img
+            alt="Gunn Runners Logo. It has a blue circle, with a red inner circle, and a swan in the very centre. The Gunn Runners text is curved on the top and bottom of the red circle."
+            className="w-10 h-10 rounded-full"
+            src="/android-chrome-512x512.png"
+          />
         </Link>
         <DesktopNavMenu notifications={notifications} />
-        <div className="flex gap-3 justify-end w-[250px]">
+        <div className="flex gap-2 justify-end w-[250px]">
           <AvatarIconModal />
           <ModeToggle />
           <LogInOut />
