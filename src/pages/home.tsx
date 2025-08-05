@@ -22,7 +22,7 @@ export function Home() {
   return (
     <div className="min-h-screen">
       {/* Hero Section with Images and Text Overlay */}
-      <section className="relative min-h-[90vh] bg-gradient-to-b from-background to-muted/30 overflow-hidden">
+      <section className="relative min-h-[80vh] bg-gradient-to-b from-background to-muted/30 overflow-hidden">
         {/* Background Images Grid */}
         <div className="absolute inset-0 opacity-60 dark:opacity-50">
           {/* Desktop: Grid Layout */}
@@ -66,8 +66,8 @@ export function Home() {
           </div>
         </div>
 
-        {/* Gradient Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-b from-background/80 via-background/60 to-background"></div>
+        {/* Gradient Overlay - Only for desktop with images */}
+        <div className="absolute inset-0 bg-gradient-to-b from-background/80 via-background/60 to-background hidden md:block"></div>
 
         {/* Hero Content */}
         <div className="relative z-10 flex items-center justify-center min-h-[80vh] px-4">
