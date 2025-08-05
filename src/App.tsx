@@ -11,6 +11,7 @@ import { Runs } from "@/pages/runs";
 import { ClubStats } from "@/pages/clubStats";
 import { ManageClub } from "@/pages/manageClub";
 import { FAQs } from "@/pages/faqs";
+import { Donations } from "@/pages/donations";
 import { Wiki } from "@/pages/wiki";
 import { ContactUs } from "@/pages/contactUs";
 import { Privacy } from "@/pages/privacy";
@@ -24,7 +25,7 @@ import { Waiver } from "@/pages/waiver";
 import { Account } from "@/pages/user";
 import { MemberStats } from "@/pages/memberStats";
 import { EditRun } from "@/pages/editRun";
-import { TriviaPage } from "./pages/trivia";
+import { TriviaPage } from "@/pages/trivia";
 
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
@@ -45,6 +46,7 @@ export default function App() {
                 <Route path="/runs" element={<Runs />} />
                 <Route path="/runs/:runId/edit" element={<EditRun />} />
                 <Route path="/faqs" element={<FAQs />} />
+                <Route path="/donations" element={<Donations />} />
                 <Route path="/contact" element={<ContactUs />} />
                 <Route path="/privacy" element={<Privacy />} />
                 <Route path="/events" element={<Events />} />

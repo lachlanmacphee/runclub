@@ -123,3 +123,13 @@ export type Trivia = {
   correct: number;
   incorrect: number;
 };
+
+export type Donation = {
+  id: string;
+  recipient: string;
+  amount: number;
+  description?: string;
+  date: Date;
+  receipt_url?: string;
+  category: string;
+};

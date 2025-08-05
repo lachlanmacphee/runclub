@@ -14,6 +14,7 @@ import {
 } from "@/components/ui/card";
 import { EventUpsertDialog } from "@/components/events/eventUpsertDialog";
 import { EventDeleteAlertDialog } from "@/components/events/eventDeleteAlertDialog";
+import { EventAttendeesDialog } from "@/components/events/eventAttendeesDialog";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
 
@@ -100,40 +101,50 @@ export function Events() {
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 3xl:grid-cols-6 gap-8">
         {events.length == 0 && <p>There are currently no upcoming events.</p>}
         {events.map((event, idx) => (
-          <Card key={idx}>
-            <div className="flex justify-between items-center pr-6">
-              <CardHeader>
-                <CardTitle>{event.title}</CardTitle>
-                <CardDescription>
-                  {event.start.getTime() == event.end.getTime()
-                    ? event.start.toLocaleDateString()
-                    : `${event.start.toLocaleDateString()} - ${event.end.toLocaleDateString()}`}
-                </CardDescription>
-              </CardHeader>
-              {isAdmin && (
-                <div className="flex gap-2">
-                  <EventUpsertDialog
-                    event={event}
-                    refreshEvents={fetchEventsAndAttendance}
-                  />
-                  <EventDeleteAlertDialog
-                    event={event}
-                    refreshEvents={fetchEventsAndAttendance}
-                  />
+          <Card key={idx} className="flex flex-col">
+            <CardHeader className="pb-3">
+              <div className="flex justify-between items-start gap-2">
+                <div className="flex-1 min-w-0">
+                  <CardTitle className="text-lg font-bold leading-tight truncate">
+                    {event.title}
+                  </CardTitle>
+                  <CardDescription className="text-sm mt-1">
+                    {event.start.getTime() == event.end.getTime()
+                      ? event.start.toLocaleDateString()
+                      : `${event.start.toLocaleDateString()} - ${event.end.toLocaleDateString()}`}
+                  </CardDescription>
                 </div>
-              )}
-            </div>
-            <CardContent>
+                {isAdmin && (
+                  <div className="flex gap-1 flex-shrink-0">
+                    <EventUpsertDialog
+                      event={event}
+                      refreshEvents={fetchEventsAndAttendance}
+                    />
+                    <EventAttendeesDialog
+                      eventId={event.id}
+                      eventTitle={event.title}
+                    />
+                    <EventDeleteAlertDialog
+                      event={event}
+                      refreshEvents={fetchEventsAndAttendance}
+                    />
+                  </div>
+                )}
+              </div>
+            </CardHeader>
+            <CardContent className="flex-grow">
               <p>{event.description}</p>
             </CardContent>
-            {event.link && (
-              <CardFooter className="justify-between">
+            <CardFooter>
+              {event.link && (
                 <a
                   href={event.link}
-                  className="text-primary font-bold underline-offset-4 hover:underline"
+                  className="text-primary w-full font-bold underline-offset-4 hover:underline"
                 >
                   More details
                 </a>
+              )}
+              <div className="w-full flex justify-end">
                 <div className="flex items-center space-x-2">
                   <Switch
                     id={`${event.title.toLowerCase().replace(/\s/g, "")}-going`}
@@ -152,8 +163,8 @@ export function Events() {
                     Going?
                   </Label>
                 </div>
-              </CardFooter>
-            )}
+              </div>
+            </CardFooter>
           </Card>
         ))}
       </div>

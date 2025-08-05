@@ -51,9 +51,13 @@ export const PocketProvider = ({ children }: PocketProviderProps) => {
 
   useEffect(() => {
     async function getLatestUserData() {
-      const res = await pb.collection("users").authRefresh();
-      setToken(res.token);
-      setUser(res.record as User);
+      try {
+        const res = await pb.collection("users").authRefresh();
+        setToken(res.token);
+        setUser(res.record as User);
+      } catch (error) {
+        pb.authStore.clear();
+      }
     }
     if (pb.authStore.isValid) {
       getLatestUserData();
@@ -145,9 +149,15 @@ export const PocketProvider = ({ children }: PocketProviderProps) => {
       return;
     }
     const tokenExpiration = decoded.exp;
-    const expirationWithBuffer = tokenExpiration + fiveMinutesInMs / 1000;
-    if (tokenExpiration < expirationWithBuffer) {
-      await pb.collection("users").authRefresh();
+    const currentTime = Date.now() / 1000;
+    const timeUntilExpiration = tokenExpiration - currentTime;
+
+    if (timeUntilExpiration < fiveMinutesInMs / 1000) {
+      try {
+        await pb.collection("users").authRefresh();
+      } catch (error) {
+        logout();
+      }
     }
   }, [logout, pb, token]);
 
