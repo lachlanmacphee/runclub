@@ -25,7 +25,16 @@ export function Home() {
       <section className="relative min-h-[90vh] bg-gradient-to-b from-background to-muted/30 overflow-hidden">
         {/* Background Images Grid */}
         <div className="absolute inset-0 opacity-60 dark:opacity-50">
-          <div className="grid gap-4 grid-cols-2 h-full grid-rows-2 md:grid-cols-4 md:grid-rows-2 max-w-6xl mx-auto p-4">
+          {/* Mobile: Single Image */}
+          <div className="md:hidden h-full">
+            <Image
+              alt="A group of Gunn Runners celebrating after completing the Sunbury Parkrun."
+              src={image4}
+            />
+          </div>
+
+          {/* Desktop: Grid Layout */}
+          <div className="hidden md:grid gap-4 grid-cols-4 h-full grid-rows-2 max-w-6xl mx-auto p-4">
             <Image
               alt="A group of Gunn Runners under a big yellow Pirelli sign stretching across the top of the road. This photo was taken after a Tuesday Grand Prix run."
               src={image2}
@@ -85,7 +94,7 @@ export function Home() {
               </div>
               {/* Call to Action */}
               <div className="pt-8 space-y-4">
-                <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                <div className="flex flex-row gap-4 justify-center items-center">
                   <Link
                     to="/waiver"
                     className="px-8 py-4 bg-red-600 hover:bg-red-700 text-white font-bold rounded-full transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
@@ -113,13 +122,11 @@ export function Home() {
       </section>
 
       {/* Information Sections */}
-      <div className="space-y-20 py-20 bg-gradient-to-b from-background to-muted/20">
+      <div className="space-y-10 py-20 bg-gradient-to-b from-background to-muted/20">
         {/* New Members Section */}
         <section className="relative group">
-          <div className="absolute inset-0 bg-gradient-to-r from-red-500/10 to-orange-500/10 rounded-3xl blur-xl transform group-hover:scale-105 transition-transform duration-500"></div>
-          <div className="relative bg-card/80 backdrop-blur-sm border-2 border-red-500/20 rounded-3xl mx-4 md:mx-8 shadow-2xl hover:shadow-red-500/10 transition-all duration-500 overflow-hidden">
-            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-red-500 to-orange-500"></div>
-            <div className="container mx-auto px-8 py-12 md:py-16 max-w-5xl">
+          <div className="relative mx-4 md:mx-8 overflow-hidden">
+            <div className="container mx-auto px-8 md:py-4 max-w-5xl">
               <div className="flex flex-col gap-8">
                 <div className="flex items-center gap-4">
                   <div className="h-2 w-16 bg-gradient-to-r from-red-500 to-orange-500 rounded-full animate-pulse"></div>
@@ -141,7 +148,7 @@ export function Home() {
                     up to the site is not the same as filling out the waiver
                     form.
                   </p>
-                  <p className="text-lg">
+                  <p className="text-xl leading-relaxed">
                     If you have any questions, we kindly ask that you please
                     check whether they have already been answered on our{" "}
                     <a
@@ -160,10 +167,8 @@ export function Home() {
 
         {/* Essential Info Section */}
         <section className="relative group">
-          <div className="absolute inset-0 bg-gradient-to-r from-slate-600/10 to-slate-800/10 rounded-3xl blur-xl transform group-hover:scale-105 transition-transform duration-500"></div>
-          <div className="relative bg-gradient-to-br from-slate-50/80 to-slate-100/80 dark:from-slate-950/40 dark:to-slate-900/40 backdrop-blur-sm border-2 border-slate-600/20 rounded-3xl mx-4 md:mx-8 shadow-2xl hover:shadow-slate-600/10 transition-all duration-500 overflow-hidden">
-            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-slate-600 to-slate-800"></div>
-            <div className="container mx-auto px-8 py-12 md:py-16 max-w-5xl">
+          <div className="relative mx-4 md:mx-8 overflow-hidden">
+            <div className="container mx-auto px-8 md:py-4 max-w-5xl">
               <div className="flex flex-col gap-8">
                 <div className="flex items-center gap-4">
                   <div className="h-2 w-16 bg-gradient-to-r from-slate-600 to-slate-800 rounded-full animate-pulse"></div>
@@ -172,7 +177,7 @@ export function Home() {
                   </h3>
                 </div>
                 <div className="space-y-6 leading-relaxed">
-                  <div className="p-6 bg-white/50 dark:bg-black/20 rounded-2xl border border-slate-200/50 dark:border-slate-800/50">
+                  <div>
                     <p className="text-xl font-semibold text-slate-900 dark:text-slate-100">
                       We meet{" "}
                       <span className="text-red-600 dark:text-red-400 font-black">
@@ -183,7 +188,7 @@ export function Home() {
                       and paces with up to 35 minutes to complete either course.
                     </p>
                   </div>
-                  <div className="p-6 bg-white/50 dark:bg-black/20 rounded-2xl border border-slate-200/50 dark:border-slate-800/50">
+                  <div>
                     <p className="text-xl font-semibold text-slate-900 dark:text-slate-100">
                       Join us at{" "}
                       <span className="text-red-600 dark:text-red-400 font-black">
@@ -199,24 +204,21 @@ export function Home() {
                       Limerick Arms.
                     </p>
                   </div>
-                  <div className="grid md:grid-cols-2 gap-4">
-                    <div className="p-6 bg-white/50 dark:bg-black/20 rounded-2xl border border-slate-200/50 dark:border-slate-800/50">
-                      <p className="text-lg font-medium text-slate-900 dark:text-slate-100">
-                        Whilst your first run is on us,
-                        <span className="text-red-600 dark:text-red-400 font-black">
-                          {" "}
-                          each run after costs $5
-                        </span>{" "}
-                        and helps support the Gunn Runners club and the various
-                        charities that we donate to throughout the year.
-                      </p>
-                    </div>
-                    <div className="p-6 bg-white/50 dark:bg-black/20 rounded-2xl border border-slate-200/50 dark:border-slate-800/50">
-                      <p className="text-lg font-medium text-slate-900 dark:text-slate-100">
-                        We take payment exclusively via bank transfer to prevent
-                        cash handling. Thank you for your understanding.
-                      </p>
-                    </div>
+                  <div>
+                    <p className="text-xl font-semibold text-slate-900 dark:text-slate-100">
+                      Whilst your first run is on us,
+                      <span className="text-red-600 dark:text-red-400 font-black">
+                        {" "}
+                        each run after costs $5
+                      </span>{" "}
+                      and helps support the Gunn Runners club and the various
+                      charities that we donate to throughout the year.
+                    </p>
+                  </div>
+                  <div>
+                    <p className="text-lg text-slate-700 dark:text-slate-300 text-center">
+                      We take payment exclusively via bank transfer to prevent cash handling. Thank you for your understanding.
+                    </p>
                   </div>
                 </div>
               </div>
@@ -226,10 +228,8 @@ export function Home() {
 
         {/* Payment Details Section */}
         <section className="relative group">
-          <div className="absolute inset-0 bg-gradient-to-r from-green-500/10 to-emerald-500/10 rounded-3xl blur-xl transform group-hover:scale-105 transition-transform duration-500"></div>
-          <div className="relative bg-gradient-to-br from-green-50/80 to-emerald-50/80 dark:from-green-950/40 dark:to-emerald-950/40 backdrop-blur-sm border-2 border-green-500/30 rounded-3xl mx-4 md:mx-8 shadow-2xl hover:shadow-green-500/10 transition-all duration-500 overflow-hidden">
-            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-green-500 to-emerald-500"></div>
-            <div className="container mx-auto px-8 py-12 md:py-16 max-w-5xl">
+          <div className="relative mx-4 md:mx-8 overflow-hidden">
+            <div className="container mx-auto px-8 md:py-4 max-w-5xl">
               <div className="flex flex-col gap-8">
                 <div className="flex items-center gap-4">
                   <div className="h-2 w-16 bg-gradient-to-r from-green-500 to-emerald-500 rounded-full animate-pulse"></div>
