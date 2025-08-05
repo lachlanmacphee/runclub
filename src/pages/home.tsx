@@ -217,7 +217,8 @@ export function Home() {
                   </div>
                   <div>
                     <p className="text-lg text-slate-700 dark:text-slate-300 text-center">
-                      We take payment exclusively via bank transfer to prevent cash handling. Thank you for your understanding.
+                      We take payment exclusively via bank transfer to prevent
+                      cash handling. Thank you for your understanding.
                     </p>
                   </div>
                 </div>
