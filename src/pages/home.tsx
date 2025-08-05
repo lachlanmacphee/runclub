@@ -22,7 +22,7 @@ export function Home() {
   return (
     <div className="min-h-screen">
       {/* Hero Section with Images and Text Overlay */}
-      <section className="relative min-h-[80vh] bg-gradient-to-b from-background to-muted/30 overflow-hidden">
+      <section className="relative min-h-[80vh] md:bg-gradient-to-b md:from-background md:to-muted/30 overflow-hidden">
         {/* Background Images Grid */}
         <div className="absolute inset-0 opacity-60 dark:opacity-50">
           {/* Desktop: Grid Layout */}
