@@ -18,6 +18,18 @@ function showCopiedToast() {
   });
 }
 
+function scrollToSection(sectionId: string) {
+  const element = document.getElementById(sectionId);
+  if (element) {
+    const topPadding = 30;
+    const elementPosition = element.offsetTop - topPadding;
+    window.scrollTo({
+      top: elementPosition,
+      behavior: "smooth",
+    });
+  }
+}
+
 export function Home() {
   return (
     <div>
@@ -83,18 +95,18 @@ export function Home() {
             </h2>
             {/* Call to Action */}
             <div className="flex gap-4 justify-center items-center pt-8">
-              <Link
-                to="/waiver"
+              <button
+                onClick={() => scrollToSection("newMembers")}
                 className="px-8 py-4 bg-red-600 hover:bg-red-700 text-white font-bold rounded-full transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
               >
-                Complete Waiver
-              </Link>
-              <a
-                href="/faqs"
+                I'm New Here
+              </button>
+              <button
+                onClick={() => scrollToSection("essentialInfo")}
                 className="px-8 py-4 bg-slate-700 hover:bg-slate-800 text-white font-bold rounded-full transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
               >
-                Learn More
-              </a>
+                Essential Info
+              </button>
             </div>
           </div>
         </div>
@@ -103,7 +115,10 @@ export function Home() {
       {/* Information Sections */}
       <div className="space-y-10 py-20 bg-gradient-to-b from-background to-muted/20">
         {/* New Members Section */}
-        <section className="container mx-auto px-8 md:px-12 max-w-5xl">
+        <section
+          className="container mx-auto px-8 md:px-12 max-w-5xl"
+          id="newMembers"
+        >
           <div className="flex items-center gap-4 mb-8">
             <div className="h-2 w-16 bg-gradient-to-r from-red-500 to-orange-500 rounded-full"></div>
             <h3 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-red-600 to-orange-600 bg-clip-text text-transparent">
@@ -138,7 +153,10 @@ export function Home() {
         </section>
 
         {/* Essential Info Section */}
-        <section className="container mx-auto px-8 md:px-12 max-w-5xl">
+        <section
+          className="container mx-auto px-8 md:px-12 max-w-5xl"
+          id="essentialInfo"
+        >
           <div className="flex items-center gap-4 mb-8">
             <div className="h-2 w-16 bg-gradient-to-r from-slate-600 to-slate-800 dark:from-slate-400 dark:to-slate-500 rounded-full"></div>
             <h3 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-slate-700 to-slate-800 dark:from-slate-400 dark:to-slate-500 bg-clip-text text-transparent">
