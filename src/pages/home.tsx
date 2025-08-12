@@ -72,10 +72,10 @@ export function Home() {
         {/* Hero Content */}
         <div className="relative z-10 flex items-center justify-center px-4 text-center max-w-5xl mx-auto space-y-6">
           <div>
-            <h1 className="text-6xl md:text-8xl font-black bg-gradient-to-r from-red-600 via-red-500 to-orange-500 bg-clip-text text-transparent drop-shadow-2xl">
+            <h1 className="text-6xl md:text-8xl font-bold bg-gradient-to-r from-red-600 via-red-500 to-orange-500 bg-clip-text text-transparent drop-shadow-2xl">
               Welcome to
             </h1>
-            <h1 className="text-6xl md:text-8xl font-black bg-gradient-to-r from-slate-700 via-slate-600 to-slate-800 dark:from-slate-400 dark:to-slate-500 bg-clip-text text-transparent drop-shadow-2xl">
+            <h1 className="text-6xl md:text-8xl font-bold bg-gradient-to-r from-slate-700 via-slate-600 to-slate-800 dark:from-slate-400 dark:to-slate-500 bg-clip-text text-transparent drop-shadow-2xl">
               Gunn Runners
             </h1>
             <h2 className="text-2xl md:text-4xl font-light text-foreground/90 drop-shadow-lg pt-4">
@@ -106,7 +106,7 @@ export function Home() {
         <section className="container mx-auto px-8 md:px-12 max-w-5xl">
           <div className="flex items-center gap-4 mb-8">
             <div className="h-2 w-16 bg-gradient-to-r from-red-500 to-orange-500 rounded-full"></div>
-            <h3 className="text-3xl md:text-4xl font-black bg-gradient-to-r from-red-600 to-orange-600 bg-clip-text text-transparent">
+            <h3 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-red-600 to-orange-600 bg-clip-text text-transparent">
               New Members
             </h3>
           </div>
@@ -141,43 +141,43 @@ export function Home() {
         <section className="container mx-auto px-8 md:px-12 max-w-5xl">
           <div className="flex items-center gap-4 mb-8">
             <div className="h-2 w-16 bg-gradient-to-r from-slate-600 to-slate-800 dark:from-slate-400 dark:to-slate-500 rounded-full"></div>
-            <h3 className="text-3xl md:text-4xl font-black bg-gradient-to-r from-slate-700 to-slate-800 dark:from-slate-400 dark:to-slate-500 bg-clip-text text-transparent">
+            <h3 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-slate-700 to-slate-800 dark:from-slate-400 dark:to-slate-500 bg-clip-text text-transparent">
               Essential Info
             </h3>
           </div>
-          <div className="space-y-6 leading-relaxed">
-            <p className="text-xl">
+          <div className="space-y-6 text-card-foreground/90 leading-relaxed text-lg">
+            <p className="text-xl leading-relaxed">
               We meet{" "}
-              <span className="text-red-600 dark:text-red-400 font-black">
+              <span className="text-red-600 dark:text-red-400 font-bold">
                 every Tuesday night
               </span>{" "}
               for a run at Albert Park Lake over a 3.5km or 5km timed circuit.
               We cater for a wide range of running abilities and paces with up
               to 35 minutes to complete either course.
             </p>
-            <p className="text-xl">
+            <p className="text-xl leading-relaxed">
               Join us at{" "}
-              <span className="text-red-600 dark:text-red-400 font-black">
+              <span className="text-red-600 dark:text-red-400 font-bold">
                 6pm
               </span>{" "}
               at the{" "}
-              <span className="text-red-600 dark:text-red-400 font-black">
+              <span className="text-red-600 dark:text-red-400 font-bold">
                 Limerick Arms Hotel
               </span>{" "}
               (364 Clarendon Street, South Melbourne) before we head over to the
               lake. Afterwards, everyone is welcome back to the pub for a meal
               and a free drink - compliments of the Limerick Arms.
             </p>
-            <p className="text-xl">
+            <p className="text-xl leading-relaxed">
               Whilst your first run is on us,
-              <span className="text-red-600 dark:text-red-400 font-black">
+              <span className="text-red-600 dark:text-red-400 font-bold">
                 {" "}
                 each run after costs $5
               </span>{" "}
               and helps support the Gunn Runners club and the various charities
               that we donate to throughout the year.
             </p>
-            <p className="text-xl text-red-600 dark:text-red-400">
+            <p className="text-xl leading-relaxed text-red-600 dark:text-red-400">
               We take payment exclusively via bank transfer to prevent cash
               handling. Thank you for your understanding.
             </p>
@@ -188,7 +188,7 @@ export function Home() {
         <section className="container mx-auto px-8 md:px-12 max-w-5xl">
           <div className="flex items-center gap-4 mb-8">
             <div className="h-2 w-16 bg-gradient-to-r from-green-500 to-emerald-500 rounded-full"></div>
-            <h3 className="text-3xl md:text-4xl font-black bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent">
+            <h3 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent">
               Payment Details
             </h3>
           </div>
