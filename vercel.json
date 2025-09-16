@@ -5,13 +5,13 @@
       "headers": {
         "Cache-Control": "public, max-age=0, must-revalidate",
         "CDN-Cache-Control": "max-age=3600",
-        "Vercel-CDN-Cache-Control": "max-age=86400"
+        "Vercel-CDN-Cache-Control": "max-age=3600"
       }
     },
     {
       "src": "/assets/(.+\\.css)$",
       "headers": {
-        "Cache-Control": "public, max-age=604800"
+        "Cache-Control": "public, max-age=86400"
       }
     },
     {
