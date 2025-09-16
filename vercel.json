@@ -11,7 +11,9 @@
     {
       "src": "/assets/(.+\\.css)$",
       "headers": {
-        "Cache-Control": "public, max-age=86400"
+        "Cache-Control": "public, max-age=0, must-revalidate",
+        "CDN-Cache-Control": "max-age=3600",
+        "Vercel-CDN-Cache-Control": "max-age=3600"
       }
     },
     {
