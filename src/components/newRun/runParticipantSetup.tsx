@@ -107,23 +107,32 @@ export function RunParticipantSetup({
   useEffect(() => {
     const loadExistingParticipants = async () => {
       try {
-        const existingParticipants = await pb.collection("participant_runs").getFullList({
-          filter: pb.filter("group_run_id = {:runId}", { runId: groupRun.id }),
-          sort: "bib",
-        }) as Participant[];
+        const existingParticipants = (await pb
+          .collection("participant_runs")
+          .getFullList({
+            filter: pb.filter("group_run_id = {:runId}", {
+              runId: groupRun.id,
+            }),
+            sort: "bib",
+          })) as Participant[];
 
         if (existingParticipants.length > 0) {
-          const formattedParticipants = existingParticipants.map(participant => ({
-            id: participant.id,
-            bib: participant.bib.toString(),
-            details: {
-              value: participant.waiver_id,
-              label: participant.name,
-            },
-            distance: DISTANCE_OPTIONS.find(opt => opt.value === participant.distance.toString()) || DISTANCE_OPTIONS[1],
-            isNew: participant.is_new,
-            isPaid: participant.is_paid,
-          }));
+          const formattedParticipants = existingParticipants.map(
+            (participant) => ({
+              id: participant.id,
+              bib: participant.bib.toString(),
+              details: {
+                value: participant.waiver_id,
+                label: participant.name,
+              },
+              distance:
+                DISTANCE_OPTIONS.find(
+                  (opt) => opt.value === participant.distance.toString()
+                ) || DISTANCE_OPTIONS[1],
+              isNew: participant.is_new,
+              isPaid: participant.is_paid,
+            })
+          );
           replace(formattedParticipants);
         }
       } catch (error) {
@@ -174,7 +183,7 @@ export function RunParticipantSetup({
     const nextBibNumber = latestParticipant
       ? String(parseInt(latestParticipant.bib) - 1)
       : "100";
-    
+
     if (partDetails && partDist) {
       try {
         // Create participant in database immediately
@@ -239,26 +248,30 @@ export function RunParticipantSetup({
   }
 
   // Function to update participant in database when form fields change
-  async function updateParticipant(index: number, field: string, value: string | { value: string; label: string } | null) {
+  async function updateParticipant(
+    index: number,
+    field: string,
+    value: string | { value: string; label: string } | null
+  ) {
     const participant = participants[index];
     if (participant.id && value !== null) {
       try {
         const updateData: Record<string, string | number> = {};
-        
+
         switch (field) {
-          case 'bib':
-            if (typeof value === 'string') {
+          case "bib":
+            if (typeof value === "string") {
               updateData.bib = Number(value);
             }
             break;
-          case 'details':
-            if (typeof value === 'object' && value !== null) {
+          case "details":
+            if (typeof value === "object" && value !== null) {
               updateData.waiver_id = value.value;
               updateData.name = value.label;
             }
             break;
-          case 'distance':
-            if (typeof value === 'object' && value !== null) {
+          case "distance":
+            if (typeof value === "object" && value !== null) {
               updateData.distance = Number(value.value);
             }
             break;
@@ -266,7 +279,9 @@ export function RunParticipantSetup({
             return;
         }
 
-        await pb.collection("participant_runs").update(participant.id, updateData);
+        await pb
+          .collection("participant_runs")
+          .update(participant.id, updateData);
       } catch (error) {
         console.error("Failed to update participant:", error);
         // You might want to show a toast or error message here
@@ -358,9 +373,11 @@ export function RunParticipantSetup({
                 options={DISTANCE_OPTIONS}
               />
             </div>
-            <Button type="button" onClick={addParticipant}>
-              Add Participant
-            </Button>
+            <div className="flex justify-end">
+              <Button type="button" onClick={addParticipant}>
+                Add Participant
+              </Button>
+            </div>
           </div>
           <div className="flex flex-col gap-2">
             <div className="grid grid-cols-[65px_2fr_1fr_40px] gap-x-2">
@@ -379,12 +396,12 @@ export function RunParticipantSetup({
                   render={({ field }) => (
                     <FormItem>
                       <FormControl>
-                        <Input 
-                          placeholder="#" 
-                          {...field} 
+                        <Input
+                          placeholder="#"
+                          {...field}
                           onBlur={() => {
                             field.onBlur();
-                            updateParticipant(index, 'bib', field.value);
+                            updateParticipant(index, "bib", field.value);
                           }}
                         />
                       </FormControl>
@@ -405,7 +422,7 @@ export function RunParticipantSetup({
                           placeholder="Select..."
                           onChange={(value) => {
                             field.onChange(value);
-                            updateParticipant(index, 'details', value);
+                            updateParticipant(index, "details", value);
                           }}
                           options={members.map((member) => {
                             return {
@@ -432,7 +449,7 @@ export function RunParticipantSetup({
                           placeholder="Select..."
                           onChange={(value) => {
                             field.onChange(value);
-                            updateParticipant(index, 'distance', value);
+                            updateParticipant(index, "distance", value);
                           }}
                           options={DISTANCE_OPTIONS}
                         />
