@@ -30,6 +30,7 @@ const FormSchema = z
   .object({
     participants: z.array(
       z.object({
+        id: z.string().optional(),
         bib: z.string(),
         details: z.object(
           { value: z.string(), label: z.string() },
@@ -64,8 +65,6 @@ const FormSchema = z
     }
   );
 
-const localStorageKey = "participants";
-
 export function RunParticipantSetup({
   groupRun,
   setStep,
@@ -95,22 +94,45 @@ export function RunParticipantSetup({
     resolver: zodResolver(FormSchema),
     mode: "onBlur",
     defaultValues: {
-      participants: JSON.parse(localStorage.getItem(localStorageKey) ?? "[]"),
+      participants: [],
     },
   });
 
-  const { fields, prepend, remove } = useFieldArray({
+  const { fields, prepend, remove, replace } = useFieldArray({
     control: form.control,
     name: "participants",
   });
 
+  // Load existing participants from database
   useEffect(() => {
-    const subscription = form.watch((data) =>
-      localStorage.setItem(localStorageKey, JSON.stringify(data.participants))
-    );
-    return () => subscription.unsubscribe();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    const loadExistingParticipants = async () => {
+      try {
+        const existingParticipants = await pb.collection("participant_runs").getFullList({
+          filter: pb.filter("group_run_id = {:runId}", { runId: groupRun.id }),
+          sort: "-bib",
+        }) as Participant[];
+
+        if (existingParticipants.length > 0) {
+          const formattedParticipants = existingParticipants.map(participant => ({
+            id: participant.id,
+            bib: participant.bib.toString(),
+            details: {
+              value: participant.waiver_id,
+              label: participant.name,
+            },
+            distance: DISTANCE_OPTIONS.find(opt => opt.value === participant.distance.toString()) || DISTANCE_OPTIONS[1],
+            isNew: participant.is_new,
+            isPaid: participant.is_paid,
+          }));
+          replace(formattedParticipants);
+        }
+      } catch (error) {
+        console.error("Failed to load existing participants:", error);
+      }
+    };
+
+    loadExistingParticipants();
+  }, [groupRun.id, pb, replace]);
 
   const handleSubmitConfirmation = () => {
     setIsConfirmationModalOpen(true);
@@ -128,6 +150,7 @@ export function RunParticipantSetup({
   async function onSubmit(data: z.infer<typeof FormSchema>) {
     const participants = data.participants.map((participant) => {
       return {
+        id: participant.id,
         waiver_id: participant.details.value,
         name: participant.details.label,
         group_run_id: groupRun.id,
@@ -139,45 +162,115 @@ export function RunParticipantSetup({
       };
     });
 
-    Promise.all(
-      participants.map(async (pdata: Participant) => {
-        const res = await pb
-          .collection("participant_runs")
-          .create(pdata, { requestKey: null });
-        pdata.id = res.id;
-      })
-    );
-
     setStep(2);
     setParticipants(participants);
-    localStorage.removeItem(localStorageKey);
   }
 
   const participants = form.getValues("participants");
   const participantsLength = participants.length;
 
-  function addParticipant() {
+  async function addParticipant() {
     const latestParticipant = participants[0];
     const nextBibNumber = latestParticipant
       ? String(parseInt(latestParticipant.bib) - 1)
       : "100";
+    
     if (partDetails && partDist) {
-      prepend(
-        {
-          bib: nextBibNumber,
-          details: { label: partDetails.label, value: partDetails.value },
-          distance: partDist,
-          isNew: partIsNew,
-          isPaid: partIsPaid,
-        },
-        {
-          shouldFocus: false,
+      try {
+        // Create participant in database immediately
+        const participantData = {
+          waiver_id: partDetails.value,
+          name: partDetails.label,
+          group_run_id: groupRun.id,
+          distance: Number(partDist.value),
+          bib: Number(nextBibNumber),
+          is_new: partIsNew,
+          is_paid: partIsPaid,
+          time_seconds: 0,
+        };
+
+        const createdParticipant = await pb
+          .collection("participant_runs")
+          .create(participantData, { requestKey: null });
+
+        // Add to form
+        prepend(
+          {
+            id: createdParticipant.id,
+            bib: nextBibNumber,
+            details: { label: partDetails.label, value: partDetails.value },
+            distance: partDist,
+            isNew: partIsNew,
+            isPaid: partIsPaid,
+          },
+          {
+            shouldFocus: false,
+          }
+        );
+
+        // Reset form inputs
+        setPartDetails(null);
+        setPartDist(DISTANCE_OPTIONS[1]);
+        setPartIsNew(false);
+        setPartIsPaid(true);
+      } catch (error) {
+        console.error("Failed to add participant:", error);
+        // You might want to show a toast or error message here
+      }
+    }
+  }
+
+  async function removeParticipant(index: number) {
+    const participant = participants[index];
+    if (participant.id) {
+      try {
+        // Delete from database
+        await pb.collection("participant_runs").delete(participant.id);
+        // Remove from form
+        remove(index);
+      } catch (error) {
+        console.error("Failed to remove participant:", error);
+        // You might want to show a toast or error message here
+      }
+    } else {
+      // If no ID, just remove from form (shouldn't happen with new logic)
+      remove(index);
+    }
+  }
+
+  // Function to update participant in database when form fields change
+  async function updateParticipant(index: number, field: string, value: string | { value: string; label: string } | null) {
+    const participant = participants[index];
+    if (participant.id && value !== null) {
+      try {
+        const updateData: Record<string, string | number> = {};
+        
+        switch (field) {
+          case 'bib':
+            if (typeof value === 'string') {
+              updateData.bib = Number(value);
+            }
+            break;
+          case 'details':
+            if (typeof value === 'object' && value !== null) {
+              updateData.waiver_id = value.value;
+              updateData.name = value.label;
+            }
+            break;
+          case 'distance':
+            if (typeof value === 'object' && value !== null) {
+              updateData.distance = Number(value.value);
+            }
+            break;
+          default:
+            return;
         }
-      );
-      setPartDetails(null);
-      setPartDist(DISTANCE_OPTIONS[1]);
-      setPartIsNew(false);
-      setPartIsPaid(true);
+
+        await pb.collection("participant_runs").update(participant.id, updateData);
+      } catch (error) {
+        console.error("Failed to update participant:", error);
+        // You might want to show a toast or error message here
+      }
     }
   }
 
@@ -284,7 +377,14 @@ export function RunParticipantSetup({
                   render={({ field }) => (
                     <FormItem>
                       <FormControl>
-                        <Input placeholder="#" {...field} />
+                        <Input 
+                          placeholder="#" 
+                          {...field} 
+                          onBlur={() => {
+                            field.onBlur();
+                            updateParticipant(index, 'bib', field.value);
+                          }}
+                        />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -301,6 +401,10 @@ export function RunParticipantSetup({
                           className="custom-react-select-container"
                           classNamePrefix="custom-react-select"
                           placeholder="Select..."
+                          onChange={(value) => {
+                            field.onChange(value);
+                            updateParticipant(index, 'details', value);
+                          }}
                           options={members.map((member) => {
                             return {
                               label: member.name,
@@ -324,6 +428,10 @@ export function RunParticipantSetup({
                           className="custom-react-select-container"
                           classNamePrefix="custom-react-select"
                           placeholder="Select..."
+                          onChange={(value) => {
+                            field.onChange(value);
+                            updateParticipant(index, 'distance', value);
+                          }}
                           options={DISTANCE_OPTIONS}
                         />
                       </FormControl>
@@ -333,9 +441,10 @@ export function RunParticipantSetup({
                 />
                 <div className="flex justify-center">
                   <Button
-                    onClick={() => remove(index)}
+                    onClick={() => removeParticipant(index)}
                     variant="destructive"
                     size="icon"
+                    type="button"
                   >
                     <Trash />
                   </Button>
