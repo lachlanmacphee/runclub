@@ -109,7 +109,7 @@ export function RunParticipantSetup({
       try {
         const existingParticipants = await pb.collection("participant_runs").getFullList({
           filter: pb.filter("group_run_id = {:runId}", { runId: groupRun.id }),
-          sort: "-bib",
+          sort: "bib",
         }) as Participant[];
 
         if (existingParticipants.length > 0) {
