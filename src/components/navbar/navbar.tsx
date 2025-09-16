@@ -24,7 +24,15 @@ export function Navbar() {
     const record = await pb.collection("announcements").getList(1, 1, {
       sort: "-created",
     });
-    setAnnouncement(record.items[0]);
+    const latestAnnouncement = record.items[0];
+    
+    // Check if this announcement was already closed
+    if (latestAnnouncement) {
+      const closedAnnouncementId = localStorage.getItem('closedAnnouncementId');
+      if (closedAnnouncementId !== latestAnnouncement.id) {
+        setAnnouncement(latestAnnouncement);
+      }
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -58,6 +66,7 @@ export function Navbar() {
         <AnnouncementBanner
           icon={announcement.icon}
           message={announcement.message}
+          announcementId={announcement.id}
         />
       )}
       <div className="flex justify-between py-4 px-8 items-center">

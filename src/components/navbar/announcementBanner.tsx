@@ -6,6 +6,7 @@ type AnnouncementBannerProps = {
   icon: string;
   message: string;
   isPreview?: boolean;
+  announcementId?: string;
 };
 
 function getIcon(icon: string) {
@@ -23,8 +24,16 @@ export function AnnouncementBanner({
   icon,
   message,
   isPreview,
+  announcementId,
 }: AnnouncementBannerProps) {
   const [isShowing, setIsShowing] = useState(true);
+
+  const handleClose = () => {
+    setIsShowing(false);
+    if (announcementId) {
+      localStorage.setItem('closedAnnouncementId', announcementId);
+    }
+  };
 
   if (!isPreview && !isShowing) {
     return;
@@ -51,7 +60,7 @@ export function AnnouncementBanner({
         </span>
       </div>
       {!isPreview && (
-        <Button variant="ghost" onClick={() => setIsShowing(false)}>
+        <Button variant="ghost" onClick={handleClose}>
           <X />
         </Button>
       )}
