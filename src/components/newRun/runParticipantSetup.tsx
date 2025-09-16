@@ -301,6 +301,7 @@ export function RunParticipantSetup({
                 className="custom-react-select-container"
                 classNamePrefix="custom-react-select"
                 placeholder="Select..."
+                isSearchable={true}
                 value={partDetails}
                 onChange={(details) => setPartDetails(details)}
                 options={members
@@ -351,6 +352,7 @@ export function RunParticipantSetup({
                 className="custom-react-select-container"
                 classNamePrefix="custom-react-select"
                 placeholder="Select..."
+                isSearchable={false}
                 value={partDist}
                 onChange={(newDistance) => setPartDist(newDistance)}
                 options={DISTANCE_OPTIONS}

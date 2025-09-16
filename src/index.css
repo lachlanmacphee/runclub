@@ -114,10 +114,10 @@ body {
 
   .custom-react-select-container .custom-react-select__input-container,
   .custom-react-select-container .custom-react-select__single-value {
-    @apply text-black dark:text-white text-sm;
+    @apply text-black dark:text-white text-base;
   }
 
   .custom-react-select-container .custom-react-select__placeholder {
-    @apply text-muted-foreground text-sm;
+    @apply text-muted-foreground text-base;
   }
 }
