@@ -4,16 +4,16 @@
       "src": "/assets/(.+\\.js)$",
       "headers": {
         "Cache-Control": "public, max-age=0, must-revalidate",
-        "CDN-Cache-Control": "max-age=3600",
-        "Vercel-CDN-Cache-Control": "max-age=3600"
+        "CDN-Cache-Control": "max-age=0, must-revalidate",
+        "Vercel-CDN-Cache-Control": "max-age=0, must-revalidate"
       }
     },
     {
       "src": "/assets/(.+\\.css)$",
       "headers": {
         "Cache-Control": "public, max-age=0, must-revalidate",
-        "CDN-Cache-Control": "max-age=3600",
-        "Vercel-CDN-Cache-Control": "max-age=3600"
+        "CDN-Cache-Control": "max-age=0, must-revalidate",
+        "Vercel-CDN-Cache-Control": "max-age=0, must-revalidate"
       }
     },
     {
