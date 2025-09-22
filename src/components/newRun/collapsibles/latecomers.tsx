@@ -183,7 +183,7 @@ export function Latecomers({
                 name="bib"
                 render={({ field }) => (
                   <FormItem>
-                    <Input {...field} placeholder="Bib" />
+                    <Input {...field} placeholder="Bib" className="text-base" />
                     <FormMessage />
                   </FormItem>
                 )}

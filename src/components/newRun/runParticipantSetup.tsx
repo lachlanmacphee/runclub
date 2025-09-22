@@ -403,6 +403,7 @@ export function RunParticipantSetup({
                             field.onBlur();
                             updateParticipant(index, "bib", field.value);
                           }}
+                          className="text-base"
                         />
                       </FormControl>
                       <FormMessage />
