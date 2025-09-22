@@ -1,17 +1,20 @@
+import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 
 import { usePocket } from "@/contexts";
 import { useMembers } from "@/hooks/useMembers";
 
-import { Participant } from "@/lib/types";
 import { DISTANCE_OPTIONS } from "@/lib/constants";
+import { Participant } from "@/lib/types";
 
-import Select from "react-select";
-import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@/components/ui/collapsible";
 import {
   Form,
   FormControl,
@@ -20,13 +23,10 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { Checkbox } from "../../ui/checkbox";
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "@/components/ui/collapsible";
+import { Input } from "@/components/ui/input";
 import { ChevronsUpDown } from "lucide-react";
+import Select from "react-select";
+import { Checkbox } from "../../ui/checkbox";
 
 const FormSchema = z.object({
   bib: z.string().min(1, {
@@ -197,6 +197,7 @@ export function Latecomers({
                     className="custom-react-select-container"
                     classNamePrefix="custom-react-select"
                     placeholder="Select..."
+                    isSearchable={false}
                     options={DISTANCE_OPTIONS}
                   />
                 )}

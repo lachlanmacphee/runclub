@@ -1,12 +1,12 @@
+import { usePocket } from "@/contexts";
+import { COLLECTIONS, DISTANCE_OPTIONS } from "@/lib/constants";
 import { Participant } from "@/lib/types";
 import { useCallback, useState } from "react";
 import Select from "react-select";
+import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
-import { Button } from "../ui/button";
 import { useToast } from "../ui/use-toast";
-import { COLLECTIONS, DISTANCE_OPTIONS } from "@/lib/constants";
-import { usePocket } from "@/contexts";
 
 function convertStrDistanceToNumber(distance: string) {
   if (distance == "3.5") return 3.5;
@@ -196,6 +196,7 @@ export function EditDistanceTime({
             classNamePrefix="custom-react-select"
             placeholder="Select distance..."
             value={distance}
+            isSearchable={false}
             onChange={setDistance}
             options={DISTANCE_OPTIONS}
           />

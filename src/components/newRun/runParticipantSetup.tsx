@@ -1,14 +1,13 @@
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
-import * as z from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useFieldArray, useForm } from "react-hook-form";
 import { usePocket } from "@/contexts";
-import { hasDuplicates } from "@/lib/utils";
-import { GroupRun, Participant } from "@/lib/types";
 import { DISTANCE_OPTIONS } from "@/lib/constants";
+import { GroupRun, Participant } from "@/lib/types";
+import { hasDuplicates } from "@/lib/utils";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { useFieldArray, useForm } from "react-hook-form";
+import * as z from "zod";
 
 // Components
-import Select from "react-select";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -18,13 +17,14 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import Select from "react-select";
 
 // Icons
-import { Trash } from "lucide-react";
 import { useMembers } from "@/hooks/useMembers";
-import { RunSetupConfirmationAlert } from "./runSetupConfirmationAlert";
-import { Label } from "../ui/label";
+import { Trash } from "lucide-react";
 import { Checkbox } from "../ui/checkbox";
+import { Label } from "../ui/label";
+import { RunSetupConfirmationAlert } from "./runSetupConfirmationAlert";
 
 const FormSchema = z
   .object({
@@ -447,6 +447,7 @@ export function RunParticipantSetup({
                           className="custom-react-select-container"
                           classNamePrefix="custom-react-select"
                           placeholder="Select..."
+                          isSearchable={false}
                           onChange={(value) => {
                             field.onChange(value);
                             updateParticipant(index, "distance", value);
