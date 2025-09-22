@@ -1,7 +1,7 @@
+import Whatsapp from "@/components/icons/Whatsapp";
 import { Facebook, Instagram } from "lucide-react";
 import { Link } from "react-router-dom";
 import { buttonVariants } from "../ui/button";
-import Whatsapp from "@/components/icons/Whatsapp";
 
 const SocialLinks = () => (
   <>
@@ -23,7 +23,7 @@ export function Footer() {
       <div className="flex sm:hidden w-full justify-center gap-4">
         <SocialLinks />
       </div>
-      <p className="font-bold">&copy; Gunn Runners</p>
+      <p>&copy; Gunn Runners</p>
       <div className="hidden sm:flex justify-center gap-4">
         <SocialLinks />
       </div>
