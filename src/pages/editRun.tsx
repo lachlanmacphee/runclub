@@ -1,10 +1,11 @@
 import { useCallback, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
+import { AddParticipant } from "@/components/editRun/AddParticipant";
+import { EditDistanceTime } from "@/components/editRun/EditDistanceTime";
+import { SwapTimes } from "@/components/editRun/SwapTimes";
 import { usePastRuns } from "@/hooks/usePastRuns";
 import { Participant } from "@/lib/types";
-import { SwapTimes } from "@/components/editRun/SwapTimes";
-import { EditDistanceTime } from "@/components/editRun/EditDistanceTime";
 import { Loader2 } from "lucide-react";
 
 export function EditRun() {
@@ -52,6 +53,7 @@ export function EditRun() {
           participants={participants}
           update={getParticipants}
         />
+        <AddParticipant runId={runId} participants={participants} />
       </div>
     </div>
   );
