@@ -1,8 +1,12 @@
-import { useCallback, useEffect, useState } from "react";
 import { usePocket } from "@/contexts";
-import type { Donation } from "@/lib/types";
 import { ROLES } from "@/lib/constants";
+import type { Donation } from "@/lib/types";
+import { useCallback, useEffect, useState } from "react";
 
+import { DonationDeleteAlertDialog } from "@/components/donations/donationDeleteAlertDialog";
+import { DonationUpsertDialog } from "@/components/donations/donationUpsertDialog";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -11,11 +15,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import { ExternalLink } from "lucide-react";
-import { DonationUpsertDialog } from "@/components/donations/donationUpsertDialog";
-import { DonationDeleteAlertDialog } from "@/components/donations/donationDeleteAlertDialog";
 
 export function Donations() {
   const { pb, user } = usePocket();
@@ -95,7 +95,7 @@ export function Donations() {
         <CardHeader>
           <CardTitle className="text-green-800">Total Donations</CardTitle>
           <CardDescription className="text-green-600">
-            Amount donated by our club to date
+            Amount donated by our club since December 2022
           </CardDescription>
         </CardHeader>
         <CardContent>
