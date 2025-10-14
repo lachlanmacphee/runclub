@@ -65,19 +65,6 @@ export function Donations() {
     }).format(amount);
   };
 
-  const getCategoryColor = (category: string) => {
-    const colors: Record<string, string> = {
-      charity: "bg-green-100 text-green-800",
-      community: "bg-blue-100 text-blue-800",
-      environment: "bg-emerald-100 text-emerald-800",
-      health: "bg-red-100 text-red-800",
-      education: "bg-purple-100 text-purple-800",
-      sports: "bg-orange-100 text-orange-800",
-      other: "bg-gray-100 text-gray-800",
-    };
-    return colors[category.toLowerCase()] || colors["other"];
-  };
-
   return (
     <div className="space-y-8">
       <div className="flex justify-between items-center">
@@ -91,18 +78,16 @@ export function Donations() {
       </div>
 
       {/* Summary Card */}
-      <Card className="bg-gradient-to-r from-green-50 to-emerald-50 border-green-200">
+      <Card>
         <CardHeader>
-          <CardTitle className="text-green-800">Total Donations</CardTitle>
-          <CardDescription className="text-green-600">
+          <CardTitle>Total Donations</CardTitle>
+          <CardDescription>
             Amount donated by our club since December 2022
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <div className="text-3xl font-bold text-green-800">
-            {formatCurrency(totalDonated)}
-          </div>
-          <p className="text-sm text-green-600 mt-2">
+          <p className="text-3xl font-bold">{formatCurrency(totalDonated)}</p>
+          <p className="text-sm mt-2">
             Across {donations.length} donation
             {donations.length !== 1 ? "s" : ""}
           </p>
@@ -143,7 +128,15 @@ export function Donations() {
                     </CardDescription>
                   </div>
                   <div className="flex items-center gap-2">
-                    <Badge className={getCategoryColor(donation.category)}>
+                    <Badge
+                      variant={
+                        donation.category === "community"
+                          ? "default"
+                          : donation.category === "sports"
+                          ? "destructive"
+                          : "secondary"
+                      }
+                    >
                       {donation.category}
                     </Badge>
                     {isAdmin && (
@@ -163,7 +156,7 @@ export function Donations() {
               </CardHeader>
               <CardContent>
                 <div className="space-y-3">
-                  <div className="text-2xl font-bold text-green-600">
+                  <div className="text-2xl font-bold">
                     {formatCurrency(donation.amount)}
                   </div>
                   <p className="text-sm text-muted-foreground">
