@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 
 import { AddParticipant } from "@/components/editRun/AddParticipant";
 import { EditDistanceTime } from "@/components/editRun/EditDistanceTime";
+import { SwapBibParticipant } from "@/components/editRun/SwapBibParticipant";
 import { SwapTimes } from "@/components/editRun/SwapTimes";
 import { usePastRuns } from "@/hooks/usePastRuns";
 import { Participant } from "@/lib/types";
@@ -49,6 +50,7 @@ export function EditRun() {
     <div className="flex justify-center">
       <div className="flex flex-col gap-16 grow max-w-3xl">
         <SwapTimes participants={participants} update={getParticipants} />
+        <SwapBibParticipant participants={participants} update={getParticipants} />
         <EditDistanceTime
           participants={participants}
           update={getParticipants}

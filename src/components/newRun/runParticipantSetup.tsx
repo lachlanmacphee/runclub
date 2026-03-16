@@ -103,7 +103,6 @@ export function RunParticipantSetup({
     name: "participants",
   });
 
-  // Load existing participants from database
   useEffect(() => {
     const loadExistingParticipants = async () => {
       try {
@@ -113,7 +112,7 @@ export function RunParticipantSetup({
             filter: pb.filter("group_run_id = {:runId}", {
               runId: groupRun.id,
             }),
-            sort: "bib",
+            sort: "-bib",
           })) as Participant[];
 
         if (existingParticipants.length > 0) {
@@ -179,14 +178,14 @@ export function RunParticipantSetup({
   const participantsLength = participants.length;
 
   async function addParticipant() {
-    const latestParticipant = participants[0];
-    const nextBibNumber = latestParticipant
-      ? String(parseInt(latestParticipant.bib) - 1)
-      : "100";
+    const maxBibNumber = participants.reduce((maxBib, participant) => {
+      const bibNumber = Number(participant.bib);
+      return Number.isNaN(bibNumber) ? maxBib : Math.max(maxBib, bibNumber);
+    }, 0);
+    const nextBibNumber = String(maxBibNumber + 1);
 
     if (partDetails && partDist) {
       try {
-        // Create participant in database immediately
         const participantData = {
           waiver_id: partDetails.value,
           name: partDetails.label,
@@ -202,7 +201,6 @@ export function RunParticipantSetup({
           .collection("participant_runs")
           .create(participantData, { requestKey: null });
 
-        // Add to form
         prepend(
           {
             id: createdParticipant.id,
@@ -217,14 +215,12 @@ export function RunParticipantSetup({
           }
         );
 
-        // Reset form inputs
         setPartDetails(null);
         setPartDist(DISTANCE_OPTIONS[1]);
         setPartIsNew(false);
         setPartIsPaid(true);
       } catch (error) {
         console.error("Failed to add participant:", error);
-        // You might want to show a toast or error message here
       }
     }
   }
@@ -233,21 +229,16 @@ export function RunParticipantSetup({
     const participant = participants[index];
     if (participant.id) {
       try {
-        // Delete from database
         await pb.collection("participant_runs").delete(participant.id);
-        // Remove from form
         remove(index);
       } catch (error) {
         console.error("Failed to remove participant:", error);
-        // You might want to show a toast or error message here
       }
     } else {
-      // If no ID, just remove from form (shouldn't happen with new logic)
       remove(index);
     }
   }
 
-  // Function to update participant in database when form fields change
   async function updateParticipant(
     index: number,
     field: string,
@@ -284,7 +275,6 @@ export function RunParticipantSetup({
           .update(participant.id, updateData);
       } catch (error) {
         console.error("Failed to update participant:", error);
-        // You might want to show a toast or error message here
       }
     }
   }
