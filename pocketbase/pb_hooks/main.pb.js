@@ -25,6 +25,15 @@ onRecordBeforeCreateRequest((e) => {
   }
 }, "contact_us_submissions");
 
+// Require a verified email to log in with a password.
+onRecordAfterAuthWithPasswordRequest((e) => {
+  if (!e.record.verified()) {
+    throw new ForbiddenError(
+      "Please verify your email address before logging in. Check your inbox (and spam folder) for the verification link."
+    );
+  }
+}, "users");
+
 onRecordAfterCreateRequest((e) => {
   $app.logger().debug("Emails: Contact Us. Beginning message send...");
 

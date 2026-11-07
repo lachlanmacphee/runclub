@@ -43,7 +43,7 @@ const FormSchema = z
   });
 
 export const SignUp = () => {
-  const { register, login, user } = usePocket();
+  const { register, user } = usePocket();
   const { toast } = useToast();
   const [, navigate] = useLocation();
 
@@ -74,8 +74,13 @@ export const SignUp = () => {
           data.requestVolunteer,
           data.alias,
         );
-        await login(data.email, data.password);
-        navigate("/");
+        toast({
+          title: "Check your email",
+          duration: 10000,
+          description:
+            "We've sent you a verification link. Verify your email, then log in. If you don't see it, check your spam folder.",
+        });
+        navigate("/login");
       } catch (error) {
         const message = getErrorMessage(error);
         toast({
@@ -86,7 +91,7 @@ export const SignUp = () => {
         });
       }
     },
-    [login, navigate, register, toast],
+    [navigate, register, toast],
   );
 
   if (user) {

@@ -9,6 +9,21 @@ const Login = lazy(() =>
 const SignUp = lazy(() =>
   import("@/pages/signUp").then((m) => ({ default: m.SignUp })),
 );
+const ConfirmVerification = lazy(() =>
+  import("@/pages/confirmVerification").then((m) => ({
+    default: m.ConfirmVerification,
+  })),
+);
+const ConfirmResetPassword = lazy(() =>
+  import("@/pages/confirmResetPassword").then((m) => ({
+    default: m.ConfirmResetPassword,
+  })),
+);
+const ConfirmEmailChange = lazy(() =>
+  import("@/pages/confirmEmailChange").then((m) => ({
+    default: m.ConfirmEmailChange,
+  })),
+);
 import { Home } from "@/pages/home";
 const NewRun = lazy(() =>
   import("@/pages/newRun").then((m) => ({ default: m.NewRun })),
@@ -80,6 +95,18 @@ export default function App() {
               <Route path="/login" component={Login} />
               <Route path="/signup" component={SignUp} />
               <Route path="/resetpassword" component={ResetPassword} />
+              <Route
+                path="/confirm-password-reset/:token"
+                component={ConfirmResetPassword}
+              />
+              <Route
+                path="/confirm-email-change/:token"
+                component={ConfirmEmailChange}
+              />
+              <Route
+                path="/confirm-verification/:token"
+                component={ConfirmVerification}
+              />
               <Route>
                 <Layout>
                   <Switch>

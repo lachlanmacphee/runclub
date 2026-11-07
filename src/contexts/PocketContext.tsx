@@ -30,6 +30,15 @@ export type PocketContextType = {
   ) => Promise<RecordAuthResponse<RecordModel>>;
   OAuthLogin: (provider: string) => Promise<RecordAuthResponse<RecordModel>>;
   resetPassword: (email: string) => Promise<void>;
+  confirmResetPassword: (
+    token: string,
+    password: string,
+    passwordConfirm: string
+  ) => Promise<void>;
+  requestEmailChange: (newEmail: string) => Promise<void>;
+  confirmEmailChange: (token: string, password: string) => Promise<void>;
+  resendVerification: (email: string) => Promise<void>;
+  confirmVerification: (token: string) => Promise<void>;
   logout: VoidFunction;
   user: User | null;
   token: string;
@@ -91,6 +100,8 @@ export const PocketProvider = ({ children }: PocketProviderProps) => {
           .collection("role_requests")
           .create({ user_id: res.id, new_role: ROLES.MODERATOR });
       }
+      // Users must verify their email before they can log in
+      await pb.collection("users").requestVerification(email);
       return res;
     },
     [pb]
@@ -135,6 +146,45 @@ export const PocketProvider = ({ children }: PocketProviderProps) => {
     [pb]
   );
 
+  const confirmResetPassword = useCallback(
+    async (token: string, password: string, passwordConfirm: string) => {
+      await pb
+        .collection("users")
+        .confirmPasswordReset(token, password, passwordConfirm);
+    },
+    [pb]
+  );
+
+  const requestEmailChange = useCallback(
+    async (newEmail: string) => {
+      await pb.collection("users").requestEmailChange(newEmail);
+    },
+    [pb]
+  );
+
+  const confirmEmailChange = useCallback(
+    async (token: string, password: string) => {
+      await pb.collection("users").confirmEmailChange(token, password);
+      // The server invalidates existing sessions once the email changes
+      pb.authStore.clear();
+    },
+    [pb]
+  );
+
+  const resendVerification = useCallback(
+    async (email: string) => {
+      await pb.collection("users").requestVerification(email);
+    },
+    [pb]
+  );
+
+  const confirmVerification = useCallback(
+    async (token: string) => {
+      await pb.collection("users").confirmVerification(token);
+    },
+    [pb]
+  );
+
   const logout = useCallback(() => {
     pb.authStore.clear();
   }, [pb]);
@@ -170,6 +220,11 @@ export const PocketProvider = ({ children }: PocketProviderProps) => {
         login,
         OAuthLogin,
         resetPassword,
+        confirmResetPassword,
+        requestEmailChange,
+        confirmEmailChange,
+        resendVerification,
+        confirmVerification,
         logout,
         user,
         token,

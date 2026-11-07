@@ -1,4 +1,5 @@
-import { useCallback } from "react";
+import { useCallback, useState } from "react";
+import { ClientResponseError } from "pocketbase";
 import { useLocation, Link, Redirect } from "wouter";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -28,7 +29,8 @@ const FormSchema = z.object({
 });
 
 export const Login = () => {
-  const { OAuthLogin, login, user } = usePocket();
+  const { OAuthLogin, login, resendVerification, user } = usePocket();
+  const [unverifiedEmail, setUnverifiedEmail] = useState<string | null>(null);
   const { toast } = useToast();
   const [, navigate] = useLocation();
 
@@ -47,10 +49,14 @@ export const Login = () => {
 
   const onSubmit = useCallback(
     async (data: z.infer<typeof FormSchema>) => {
+      setUnverifiedEmail(null);
       try {
         await login(data.email, data.password);
         navigate("/");
       } catch (error) {
+        if (error instanceof ClientResponseError && error.status === 403) {
+          setUnverifiedEmail(data.email);
+        }
         const message = getErrorMessage(error);
         toast({
           title: "Login Failed",
@@ -62,6 +68,25 @@ export const Login = () => {
     },
     [login, navigate, toast],
   );
+
+  const handleResend = useCallback(async () => {
+    if (!unverifiedEmail) return;
+    try {
+      await resendVerification(unverifiedEmail);
+      toast({
+        title: "Verification email sent",
+        duration: 5000,
+        description: "Check your inbox (and spam folder) for the link.",
+      });
+    } catch (error) {
+      toast({
+        title: "Couldn't send verification email",
+        variant: "destructive",
+        duration: 5000,
+        description: getErrorMessage(error),
+      });
+    }
+  }, [resendVerification, toast, unverifiedEmail]);
 
   if (user) {
     return <Redirect to="/" replace />;
@@ -127,6 +152,14 @@ export const Login = () => {
                 Forgot password?
               </Link>
             </div>
+            {unverifiedEmail && (
+              <div className="flex flex-col gap-2 rounded-md border p-4 text-sm">
+                <p>Your email address hasn't been verified yet.</p>
+                <Button type="button" variant="secondary" onClick={handleResend}>
+                  Resend verification email
+                </Button>
+              </div>
+            )}
             <Button type="submit">Login</Button>
             <div className="relative">
               <div className="absolute inset-0 flex items-center">
