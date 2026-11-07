@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link } from "wouter";
 
 import image1 from "@/assets/1.jpg";
 import image2 from "@/assets/2.png";
@@ -129,7 +129,7 @@ export function Home() {
             <p className="text-xl leading-relaxed">
               Please{" "}
               <Link
-                to="/waiver"
+                href="/waiver"
                 className="text-red-600 dark:text-red-400 underline-offset-4 font-bold hover:underline transition-all duration-300 hover:scale-105 inline-block"
               >
                 click here

@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction } from "react";
-import { Link } from "react-router-dom";
+import { Link } from "wouter";
 
 // Components
 import { buttonVariants } from "../ui/button";
@@ -19,7 +19,7 @@ export function MobileLink({
     return (
       <div className="flex items-center justify-center shadow-md rounded-lg h-16">
         <Link
-          to={path}
+          href={path}
           onClick={() => setter(false)}
           className={
             buttonVariants({ variant: "secondary" }) +
@@ -37,7 +37,7 @@ export function MobileLink({
     <div className="flex items-center justify-center shadow-md rounded-lg h-16">
       <Link
         aria-label={label}
-        to={path}
+        href={path}
         className={
           buttonVariants({ variant: "secondary" }) +
           " w-full h-full [&_span]:w-full"

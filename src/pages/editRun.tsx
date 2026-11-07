@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams } from "wouter";
 
 import { AddParticipant } from "@/components/editRun/AddParticipant";
 import { EditDistanceTime } from "@/components/editRun/EditDistanceTime";

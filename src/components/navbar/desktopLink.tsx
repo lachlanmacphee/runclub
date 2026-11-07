@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link } from "wouter";
 import {
   NavigationMenuItem,
   navigationMenuTriggerStyle,
@@ -18,7 +18,7 @@ export function DesktopLink({
     return (
       <NavigationMenuItem>
         <div className="relative">
-          <Link to={path} className={navigationMenuTriggerStyle()}>
+          <Link href={path} className={navigationMenuTriggerStyle()}>
             {label}
           </Link>
           <Circle className="fill-red-500 stroke-red-500 w-2 h-2 absolute top-2 right-2" />
@@ -29,7 +29,7 @@ export function DesktopLink({
 
   return (
     <NavigationMenuItem>
-      <Link to={path} className={navigationMenuTriggerStyle()}>
+      <Link href={path} className={navigationMenuTriggerStyle()}>
         {label}
       </Link>
     </NavigationMenuItem>

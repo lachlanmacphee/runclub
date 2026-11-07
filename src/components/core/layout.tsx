@@ -1,15 +1,16 @@
-import { Outlet, useLocation } from "react-router-dom";
+import type { ReactNode } from "react";
+import { useLocation } from "wouter";
 import { Navbar } from "../navbar/navbar";
 import { Footer } from "./footer";
 
-export const Layout = () => {
-  const { pathname } = useLocation();
+export const Layout = ({ children }: { children?: ReactNode }) => {
+  const [pathname] = useLocation();
   const isHome = pathname === "/";
   return (
     <>
       <Navbar />
       <div className={`${isHome ? "" : "p-6"} min-h-[calc(100vh-72px)]`}>
-        <Outlet />
+        {children}
       </div>
       <Footer />
     </>

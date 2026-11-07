@@ -1,5 +1,5 @@
 import { useCallback, useEffect } from "react";
-import { Link, Navigate } from "react-router-dom";
+import { Link, Redirect } from "wouter";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -64,7 +64,7 @@ export const ResetPassword = () => {
   );
 
   if (user) {
-    return <Navigate to="/" replace />;
+    return <Redirect to="/" replace />;
   }
 
   return (
@@ -92,7 +92,7 @@ export const ResetPassword = () => {
             />
             <div className="flex justify-between mt-2">
               <Link
-                to="/login"
+                href="/login"
                 className={buttonVariants({ variant: "secondary" })}
               >
                 Back to Login

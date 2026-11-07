@@ -1,5 +1,5 @@
 import { useCallback } from "react";
-import { useNavigate, Link, Navigate } from "react-router-dom";
+import { useLocation, Link, Redirect } from "wouter";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -30,7 +30,7 @@ const FormSchema = z.object({
 export const Login = () => {
   const { OAuthLogin, login, user } = usePocket();
   const { toast } = useToast();
-  const navigate = useNavigate();
+  const [, navigate] = useLocation();
 
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
@@ -64,7 +64,7 @@ export const Login = () => {
   );
 
   if (user) {
-    return <Navigate to="/" replace />;
+    return <Redirect to="/" replace />;
   }
 
   return (
@@ -115,13 +115,13 @@ export const Login = () => {
             />
             <div className="flex justify-between">
               <Link
-                to="/signup"
+                href="/signup"
                 className={buttonVariants({ variant: "link" })}
               >
                 Need an account?
               </Link>
               <Link
-                to="/resetpassword"
+                href="/resetpassword"
                 className={buttonVariants({ variant: "link" })}
               >
                 Forgot password?

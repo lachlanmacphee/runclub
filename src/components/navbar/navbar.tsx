@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link } from "wouter";
 
 // Components
 import { DesktopNavMenu } from "./desktopNavMenu";
@@ -72,7 +72,7 @@ export function Navbar() {
       <div className="flex justify-between py-4 px-8 items-center">
         <Link
           aria-label="Back to home page"
-          to="/"
+          href="/"
           className="normal-case font-bold text-2xl w-[250px]"
         >
           <img

@@ -1,7 +1,7 @@
 import { usePocket } from "@/contexts";
 
 // Components
-import { Link } from "react-router-dom";
+import { Link } from "wouter";
 import { buttonVariants } from "../ui/button";
 import { User2 } from "lucide-react";
 
@@ -12,7 +12,7 @@ export function AvatarIconModal() {
 
   return (
     <Link
-      to="/account"
+      href="/account"
       className={buttonVariants({ variant: "ghost", size: "icon" })}
     >
       <User2 className="h-[1.2rem] w-[1.2rem]" />

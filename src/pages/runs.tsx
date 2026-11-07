@@ -10,7 +10,7 @@ import { usePastRuns } from "@/hooks/usePastRuns";
 import { format } from "date-fns";
 import { usePocket } from "@/contexts";
 import { ROLES } from "@/lib/constants";
-import { Link } from "react-router-dom";
+import { Link } from "wouter";
 import { buttonVariants } from "@/components/ui/button";
 
 export function Runs() {
@@ -55,7 +55,7 @@ export function Runs() {
             <DatePicker date={date} setDate={dateChangeHandler} />
             {user?.role == ROLES.ADMIN && runDetails?.run.id && (
               <Link
-                to={`/runs/${runDetails.run.id}/edit`}
+                href={`/runs/${runDetails.run.id}/edit`}
                 className={buttonVariants({ variant: "default" })}
               >
                 Edit Run

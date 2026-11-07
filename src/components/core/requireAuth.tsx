@@ -1,16 +1,17 @@
-import { Navigate, Outlet, useLocation } from "react-router-dom";
+import type { ReactNode } from "react";
+import { Redirect, useLocation } from "wouter";
 
 import { usePocket } from "../../contexts";
 import { useAccessiblePages } from "@/hooks/useAccessiblePages";
 
-export const RequireAuth = () => {
+export const RequireAuth = ({ children }: { children?: ReactNode }) => {
   const { user } = usePocket();
   const { getPages } = useAccessiblePages();
-  const { pathname } = useLocation();
+  const [pathname] = useLocation();
 
   if (!user || !getPages().findIndex((page) => pathname === page.path)) {
-    return <Navigate to="/" replace />;
+    return <Redirect to="/" replace />;
   }
 
-  return <Outlet />;
+  return <>{children}</>;
 };

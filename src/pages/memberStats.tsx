@@ -1,7 +1,7 @@
 import { toast } from "@/components/ui/use-toast";
 import { usePocket } from "@/contexts";
 import { Participant } from "@/lib/types";
-import { useParams } from "react-router-dom";
+import { useParams } from "wouter";
 import { useCallback, useEffect, useState } from "react";
 import {
   LineChart,

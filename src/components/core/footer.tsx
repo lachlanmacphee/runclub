@@ -1,19 +1,19 @@
 import Whatsapp from "@/components/icons/Whatsapp";
 import { Facebook, Instagram } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link } from "wouter";
 import { buttonVariants } from "../ui/button";
 
 const SocialLinks = () => (
   <>
-    <Link to="https://www.facebook.com/groups/1147699358622893/">
+    <a href="https://www.facebook.com/groups/1147699358622893/">
       <Facebook className="w-8 h-8" />
-    </Link>
-    <Link to="https://www.instagram.com/gunn.runners/">
+    </a>
+    <a href="https://www.instagram.com/gunn.runners/">
       <Instagram className="w-8 h-8" />
-    </Link>
-    <Link to="https://chat.whatsapp.com/HLf0ViSAJD77iGmuWGMORV">
+    </a>
+    <a href="https://chat.whatsapp.com/HLf0ViSAJD77iGmuWGMORV">
       <Whatsapp className="w-8 h-8 dark:fill-white" />
-    </Link>
+    </a>
   </>
 );
 
@@ -27,7 +27,7 @@ export function Footer() {
       <div className="hidden sm:flex justify-center gap-4">
         <SocialLinks />
       </div>
-      <Link to="/privacy" className={buttonVariants({ variant: "link" })}>
+      <Link href="/privacy" className={buttonVariants({ variant: "link" })}>
         Privacy Policy
       </Link>
     </footer>

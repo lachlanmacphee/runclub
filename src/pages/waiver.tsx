@@ -2,7 +2,7 @@ import { useCallback, useEffect } from "react";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
+import { useLocation } from "wouter";
 import { usePocket } from "@/contexts";
 
 // Components
@@ -27,7 +27,7 @@ import { PhoneInput } from "@/components/ui/phone-input";
 export const Waiver = () => {
   const { pb } = usePocket();
   const { toast } = useToast();
-  const navigate = useNavigate();
+  const [, navigate] = useLocation();
 
   const form = useForm<
     z.input<typeof WaiverFormSchema>,

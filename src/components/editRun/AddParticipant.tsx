@@ -1,7 +1,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
+import { useLocation } from "wouter";
 import * as z from "zod";
 
 import { usePocket } from "@/contexts";
@@ -47,7 +47,7 @@ export function AddParticipant({
   const { members } = useMembers();
   const { pb } = usePocket();
   const { toast } = useToast();
-  const navigate = useNavigate();
+  const [, navigate] = useLocation();
 
   const form = useForm<
     z.input<typeof FormSchema>,

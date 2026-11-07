@@ -1,4 +1,4 @@
-import { Navigate } from "react-router-dom";
+import { Redirect } from "wouter";
 
 import { usePocket } from "@/contexts";
 import type { Volunteer } from "@/lib/types";
@@ -17,7 +17,7 @@ export function Volunteer() {
   const { tuesdays } = useUpcomingTuesdays();
   const { signUp, optOut, volunteers, isUpdating } = useVolunteers();
 
-  if (!user) return <Navigate to="/" replace />;
+  if (!user) return <Redirect to="/" replace />;
   if (!tuesdays)
     return (
       <div className="flex justify-center">

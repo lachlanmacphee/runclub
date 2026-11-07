@@ -1,5 +1,5 @@
 import { useCallback } from "react";
-import { useNavigate, Link, Navigate } from "react-router-dom";
+import { useLocation, Link, Redirect } from "wouter";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -45,7 +45,7 @@ const FormSchema = z
 export const SignUp = () => {
   const { register, login, user } = usePocket();
   const { toast } = useToast();
-  const navigate = useNavigate();
+  const [, navigate] = useLocation();
 
   const form = useForm<
     z.input<typeof FormSchema>,
@@ -90,7 +90,7 @@ export const SignUp = () => {
   );
 
   if (user) {
-    return <Navigate to="/" replace />;
+    return <Redirect to="/" replace />;
   }
 
   return (
@@ -212,7 +212,7 @@ export const SignUp = () => {
 
             <div className="flex justify-between mt-2">
               <Link
-                to="/login"
+                href="/login"
                 className={buttonVariants({ variant: "secondary" })}
               >
                 Go to Login

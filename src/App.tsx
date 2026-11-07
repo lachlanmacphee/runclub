@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Route, Switch } from "wouter";
 import { PocketProvider } from "./contexts/PocketContext";
 import { ThemeProvider } from "./contexts/ThemeProviderContext";
 
@@ -36,38 +36,45 @@ export default function App() {
     <QueryClientProvider client={queryClient}>
       <PocketProvider>
         <ThemeProvider defaultTheme="system" storageKey="vite-ui-theme">
-          <BrowserRouter>
-            <Routes>
-              <Route path="/login" element={<Login />} />
-              <Route path="/signup" element={<SignUp />} />
-              <Route path="/resetpassword" element={<ResetPassword />} />
-              <Route element={<Layout />}>
-                <Route index element={<Home />} />
-                <Route path="/runs" element={<Runs />} />
-                <Route path="/runs/:runId/edit" element={<EditRun />} />
-                <Route path="/faqs" element={<FAQs />} />
-                <Route path="/donations" element={<Donations />} />
-                <Route path="/contact" element={<ContactUs />} />
-                <Route path="/privacy" element={<Privacy />} />
-                <Route path="/events" element={<Events />} />
-                <Route path="/waiver" element={<Waiver />} />
-                <Route element={<RequireAuth />}>
-                  <Route path="/newrun" element={<NewRun />} />
-                  <Route path="/volunteer" element={<Volunteer />} />
-                  <Route path="/manage" element={<ManageClub />} />
-                  <Route path="/wiki" element={<Wiki />} />
-                  <Route path="/account" element={<Account />} />
-                  <Route path="/stats">
-                    <Route path="member" element={<MemberStats />} />
-                    <Route path="member/:waiverId" element={<MemberStats />} />
-                    <Route path="club" element={<ClubStats />} />
+          <Switch>
+            <Route path="/login" component={Login} />
+            <Route path="/signup" component={SignUp} />
+            <Route path="/resetpassword" component={ResetPassword} />
+            <Route>
+              <Layout>
+                <Switch>
+                  <Route path="/" component={Home} />
+                  <Route path="/runs" component={Runs} />
+                  <Route path="/runs/:runId/edit" component={EditRun} />
+                  <Route path="/faqs" component={FAQs} />
+                  <Route path="/donations" component={Donations} />
+                  <Route path="/contact" component={ContactUs} />
+                  <Route path="/privacy" component={Privacy} />
+                  <Route path="/events" component={Events} />
+                  <Route path="/waiver" component={Waiver} />
+                  <Route>
+                    <RequireAuth>
+                      <Switch>
+                        <Route path="/newrun" component={NewRun} />
+                        <Route path="/volunteer" component={Volunteer} />
+                        <Route path="/manage" component={ManageClub} />
+                        <Route path="/wiki" component={Wiki} />
+                        <Route path="/account" component={Account} />
+                        <Route path="/stats/member" component={MemberStats} />
+                        <Route
+                          path="/stats/member/:waiverId"
+                          component={MemberStats}
+                        />
+                        <Route path="/stats/club" component={ClubStats} />
+                        <Route path="/trivia" component={TriviaPage} />
+                      </Switch>
+                    </RequireAuth>
                   </Route>
-                  <Route path="/trivia" element={<TriviaPage />} />
-                </Route>
-              </Route>
-            </Routes>
-            <Toaster />
-          </BrowserRouter>
+                </Switch>
+              </Layout>
+            </Route>
+          </Switch>
+          <Toaster />
         </ThemeProvider>
       </PocketProvider>
     </QueryClientProvider>

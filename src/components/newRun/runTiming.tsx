@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation } from "wouter";
 import { useStopwatch } from "react-timer-hook";
 import { usePocket } from "@/contexts";
 import { Participant } from "@/lib/types";
@@ -34,7 +34,7 @@ export function RunTiming({
   const runId = participants[0].group_run_id;
   const { start, pause, hours, minutes, seconds, totalSeconds, isRunning } =
     useStopwatch();
-  const navigate = useNavigate();
+  const [, navigate] = useLocation();
 
   const [completed, setCompleted] = useState<Record<number, boolean>>(
     getCompletedDefault(participants)
