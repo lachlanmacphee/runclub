@@ -1,5 +1,30 @@
 /* eslint-disable no-undef */
 
+// Verify the Cloudflare Turnstile token before a contact form submission is saved
+onRecordBeforeCreateRequest((e) => {
+  const info = $apis.requestInfo(e.httpContext);
+  const token = info.data.captchaToken;
+  if (!token) {
+    throw new BadRequestError("Captcha required.");
+  }
+
+  const res = $http.send({
+    url: "https://challenges.cloudflare.com/turnstile/v0/siteverify",
+    method: "POST",
+    headers: { "content-type": "application/json" },
+    body: JSON.stringify({
+      secret: $os.getenv("TURNSTILE_SECRET"),
+      response: token,
+      remoteip: e.httpContext.realIP(),
+    }),
+    timeout: 10,
+  });
+
+  if (!res.json || res.json.success !== true) {
+    throw new BadRequestError("Captcha verification failed.");
+  }
+}, "contact_us_submissions");
+
 onRecordAfterCreateRequest((e) => {
   $app.logger().debug("Emails: Contact Us. Beginning message send...");
 

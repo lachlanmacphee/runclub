@@ -1,4 +1,5 @@
-import { useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
+import { Turnstile, TurnstileInstance } from "@marsidev/react-turnstile";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -53,6 +54,8 @@ const formSchema = z.object({
 
 export const ContactUs = () => {
   const { pb } = usePocket();
+  const [captchaToken, setCaptchaToken] = useState<string | null>(null);
+  const turnstileRef = useRef<TurnstileInstance>(null);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -74,18 +77,32 @@ export const ContactUs = () => {
   }, [form.formState, form.reset]);
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    await pb.collection("contact_us_submissions").create({
-      firstName: values.firstName,
-      lastName: values.lastName,
-      emailAddress: values.emailAddress,
-      phoneNumber: values.phoneNumber,
-      subject: values.subject,
-      comments: values.comments,
-    });
-    toast({
-      title: "Form Submitted!",
-      description: "We'll get back to you as soon as we can.",
-    });
+    if (!captchaToken) return;
+    try {
+      await pb.collection("contact_us_submissions").create({
+        firstName: values.firstName,
+        lastName: values.lastName,
+        emailAddress: values.emailAddress,
+        phoneNumber: values.phoneNumber,
+        subject: values.subject,
+        comments: values.comments,
+        captchaToken,
+      });
+      toast({
+        title: "Form Submitted!",
+        description: "We'll get back to you as soon as we can.",
+      });
+    } catch {
+      toast({
+        title: "Submission failed",
+        description: "Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      // Turnstile tokens are single-use
+      turnstileRef.current?.reset();
+      setCaptchaToken(null);
+    }
   }
 
   return (
@@ -203,7 +220,14 @@ export const ContactUs = () => {
               )}
             />
 
-            <Button type="submit">
+            <Turnstile
+              ref={turnstileRef}
+              siteKey={import.meta.env.VITE_TURNSTILE_SITE_KEY}
+              onSuccess={setCaptchaToken}
+              onExpire={() => setCaptchaToken(null)}
+            />
+
+            <Button type="submit" disabled={!captchaToken}>
               {form.formState.isSubmitting ? (
                 <Loader2 className="h-4 w-4 animate-spin" />
               ) : (
