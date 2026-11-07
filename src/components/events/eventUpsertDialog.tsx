@@ -31,15 +31,15 @@ import { useState } from "react";
 
 const FormSchema = z.object({
   title: z.string().min(1, {
-    message: "Title is required.",
+    error: "Title is required.",
   }),
   description: z.string().min(1, {
-    message: "Description is required.",
+    error: "Description is required.",
   }),
   link: z.string(),
-  start: z.date({ required_error: "Start date is required." }),
+  start: z.date({ error: "Start date is required." }),
   end: z.date({
-    required_error:
+    error:
       "End date is required. Set it the same as the start date if the event is only one day.",
   }),
 });

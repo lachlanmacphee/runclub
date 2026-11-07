@@ -29,7 +29,11 @@ export const Waiver = () => {
   const { toast } = useToast();
   const navigate = useNavigate();
 
-  const form = useForm<z.infer<typeof WaiverFormSchema>>({
+  const form = useForm<
+    z.input<typeof WaiverFormSchema>,
+    unknown,
+    z.output<typeof WaiverFormSchema>
+  >({
     resolver: zodResolver(WaiverFormSchema),
     reValidateMode: "onBlur",
     defaultValues: {
@@ -90,7 +94,7 @@ export const Waiver = () => {
         });
       }
     },
-    [navigate, pb, toast]
+    [navigate, pb, toast],
   );
 
   return (

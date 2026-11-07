@@ -30,7 +30,7 @@ import { Checkbox } from "../../ui/checkbox";
 
 const FormSchema = z.object({
   bib: z.string().min(1, {
-    message: "Bib number is required",
+    error: "Bib number is required",
   }),
   details: z.object({ value: z.string(), label: z.string() }),
   distance: z.object({ value: z.string(), label: z.string() }),
@@ -51,7 +51,11 @@ export function Latecomers({
   const { pb } = usePocket();
   const [isOpen, setIsOpen] = useState(false);
 
-  const form = useForm<z.infer<typeof FormSchema>>({
+  const form = useForm<
+    z.input<typeof FormSchema>,
+    unknown,
+    z.output<typeof FormSchema>
+  >({
     resolver: zodResolver(FormSchema),
     mode: "onBlur",
     defaultValues: {
@@ -73,7 +77,7 @@ export function Latecomers({
 
   async function onSubmit(data: z.infer<typeof FormSchema>) {
     const currentBibs: number[] = participants.map(
-      (participant) => participant.bib
+      (participant) => participant.bib,
     );
 
     if (currentBibs.includes(Number(data.bib))) {
@@ -102,7 +106,7 @@ export function Latecomers({
   }
 
   const addedParticipants: string[] = participants.map(
-    (participant) => participant.waiver_id
+    (participant) => participant.waiver_id,
   );
 
   return (
@@ -135,7 +139,7 @@ export function Latecomers({
                     options={members
                       .filter(
                         (member) =>
-                          !addedParticipants.includes(member.waiver_id)
+                          !addedParticipants.includes(member.waiver_id),
                       )
                       .map((member) => {
                         return {

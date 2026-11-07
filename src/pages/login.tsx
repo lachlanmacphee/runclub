@@ -23,7 +23,7 @@ import Facebook from "@/components/icons/Facebook";
 import Google from "@/components/icons/Google";
 
 const FormSchema = z.object({
-  email: z.string().email(),
+  email: z.email(),
   password: z.string(),
 });
 
@@ -60,7 +60,7 @@ export const Login = () => {
         });
       }
     },
-    [login, navigate, toast]
+    [login, navigate, toast],
   );
 
   if (user) {

@@ -25,9 +25,9 @@ import Select from "react-select";
 
 const FormSchema = z.object({
   details: z.object({ value: z.string(), label: z.string() }),
-  hours: z.string().min(1, { message: "Hours is required" }),
-  minutes: z.string().min(1, { message: "Minutes is required" }),
-  seconds: z.string().min(1, { message: "Seconds is required" }),
+  hours: z.string().min(1, { error: "Hours is required" }),
+  minutes: z.string().min(1, { error: "Minutes is required" }),
+  seconds: z.string().min(1, { error: "Seconds is required" }),
   distance: z.object({ value: z.string(), label: z.string() }),
 });
 
@@ -49,7 +49,11 @@ export function AddParticipant({
   const { toast } = useToast();
   const navigate = useNavigate();
 
-  const form = useForm<z.infer<typeof FormSchema>>({
+  const form = useForm<
+    z.input<typeof FormSchema>,
+    unknown,
+    z.output<typeof FormSchema>
+  >({
     resolver: zodResolver(FormSchema),
     mode: "onBlur",
     defaultValues: {
@@ -110,7 +114,7 @@ export function AddParticipant({
   }
 
   const addedParticipants: string[] = participants.map(
-    (participant) => participant.waiver_id
+    (participant) => participant.waiver_id,
   );
 
   const selectedParticipant = form.watch("details");
@@ -139,7 +143,7 @@ export function AddParticipant({
                     options={members
                       .filter(
                         (member) =>
-                          !addedParticipants.includes(member.waiver_id)
+                          !addedParticipants.includes(member.waiver_id),
                       )
                       .map((member) => ({
                         label: member.name,

@@ -32,7 +32,7 @@ import { PhoneInput } from "@/components/ui/phone-input";
 const formSchema = z.object({
   firstName: z.string().min(2),
   lastName: z.string().min(2),
-  emailAddress: z.string().email(),
+  emailAddress: z.email(),
   phoneNumber: z.string().min(10),
   subject: z.enum([
     "general",
@@ -44,10 +44,10 @@ const formSchema = z.object({
   comments: z
     .string()
     .min(10, {
-      message: "Comment must be at least 10 characters.",
+      error: "Comment must be at least 10 characters.",
     })
     .max(160, {
-      message: "Comment must not be longer than 160 characters.",
+      error: "Comment must not be longer than 160 characters.",
     }),
 });
 

@@ -35,13 +35,13 @@ const FormSchema = z
         details: z.object(
           { value: z.string(), label: z.string() },
           {
-            invalid_type_error: "A name is required here.",
-          }
+            error: "A name is required here.",
+          },
         ),
         distance: z.object({ value: z.string(), label: z.string() }),
         isNew: z.boolean(),
         isPaid: z.boolean(),
-      })
+      }),
     ),
   })
   .refine(
@@ -51,8 +51,8 @@ const FormSchema = z
     },
     {
       path: ["participants"],
-      message: "You cannot have duplicate bib numbers.",
-    }
+      error: "You cannot have duplicate bib numbers.",
+    },
   )
   .refine(
     (schema) => {
@@ -61,8 +61,8 @@ const FormSchema = z
     },
     {
       path: ["participants"],
-      message: "You cannot have duplicate participants.",
-    }
+      error: "You cannot have duplicate participants.",
+    },
   );
 
 export function RunParticipantSetup({
@@ -126,11 +126,11 @@ export function RunParticipantSetup({
               },
               distance:
                 DISTANCE_OPTIONS.find(
-                  (opt) => opt.value === participant.distance.toString()
+                  (opt) => opt.value === participant.distance.toString(),
                 ) || DISTANCE_OPTIONS[1],
               isNew: participant.is_new,
               isPaid: participant.is_paid,
-            })
+            }),
           );
           replace(formattedParticipants);
         }
@@ -212,7 +212,7 @@ export function RunParticipantSetup({
           },
           {
             shouldFocus: false,
-          }
+          },
         );
 
         setPartDetails(null);
@@ -242,7 +242,7 @@ export function RunParticipantSetup({
   async function updateParticipant(
     index: number,
     field: string,
-    value: string | { value: string; label: string } | null
+    value: string | { value: string; label: string } | null,
   ) {
     const participant = participants[index];
     if (participant.id && value !== null) {
@@ -280,7 +280,7 @@ export function RunParticipantSetup({
   }
 
   const addedParticipants: string[] = participants.map(
-    (participant) => participant.details.value
+    (participant) => participant.details.value,
   );
 
   return (
@@ -311,7 +311,7 @@ export function RunParticipantSetup({
                 onChange={(details) => setPartDetails(details)}
                 options={members
                   .filter(
-                    (member) => !addedParticipants.includes(member.waiver_id)
+                    (member) => !addedParticipants.includes(member.waiver_id),
                   )
                   .map((member) => {
                     return {

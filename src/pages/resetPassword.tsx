@@ -20,7 +20,7 @@ import {
 } from "@/components/ui/form";
 
 const FormSchema = z.object({
-  email: z.string().email(),
+  email: z.email(),
 });
 
 export const ResetPassword = () => {
@@ -60,7 +60,7 @@ export const ResetPassword = () => {
         });
       }
     },
-    [resetPassword, toast]
+    [resetPassword, toast],
   );
 
   if (user) {

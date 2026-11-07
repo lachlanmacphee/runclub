@@ -39,7 +39,7 @@ const FormSchema = z.object({
   member: z.object(
     { value: z.string(), label: z.string() },
     {
-      invalid_type_error: "A name is required here.",
+      error: "A name is required here.",
     }
   ),
 });

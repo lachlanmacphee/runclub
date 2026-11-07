@@ -24,7 +24,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 const FormSchema = z
   .object({
     fullName: z.string().min(5, "Full name must be at least 5 characters long"),
-    email: z.string().email(),
+    email: z.email(),
     password: z
       .string()
       .min(10, "Password must be at least 10 characters long"),
@@ -38,7 +38,7 @@ const FormSchema = z
       .transform((e) => (e === "" ? undefined : e)),
   })
   .refine((schema) => schema.password === schema.passwordConfirm, {
-    message: "Passwords must match",
+    error: "Passwords must match",
     path: ["passwordConfirm"],
   });
 
@@ -47,7 +47,11 @@ export const SignUp = () => {
   const { toast } = useToast();
   const navigate = useNavigate();
 
-  const form = useForm<z.infer<typeof FormSchema>>({
+  const form = useForm<
+    z.input<typeof FormSchema>,
+    unknown,
+    z.output<typeof FormSchema>
+  >({
     resolver: zodResolver(FormSchema),
     defaultValues: {
       fullName: "",
@@ -68,7 +72,7 @@ export const SignUp = () => {
           data.password,
           data.passwordConfirm,
           data.requestVolunteer,
-          data.alias
+          data.alias,
         );
         await login(data.email, data.password);
         navigate("/");
@@ -82,7 +86,7 @@ export const SignUp = () => {
         });
       }
     },
-    [login, navigate, register, toast]
+    [login, navigate, register, toast],
   );
 
   if (user) {

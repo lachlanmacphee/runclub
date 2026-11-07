@@ -3,81 +3,51 @@ import { ROLES } from "./constants";
 import { isValidPhoneNumber } from "react-phone-number-input";
 
 export const WaiverFormSchema = z.object({
-  email: z
-    .string({
-      errorMap: () => ({
-        message: "Email is required and must be the correct format.",
-      }),
-    })
-    .email(),
+  email: z.email("Email is required and must be the correct format."),
   fname: z
-    .string({
-      errorMap: () => ({
-        message: "First name is required and must be 2 characters minimum.",
-      }),
-    })
-    .min(2),
+    .string("First name is required and must be 2 characters minimum.")
+    .min(2, "First name is required and must be 2 characters minimum."),
   lname: z
-    .string({
-      errorMap: () => ({
-        message: "Last name is required and must be 2 characters minimum.",
-      }),
-    })
-    .min(2),
+    .string("Last name is required and must be 2 characters minimum.")
+    .min(2, "Last name is required and must be 2 characters minimum."),
   alias: z
     .union([z.string().length(0), z.string().min(5)])
     .optional()
     .transform((e) => (e === "" ? undefined : e)),
   suburb: z
-    .string({
-      errorMap: () => ({
-        message: "Suburb is required and must be 3 characters minimum.",
-      }),
-    })
-    .min(3),
+    .string("Suburb is required and must be 3 characters minimum.")
+    .min(3, "Suburb is required and must be 3 characters minimum."),
   postcode: z
-    .string({
-      errorMap: () => ({
-        message: "Postcode is required and must be 4 characters minimum.",
-      }),
-    })
-    .min(4)
-    .max(10),
+    .string("Postcode is required and must be 4 characters minimum.")
+    .min(4, "Postcode is required and must be 4 characters minimum.")
+    .max(10, "Postcode is required and must be 4 characters minimum."),
   phone: z
     .string()
-    .refine(isValidPhoneNumber, { message: "Invalid phone number" }),
+    .refine(isValidPhoneNumber, { error: "Invalid phone number" }),
   gender: z.enum(["Male", "Female", "Other", "Blank"], {
-    errorMap: () => ({
-      message: "Gender is a required field.",
-    }),
+    error: "Gender is a required field.",
   }),
   age: z.enum(["Under18", "18-30", "31-40", "41-50", "Above50", "Blank"], {
-    errorMap: () => ({
-      message: "Age is a required field.",
-    }),
+    error: "Age is a required field.",
   }),
   satisfiesAgeReq: z.enum(["Over18", "HavePermission"], {
-    errorMap: () => ({
-      message: "This is a required field.",
-    }),
+    error: "This is a required field.",
   }),
   readTermsAndConditions: z.literal<boolean>(true, {
-    errorMap: () => ({
-      message:
-        "It's a requirement that you read and accept the terms and conditions.",
-    }),
+    error:
+      "It's a requirement that you read and accept the terms and conditions.",
   }),
   emergencyContactName: z
-    .string({
-      errorMap: () => ({
-        message:
-          "Emergency contact name is a required field and must be at least 2 characters.",
-      }),
-    })
-    .min(2),
+    .string(
+      "Emergency contact name is a required field and must be at least 2 characters.",
+    )
+    .min(
+      2,
+      "Emergency contact name is a required field and must be at least 2 characters.",
+    ),
   emergencyContactPhone: z
     .string()
-    .refine(isValidPhoneNumber, { message: "Invalid phone number" }),
+    .refine(isValidPhoneNumber, { error: "Invalid phone number" }),
   referredBy: z
     .union([z.string().length(0), z.string()])
     .optional()
@@ -89,12 +59,8 @@ export const AccountDetailsSchema = z.object({
   alias: z
     .union([
       z
-        .string({
-          errorMap: () => ({
-            message: "Alias must be either blank or 5 characters minimum.",
-          }),
-        })
-        .length(0),
+        .string("Alias must be either blank or 5 characters minimum.")
+        .length(0, "Alias must be either blank or 5 characters minimum."),
       z.string().min(5),
     ])
     .optional(),

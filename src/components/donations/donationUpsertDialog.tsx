@@ -39,16 +39,16 @@ import { useState } from "react";
 
 const FormSchema = z.object({
   recipient: z.string().min(1, {
-    message: "Recipient is required.",
+    error: "Recipient is required.",
   }),
   amount: z.number().positive({
-    message: "Amount must be a positive number.",
+    error: "Amount must be a positive number.",
   }),
   description: z.string().optional(),
-  date: z.date({ required_error: "Date is required." }),
-  receipt_url: z.string().url().optional().or(z.literal("")),
+  date: z.date({ error: "Date is required." }),
+  receipt_url: z.url().optional().or(z.literal("")),
   category: z.string().min(1, {
-    message: "Category is required.",
+    error: "Category is required.",
   }),
 });
 
